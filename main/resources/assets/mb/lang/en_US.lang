@@ -1,0 +1,8 @@
+item.TestItem1.name=Test Item 1
+item.TestItem2.name=Test Item 2
+item.TestFood.name=Test Food
+
+tile.TestBlock.name=Test Block
+
+entity.SenseiSteve.name=Sensei Steve
+entity.HeavyChorp.name=Heavy Chorp
