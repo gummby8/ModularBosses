@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.client.entity;
 
 
 
+import java.sql.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,43 +42,23 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityParagon extends EntityMob
 {
 	
+	
 	boolean Moving = false;
 	boolean PreMoving = false;
-	boolean Transition = false; 
+	boolean Transition = false;
 	
-	int AniID = 0;
-	int AniFrame = 0;
-	
-	
-	
-	
+	public int PreAniID = 0;
+	public int AniID = 0;
+	public int AniFrame = 0;
+
 	
 	
+		
+		
 	
 	
-										public float HEAD;
-										public float CHEST;
-											
-		public float LSHOULDERGEAR;								public float RSHOULDERGEAR;
-	    public float LSHOULDER;									public float RSHOULDER;	    
-	    public float LARM;										public float RARM;
-	    public float LELBOW;										public float RELBOW;
-	    public float LFOREARM;									public float RFOREARM;
-	    public float LHAND;										public float RHAND;
-	    public float LFINGER11;									public float RFINGER11;
-	    public float LFINGER21;									public float RFINGER21;
-	    public float LFINGER31;									public float RFINGER31;
-	    
-	    			public float GRILLL;					public float GRILLR;
-	    
-										public float HIPy;
-	    	    
-	    public float LHIPJOINT;									public float RHIPJOINT;
-	    public float LTHIGH;									    public float RTHIGH;
-	    public float LKNEE;										public float RKNEE;
-	    public float LSHIN;										public float RSHIN;
-    public float LLEGGEAR;									public float RLEGGEAR;
-	    public float LFOOT;										public float RFOOT;
+	
+
 
 	    
 	    
@@ -304,243 +285,54 @@ public class EntityParagon extends EntityMob
         } else if (this.motionX != 0 || this.motionZ != 0) {
         	this.Moving = true;
         }
-
        if (this.Moving == true && this.AniID == 0){
-    	   Transition = true;
-    	   this.AniID = 1;
+    	   this.AniID = 1; 
     	}
        
+       
+    
 
        
-
-
-    	PreMoving = Moving;
-         
-    	
-    	
-    	DoAnimation();
-        
-    	
-    	
-        
-	}
-	
-	
-	public void DoAnimation(){
+       
 		if (this.AniID == 0){
-			Stand();
-		} else
-		if (this.AniID == 1){
-			TransWalk();
-		} else
-		if (this.AniID == 2){
-			Walk();
-		}
-		
-	}
-	public void Stand(){
-		this.RARM = 0;				this.LARM = 0;
-		this.RFOREARM = 0;		this.LFOREARM = 0;
-		this.HIPy = -38;
-		this.RTHIGH = 0;			this.LTHIGH = 0;
-		this.RKNEE = 0;				this.LKNEE = 0;
-		this.RSHIN = 0;			this.LSHIN = 0;
-		this.RFOOT = 0;			this.LFOOT = 0;
-		
-		this.AniFrame = 0;
-	}
-	
-	
-	
-	public void TransWalk(){
-		if (this.AniFrame == 0)	{
-			this.RARM = 0;			this.LARM = 0;
-			this.RFOREARM = 0;		this.LFOREARM = 0;
-			this.HIPy = -38;
-			this.RTHIGH = 0;		this.LTHIGH = 0;
-									this.LKNEE = 0;
-			this.RSHIN = 0;			this.LSHIN = 0;
-			this.RFOOT = 0;			this.LFOOT = 0;
-			
-		}
-		
-		if (this.AniFrame >= 1 && this.AniFrame <= 5)	{
-			this.RARM -= 1;				this.LARM += 1.33333;
-			this.RFOREARM -= 0.75;		this.LFOREARM -= 1.5;
-			this.RTHIGH += 0.75;		this.LTHIGH -= 2;
-										this.LKNEE += 1.66666;
-			this.RSHIN -= 0.25;			this.LSHIN += 1.66666;
-			this.RFOOT += 0.39185;		
-		}
-		
-		if (this.AniFrame >= 6 && this.AniFrame <= 10)	{
-			this.RARM -= 1;				this.LARM += 1.33333;
-			this.RFOREARM -= 0.75;		this.LFOREARM -= 1.5;
-			this.RTHIGH += 0.75;		this.LTHIGH -= 2;
-										this.LKNEE += 1.66666;
-			this.RSHIN -= 0.25;			this.LSHIN += 1.66666;
-			this.RFOOT += 0.39185;
-										
-		}			
-		
-		if (this.AniFrame >= 11 && this.AniFrame <= 15)	{
-			this.RARM -= 1;				this.LARM += 1.33333;
-			this.RFOREARM -= 0.75;		this.LFOREARM -= 1.5;
-			this.RTHIGH += 0.75;		this.LTHIGH -= 2;
-										this.LKNEE += 1.66666;
-			this.RSHIN -= 0.25;			this.LSHIN += 1.66666;
-			this.RFOOT += 0.39185;	
-		}
-		
-		if (this.AniFrame >= 16 && this.AniFrame <= 20)	{
-			this.RARM -= 1;				this.LARM += 1.33333;
-			this.RFOREARM -= 0.75;		this.LFOREARM -= 1.5;
-			this.RTHIGH += 0.75;		this.LTHIGH -= 2;
-										this.LKNEE -= 2;
-			this.RSHIN -= 0.25;			this.LSHIN -= 3;
-			this.RFOOT += 0.39185;		
-		}
-		
-		this.AniFrame++;
-		if (this.AniFrame > 20){
 			this.AniFrame = 0;
-			this.AniID = 2;
+			this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		}else if (this.AniID == 1 && this.AniFrame > 19){
+				this.AniFrame = 0;
+				this.AniID = 2;
+		}else if (this.AniID == 2 && this.AniFrame > 29){
+				this.AniFrame = 0;
+				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.5D);
+				this.AniID = 3;
+		}else if (this.AniID == 3 && this.AniFrame > 14){
+			this.AniFrame = 0;
+			this.AniID = 4;
+		}else if (this.AniID == 4 && this.AniFrame > 29){
+			this.AniFrame = 0;
+			this.AniID = 4;
+		}else{
+			this.AniFrame++;
 		}
+		
+			/**	 
+		if (this.worldObj.isRemote){
+			System.out.println("Add = " + this.Add);
+			System.out.println("AniID = " + this.AniID);
+			System.out.println("AniFrame = " + this.AniFrame);
+			System.out.println("===========================================================");
+		}
+			 */
+		
+		this.PreAniID = this.AniID;
 	}
 	
 	
 
-	public void Walk (){
-		if (this.AniFrame == 0)	{
-			this.RARM = -20;				this.LARM = 20;
-			this.RFOREARM = -15;		this.LFOREARM = -30;
-			this.HIPy = -38;
-			this.RTHIGH = 15;			this.LTHIGH = -40;
-			this.RKNEE = 0;				this.LKNEE = 16;
-			this.RSHIN = -5;			this.LSHIN = 10;
-			this.RFOOT = 7.83F;			this.LFOOT = 0;
-			
-		}
-		
-		if (this.AniFrame >= 1 && this.AniFrame <= 5)	{
-			this.RARM += 1.33333;		this.LARM -= 1.33333;
-			this.RFOREARM -= 3;			this.LFOREARM += 3;
-			this.HIPy += 0.6;
-			this.RTHIGH -= 1.83333;		this.LTHIGH += 1.83333;
-			this.RKNEE += 2.66666;		this.LKNEE -= 0.53333;
-			this.RSHIN += 2.04;			this.LSHIN -= 0.5;
-			this.RFOOT += 4.174;		
-		}
-		
-		if (this.AniFrame >= 6 && this.AniFrame <= 10)	{
-			this.RARM += 1.33333;		this.LARM -= 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH -= 1.83333;		this.LTHIGH += 1.83333;
-			this.RKNEE += 2.66666;		this.LKNEE -= 0.53333;
-			this.RSHIN += 2.04;			this.LSHIN -= 0.5;
-										
-		}			
-		
-		if (this.AniFrame >= 11 && this.AniFrame <= 15)	{
-			this.RARM += 1.33333;		this.LARM -= 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH -= 1.83333;		this.LTHIGH += 1.83333;
-			this.RKNEE += 2.66666;		this.LKNEE -= 0.53333;
-			this.RSHIN += 2.04;			this.LSHIN -= 0.5;
-										this.LFOOT += 1.044;
-		}
-		
-		if (this.AniFrame >= 16 && this.AniFrame <= 20)	{
-			this.RARM += 1.33333;		this.LARM -= 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH -= 1.83333;		this.LTHIGH += 1.83333;
-			this.RKNEE -= 1.6;			this.LKNEE -= 0.53333;
-			this.RSHIN -= 1.04;			this.LSHIN -= 0.5;
-			this.RFOOT -= 1.91333;		this.LFOOT -= 1.044;
-		}
-		
-		if (this.AniFrame >= 21 && this.AniFrame <= 25)	{
-			this.RARM += 1.33333;		this.LARM -= 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH -= 1.83333;		this.LTHIGH += 1.83333;
-			this.RKNEE -= 1.6;			this.LKNEE -= 0.53333;
-			this.RSHIN -= 1.04;			this.LSHIN -= 0.5;
-			this.RFOOT -= 1.91333;		this.LFOOT -= 1.044;
-		}
-		
-		if (this.AniFrame >= 26 && this.AniFrame <= 30)	{
-			this.RARM += 1.33333;		this.LARM -= 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH -= 1.83333;		this.LTHIGH += 1.83333;
-			this.RKNEE -= 1.6;			this.LKNEE -= 0.53333;
-			this.RSHIN -= 1.04;			this.LSHIN -= 0.5;
-			this.RFOOT -= 1.91333;		this.LFOOT += 2.61;
-		}
-		
-		if (this.AniFrame >= 31 && this.AniFrame <= 35)	{
-			this.RARM -= 1.33333;		this.LARM += 1.33333;
-			this.RFOREARM += 3;			this.LFOREARM -= 3;
-			this.HIPy += 0.6;
-			this.RTHIGH += 1.83333;		this.LTHIGH -= 1.83333;
-			this.RKNEE -= 0.53333;		this.LKNEE += 2.66666;
-			this.RSHIN -= 0.5;			this.LSHIN += 2.04;
-										this.LFOOT += 2.61;
-		}
-		
-		if (this.AniFrame >= 36 && this.AniFrame <= 40)	{
-			this.RARM -= 1.33333;		this.LARM += 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH += 1.83333;		this.LTHIGH -= 1.83333;
-			this.RKNEE -= 0.53333;		this.LKNEE += 2.66666;
-			this.RSHIN -= 0.5;			this.LSHIN += 2.04;
-			this.RFOOT += 1.044;
-		}
-		
-		if (this.AniFrame >= 41 && this.AniFrame <= 45)	{
-			this.RARM -= 1.33333;		this.LARM += 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH += 1.83333;		this.LTHIGH -= 1.83333;
-			this.RKNEE -= 0.53333;		this.LKNEE += 2.66666;
-			this.RSHIN -= 0.5;			this.LSHIN += 2.04;
-			this.RFOOT -= 1.044;
-		}
-		
-		if (this.AniFrame >= 46 && this.AniFrame <= 50)	{
-			this.RARM -= 1.33333;		this.LARM += 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH += 1.83333;		this.LTHIGH -= 1.83333;
-			this.RKNEE -= 0.53333;		this.LKNEE -= 1.6;
-			this.RSHIN -= 0.5;			this.LSHIN -= 1.04;
-			this.RFOOT -= 1.044;		this.LFOOT -= 1.39133;
-		}
-		
-		if (this.AniFrame >= 51 && this.AniFrame <= 55)	{
-			this.RARM -= 1.33333;		this.LARM += 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH += 1.83333;		this.LTHIGH -= 1.83333;
-			this.RKNEE -= 0.53333;		this.LKNEE -= 1.6;
-			this.RSHIN -= 0.5;			this.LSHIN -= 1.04;
-										this.LFOOT -= 1.39133;
-		}
-		
-		if (this.AniFrame >= 56 && this.AniFrame <= 60)	{
-			this.RARM -= 1.33333;		this.LARM += 1.33333;
-			this.HIPy -= 0.12;
-			this.RTHIGH += 1.83333;		this.LTHIGH -= 1.83333;
-			this.RKNEE -= 0.53333;		this.LKNEE -= 1.6;
-			this.RSHIN -= 0.5;			this.LSHIN -= 1.04;
-			this.RFOOT += 2.61;			this.LFOOT -= 1.39133;
-			
-		}
-		
+	
 
-		this.AniFrame++;
-		if (this.AniFrame > 60){
-			this.AniFrame = 0;
-		}
-	}
 	
+float count;
 	
-	
+
 
 }
