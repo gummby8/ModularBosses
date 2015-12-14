@@ -4,6 +4,7 @@ package com.Splosions.ModularBosses.client.entity;
 
 import java.sql.Array;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import com.Splosions.ModularBosses.Sounds;
@@ -31,6 +32,7 @@ import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -137,7 +139,7 @@ public class EntityParagon extends EntityMob
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(0.01D);
 	}
 
 
@@ -145,6 +147,10 @@ public class EntityParagon extends EntityMob
 	{
 		super.entityInit();
 		this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+		this.dataWatcher.addObject(17, 0);
+		this.dataWatcher.addObject(18, 0);
+		
+		
 
 	}
 
@@ -257,9 +263,38 @@ public class EntityParagon extends EntityMob
     	return Rounded;
     }
     
+    
+    /**
+     * Pushes all entities inside the list away from the enderdragon.
+     */
+    private void collideWithEntities(List p_70970_1_)
+    {
+        double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
+        double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
+        Iterator iterator = p_70970_1_.iterator();
+
+        while (iterator.hasNext())
+        {
+            Entity entity = (Entity)iterator.next();
+
+            if (entity instanceof EntityLivingBase)
+            {
+                double d2 = entity.posX - d0;
+                double d3 = entity.posZ - d1;
+                double d4 = d2 * d2 + d3 * d3;
+                entity.addVelocity(d2 / d4 * 3.0D, 3D, d3 / d4 * 3.0D);
+            }
+        }
+    }
+	
+
+    
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		
+		this.AniID = this.dataWatcher.getWatchableObjectInt(17);
+		this.AniFrame = this.dataWatcher.getWatchableObjectInt(18);
 
 		//Spawn some particles in the furnace
         if (this.worldObj.isRemote)
@@ -276,20 +311,19 @@ public class EntityParagon extends EntityMob
 
  
 
-        
-
-        
-        if (this.motionX == 0 && this.motionZ == 0) {
-        	this.Moving = false;
-        	this.AniID = 0;
-        } else if (this.motionX != 0 || this.motionZ != 0) {
-        	this.Moving = true;
-        }
-       if (this.Moving == true && this.AniID == 0){
-    	   this.AniID = 1; 
-    	}
+        if (!this.worldObj.isRemote){
+        	
+        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 5) {
+        		this.Moving = false;
+        		this.AniID = 0;
+        	} else if (this.motionX != 0 || this.motionZ != 0) {
+        		this.Moving = true;
+        	}
+        	if (this.Moving == true && this.AniID == 0){
+        		this.AniID = 1; 
+    		}
        
-       
+        
     
 
        
@@ -309,30 +343,28 @@ public class EntityParagon extends EntityMob
 			this.AniID = 4;
 		}else if (this.AniID == 4 && this.AniFrame > 29){
 			this.AniFrame = 0;
-			this.AniID = 4;
+			this.AniID = 5;
+		}else if (this.AniID == 5 && this.AniFrame == 10 ){
+			this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(8.0D, 8.0D, 8.0D)));
+			System.out.println("KICK!");
+			this.AniFrame++;
+		}else if (this.AniID == 5 && this.AniFrame > 24){
+			this.AniFrame = 0;
+			this.AniID = 0;
 		}else{
 			this.AniFrame++;
 		}
 		
-			/**	 
-		if (this.worldObj.isRemote){
-			System.out.println("Add = " + this.Add);
-			System.out.println("AniID = " + this.AniID);
-			System.out.println("AniFrame = " + this.AniFrame);
-			System.out.println("===========================================================");
-		}
-			 */
 		
-		this.PreAniID = this.AniID;
+        }
+				 
+
+			//System.out.println("AniFrame = " + this.AniFrame);
+
+			this.dataWatcher.updateObject(17, AniID);
+			this.dataWatcher.updateObject(18, AniFrame);
+		
+		
 	}
-	
-	
-
-	
-
-	
-float count;
-	
-
 
 }

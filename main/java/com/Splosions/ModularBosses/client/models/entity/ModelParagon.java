@@ -7870,8 +7870,7 @@ public float[] aLFOOT;										public float[] aRFOOT;
     		
     		
 		this.Add = ((this.aHIPy.length - 1) == Robot.AniFrame) ? 0 : 1;
-
-    	
+		
 		this.HIP.rotationPointY = this.aHIPy[Robot.AniFrame] + (PartialTick * (this.aHIPy[Robot.AniFrame + this.Add] - this.aHIPy[Robot.AniFrame]));
 		this.RARM.rotateAngleX = (this.aRARM[Robot.AniFrame] + (PartialTick * (this.aRARM[Robot.AniFrame + this.Add] - this.aRARM[Robot.AniFrame]))) * 0.0174533F;
 		this.LARM.rotateAngleX = (this.aLARM[Robot.AniFrame] + (PartialTick * (this.aLARM[Robot.AniFrame + this.Add] - this.aLARM[Robot.AniFrame]))) * 0.0174533F;
@@ -7893,28 +7892,7 @@ public float[] aLFOOT;										public float[] aRFOOT;
 			this.LARM.rotateAngleZ = (this.aLARMz[Robot.AniFrame] + (PartialTick * (this.aLARMz[Robot.AniFrame + this.Add] - this.aLARMz[Robot.AniFrame]))) * 0.0174533F;
 		}
 		
-		
-		System.out.println(this.aRARM.length);
-		System.out.println(this.aLARM.length);
-		System.out.println(this.aRFOREARM.length);
-		System.out.println(this.aLFOREARM.length);
-		System.out.println(this.aCHEST.length);
-		System.out.println(this.aHIPy.length);
-		System.out.println(this.aRTHIGH.length);
-		System.out.println(this.aLTHIGH.length);
-		System.out.println(this.aRKNEE.length);
-		System.out.println(this.aLKNEE.length);
-		System.out.println(this.aRSHIN.length);
-		System.out.println(this.aLSHIN.length);
-		System.out.println(this.aRFOOT.length);
-		System.out.println(this.aLFOOT.length);
-		
-		System.out.println("===========================================================");
-		
-		System.out.println("Add = " + this.Add);
-		System.out.println("AniID = " + Robot.AniID);
-		System.out.println("AniFrame = " + Robot.AniFrame);
-		System.out.println("===========================================================");
+
 		
 		
     }
