@@ -1699,9 +1699,6 @@ public class ModelTatters extends ModelBase {
     	        this.CLOTHSTRIPS2.addChild(this.StripB7);
     	        this.HOOD.addChild(this.Hood62);
     	        
-    	        this.StripF1P = new ModelRenderer(this, 101, 0);
-    	        this.StripF1P.setRotationPoint(0.0F, -31F, -6.9F);
-    	        this.StripF1P.addBox(-1.0F, 0F, 0F, 2, 1, 0, 0.0F);
     	        
     	        for (int i = 0; i < this.StripF2.length; ++i){
     	        this.CLOTHSTRIPS.addChild(this.StripF2[i]);
@@ -1787,8 +1784,6 @@ public class ModelTatters extends ModelBase {
     	        this.StripF19[i].addBox(-10.0F, 8.5F, -5.4F, 1, 1, 0, 0.0F);}
        
 
-    	        //for (int i = 0; i < this.StripF1.length; ++i){this.SHOULDERS.addChild(this.StripF1[i]);}
-    	        //for (int i = 0; i < this.StripF2.length; ++i){this.SHOULDERS.addChild(this.StripF2[i]);}
 
     	        
     	        
@@ -1802,7 +1797,7 @@ public class ModelTatters extends ModelBase {
     	this.HEAD.render(f5);
     	this.SHOULDERS.render(f5);
     	
-    	this.StripF1P.render(f5);
+    	
     
     	
         for (int i = 0; i < this.StripF1.length; ++i){this.StripF1[i].render(f5);}
@@ -1875,25 +1870,17 @@ public class ModelTatters extends ModelBase {
     	X = (Tatters.Ccount == 0 || Tatters.Ccount == 120) ? (MathHelper.sin((float)Tatters.ticksExisted / Speed) * Swing * 0.0174533F) : 0; 
     	  	
     	
-    	CLOTHSTRIPS.rotateAngleX = SHOULDERS.rotateAngleX;
-    	this.StripF1P.rotateAngleX = SHOULDERS.rotateAngleX;
     	
-    	this.StripF1P.rotationPointX = CLOTHSTRIPS.rotationPointX;
-    	this.StripF1P.rotationPointY = (-5.4F * (MathHelper.sin(-CLOTHSTRIPS.rotateAngleX))) + (2F * (MathHelper.cos(-CLOTHSTRIPS.rotateAngleX))) + CLOTHSTRIPS.rotationPointY - 2;
-    	this.StripF1P.rotationPointZ = (-5.4F * (MathHelper.cos(-CLOTHSTRIPS.rotateAngleX))) - (2F * (MathHelper.sin(-CLOTHSTRIPS.rotateAngleX))) + CLOTHSTRIPS.rotationPointZ;
+
     	
+
+
     	
     	
+    	//              Child, Width, Height, Xoff, Yoff
+    	ClothChild(StripF1, -5.4F, 2F, 0F, -2F, Tatters.StripF1);
     	
-    	PseudoChild(StripF1P,1,this.StripF1[0]);
-    	this.StripF1[0].rotateAngleX = X + CLOTHSTRIPS.rotateAngleX;
     	
-    	
-    	for (int i = 1; i < this.StripF1.length; ++i){ 
-    	StripF1[i].rotateAngleX = Tatters.StripF1[i] + ((StripF1[i - 1].rotateAngleX - Tatters.StripF1[i]) * 0.25F);
-    	Tatters.StripF1[i] = StripF1[i].rotateAngleX;
-    	PseudoChild(StripF1[i - 1], 1, StripF1[i]);
-    	}
     	
     	
     	
@@ -2018,8 +2005,24 @@ public class ModelTatters extends ModelBase {
     	return result;
     }
     
+    
+    public void ClothChild (ModelRenderer[] Child, float Width, float Height, float Xoff, float Yoff, float TattersPart[]){
+    	
+    	Child[0].rotationPointX = SHOULDERS.rotationPointX + Xoff;
+    	Child[0].rotationPointY = (Width * (MathHelper.sin(-SHOULDERS.rotateAngleX))) + (Height * (MathHelper.cos(-SHOULDERS.rotateAngleX))) + CLOTHSTRIPS.rotationPointY + Yoff;
+    	Child[0].rotationPointZ = (Width * (MathHelper.cos(-SHOULDERS.rotateAngleX))) - (Height * (MathHelper.sin(-SHOULDERS.rotateAngleX))) + CLOTHSTRIPS.rotationPointZ;
+    	Child[0].rotateAngleX = X + SHOULDERS.rotateAngleX;
+    	
+    	for (int i = 1; i < Child.length; ++i){ 
+    	Child[i].rotateAngleX = TattersPart[i] + ((StripF1[i - 1].rotateAngleX - TattersPart[i]) * 0.25F);
+    	TattersPart[i] = Child[i].rotateAngleX;
+    	PseudoChild(Child[i - 1], 1, Child[i]);
+    	}
+    	
+    }
+    
 
-    public void PseudoChild(ModelRenderer Parent, float ParentLength, ModelRenderer Child){
+    public void PseudoChild (ModelRenderer Parent, float ParentLength, ModelRenderer Child){
     	
 	float X = ParentLength * MathHelper.sin(Parent.rotateAngleX) * MathHelper.sin(Parent.rotateAngleY);
 	float Y = ParentLength * MathHelper.cos(Parent.rotateAngleX);
