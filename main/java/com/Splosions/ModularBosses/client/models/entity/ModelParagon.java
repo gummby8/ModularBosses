@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.client.models.entity;
 
 import com.Splosions.ModularBosses.client.entity.EntityParagon;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -7799,24 +7800,7 @@ public float[] aLFOOT;										public float[] aRFOOT;
 	
 
 
-    /**
-    float[] Parts = {LARM.rotateAngleX, RARM.rotateAngleX};
-   
-    float[] LeftArmX = {1,2,3,4,5,6,7,8,9,0};
-    float[] RightArmX = {1,2,3,4,5,6,7,8,9,0};
-    public float[][] PartAngle = {LeftArmX, RightArmX};
 
-    private void setLivingAnimations(EntityDarknut entity, float par2, float par3, float partialTick) {
-    EntityRobot Robot = (EntityRobot)par1EntityLivingBase;
-
-            for (int p=0; p < Parts.length; p++) {
-                for (int a=0; a < PartAngle[p].length; a++) {
-                    Parts[p] = PartAngle[p][Robot.AniFrame] + (partialTick * (PartAngle[p][Robot.AniFrame + 1] - PartAngle[p][Robot.AniFrame]));
-                    }
-            }
-    }
-    0.0174533F
-    */
    
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)  {
     	

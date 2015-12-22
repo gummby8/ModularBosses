@@ -5,7 +5,6 @@ package com.Splosions.ModularBosses.client.entity;
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob;
 
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -36,40 +35,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityTatters extends EntityMob
+public class EntityTattersHead extends EntityMob
 {
 
-	
-	
-	
-	public float SHOULDERS;
 
-
-	public float[] StripF1 = new float[40];
-	
-	
-	public float[] StripF2 = new float[40];
-	public float[] StripF3 = new float[40];
-	public float[] StripF4 = new float[40];
-	public float[] StripF5 = new float[40];
-	public float[] StripF6 = new float[40];
-	public float[] StripF7 = new float[40];
-	public float[] StripF8 = new float[40];
-	public float[] StripF9 = new float[40];
-	public float[] StripF10 = new float[40];
-	public float[] StripF11 = new float[40];
-	public float[] StripF12 = new float[40];
-	public float[] StripF13 = new float[40];
-	public float[] StripF14 = new float[40];
-	public float[] StripF15 = new float[40];
-	public float[] StripF16 = new float[40];
-	public float[] StripF17 = new float[40];
-	public float[] StripF18 = new float[40];
-	public float[] StripF19 = new float[40];
-	
-	
-	public float count;
-	public float Ccount;
 	
 	
 
@@ -86,10 +55,7 @@ public class EntityTatters extends EntityMob
 	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	private float DeadRot;
 
-
-	
-
-	public EntityTatters(World par1World) {
+	public EntityTattersHead(World par1World) {
 		super(par1World);
 		//sets hitbox size
 		this.setSize(1F, 3F);
@@ -275,9 +241,6 @@ public class EntityTatters extends EntityMob
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		
-		
-		
 		
 		
 	}
