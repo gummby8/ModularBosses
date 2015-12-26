@@ -46,8 +46,6 @@ public class EntityTatters extends EntityMob
 
 
 	public float[] StripF1 = new float[40];
-	
-	
 	public float[] StripF2 = new float[40];
 	public float[] StripF3 = new float[40];
 	public float[] StripF4 = new float[40];
@@ -66,6 +64,56 @@ public class EntityTatters extends EntityMob
 	public float[] StripF17 = new float[40];
 	public float[] StripF18 = new float[40];
 	public float[] StripF19 = new float[40];
+	
+	public float[] StripB1 = new float[40];
+	public float[] StripB2 = new float[40];
+	public float[] StripB3 = new float[40];
+	public float[] StripB4 = new float[40];
+	public float[] StripB5 = new float[40];
+	public float[] StripB6 = new float[40];
+	public float[] StripB7 = new float[40];
+	public float[] StripB8 = new float[40];
+	public float[] StripB9 = new float[40];
+	public float[] StripB10 = new float[40];
+	public float[] StripB11 = new float[40];
+	public float[] StripB12 = new float[40];
+	public float[] StripB13 = new float[40];
+	public float[] StripB14 = new float[40];
+	public float[] StripB15 = new float[40];
+	public float[] StripB16 = new float[40];
+	public float[] StripB17 = new float[40];
+	public float[] StripB18 = new float[40];
+	public float[] StripB19 = new float[40];
+	
+	public float[] StripL1 = new float[40];
+	public float[] StripL2 = new float[40];
+	public float[] StripL3 = new float[40];
+	public float[] StripL4 = new float[40];
+	public float[] StripL5 = new float[40];
+	public float[] StripL6 = new float[40];
+	public float[] StripL7 = new float[40];
+	public float[] StripL8 = new float[40];
+	public float[] StripL9 = new float[40];
+	public float[] StripL10 = new float[40];
+	public float[] StripL11 = new float[40];
+	public float[] StripL12 = new float[40];
+	public float[] StripL13 = new float[40];
+	public float[] StripL14 = new float[40];
+	
+	public float[] StripR1 = new float[40];
+	public float[] StripR2 = new float[40];
+	public float[] StripR3 = new float[40];
+	public float[] StripR4 = new float[40];
+	public float[] StripR5 = new float[40];
+	public float[] StripR6 = new float[40];
+	public float[] StripR7 = new float[40];
+	public float[] StripR8 = new float[40];
+	public float[] StripR9 = new float[40];
+	public float[] StripR10 = new float[40];
+	public float[] StripR11 = new float[40];
+	public float[] StripR12 = new float[40];
+	public float[] StripR13 = new float[40];
+	public float[] StripR14 = new float[40];
 	
 	
 	public float count;
