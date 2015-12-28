@@ -9,9 +9,12 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.Sounds;
 
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIBreakDoor;
@@ -24,6 +27,8 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.boss.EntityDragonPart;
+import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityVillager;
@@ -41,7 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityParagon extends EntityMob
+public class EntityParagon extends EntityMob implements IBossDisplayData, MBEntityMultiPart, IMob
 {
 	
 	
@@ -53,13 +58,14 @@ public class EntityParagon extends EntityMob
 	public int AniID = 0;
 	public int AniFrame = 0;
 
-	
-	
+	public MBEntityPart[] paragonPartArray;
+	public MBEntityPart paragonPartFurnace;
+	public MBEntityPart paragonPartRKnee;
+	public MBEntityPart paragonPartLKnee;
 		
-		
 	
 	
-	
+	public double FurnacePosY;
 
 
 	    
@@ -76,11 +82,18 @@ public class EntityParagon extends EntityMob
 
 	public EntityParagon(World par1World) {
 		super(par1World);
+		this.paragonPartArray = new MBEntityPart[] {this.paragonPartFurnace = new MBEntityPart(this, "furnace", 1.0F, 1.0F), this.paragonPartRKnee = new MBEntityPart(this, "RKnee", 1.0F, 1.0F), this.paragonPartLKnee = new MBEntityPart(this, "LKnee", 1.0F, 1.0F)};
+		
 		//sets hitbox size
 		this.setSize(1F, 3F);
 		this.experienceValue = 10;
 		this.isImmuneToFire = false;
+		this.ignoreFrustumCheck = true; //renders mob even if the camera is not looking at a hitbox
+		
 
+		
+		
+		
 		//AI STUFF
 		//this.getNavigator().setBreakDoors(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
@@ -163,8 +176,6 @@ public class EntityParagon extends EntityMob
 	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
 	 */
 	protected void onDeathUpdate() {
-
-
 
 		entityToAttack = null;
 		byte b1 = 1;
@@ -279,10 +290,11 @@ public class EntityParagon extends EntityMob
 
             if (entity instanceof EntityLivingBase)
             {
+            	System.out.println(entity.getEntityId());
                 double d2 = entity.posX - d0;
                 double d3 = entity.posZ - d1;
                 double d4 = d2 * d2 + d3 * d3;
-                entity.addVelocity(d2 / d4 * 3.0D, 3D, d3 / d4 * 3.0D);
+                //entity.addVelocity(d2 / d4 * 3.0D, 3D, d3 / d4 * 3.0D);
             }
         }
     }
@@ -292,6 +304,31 @@ public class EntityParagon extends EntityMob
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		
+		this.paragonPartFurnace.width = this.paragonPartFurnace.height = 1.3F;
+		this.paragonPartRKnee.width = this.paragonPartRKnee.height = 0.9F;
+		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 0.9F;
+		
+        float f3 = this.rotationYaw * (float)Math.PI / 180.0F;
+        float f11 = MathHelper.sin(f3);
+        float f4 = MathHelper.cos(f3);
+        
+        this.paragonPartFurnace.onUpdate();
+        this.paragonPartFurnace.setLocationAndAngles(this.posX + (double)(f11 * -0.5F), this.posY + 4.6, this.posZ - (double)(f4 * 0.5F), 0.0F, 0.0F);
+        setOffsets(this.paragonPartFurnace, (double)(f11 * -0.5F), 4.6, (double)(f4 * 0.5F) );
+        
+        this.paragonPartRKnee.onUpdate();
+        this.paragonPartRKnee.setLocationAndAngles(this.posX + (double)(f4 * 4.5F), this.posY + 2.0D, this.posZ + (double)(f11 * 4.5F), 0.0F, 0.0F);
+        setOffsets(this.paragonPartRKnee, (double)(f4 * 1F), 1.7D, (double)(f11 * 1F) );
+        
+        this.paragonPartLKnee.onUpdate();
+        this.paragonPartLKnee.setLocationAndAngles(this.posX - (double)(f4 * 4.5F), this.posY + 2.0D, this.posZ - (double)(f11 * 4.5F), 0.0F, 0.0F);
+        setOffsets(this.paragonPartLKnee, (double)(f4 * -1F), 1.7D, (double)(f11 * -1F) );
+		
+        this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartFurnace.getEntityBoundingBox()));
+        this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartRKnee.getEntityBoundingBox()));
+        this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartLKnee.getEntityBoundingBox()));
+		
 		
 		this.AniID = this.dataWatcher.getWatchableObjectInt(17);
 		this.AniFrame = this.dataWatcher.getWatchableObjectInt(18);
@@ -307,9 +344,10 @@ public class EntityParagon extends EntityMob
             }
         }
         
-        
+   
 
- 
+        
+        
 
         if (!this.worldObj.isRemote){
         	
@@ -365,6 +403,26 @@ public class EntityParagon extends EntityMob
 			this.dataWatcher.updateObject(18, AniFrame);
 		
 		
+	}
+	
+	
+	public void setOffsets(MBEntityPart part, double xOff, double yOff, double zOff){
+		part.PPosX = xOff;
+		part.PPosY = yOff;
+		part.PPosZ = zOff;
+	}
+
+
+	@Override
+	public World getWorld() {
+		return this.worldObj;
+	}
+
+
+	@Override
+	public boolean attackEntityFromPart(MBEntityPart p_70965_1_, DamageSource p_70965_2_, float p_70965_3_) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
