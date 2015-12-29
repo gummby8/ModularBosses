@@ -94,13 +94,13 @@ public class ModularBossesEntities
 		//CustomEntityList.addMapping(EntityTestDummy.class, "Test Dummy", 0xF2FF00, 0x000000);
 		
 		EntityRegistry.registerModEntity(EntityParagon.class, "Paragon", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityParagon.class, "Paragon", 0x8C713F, 0xFFFFFF);
+		CustomEntityList.addMapping(EntityParagon.class, "Paragon", 0x5C2918, 0xE30000);
 		
 		EntityRegistry.registerModEntity(EntityTatters.class, "Tatters", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityTatters.class, "Tatters", 0x8C713F, 0xFFFFFF);
+		CustomEntityList.addMapping(EntityTatters.class, "Tatters", 0x666565, 0x000000);
 		
 		EntityRegistry.registerModEntity(EntityTattersHead.class, "TattersHead", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityTattersHead.class, "TattersHead", 0x8C713F, 0xFFFFFF);
+		CustomEntityList.addMapping(EntityTattersHead.class, "TattersHead", 0x000000, 0x000000);
 
 		}
 

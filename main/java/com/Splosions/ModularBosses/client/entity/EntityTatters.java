@@ -323,6 +323,7 @@ public class EntityTatters extends EntityMob
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+	
 		
 		
 		
