@@ -7830,9 +7830,6 @@ public float[] aLFOOT;										public float[] aRFOOT;
      */
     private void setLivingAnimations(EntityParagon Robot, float par2, float par3, float PartialTick)  {
    
-    	Robot.RkneeAng = this.RTHIGH.rotateAngleX;
-    	Robot.LkneeAng = this.LTHIGH.rotateAngleX;
-    	
     	//if (Robot.PreAniID != Robot.AniID){
     	
     		if (Robot.AniID == 0){

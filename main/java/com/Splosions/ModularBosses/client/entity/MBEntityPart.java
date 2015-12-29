@@ -48,7 +48,7 @@ public class MBEntityPart extends Entity
      */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        return this.isEntityInvulnerable(source) ? false : this.entityObj.attackEntityFromPart(this, source, amount);
+        return this.entityObj.attackEntityFromPart(this, source, amount);
     }
 
     /**

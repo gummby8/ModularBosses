@@ -38,6 +38,7 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -63,8 +64,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	public MBEntityPart paragonPartRKnee;
 	public MBEntityPart paragonPartLKnee;
 		
-	public float RkneeAng;
-	public float LkneeAng;
+	public double KneeHP = 10; 
 	
 	public double FurnacePosY;
 
@@ -310,15 +310,17 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		
+		
+		System.out.println(KneeHP);
+		
+		KneeHP = (KneeHP == 0) ? 10 : KneeHP;
+		
+		
 		this.paragonPartFurnace.width = this.paragonPartFurnace.height = 1.3F;
 		this.paragonPartRKnee.width = this.paragonPartRKnee.height = 0.9F;
 		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 0.9F;
 		
-		
-		
-		
-		
-        moveHitBoxes(this.paragonPartFurnace, 0.5D, 0, 4.6D);
+		moveHitBoxes(this.paragonPartFurnace, 0.5D, 0, 4.6D);
         moveHitBoxes(this.paragonPartRKnee, 0.0D, -1, 1.7D);
         moveHitBoxes(this.paragonPartLKnee, 0.0D, 1, 1.7D);
         
@@ -364,7 +366,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
         
     
         
-        	this.AniID = 2;	
+     
        
 		if (this.AniID == 0){
 			this.AniFrame = 0;
@@ -433,10 +435,54 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	}
 
 
-	@Override
-	public boolean attackEntityFromPart(MBEntityPart p_70965_1_, DamageSource p_70965_2_, float p_70965_3_) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public boolean attackEntityFromPart(MBEntityPart Part, DamageSource Source, float DMGAmmount) {
+	       if (Part == this.paragonPartLKnee || Part == this.paragonPartRKnee){
+	    	   DMGAmmount = 0;
+	    	   KneeHP--;
+	    	}
+	       
+	       this.Damage(Source, DMGAmmount);   
+		return true ;
 	}
+	
+
+/**
+ * Called when the entity is attacked.
+ */
+public boolean attackEntityFrom(DamageSource source, float amount)
+{
+    if (source instanceof EntityDamageSource && ((EntityDamageSource)source).getIsThornsDamage())
+    {
+        this.Damage(source, amount);
+    }
+
+    return false;
+}
+
+protected boolean Damage(DamageSource Source, float DMGAmmount)
+{
+    return super.attackEntityFrom(Source, DMGAmmount);
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    /**
+     * Return the Entity parts making up this Entity (currently only for dragons)
+     */
+    public Entity[] getParts()
+    {
+        return this.paragonPartArray;
+    }
 
 }
