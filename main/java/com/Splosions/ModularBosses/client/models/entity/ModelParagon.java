@@ -1347,6 +1347,8 @@ public class ModelParagon extends ModelBase {
     public ModelRenderer RFinger321;
     public ModelRenderer RFinger322;
     public ModelRenderer RFinger323;
+    
+
 
     public ModelParagon() {
         this.textureWidth = 128;
@@ -7828,7 +7830,8 @@ public float[] aLFOOT;										public float[] aRFOOT;
      */
     private void setLivingAnimations(EntityParagon Robot, float par2, float par3, float PartialTick)  {
    
-
+    	Robot.RkneeAng = this.RTHIGH.rotateAngleX;
+    	Robot.LkneeAng = this.LTHIGH.rotateAngleX;
     	
     	//if (Robot.PreAniID != Robot.AniID){
     	

@@ -63,7 +63,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	public MBEntityPart paragonPartRKnee;
 	public MBEntityPart paragonPartLKnee;
 		
-	
+	public float RkneeAng;
+	public float LkneeAng;
 	
 	public double FurnacePosY;
 
@@ -176,7 +177,10 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
 	 */
 	protected void onDeathUpdate() {
-
+		this.setDead(); 
+		
+		
+		/**
 		entityToAttack = null;
 		byte b1 = 1;
 		this.dataWatcher.updateObject(16, Byte.valueOf(b1));
@@ -189,6 +193,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 			this.dropItem(Item.getItemById(3), 1);
 			this.setDead();   	
 		}
+		*/
 
 
 	}
@@ -290,7 +295,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 
             if (entity instanceof EntityLivingBase)
             {
-            	System.out.println(entity.getEntityId());
+            	if(!this.worldObj.isRemote){System.out.println(entity.getEntityId());}
                 double d2 = entity.posX - d0;
                 double d3 = entity.posZ - d1;
                 double d4 = d2 * d2 + d3 * d3;
@@ -309,21 +314,14 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		this.paragonPartRKnee.width = this.paragonPartRKnee.height = 0.9F;
 		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 0.9F;
 		
-        float f3 = this.rotationYaw * (float)Math.PI / 180.0F;
-        float f11 = MathHelper.sin(f3);
-        float f4 = MathHelper.cos(f3);
+		
+		
+		
+		
+        moveHitBoxes(this.paragonPartFurnace, 0.5D, 0, 4.6D);
+        moveHitBoxes(this.paragonPartRKnee, 0.0D, -1, 1.7D);
+        moveHitBoxes(this.paragonPartLKnee, 0.0D, 1, 1.7D);
         
-        this.paragonPartFurnace.onUpdate();
-        this.paragonPartFurnace.setLocationAndAngles(this.posX + (double)(f11 * -0.5F), this.posY + 4.6, this.posZ - (double)(f4 * 0.5F), 0.0F, 0.0F);
-        setOffsets(this.paragonPartFurnace, (double)(f11 * -0.5F), 4.6, (double)(f4 * 0.5F) );
-        
-        this.paragonPartRKnee.onUpdate();
-        this.paragonPartRKnee.setLocationAndAngles(this.posX + (double)(f4 * 4.5F), this.posY + 2.0D, this.posZ + (double)(f11 * 4.5F), 0.0F, 0.0F);
-        setOffsets(this.paragonPartRKnee, (double)(f4 * 1F), 1.7D, (double)(f11 * 1F) );
-        
-        this.paragonPartLKnee.onUpdate();
-        this.paragonPartLKnee.setLocationAndAngles(this.posX - (double)(f4 * 4.5F), this.posY + 2.0D, this.posZ - (double)(f11 * 4.5F), 0.0F, 0.0F);
-        setOffsets(this.paragonPartLKnee, (double)(f4 * -1F), 1.7D, (double)(f11 * -1F) );
 		
         this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartFurnace.getEntityBoundingBox()));
         this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartRKnee.getEntityBoundingBox()));
@@ -333,6 +331,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		this.AniID = this.dataWatcher.getWatchableObjectInt(17);
 		this.AniFrame = this.dataWatcher.getWatchableObjectInt(18);
 
+		
+		
 		//Spawn some particles in the furnace
         if (this.worldObj.isRemote)
         {
@@ -363,8 +363,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
        
         
     
-
-       
+        
+        	this.AniID = 2;	
        
 		if (this.AniID == 0){
 			this.AniFrame = 0;
@@ -372,10 +372,10 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		}else if (this.AniID == 1 && this.AniFrame > 19){
 				this.AniFrame = 0;
 				this.AniID = 2;
-		}else if (this.AniID == 2 && this.AniFrame > 29){
+		}else if (this.AniID == 2 && this.AniFrame > 59){
+				this.AniFrame = 2;
 				this.AniFrame = 0;
-				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(1.5D);
-				this.AniID = 3;
+				
 		}else if (this.AniID == 3 && this.AniFrame > 14){
 			this.AniFrame = 0;
 			this.AniID = 4;
@@ -393,9 +393,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 			this.AniFrame++;
 		}
 		
-		
         }
-				 
+    		 
 
 			//System.out.println("AniFrame = " + this.AniFrame);
 
@@ -406,12 +405,27 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	}
 	
 	
+	public void moveHitBoxes(MBEntityPart part, double FrontToBack, double SideToSide, double TopToBot){
+        
+        float f3 = this.rotationYaw * (float)Math.PI / 180.0F;
+        float f11 = MathHelper.sin(f3);
+        float f4 = MathHelper.cos(f3);
+		
+        part.onUpdate();
+        part.setLocationAndAngles(this.posX + (double)(f11 * -FrontToBack) + (double)(f4 * SideToSide), this.posY + TopToBot, this.posZ + (double)(f4 * FrontToBack) + (double)(f11 * SideToSide), 0.0F, 0.0F);
+        setOffsets(part, (double)(f11 * -FrontToBack) + (double)(f4 * SideToSide), TopToBot, (double)(f4 * FrontToBack) +  (double)(f11 * SideToSide));
+	}
+	
+	
 	public void setOffsets(MBEntityPart part, double xOff, double yOff, double zOff){
 		part.PPosX = xOff;
 		part.PPosY = yOff;
 		part.PPosZ = zOff;
 	}
 
+	
+	
+	
 
 	@Override
 	public World getWorld() {
