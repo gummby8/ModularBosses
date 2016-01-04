@@ -265,7 +265,7 @@ public class EntityChorpChorp extends EntityMob
 				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
 				Entity projectile;
 				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0).setDamage(f * difficulty);
+				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0,0,0).setDamage(f * difficulty);
 				if (!this.worldObj.isRemote){
 					worldObj.spawnEntityInWorld(projectile);
 				}

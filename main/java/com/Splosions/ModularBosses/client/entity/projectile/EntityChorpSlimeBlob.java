@@ -23,8 +23,8 @@ public class EntityChorpSlimeBlob extends EntityMobThrowable
 		super(world, x, y, z);
 	}
 
-	public EntityChorpSlimeBlob(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float YOffset, float Size1, float Size2) {
-		super(world, shooter, target, velocity, wobble, YOffset, Size1, Size2);
+	public EntityChorpSlimeBlob(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2) {
+		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
 	}
 
 	@Override

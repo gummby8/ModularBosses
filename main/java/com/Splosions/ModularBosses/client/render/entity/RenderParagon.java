@@ -32,7 +32,10 @@ public class RenderParagon extends RenderLiving {
     public void doRender(EntityLiving entity, double x, double y, double z, float p_76986_8_, float partialTicks)
     {
         this.doRender((EntityParagon)entity, x, y, z, p_76986_8_, partialTicks);
+        
     }
+    
+    
     
     public void doRender(EntityParagon entity, double x, double y, double z, float p_76986_8_, float partialTicks)
     {

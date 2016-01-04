@@ -89,13 +89,13 @@ public class ModularBossesItems {
 	
 	//================ NO TAB ================//
 	public static Item
-	SlimeBlob;
+	slimeblob;
 	
 	
 	public static void init() {
 		
 		 Legends_Sword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
-		 SlimeBlob = new Item().setUnlocalizedName("SlimeBlob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
+		 slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
 		 
 		 eggSpawner = new ItemCustomEgg().setUnlocalizedName("spawn_egg");
 	}
@@ -136,9 +136,8 @@ public class ModularBossesItems {
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders(){
-		registerRender(eggSpawner);
 		registerRender(Legends_Sword);
-		registerRender(SlimeBlob);
+		registerRender(slimeblob);
 		
 	}
 	
@@ -146,6 +145,7 @@ public class ModularBossesItems {
 	public static void registerRender(Item item) {
 		
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+
 	}
 	
 	

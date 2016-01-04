@@ -38,17 +38,24 @@ public abstract class EntityMobThrowable extends EntityThrowable
 	 * @param wobble amount of deviation from base trajectory, used by Skeletons and the like; set to 0.0F for no x/z deviation
 	 * YOffset is subtracted from the Y coordinates that determin spawn location.
 	 */
-	public EntityMobThrowable(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float YOffset, float HitBoxSize1, float HitBoxSize2) {
+	public EntityMobThrowable(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float HitBoxSize1, float HitBoxSize2) {
 		super(world, shooter);
 		if (HitBoxSize1 != 0 || HitBoxSize2 != 0){
 			this.setSize(HitBoxSize1, HitBoxSize2);
 		}
 		
 
+        float r3 = this.rotationYaw * (float)Math.PI / 180.0F;
+        float r11 = MathHelper.cos(r3);
+        float r4 = MathHelper.sin(r3);
+        
+        
 		
-		this.posY = shooter.posY + (double) shooter.getEyeHeight() - 0.10000000149011612D;		
+		
+		
+		this.posY = shooter.posY + (double) shooter.getEyeHeight() - 0.2D;		
 		double d0 = target.posX - shooter.posX;
-		double d1 = target.getEntityBoundingBox().minY + (double)(target.height / 3.0F) - this.posY;
+		double d1 = target.posY - this.posY - 2;
 		double d2 = target.posZ - shooter.posZ;
 		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 		if (d3 >= 1.0E-7D) {
@@ -57,10 +64,16 @@ public abstract class EntityMobThrowable extends EntityThrowable
 			double d4 = d0 / d3;
 			double d5 = d2 / d3;
 			
-			setLocationAndAngles(shooter.posX + d4, this.posY - YOffset, shooter.posZ + d5, f2, f3);
+			
+			double xOff = (double)(r11 * -FrontToBack) + (double)(r4 * SideToSide);
+			double zOff = (double)(r4 * FrontToBack) + (double)(r11 * SideToSide);
+			
+			
+			
+			setLocationAndAngles(shooter.posX + xOff, this.posY - YOffset, shooter.posZ + zOff, f2, f3);
 			YOffset = 0.0F;
 			float f4 = (float) d3 * 0.2F;
-			setThrowableHeading(d0, d1 + (double) f4, d2, velocity, wobble);//0 used to be "d1 + (double) f4" 0 causes the projectile to always fire straight out of entity with no upward or downward arc
+			setThrowableHeading(d0 - xOff, d1 + (double) f4, d2 - zOff, velocity, wobble);//0 used to be "d1 + (double) f4" 0 causes the projectile to always fire straight out of entity with no upward or downward arc
 		}
 	}
 	

@@ -6,9 +6,15 @@ import java.sql.Array;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.client.entity.projectile.EntityFlameThrower;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EffectRenderer;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -68,16 +74,16 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	
 	public double FurnacePosY;
 
-
+	Random rand = new Random();
 	    
 	    
     /** The Entity this EntityCreature is set to attack. */
-    public Entity entityToAttack;
+	public Entity targetedEntity;
     
 	public int attackCounter;
 	public int deathTicks;
 
-
+	Entity projectile;
 	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	private float DeadRot;
 
@@ -310,8 +316,20 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		
+		 
 		
-		System.out.println(KneeHP);
+		
+		
+		EntityLivingBase entitylivingbase = this.worldObj.getClosestPlayerToEntity(this, 20.0D);
+		
+		for (int i = 0; i < 15; ++i){
+		if (entitylivingbase != null){
+		this.projectile = new EntityFlameThrower(worldObj, this, entitylivingbase, (rand.nextFloat() * 0.2F) + 0.4F, 2F, 2.2F, -0.7F, 0, 0, 0, 0);
+		if (!worldObj.isRemote) {worldObj.spawnEntityInWorld(this.projectile);}
+		}
+		}
+		
+		
 		
 		KneeHP = (KneeHP == 0) ? 10 : KneeHP;
 		
@@ -321,13 +339,19 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 0.9F;
 		
 		moveHitBoxes(this.paragonPartFurnace, 0.5D, 0, 4.6D);
-        moveHitBoxes(this.paragonPartRKnee, 0.0D, -1, 1.7D);
-        moveHitBoxes(this.paragonPartLKnee, 0.0D, 1, 1.7D);
+        moveHitBoxes(this.paragonPartRKnee, 0D, -1.2D, 1.7D);
+        moveHitBoxes(this.paragonPartLKnee, 0D, 1.2D, 1.7D);
         
 		
+        
+        
         this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartFurnace.getEntityBoundingBox()));
         this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartRKnee.getEntityBoundingBox()));
         this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartLKnee.getEntityBoundingBox()));
+        
+        
+        
+        
 		
 		
 		this.AniID = this.dataWatcher.getWatchableObjectInt(17);
@@ -346,10 +370,10 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
             }
         }
         
-   
+ 
+        
 
-        
-        
+
 
         if (!this.worldObj.isRemote){
         	
@@ -407,6 +431,19 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	}
 	
 	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void moveHitBoxes(MBEntityPart part, double FrontToBack, double SideToSide, double TopToBot){
         
         float f3 = this.rotationYaw * (float)Math.PI / 180.0F;
@@ -425,6 +462,16 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		part.PPosZ = zOff;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -447,35 +494,23 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	}
 	
 
-/**
- * Called when the entity is attacked.
- */
-public boolean attackEntityFrom(DamageSource source, float amount)
-{
-    if (source instanceof EntityDamageSource && ((EntityDamageSource)source).getIsThornsDamage())
-    {
-        this.Damage(source, amount);
-    }
+	/**
+	 * Called when the entity is attacked.
+	 */
+	public boolean attackEntityFrom(DamageSource source, float amount)
+	{
+		if (source instanceof EntityDamageSource && ((EntityDamageSource)source).getIsThornsDamage())
+		{
+			this.Damage(source, amount);
+		}
 
-    return false;
-}
+		return false;
+	}
 
 protected boolean Damage(DamageSource Source, float DMGAmmount)
 {
     return super.attackEntityFrom(Source, DMGAmmount);
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
     /**
      * Return the Entity parts making up this Entity (currently only for dragons)

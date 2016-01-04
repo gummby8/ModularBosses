@@ -267,7 +267,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 				if (this.attackCounter >= 40) {
 					float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
 					Entity projectile;
-					projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14), 0,0,0).setDamage(f);
+					projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14),0,0,0,0,0).setDamage(f);
 					if (!this.worldObj.isRemote){
 						worldObj.spawnEntityInWorld(projectile);
 					}

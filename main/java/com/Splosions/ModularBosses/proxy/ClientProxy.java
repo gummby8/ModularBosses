@@ -10,7 +10,9 @@ import com.google.common.collect.Maps;
 import java.lang.reflect.Field;
 import net.minecraft.item.Item;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.ModelBakeEvent;
 
 public class ClientProxy extends CommonProxy{
@@ -21,7 +23,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void registerRenders() {
 		ModularBossesEntities.registerRenderers();
-		
+		ModularBossesItems.registerRenders();
 		
 		try {
 			for (Field f: ModularBossesItems.class.getFields()) {
@@ -30,17 +32,20 @@ public class ClientProxy extends CommonProxy{
 					if (item instanceof IModItem) {
 						((IModItem) item).registerRenderers(mc.getRenderItem().getItemModelMesher());
 					}
-
 				}
 			}
 		} catch(Exception e) {
 			System.out.println("DERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERPDERP");
 		}
-		
-		
-		
 	}
 	
+	
+	
+	
+	
+	
+	
+
 	
 
 	

@@ -91,6 +91,8 @@ public class EntitySkull  extends EntityFlying implements IMob
         
         EntityLivingBase entitylivingbase = this.worldObj.getClosestPlayerToEntity(this, 10.0D);
         
+
+        
         //distance mob can see a player
         double distance = 64.0D;
 
