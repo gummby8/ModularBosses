@@ -318,20 +318,20 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		
 		 
 		
-		
+		/**
 		
 		EntityLivingBase entitylivingbase = this.worldObj.getClosestPlayerToEntity(this, 20.0D);
 		
-		for (int i = 0; i < 15; ++i){
+		for (int i = 0; i < 5; ++i){
 		if (entitylivingbase != null){
 		this.projectile = new EntityFlameThrower(worldObj, this, entitylivingbase, (rand.nextFloat() * 0.2F) + 0.4F, 2F, 2.2F, -0.7F, 0, 0, 0, 0);
 		if (!worldObj.isRemote) {worldObj.spawnEntityInWorld(this.projectile);}
+			}
 		}
-		}
+		*/
 		
+
 		
-		
-		KneeHP = (KneeHP == 0) ? 10 : KneeHP;
 		
 		
 		this.paragonPartFurnace.width = this.paragonPartFurnace.height = 1.3F;
@@ -389,7 +389,15 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
        
         
     
-        
+    		if (KneeHP <= 0) {
+    			this.KneeHP = 10;
+    			this.AniID = 5;
+    			this.AniFrame = 0;
+    		}
+    		
+    		System.out.println(KneeHP);
+    		
+    		
      
        
 		if (this.AniID == 0){
@@ -412,7 +420,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 			this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(8.0D, 8.0D, 8.0D)));
 			System.out.println("KICK!");
 			this.AniFrame++;
-		}else if (this.AniID == 5 && this.AniFrame > 24){
+		}else if (this.AniID == 5 && this.AniFrame > 104){
 			this.AniFrame = 0;
 			this.AniID = 0;
 		}else{

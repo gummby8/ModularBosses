@@ -73,7 +73,7 @@ public abstract class EntityMobThrowable extends EntityThrowable
 			setLocationAndAngles(shooter.posX + xOff, this.posY - YOffset, shooter.posZ + zOff, f2, f3);
 			YOffset = 0.0F;
 			float f4 = (float) d3 * 0.2F;
-			setThrowableHeading(d0 - xOff, d1 + (double) f4, d2 - zOff, velocity, wobble);//0 used to be "d1 + (double) f4" 0 causes the projectile to always fire straight out of entity with no upward or downward arc
+			setThrowableHeading(d0 - xOff, d1 + (double) f4 + YOffset, d2 - zOff, velocity, wobble);//0 used to be "d1 + (double) f4" 0 causes the projectile to always fire straight out of entity with no upward or downward arc
 		}
 	}
 	
