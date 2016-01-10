@@ -7854,60 +7854,51 @@ public float[] aLFOOT;										public float[] aRFOOT;
 			} else
 			if (Robot.AniID == 6){
 				Kick();
+			} else
+			if (Robot.AniID == 7){
+				DoubleFistSlam();
 			}
     	
     		
     		
+    	
 		this.Add = ((this.pHIPy.length - 1) == Robot.AniFrame) ? 0 : 1;
-		
+
 		this.HIP.rotationPointY = this.pHIPy[Robot.AniFrame] + (PartialTick * (this.pHIPy[Robot.AniFrame + this.Add] - this.pHIPy[Robot.AniFrame]));
+		this.HIP.rotateAngleX = (this.aHIPx[Robot.AniFrame] + (PartialTick * (this.aHIPx[Robot.AniFrame + this.Add] - this.aHIPx[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.RARM.rotateAngleX = (this.aRARM[Robot.AniFrame] + (PartialTick * (this.aRARM[Robot.AniFrame + this.Add] - this.aRARM[Robot.AniFrame]))) * 0.0174533F;
+		this.RARM.rotateAngleY = (this.aRARMy[Robot.AniFrame] + (PartialTick * (this.aRARMy[Robot.AniFrame + this.Add] - this.aRARMy[Robot.AniFrame]))) * 0.0174533F;
+		this.RARM.rotateAngleZ = (this.aRARMz[Robot.AniFrame] + (PartialTick * (this.aRARMz[Robot.AniFrame + this.Add] - this.aRARMz[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.LARM.rotateAngleX = (this.aLARM[Robot.AniFrame] + (PartialTick * (this.aLARM[Robot.AniFrame + this.Add] - this.aLARM[Robot.AniFrame]))) * 0.0174533F;
+		this.LARM.rotateAngleY = (this.aLARMy[Robot.AniFrame] + (PartialTick * (this.aLARMy[Robot.AniFrame + this.Add] - this.aLARMy[Robot.AniFrame]))) * 0.0174533F;
+		this.LARM.rotateAngleZ = (this.aLARMz[Robot.AniFrame] + (PartialTick * (this.aLARMz[Robot.AniFrame + this.Add] - this.aLARMz[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.RFOREARM.rotateAngleX = (this.aRFOREARM[Robot.AniFrame] + (PartialTick * (this.aRFOREARM[Robot.AniFrame + this.Add] - this.aRFOREARM[Robot.AniFrame]))) * 0.0174533F;
+		this.RFOREARM.rotateAngleY = (this.aRFOREARMy[Robot.AniFrame] + (PartialTick * (this.aRFOREARMy[Robot.AniFrame + this.Add] - this.aRFOREARMy[Robot.AniFrame]))) * 0.0174533F;
+		this.RFOREARM.rotateAngleZ = (this.aRFOREARMz[Robot.AniFrame] + (PartialTick * (this.aRFOREARMz[Robot.AniFrame + this.Add] - this.aRFOREARMz[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.LFOREARM.rotateAngleX = (this.aLFOREARM[Robot.AniFrame] + (PartialTick * (this.aLFOREARM[Robot.AniFrame + this.Add] - this.aLFOREARM[Robot.AniFrame]))) * 0.0174533F;
+		this.LFOREARM.rotateAngleY = (this.aLFOREARMy[Robot.AniFrame] + (PartialTick * (this.aLFOREARMy[Robot.AniFrame + this.Add] - this.aLFOREARMy[Robot.AniFrame]))) * 0.0174533F;
+		this.LFOREARM.rotateAngleZ = (this.aLFOREARMz[Robot.AniFrame] + (PartialTick * (this.aLFOREARMz[Robot.AniFrame + this.Add] - this.aLFOREARMz[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.CHEST.rotateAngleX = (this.aCHEST[Robot.AniFrame] + (PartialTick * (this.aCHEST[Robot.AniFrame + this.Add] - this.aCHEST[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.RTHIGH.rotateAngleX = (this.aRTHIGH[Robot.AniFrame] + (PartialTick * (this.aRTHIGH[Robot.AniFrame + this.Add] - this.aRTHIGH[Robot.AniFrame]))) * 0.0174533F;
 		this.LTHIGH.rotateAngleX = (this.aLTHIGH[Robot.AniFrame] + (PartialTick * (this.aLTHIGH[Robot.AniFrame + this.Add] - this.aLTHIGH[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.RKNEE.rotateAngleX = (this.aRKNEE[Robot.AniFrame] + (PartialTick * (this.aRKNEE[Robot.AniFrame + this.Add] - this.aRKNEE[Robot.AniFrame]))) * 0.0174533F;
 		this.LKNEE.rotateAngleX = (this.aLKNEE[Robot.AniFrame] + (PartialTick * (this.aLKNEE[Robot.AniFrame + this.Add] - this.aLKNEE[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.RSHIN.rotateAngleX = (this.aRSHIN[Robot.AniFrame] + (PartialTick * (this.aRSHIN[Robot.AniFrame + this.Add] - this.aRSHIN[Robot.AniFrame]))) * 0.0174533F;
 		this.LSHIN.rotateAngleX = (this.aLSHIN[Robot.AniFrame] + (PartialTick * (this.aLSHIN[Robot.AniFrame + this.Add] - this.aLSHIN[Robot.AniFrame]))) * 0.0174533F;
+		
 		this.RFOOT.rotateAngleX = (this.aRFOOT[Robot.AniFrame] + (PartialTick * (this.aRFOOT[Robot.AniFrame + this.Add] - this.aRFOOT[Robot.AniFrame]))) * 0.0174533F;
 		this.LFOOT.rotateAngleX = (this.aLFOOT[Robot.AniFrame] + (PartialTick * (this.aLFOOT[Robot.AniFrame + this.Add] - this.aLFOOT[Robot.AniFrame]))) * 0.0174533F;
-		 
 
-		if (Robot.AniID == 5){
-			
-			
-			
-			this.RARM.rotateAngleY = (this.aRARMy[Robot.AniFrame] + (PartialTick * (this.aRARMy[Robot.AniFrame + this.Add] - this.aRARMy[Robot.AniFrame]))) * 0.0174533F;
-			this.LARM.rotateAngleY = (this.aLARMy[Robot.AniFrame] + (PartialTick * (this.aLARMy[Robot.AniFrame + this.Add] - this.aLARMy[Robot.AniFrame]))) * 0.0174533F;
-			
-
-			this.RFOREARM.rotateAngleY = (this.aRFOREARMy[Robot.AniFrame] + (PartialTick * (this.aRFOREARMy[Robot.AniFrame + this.Add] - this.aRFOREARMy[Robot.AniFrame]))) * 0.0174533F;
-			this.LFOREARM.rotateAngleY = (this.aLFOREARMy[Robot.AniFrame] + (PartialTick * (this.aLFOREARMy[Robot.AniFrame + this.Add] - this.aLFOREARMy[Robot.AniFrame]))) * 0.0174533F;
-			
-			this.RFOREARM.rotateAngleZ = (this.aRFOREARMz[Robot.AniFrame] + (PartialTick * (this.aRFOREARMz[Robot.AniFrame + this.Add] - this.aRFOREARMz[Robot.AniFrame]))) * 0.0174533F;
-			this.LFOREARM.rotateAngleZ = (this.aLFOREARMz[Robot.AniFrame] + (PartialTick * (this.aLFOREARMz[Robot.AniFrame + this.Add] - this.aLFOREARMz[Robot.AniFrame]))) * 0.0174533F;
-		
-			this.HIP.rotateAngleX = (this.aHIPx[Robot.AniFrame] + (PartialTick * (this.aHIPx[Robot.AniFrame + this.Add] - this.aHIPx[Robot.AniFrame]))) * 0.0174533F;
-			
-			this.GRILLR.rotateAngleY = (this.aRGRILL[Robot.AniFrame] + (PartialTick * (this.aRGRILL[Robot.AniFrame + this.Add] - this.aRGRILL[Robot.AniFrame]))) * 0.0174533F;
-			this.GRILLL.rotateAngleY = (this.aLGRILL[Robot.AniFrame] + (PartialTick * (this.aLGRILL[Robot.AniFrame + this.Add] - this.aLGRILL[Robot.AniFrame]))) * 0.0174533F;
-
-			
-		}
-		
-		
-		
-		
-		if (Robot.AniID == 6){
-			this.LARM.rotateAngleY = (this.aLARMy[Robot.AniFrame] + (PartialTick * (this.aLARMy[Robot.AniFrame + this.Add] - this.aLARMy[Robot.AniFrame]))) * 0.0174533F;
-			this.LARM.rotateAngleZ = (this.aLARMz[Robot.AniFrame] + (PartialTick * (this.aLARMz[Robot.AniFrame + this.Add] - this.aLARMz[Robot.AniFrame]))) * 0.0174533F;
-		}
-		
-
-		
+		this.GRILLR.rotateAngleY = (this.aRGRILL[Robot.AniFrame] + (PartialTick * (this.aRGRILL[Robot.AniFrame + this.Add] - this.aRGRILL[Robot.AniFrame]))) * 0.0174533F;
+		this.GRILLL.rotateAngleY = (this.aLGRILL[Robot.AniFrame] + (PartialTick * (this.aLGRILL[Robot.AniFrame + this.Add] - this.aLGRILL[Robot.AniFrame]))) * 0.0174533F;
 		
     }
     
@@ -7920,10 +7911,19 @@ public float[] aLFOOT;										public float[] aRFOOT;
 	public void Stand(){
 
 		this.pHIPy = new float[] {-38};
+		this.aHIPx = new float[] {0};
 		this.aRARM = new float[] {0};
+		this.aRARMy = new float[] {0};
+		this.aRARMz = new float[] {0};
 		this.aLARM = new float[] {0};
+		this.aLARMy = new float[] {0};
+		this.aLARMz = new float[] {0};
 		this.aRFOREARM = new float[] {0};
+		this.aRFOREARMy = new float[] {0};
+		this.aRFOREARMz = new float[] {0};
 		this.aLFOREARM = new float[] {0};
+		this.aLFOREARMy = new float[] {0};
+		this.aLFOREARMz = new float[] {0};
 		this.aCHEST = new float[] {0};
 		this.aRTHIGH = new float[] {0};
 		this.aLTHIGH = new float[] {0};
@@ -7933,17 +7933,28 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aLSHIN = new float[] {0};
 		this.aRFOOT = new float[] {0};
 		this.aLFOOT = new float[] {0};
+		this.aRGRILL = new float[] {0};
+		this.aLGRILL = new float[] {0};
 
 	}
 		
 	public void TransWalk(){
 
+		this.pHIPy = new float[] {-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38};
+		this.aHIPx = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRARM = new float[] {0,-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20};
+		this.aRARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLARM = new float[] {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+		this.aLARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRFOREARM = new float[] {0,-0.75F,-1.5F,-2.25F,-3,-3.75F,-4.5F,-5.25F,-6,-6.75F,-7.5F,-8.25F,-9,-9.75F,-10.5F,-11.25F,-12,-12.75F,-13.5F,-14.25F,-15};
+		this.aRFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLFOREARM = new float[] {0,-1.5F,-3,-4.5F,-6,-7.5F,-9,-10.5F,-12,-13.5F,-15,-16.5F,-18,-19.5F,-21,-22.5F,-24,-25.5F,-27,-28.5F,-30};
+		this.aLFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aCHEST = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-		this.pHIPy = new float[] {-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38,-38}; 
 		this.aRTHIGH = new float[] {0,0.75F,1.5F,2.25F,3,3.75F,4.5F,5.25F,6,6.75F,7.5F,8.25F,9,9.75F,10.5F,11.25F,12,12.75F,13.5F,14.25F,15};
 		this.aLTHIGH = new float[] {0,-2,-4,-6,-8,-10,-12,-14,-16,-18,-20,-22,-24,-26,-28,-30,-32,-34,-36,-38,-40};
 		this.aRKNEE = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -7952,17 +7963,28 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aLSHIN = new float[] {0,1.67F,3.33F,5,6.67F,8.33F,10,11.67F,13.33F,15,16.67F,18.33F,20,21.67F,23.33F,25,22,19,16,13,10};
 		this.aRFOOT = new float[] {0,0.39F,0.78F,1.17F,1.57F,1.96F,2.34F,2.74F,3.13F,3.52F,3.91F,4.31F,4.7F,5.09F,5.48F,5.87F,6.26F,6.66F,7.05F,7.44F,7.83F};
 		this.aLFOOT = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-	}
+	} 
 	
 	public void Walk(){
 
 		this.aRARM = new float[] {-20F ,-18.67F ,-17.33F ,-16F ,-14.67F ,-13.33F ,-12F ,-10.67F ,-9.33F ,-8F ,-6.67F ,-5.33F ,-4F ,-2.67F ,-1.33F ,0F ,1.33F ,2.66F ,4F ,5.33F ,6.67F ,8F ,9.33F ,10.67F ,12F ,13.33F ,14.67F ,16F ,17.33F ,18.67F ,20F ,18.67F ,17.33F ,16F ,14.67F ,13.33F ,12F ,10.67F ,9.33F ,8F ,6.67F ,5.33F ,4F ,2.67F ,1.33F ,0F ,-1.33F ,-2.67F ,-4F ,-5.33F ,-6.67F ,-8F ,-9.33F ,-10.67F ,-12F ,-13.33F ,-14.67F ,-16F ,-17.33F ,-18.67F ,-20F};
+		this.aRARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLARM = new float[] {20F ,18.67F ,17.33F ,16F ,14.67F ,13.33F ,12F ,10.67F ,9.33F ,8F ,6.67F ,5.33F ,4F ,2.67F ,1.33F ,0F ,-1.33F ,-2.66F ,-4F ,-5.33F ,-6.67F ,-8F ,-9.33F ,-10.67F ,-12F ,-13.33F ,-14.67F ,-16F ,-17.33F ,-18.67F ,-20F ,-18.67F ,-17.33F ,-16F ,-14.67F ,-13.33F ,-12F ,-10.67F ,-9.33F ,-8F ,-6.67F ,-5.33F ,-4F ,-2.67F ,-1.33F ,0F ,1.33F ,2.67F ,4F ,5.33F ,6.67F ,8F ,9.33F ,10.67F ,12F ,13.33F ,14.67F ,16F ,17.33F ,18.67F ,20F};
+		this.aLARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRFOREARM = new float[] {-15F ,-18F ,-21F ,-24F ,-27F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-27F ,-24F ,-21F ,-18F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F};
+		this.aRFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLFOREARM = new float[] {-30F ,-27F ,-24F ,-21F ,-18F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-15F ,-18F ,-21F ,-24F ,-27F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F};
+		this.aLFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aCHEST = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.pHIPy = new float[] {-38F ,-37.4F ,-36.8F ,-36.2F ,-35.6F ,-35F ,-35.12F ,-35.24F ,-35.36F ,-35.48F ,-35.6F ,-35.72F ,-35.84F ,-35.96F ,-36.08F ,-36.2F ,-36.32F ,-36.44F ,-36.56F ,-36.68F ,-36.8F ,-36.92F ,-37.04F ,-37.16F ,-37.28F ,-37.4F ,-37.52F ,-37.64F ,-37.76F ,-37.88F ,-38F ,-37.4F ,-36.8F ,-36.2F ,-35.6F ,-35F ,-35.12F ,-35.24F ,-35.36F ,-35.48F ,-35.6F ,-35.72F ,-35.84F ,-35.96F ,-36.08F ,-36.2F ,-36.32F ,-36.44F ,-36.56F ,-36.68F ,-36.8F ,-36.92F ,-37.04F ,-37.16F ,-37.28F ,-37.4F ,-37.52F ,-37.64F ,-37.76F ,-37.88F ,-38F};
+		this.aHIPx = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRTHIGH = new float[] {15F ,13.17F ,11.33F ,9.5F ,7.67F ,5.83F ,4F ,2.17F ,0.33F ,-1.5F ,-3.33F ,-5.17F ,-7F ,-8.83F ,-10.67F ,-12.5F ,-14.33F ,-16.17F ,-18F ,-19.83F ,-21.67F ,-23.5F ,-25.33F ,-27.17F ,-29F ,-30.83F ,-32.67F ,-34.5F ,-36.33F ,-38.17F ,-40F ,-38.17F ,-36.33F ,-34.5F ,-32.67F ,-30.83F ,-29F ,-27.17F ,-25.33F ,-23.5F ,-21.67F ,-19.83F ,-18F ,-16.17F ,-14.33F ,-12.5F ,-10.67F ,-8.83F ,-7F ,-5.17F ,-3.33F ,-1.5F ,0.33F ,2.17F ,4F ,5.83F ,7.67F ,9.5F ,11.33F ,13.17F ,15F};
 		this.aLTHIGH = new float[] {-40F ,-38.17F ,-36.33F ,-34.5F ,-32.67F ,-30.83F ,-29F ,-27.17F ,-25.33F ,-23.5F ,-21.67F ,-19.83F ,-18F ,-16.17F ,-14.33F ,-12.5F ,-10.67F ,-8.83F ,-7F ,-5.17F ,-3.33F ,-1.5F ,0.33F ,2.17F ,4F ,5.83F ,7.67F ,9.5F ,11.33F ,13.17F ,15F ,13.17F ,11.33F ,9.5F ,7.67F ,5.83F ,4F ,2.17F ,0.33F ,-1.5F ,-3.33F ,-5.17F ,-7F ,-8.83F ,-10.67F ,-12.5F ,-14.33F ,-16.17F ,-18F ,-19.83F ,-21.67F ,-23.5F ,-25.33F ,-27.17F ,-29F ,-30.83F ,-32.67F ,-34.5F ,-36.33F ,-38.17F ,-40F};
 		this.aRKNEE = new float[] {0F ,2.67F ,5.33F ,8F ,10.67F ,13.33F ,16F ,18.67F ,21.33F ,24F ,26.67F ,29.33F ,32F ,34.67F ,37.33F ,40F ,38.4F ,36.8F ,35.2F ,33.6F ,32F ,30.4F ,28.8F ,27.2F ,25.6F ,24F ,22.4F ,20.8F ,19.2F ,17.6F ,16F ,15.47F ,14.93F ,14.4F ,13.87F ,13.33F ,12.8F ,12.27F ,11.73F ,11.2F ,10.67F ,10.13F ,9.6F ,9.07F ,8.53F ,8F ,7.47F ,6.93F ,6.4F ,5.87F ,5.33F ,4.8F ,4.27F ,3.73F ,3.2F ,2.67F ,2.13F ,1.6F ,1.07F ,0.53F ,0F};
@@ -7971,18 +7993,28 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aLSHIN = new float[] {10F ,9.5F ,9F ,8.5F ,8F ,7.5F ,7F ,6.5F ,6F ,5.5F ,5F ,4.5F ,4F ,3.5F ,3F ,2.5F ,2F ,1.5F ,1F ,0.5F ,0F ,-0.5F ,-1F ,-1.5F ,-2F ,-2.5F ,-3F ,-3.5F ,-4F ,-4.5F ,-5F ,-2.96F ,-0.92F ,1.12F ,3.16F ,5.2F ,7.24F ,9.28F ,11.32F ,13.36F ,15.4F ,17.44F ,19.48F ,21.52F ,23.56F ,25.6F ,24.56F ,23.52F ,22.48F ,21.44F ,20.4F ,19.36F ,18.32F ,17.28F ,16.24F ,15.2F ,14.16F ,13.12F ,12.08F ,11.04F ,10F};
 		this.aRFOOT = new float[] {7.83F ,10.43F ,13.04F ,16.65F ,18.26F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,19.48F ,18.09F ,16.7F ,15.3F ,13.91F ,12.52F ,11.13F ,9.74F ,8.35F ,6.96F ,5.57F ,4.17F ,2.78F ,1.39F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,1.04F ,2.09F ,3.13F ,4.18F ,5.22F ,4.18F ,3.13F ,2.09F ,1.04F ,0F ,-1.04F ,-2.09F ,-3.13F ,-4.18F ,-5.22F ,-2.61F ,0F ,2.6F ,5.22F ,7.83F};
 		this.aLFOOT = new float[] {0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,1.04F ,2.09F ,3.13F ,4.18F ,5.22F ,4.18F ,3.13F ,2.09F ,1.04F ,0F ,-1.04F ,-2.09F ,-3.13F ,-4.18F ,-5.22F ,-2.61F ,0F ,2.6F ,5.22F ,7.83F ,10.43F ,13.04F ,16.65F ,18.26F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,20.87F ,19.48F ,18.09F ,16.7F ,15.3F ,13.91F ,12.52F ,11.13F ,9.74F ,8.35F ,6.96F ,5.57F ,4.17F ,2.78F ,1.39F ,0F};
-	
+		this.aRGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	}
 	
 	
 	public void TransSprint(){
 
 		this.aRARM = new float[] { 20F ,15.67F ,11.33F ,7F ,2.67F ,-1.67F ,-6F ,-10.33F ,-14.67F ,-19F ,-23.33F ,-27.67F ,-32F ,-36.33F ,-40.67F ,-45F };
+		this.aRARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLARM = new float[] { -20F ,-14.33F ,-8.67F ,-3F ,2.67F ,8.33F ,14F ,19.67F ,25.33F ,31F ,36.67F ,43.33F ,48F ,53.67F ,59.33F ,65F };
+		this.aLARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRFOREARM = new float[] { -30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-30F ,-44F ,-58F ,-72F ,-86F ,-100F };
+		this.aRFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLFOREARM = new float[] { -15F ,-19F ,-23F ,-27F ,-31F ,-35F ,-39F ,-43F ,-47F ,-51F ,-55F ,-59F ,-63F ,-67F ,-71F ,-75F };
+		this.aLFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aCHEST = new float[] { 0F ,1F ,2F ,3F ,4F ,5F ,6F ,7F ,8F ,9F ,10F ,11F ,12F ,13F ,14F ,15F };
 		this.pHIPy = new float[] { -38F ,-37.8F ,-37.6F ,-37.4F ,-37.2F ,-37F ,-37.4F ,-37.8F ,-38.2F ,-38.6F ,-39F ,-39.4F ,-39.8F ,-40.2F ,-40.6F ,-41F };
+		this.aLARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRTHIGH = new float[] { -40F ,-34.87F ,-29.73F ,-24.6F ,-19.47F ,-14.33F ,-9.2F ,-4.07F ,1.07F ,6.2F ,11.33F ,16.47F ,21.6F ,26.73F ,31.87F ,37F };
 		this.aLTHIGH = new float[] { 15F ,10.47F ,5.93F ,1.4F ,-3.13F ,-7.67F ,-12.2F ,-16.73F ,-21.27F ,-25.8F ,-30.33F ,-34.87F ,-39.4F ,-43.93F ,-48.47F ,-53F };
 		this.aRKNEE = new float[] { 16F ,12.8F ,9.6F ,6.4F ,3.2F ,0F ,0F ,0F ,0F ,0F ,0F ,3F ,6F ,9F ,12F ,15F };
@@ -7991,6 +8023,8 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aLSHIN = new float[] { -5F ,2F ,9F ,16F ,23F ,30F ,30F ,30F ,30F ,30F ,30F ,26.4F ,22.8F ,19.2F ,15.6F ,12F };
 		this.aRFOOT = new float[] { 0F ,0F ,0F ,0F ,0F ,13F ,8.2F ,3.4F ,-1.4F ,-6.2F ,-11F ,-1.8F ,7.4F ,16.6F ,25.8F ,35F };
 		this.aLFOOT = new float[] { 7.83F ,7.05F ,6.26F ,5.48F ,4.7F ,3.91F ,3.13F ,2.35F ,1.57F ,0.78F ,0F ,0F ,0F ,0F ,0F ,0F };
+		this.aRGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 			
 	}
 	
@@ -7998,11 +8032,20 @@ public float[] aLFOOT;										public float[] aRFOOT;
 	public void Sprint(){
 		
 		this.aRARM = new float[] {-45F ,-37.67F ,-30.33F ,-23F ,-15.67F ,-8.33F ,-1F ,6.33F ,13.67F ,21F ,28.33F ,35.67F ,43F ,50.33F ,57.67F ,65F ,57.67F ,50.33F ,43F ,35.67F ,28.33F ,21F ,13.67F ,6.33F ,-1F ,-8.33F ,-15.67F ,-23F ,-30.33F ,-37.67F ,-45F };
+		this.aRARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLARM = new float[] {65F ,57.67F ,50.33F ,43F ,35.67F ,28.33F ,21F ,13.67F ,6.33F ,-1F ,-8.33F ,-15.67F ,-23F ,-30.33F ,-37.67F ,-45F ,-37.67F ,-30.33F ,-23F ,-15.67F ,-8.33F ,-1F ,6.33F ,13.67F ,21F ,28.33F ,35.67F ,43F ,50.33F ,57.67F ,65F };
+		this.aLARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRFOREARM = new float[] {-100F ,-88F ,-76F ,-64F ,-52F ,-40F ,-40F ,-40F ,-40F ,-40F ,-40F ,-47F ,-54F ,-61F ,-68F ,-75F ,-68F ,-61F ,-54F ,-47F ,-40F ,-40F ,-40F ,-40F ,-40F ,-40F ,-52F ,-64F ,-76F ,-88F ,-100F };
+		this.aRFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLFOREARM = new float[] {-75F ,-68F ,-61F ,-54F ,-47F ,-40F ,-40F ,-40F ,-40F ,-40F ,-40F ,-52F ,-64F ,-76F ,-88F ,-100F ,-88F ,-76F ,-64F ,-52F ,-40F ,-40F ,-40F ,-40F ,-40F ,-40F ,-47F ,-54F ,-61F ,-68F ,-75F };
+		this.aLFOREARMy = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARMz = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aCHEST = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.pHIPy = new float[] {-41F ,-39.8F ,-38.6F ,-37.4F ,-36.2F ,-35F ,-35.4F ,-35.8F ,-36.2F ,-36.6F ,-37F ,-37.8F ,-38.6F ,-39.4F ,-40.2F ,-41F ,-39.8F ,-38.6F ,-37.4F ,-36.2F ,-35F ,-35.4F ,-35.8F ,-36.2F ,-36.6F ,-37F ,-37.8F ,-38.6F ,-39.4F ,-40.2F ,-41F };
+		this.aHIPx = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRTHIGH = new float[] {37F ,31F ,25F ,19F ,13F ,7F ,1F ,-5F ,-11F ,-17F ,-23F ,-29F ,-35F ,-41F ,-47F ,-53F ,-47F ,-41F ,-35F ,-29F ,-23F ,-17F ,-11F ,-5F ,1F ,7F ,13F ,19F ,25F ,31F ,37F };
 		this.aLTHIGH = new float[] {-53F ,-47F ,-41F ,-35F ,-29F ,-23F ,-17F ,-11F ,-5F ,1F ,7F ,13F ,19F ,25F ,31F ,37F ,31F ,25F ,19F ,13F ,7F ,1F ,-5F ,-11F ,-17F ,-23F ,-29F ,-35F ,-41F ,-47F ,-53F };
 		this.aRKNEE = new float[] {15F ,18F ,21F ,24F ,27F ,30F ,33F ,36F ,39F ,42F ,45F ,38.6F ,32.2F ,25.8F ,19.4F ,13F ,11.7F ,10.4F ,9.1F ,7.8F ,6.5F ,5.2F ,3.9F ,2.6F ,1.3F ,0F ,3F ,6F ,9F ,12F ,15F };
@@ -8011,6 +8054,8 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aLSHIN = new float[] {12F ,10.8F ,9.6F ,8.4F ,7.2F ,6F ,4.8F ,3.6F ,2.4F ,1.2F ,0F ,2F ,4F ,6F ,8F ,10F ,14F ,18F ,22F ,26F ,30F ,34F ,38F ,42F ,46F ,50F ,42.4F ,34.8F ,27.2F ,19.6F ,12F };
 		this.aRFOOT = new float[] {35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,28F ,21F ,14F ,7F ,0F ,0F ,0F ,0F ,0F ,10F ,6.6F ,3.2F ,-0.2F ,-3.6F ,-7F ,1.4F ,9.8F ,18.2F ,26.6F ,35F };
 		this.aLFOOT = new float[] {0F ,0F ,0F ,0F ,0F ,10F ,6.6F ,3.2F ,-0.2F ,-3.6F ,-7F ,1.4F ,9.8F ,18.2F ,26.6F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,35F ,28F ,21F ,14F ,7F ,0F };
+		this.aRGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLGRILL = new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		
 	}
 	
@@ -8019,8 +8064,10 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		
 		this.aRARM = new float[] {-46.95F,-40.055F,-33.16F,-26.265F,-19.37F,-12.475F,-5.58F,1.315F,8.21F,15.105F,22F,22F,22F,22F,22F,22F,-0.4F,-22.8F,-45.2F,-67.6F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-87F,-84F,-81F,-78F,-75F,-72F,-69F,-66F,-63F,-60F,-58.7F,-57.4F,-56.1F,-54.8F,-53.5F,-52.2F,-50.9F,-49.6F,-48.3F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-47F,-45.7F,-44.4F,-43.1F,-41.8F,-40.5F,-39.2F,-37.9F,-36.6F,-35.3F,-34F,-27.2F,-20.4F,-13.6F,-6.8F,0F};
 		this.aRARMy = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,7F,14F,21F,28F,35F,42F,49F,56F,63F,70F,67F,64F,61F,58F,55F,52F,49F,46F,43F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,36F,32F,28F,24F,20F,16F,12F,8F,4F,0F,0F,0F,0F,0F,0F};
+		this.aRARMz = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
 		this.aLARM = new float[] {40F,38.2F,36.4F,34.6F,32.8F,31F,29.2F,27.4F,25.6F,23.8F,22F,22F,22F,22F,22F,22F,-0.4F,-22.8F,-45.2F,-67.6F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-90F,-85F,-80F,-75F,-70F,-65F,-60F,-55F,-50F,-45F,-40F,-40.5F,-41F,-41.5F,-42F,-42.5F,-43F,-43.5F,-44F,-44.5F,-45F,-47.804F,-50.608F,-53.412F,-56.216F,-59.02F,-61.824F,-64.628F,-67.432F,-70.236F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-73.04F,-68.236F,-63.432F,-58.628F,-53.824F,-49.02F,-44.216F,-39.412F,-34.608F,-29.804F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-20F,-15F,-10F,-5F,0F};
 		this.aLARMy = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,-6.2F,-12.4F,-18.6F,-24.8F,-31F,-37.2F,-43.4F,-48.6F,-55.8F,-62F,-53.713F,-45.426F,-37.139F,-28.852F,-20.565F,-12.278F,-3.991F,4.296F,12.583F,20.87F,19.566F,18.262F,16.958F,15.654F,14.35F,13.046F,11.742F,10.438F,9.134F,7.83F,7.047F,6.264F,5.481F,4.698F,3.915F,3.132F,2.349F,1.566F,0.783F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
+		this.aLARMz = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
 		this.aRFOREARM = new float[] {-75F,-69.5F,-64F,-58.5F,-53F,-47.5F,-42F,-36.5F,-31F,-25.5F,-20F,-20F,-20F,-20F,-20F,-20F,-23F,-26F,-29F,-32F,-35F,-35F,-35F,-35F,-35F,-35F,-35F,-35F,-35F,-35F,-35F,-34.5F,-34F,-33.5F,-33F,-32.5F,-32F,-31.5F,-31F,-30.5F,-30F,-29F,-28F,-27F,-26F,-25F,-24F,-23F,-22F,-21F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-20F,-18F,-16F,-14F,-12F,-10F,-8F,-6F,-4F,-2F,0F,0F,0F,0F,0F,0F};
 		this.aRFOREARMy = new float[] {-50F,-45F,-40F,-35F,-30F,-25F,-20F,-15F,-10F,-5F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,-18F,-36F,-54F,-72F,-90F,-108F,-126F,-144F,-162F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-180F,-144F,-108F,-72F,-36F,0F};
 		this.aRFOREARMz = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,-12.8F,-25.6F,-38.4F,-51.2F,-64F,-76.8F,-89.6F,-102.4F,-115.2F,-128F,-123.2F,-118.4F,-113.6F,-108.8F,-104F,-99.2F,-94.4F,-89.6F,-84.8F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-80F,-74.6F,-69.2F,-63.8F,-58.4F,-53F,-47.6F,-42.2F,-36.8F,-31.4F,-26F,-20.8F,-15.6F,-10.4F,-5.2F,0F};
@@ -8039,21 +8086,28 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aRFOOT = new float[] {-26F,-26F,-26F,-26F,-26F,-26F,-26F,-26F,-26F,-26F,-26F,-20.8F,-15.6F,-10.4F,-5.2F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,1.8F,3.6F,5.4F,7.2F,9F,10.8F,12.6F,14.4F,16.2F,18F,14.4F,10.8F,7.2F,3.6F,0F};
 		this.aLFOOT = new float[] {19F,14.5F,10F,5.5F,1F,-3.5F,-8F,-12.5F,-17F,-21.5F,-26F,-20.8F,-15.6F,-10.4F,-5.2F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,1.8F,3.6F,5.4F,7.2F,9F,10.8F,12.6F,14.4F,16.2F,18F,14.4F,10.8F,7.2F,3.6F,0F};
 		this.aRGRILL = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,23F,46F,69F,92F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,103.5F,92F,80.5F,69F,57.5F,46F,34.5F,23F,11.5F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
-		this.aLGRILL = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,23F,46F,69F,92F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,115F,103.5F,92F,80.5F,69F,57.5F,46F,34.5F,23F,11.5F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
-		
+		this.aLGRILL = new float[] {0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,-23F,-46F,-69F,-92F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-115F,-103.5F,-92F,-80.5F,-69F,-57.5F,-46F,-34.5F,-23F,-11.5F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F,0F};
+
 	}
 	
 	
 	public void Kick(){
 		
 		this.aRARM =  new float[] {-45F ,-37.67F ,-30.33F ,-23F ,-15.67F ,-8.33F ,-1F ,6.33F ,13.67F ,21F ,28.33F ,35.67F ,43F ,50.33F ,57.67F ,65F ,58.5F ,52F ,45.5F ,39F ,32.5F ,26F ,19.5F ,13F ,6.5F ,0F };
+		this.aRARMy =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLARM =  new float[] {65F ,57.6F ,50.2F ,42.8F ,35.4F ,28F ,20.6F ,13.2F ,5.8F ,-1.6F ,-9F ,-25.2F ,-41.4F ,-57.6F ,-73.8F ,-90F ,-81F ,-72F ,-63F ,-54F ,-45F ,-36F ,-27F ,-18F ,-9F ,0F };
 		this.aLARMy =  new float[] {0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,6F ,12F ,18F ,24F ,30F ,27F ,24F ,21F ,18F ,15F ,12F ,9F ,6F ,3F ,0F };
 		this.aLARMz =  new float[] {0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,-12.8F ,-25.6F ,-38.4F ,-51.2F ,-64F ,57.6F ,51.2F ,44.8F ,38.4F ,32F ,25.6F ,19.2F ,12.8F ,6.4F ,0F }; 
 		this.aRFOREARM =  new float[] {-100F ,-94.67F ,-89.33F ,-84F ,-78.67F ,-73.33F ,-68F ,-62.67F ,-57.33F ,-52F ,-46.67F ,-41.33F ,-36F ,-30.67F ,-25.33F ,-20F ,-18F ,-16F ,-14F ,-12F ,-10F ,-8F ,-6F ,-4F ,-2F ,0F }; 
+		this.aRFOREARMy =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aLFOREARM =  new float[] {-75F ,-68F ,-61F ,-54F ,-47F ,-40F ,-40F ,-40F ,-40F ,-40F ,-40F ,-44F ,-48F ,-52F ,-56F ,-60F ,-54F ,-48F ,-42F ,-36F ,-30F ,-24F ,-18F ,-12F ,-6F ,0F };
+		this.aLFOREARMy =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aCHEST =  new float[] {15F ,17F ,19F ,21F ,23F ,25F ,22.5F ,20F ,17.5F ,15F ,12.5F ,10F ,7.5F ,5F ,2.5F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F };
 		this.pHIPy =  new float[] {-41F ,-39.8F ,-38.6F ,-37.4F ,-36.2F ,-35F ,-35F ,-35F ,-35F ,-35F ,-35F ,-36F ,-37F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F ,-38F }; 
+		this.aHIPx =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		this.aRTHIGH =  new float[] {37F ,42.6F ,48.2F ,53.8F ,59.4F ,65F ,47F ,29F ,11F ,-7F ,-25F ,-43F ,-61F ,-79F ,-97F ,-115F ,-103.5F ,-92F ,-80.5F ,-69F ,-57.5F ,-46F ,-34.5F ,-23F ,-11.5F ,0F };
 		this.aLTHIGH =  new float[] {-53F ,-47F ,-41F ,-35F ,-29F ,-23F ,-23F ,-23F ,-23F ,-23F ,-23F ,-17.4F ,-11.8F ,-6.2F ,-0.6F ,5F ,4.5F ,4F ,3.5F ,3F ,2.5F ,2F ,1.5F ,1F ,0.5F ,0F };
 		this.aRKNEE =  new float[] {15F ,15F ,15F ,15F ,15F ,15F ,21F ,27F ,33F ,39F ,45F ,36F ,27F ,18F ,9F ,0F ,3F ,6F ,9F ,12F ,15F ,12F ,9F ,6F ,3F ,0F };
@@ -8061,11 +8115,41 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		this.aRSHIN =  new float[] {10F ,10F ,10F ,10F ,10F ,10F ,21.57F ,33.13F ,44.7F ,56.26F ,67.83F ,54.26F ,40.7F ,27.13F ,13.57F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F };
 		this.aLSHIN =  new float[] {12F ,10.8F ,9.6F ,8.4F ,7.2F ,6F ,6F ,6F ,6F ,6F ,6F ,6F ,6F ,6F ,6F ,6F ,5.4F ,4.8F ,4.2F ,3.6F ,3F ,2.4F ,1.8F ,1.2F ,0.6F ,0F };
 		this.aRFOOT =  new float[] {35F ,31.5F ,28F ,24.5F ,21F ,17.5F ,14F ,10.5F ,7F ,3.5F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F ,0F };
-		this.aLFOOT =  new float[] {0F ,0F ,0F ,0F ,0F ,10F ,10F ,10F ,10F ,10F ,10F ,4.6F ,-0.8F ,-6.2F ,-11.6F ,-17F ,-15.3F ,-13.6F ,-11.9F ,-10.2F ,-8.5F ,-6.8F ,-5.1F ,-3.4F ,-1.7F ,0F }; 
+		this.aLFOOT =  new float[] {0F ,0F ,0F ,0F ,0F ,10F ,10F ,10F ,10F ,10F ,10F ,4.6F ,-0.8F ,-6.2F ,-11.6F ,-17F ,-15.3F ,-13.6F ,-11.9F ,-10.2F ,-8.5F ,-6.8F ,-5.1F ,-3.4F ,-1.7F ,0F };
+		this.aRGRILL =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLGRILL =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		
 	}
     
     
+	public void DoubleFistSlam(){
+		
+		this.aRARM =  new float[] {0F, -16F, -32F, -48F, -64F, -80F, -96F, -112F, -128F, -144F, -160F, -144F, -128F, -112F, -96F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -72F, -64F, -56F, -48F, -40F, -32F, -24F, -16F, -8F, 0F}; 
+		this.aRARMy =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -4F, -8F, -12F, -16F, -20F, -20F, -20F, -20F, -20F, -20F, -20F, -20F, -20F, -20F, -20F, -18F, -16F, -14F, -12F, -10F, -8F, -6F, -4F, -2F, 0F};
+		this.aRARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLARM =  new float[] {0F, -16F, -32F, -48F, -64F, -80F, -96F, -112F, -128F, -144F, -160F, -144F, -128F, -112F, -96F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -80F, -72F, -64F, -56F, -48F, -40F, -32F, -24F, -16F, -8F, 0F}; 
+		this.aLARMy =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 4F, 8F, 12F, 16F, 20F, 20F, 20F, 20F, 20F, 20F, 20F, 20F, 20F, 20F, 20F, 18F, 16F, 14F, 12F, 10F, 8F, 6F, 4F, 2F, 0F};
+		this.aLARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARM =  new float[] {0F, -4F, -8F, -12F, -16F, -20F, -24F, -28F, -32F, -36F, -40F, -35F, -30F, -25F, -20F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -13.5F, -12F, -10.5F, -9F, -7.5F, -6F, -4.5F, -3F, -1.5F, 0F};
+		this.aRFOREARMy =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aRFOREARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARM =  new float[] {0F, -4F, -8F, -12F, -16F, -20F, -24F, -28F, -32F, -36F, -40F, -35F, -30F, -25F, -20F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -15F, -13.5F, -12F, -10.5F, -9F, -7.5F, -6F, -4.5F, -3F, -1.5F, 0F};
+		this.aLFOREARMy =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLFOREARMz =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aCHEST =  new float[] {0F, -1.5F, -3F, -4.5F, -6F, -7.5F, -9F, -10.5F, -12F, -13.5F, -15F, -7F, 1F, 9F, 17F, 25F, 25F, 25F, 25F, 25F, 25F, 25F, 25F, 25F, 25F, 25F, 22.5F, 20F, 17.5F, 15F, 12.5F, 10F, 7.5F, 5F, 2.5F, 0F};
+		this.pHIPy =  new float[] {-38F, -38F, -38F, -38F, -38F, -38F, -38F, -38F, -38F, -38F, -38F, -30.4F, -22.8F, -15.2F, -7.6F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -3.8F, -7.6F, -11.4F, -15.2F, -19F, -22.8F, -26.6F, -30.4F, -34.2F, -38F}; 
+		this.aHIPx =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 9F, 18F, 27F, 36F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 45F, 40.5F, 36F, 31.5F, 27F, 22.5F, 18F, 13.5F, 9F, 4.5F, 0F};
+		this.aRTHIGH =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -23F, -46F, -69F, -92F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -103.5F, -92F, -80.5F, -69F, -57.5F, -46F, -34.5F, -23F, -11.5F, 0F}; 
+		this.aLTHIGH =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -23F, -46F, -69F, -92F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -115F, -103.5F, -92F, -80.5F, -69F, -57.5F, -46F, -34.5F, -23F, -11.5F, 0F};
+		this.aRKNEE =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 16F, 32F, 48F, 64F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 72F, 64F, 56F, 48F, 40F, 32F, 24F, 16F, 8F, 0F};
+		this.aLKNEE =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 16F, 32F, 48F, 64F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 80F, 72F, 64F, 56F, 48F, 40F, 32F, 24F, 16F, 8F, 0F};
+		this.aRSHIN =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 12F, 24F, 36F, 48F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 54F, 48F, 42F, 36F, 30F, 24F, 18F, 12F, 6F, 0F};
+		this.aLSHIN =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 12F, 24F, 36F, 48F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 60F, 54F, 48F, 42F, 36F, 30F, 24F, 18F, 12F, 6F, 0F};
+		this.aRFOOT =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -12F, -24F, -36F, -48F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -54F, -48F, -42F, -36F, -30F, -24F, -18F, -12F, -6F, 0F}; 
+		this.aLFOOT =  new float[] {0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, 0F, -12F, -24F, -36F, -48F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -60F, -54F, -48F, -42F, -36F, -30F, -24F, -18F, -12F, -6F, 0F};
+		this.aRGRILL =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		this.aLGRILL =  new float[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	}
     
     	
     

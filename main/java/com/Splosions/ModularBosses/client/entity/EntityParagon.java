@@ -12,12 +12,14 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.client.entity.projectile.EntityFlameThrower;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityMultiPart;
@@ -35,6 +37,7 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.boss.IBossDisplayData;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityVillager;
@@ -43,12 +46,14 @@ import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -286,29 +291,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
     }
     
     
-    /**
-     * Pushes all entities inside the list away from the enderdragon.
-     */
-    private void collideWithEntities(List p_70970_1_)
-    {
-        double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
-        double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
-        Iterator iterator = p_70970_1_.iterator();
 
-        while (iterator.hasNext())
-        {
-            Entity entity = (Entity)iterator.next();
-
-            if (entity instanceof EntityLivingBase)
-            {
-            	if(!this.worldObj.isRemote){System.out.println(entity.getEntityId());}
-                double d2 = entity.posX - d0;
-                double d3 = entity.posZ - d1;
-                double d4 = d2 * d2 + d3 * d3;
-                //entity.addVelocity(d2 / d4 * 3.0D, 3D, d3 / d4 * 3.0D);
-            }
-        }
-    }
 	
 
     
@@ -316,10 +299,9 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		
-		 
-		
+
+	
 		/**
-		
 		EntityLivingBase entitylivingbase = this.worldObj.getClosestPlayerToEntity(this, 20.0D);
 		
 		for (int i = 0; i < 5; ++i){
@@ -330,7 +312,13 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		}
 		*/
 		
+		
+		
+		System.out.println("MOB " + this.rotationYaw);
 
+		
+		
+		
 		
 		
 		
@@ -343,19 +331,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
         moveHitBoxes(this.paragonPartLKnee, 0D, 1.2D, 1.7D);
         
 		
-        
-        
-        this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartFurnace.getEntityBoundingBox()));
-        this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartRKnee.getEntityBoundingBox()));
-        this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.paragonPartLKnee.getEntityBoundingBox()));
-        
-        
-        
-        
-		
-		
-		this.AniID = this.dataWatcher.getWatchableObjectInt(17);
-		this.AniFrame = this.dataWatcher.getWatchableObjectInt(18);
+
 
 		
 		
@@ -375,9 +351,9 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 
 
 
-        if (!this.worldObj.isRemote){
+     
         	
-        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 5) {
+        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 7) {
         		this.Moving = false;
         		this.AniID = 0;
         	} else if (this.motionX != 0 || this.motionZ != 0) {
@@ -395,9 +371,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
     			this.AniFrame = 0;
     		}
     		
-    		System.out.println(KneeHP);
-    		
-    		
+   		
      
        
 		if (this.AniID == 0){
@@ -407,27 +381,76 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 				this.AniFrame = 0;
 				this.AniID = 2;
 		}else if (this.AniID == 2 && this.AniFrame > 59){
-				this.AniFrame = 2;
 				this.AniFrame = 0;
+				this.AniID = 3;
 				
 		}else if (this.AniID == 3 && this.AniFrame > 14){
 			this.AniFrame = 0;
 			this.AniID = 4;
 		}else if (this.AniID == 4 && this.AniFrame > 29){
 			this.AniFrame = 0;
-			this.AniID = 5;
-		}else if (this.AniID == 5 && this.AniFrame == 10 ){
-			this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(8.0D, 8.0D, 8.0D)));
+			this.AniID = 6;
+		}else if (this.AniID == 6 && this.AniFrame == 10 ){
+			this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(18.0D, 18.0D, 18.0D)));
 			System.out.println("KICK!");
 			this.AniFrame++;
-		}else if (this.AniID == 5 && this.AniFrame > 104){
+		}else if (this.AniID == 6 && this.AniFrame > 24){
+			this.AniFrame = 0;
+			this.AniID = 0;
+		}else if (this.AniID == 7 && this.AniFrame > 34){
 			this.AniFrame = 0;
 			this.AniID = 0;
 		}else{
 			this.AniFrame++;
 		}
 		
-        }
+		
+		this.AniID = 7;
+		
+		
+		
+		
+		
+		
+		
+		if (this.AniID == 7 && this.AniFrame > 14){
+		
+		this.attackCounter = this.AniFrame - 12;
+		
+		
+			
+		double X = (attackCounter * Math.cos(Math.toRadians(this.rotationYaw + 90))) + this.posX;
+		double Z = (attackCounter * Math.sin(Math.toRadians(this.rotationYaw + 90))) + this.posZ;
+					
+		double X1 = (1 * Math.cos(Math.toRadians(this.rotationYaw + 180))) + X;
+		double Z1 = (1 * Math.sin(Math.toRadians(this.rotationYaw + 180))) + Z;
+		
+		double X2 = (1 * Math.cos(Math.toRadians(this.rotationYaw))) + X;
+		double Z2 = (1 * Math.sin(Math.toRadians(this.rotationYaw))) + Z;	
+		
+		BlockPos pos = new BlockPos(X, this.posY - 1, Z);	 
+		
+		EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, X, this.posY - 1, Z, 0.4F, pos);
+		if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}
+		
+        pos = new BlockPos(X1, this.posY - 1, Z1);
+ 		falling = new EntityCustomFallingBlock(this.worldObj, this, X1, this.posY - 1, Z1, 0.4F, pos);
+ 		if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}
+		
+   		pos = new BlockPos(X2, this.posY - 1, Z2);
+   		falling = new EntityCustomFallingBlock(this.worldObj, this, X2, this.posY - 1, Z2, 0.4F, pos);
+   		if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}
+    
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
     		 
 
 			//System.out.println("AniFrame = " + this.AniFrame);
@@ -441,7 +464,28 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 	
 
 	
-	
+    /**
+     * Pushes all entities inside the list away from the entity.
+     */
+    private void collideWithEntities(List p_70970_1_)
+    {
+        double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
+        double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
+        Iterator iterator = p_70970_1_.iterator();
+
+        while (iterator.hasNext())
+        {
+            Entity entity = (Entity)iterator.next();
+
+
+            	//if(!this.worldObj.isRemote){System.out.println(entity.getEntityId());}
+                double d2 = entity.posX - d0;
+                double d3 = entity.posZ - d1;
+                double d4 = d2 * d2 + d3 * d3;
+                entity.addVelocity(d2 / d4 * 3.0D, 3D, d3 / d4 * 3.0D);
+            
+        }
+    }
 	
 	
 	
