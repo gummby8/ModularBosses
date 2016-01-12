@@ -51,7 +51,7 @@ public class RenderCustomFallingBlock extends Render
             	
             BlockPos blockpos = new BlockPos(p_180557_1_);
             World world = p_180557_1_.getWorldObj(); 
-            		System.out.println(p_180557_8_);
+            		
             
                     GlStateManager.pushMatrix();
                     GlStateManager.translate((float)p_180557_2_, (float)p_180557_4_, (float)p_180557_6_);

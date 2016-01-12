@@ -314,7 +314,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		
 		
 		
-		System.out.println("MOB " + this.rotationYaw);
+	
 
 		
 		
@@ -353,7 +353,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 
      
         	
-        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 7) {
+        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 7 && this.AniID != 5) {
         		this.Moving = false;
         		this.AniID = 0;
         	} else if (this.motionX != 0 || this.motionZ != 0) {
@@ -390,6 +390,9 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		}else if (this.AniID == 4 && this.AniFrame > 29){
 			this.AniFrame = 0;
 			this.AniID = 6;
+		}else if (this.AniID == 5 && this.AniFrame > 119){
+			this.AniFrame = 0;
+			this.AniID = 0;
 		}else if (this.AniID == 6 && this.AniFrame == 10 ){
 			this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(18.0D, 18.0D, 18.0D)));
 			System.out.println("KICK!");
@@ -405,7 +408,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, MBEnti
 		}
 		
 		
-		this.AniID = 7;
+		
 		
 		
 		

@@ -77,7 +77,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     public void onUpdate()
     {
     
-    	System.out.println("Block " + this.rotationYaw);
+    	
 
             this.prevPosX = this.posX;
             this.prevPosY = this.posY;
@@ -120,7 +120,6 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
                 double d4 = d2 * d2 + d3 * d3;
                 
                 if (entity.hurtResistantTime == 0 && entity instanceof EntityCustomFallingBlock == false && entity instanceof EntityParagon == false){
-                if(!this.worldObj.isRemote){System.out.println(entity.getName());}
                 entity.addVelocity(d2 / d4 * 0.2D, 1.2D, d3 / d4 * 0.2D);
                 entity.attackEntityFrom(DamageSource.fall, 10);
                 entity.hurtResistantTime = 10;
