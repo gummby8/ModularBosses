@@ -3,7 +3,7 @@ package com.Splosions.ModularBosses.client.render.entity;
 import java.util.logging.Level;
 
 import com.Splosions.ModularBosses.client.entity.EntityParagon;
-import com.Splosions.ModularBosses.client.entity.MBEntityPart;
+
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -17,6 +17,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
@@ -42,9 +43,9 @@ public class RenderParagon extends RenderLiving {
     	super.doRender((EntityLiving)entity, x, y, z, p_76986_8_, partialTicks);
     	
     			
-    			renderDebugBoundingBox(entity.paragonPartFurnace, x, y, z, p_76986_8_, partialTicks, entity.paragonPartFurnace.PPosX, entity.paragonPartFurnace.PPosY, entity.paragonPartFurnace.PPosZ);
-    			renderDebugBoundingBox(entity.paragonPartRKnee, x, y, z, p_76986_8_, partialTicks, entity.paragonPartRKnee.PPosX, entity.paragonPartRKnee.PPosY, entity.paragonPartRKnee.PPosZ);
-    			renderDebugBoundingBox(entity.paragonPartLKnee, x, y, z, p_76986_8_, partialTicks, entity.paragonPartLKnee.PPosX, entity.paragonPartLKnee.PPosY, entity.paragonPartLKnee.PPosZ);
+    			renderDebugBoundingBox(entity.paragonPartFurnace, x, y, z, p_76986_8_, partialTicks, entity.paragonPartFurnace.posX - entity.posX, entity.paragonPartFurnace.posY - entity.posY, entity.paragonPartFurnace.posZ - entity.posZ);
+    			renderDebugBoundingBox(entity.paragonPartRKnee, x, y, z, p_76986_8_, partialTicks, entity.paragonPartRKnee.posX - entity.posX, entity.paragonPartRKnee.posY - entity.posY, entity.paragonPartRKnee.posZ - entity.posZ);
+    			renderDebugBoundingBox(entity.paragonPartLKnee, x, y, z, p_76986_8_, partialTicks, entity.paragonPartLKnee.posX - entity.posX, entity.paragonPartLKnee.posY - entity.posY, entity.paragonPartLKnee.posZ - entity.posZ);
     		
     
     }
@@ -52,7 +53,7 @@ public class RenderParagon extends RenderLiving {
 
     
     
-    private void renderDebugBoundingBox(MBEntityPart p_85094_1_, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_, double xOff, double yOff, double zOff)
+    private void renderDebugBoundingBox(EntityDragonPart p_85094_1_, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_, double xOff, double yOff, double zOff)
     {
     	
     	
