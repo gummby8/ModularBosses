@@ -33,6 +33,18 @@ public abstract class EntityMobThrowable extends EntityThrowable
 		super(world, x, y, z);
 	}
 	
+	public EntityMobThrowable(World world, EntityLivingBase shooter, float wobble, float FrontToBack, float YOffset, float SideToSide) {
+		super(world, shooter);
+        float r3 = this.rotationYaw * (float)Math.PI / 180.0F;
+        float r11 = MathHelper.cos(r3);
+        float r4 = MathHelper.sin(r3);
+		double xOff = (double)(r11 * -FrontToBack) + (double)(r4 * SideToSide);
+		double zOff = (double)(r4 * FrontToBack) + (double)(r11 * SideToSide);
+		
+		setLocationAndAngles(shooter.posX + xOff, this.posY - YOffset, shooter.posZ + zOff, 0, 0);
+		System.out.println("derp");
+	}
+	
 	/**
 	 * Constructs a throwable entity heading towards target's initial position with given velocity, with possible abnormal trajectory;
 	 * @param wobble amount of deviation from base trajectory, used by Skeletons and the like; set to 0.0F for no x/z deviation

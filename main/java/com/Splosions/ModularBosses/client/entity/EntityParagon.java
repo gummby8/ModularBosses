@@ -69,6 +69,16 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	public int PreAniID = 0;
 	public int AniID = 0;
 	public int AniFrame = 0;
+	public boolean AniPause = false;
+	
+	Entity target;
+	double targetX = 0;
+	double targetY = 0;
+	double targetZ = 0;
+	
+	double jumpX = 0;
+	double jumpY = 0;
+	double jumpZ = 0;
 
 	public EntityDragonPart[] paragonPartArray;
 	public EntityDragonPart paragonPartFurnace;
@@ -121,8 +131,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		//this.getNavigator().setBreakDoors(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         //this.tasks.addTask(1, new EntityAIBreakDoor(this));
-        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
-        this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
+        //this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
+        //this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
         this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
         this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
         //this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); //Wander speed
@@ -130,7 +140,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
         //this.tasks.addTask(7, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
         //this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-        this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
+        //this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
         
 	}
 
@@ -286,7 +296,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
      */
     protected Entity findPlayerToAttack()
     {
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 16.0D);
+        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 30.0D);
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
     
@@ -350,9 +360,9 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
         {
             for (int i = 0; i < 2; ++i)
             {
-                this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 3, 0, this.motionZ * 3, new int[0]);
-                this.worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 2.5, 0, this.motionZ * 2.5, new int[0]);
-                this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 4, 0, this.motionZ * 4, new int[0]);
+              //  this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 3, 0, this.motionZ * 3, new int[0]);
+               // this.worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 2.5, 0, this.motionZ * 2.5, new int[0]);
+               // this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 4, 0, this.motionZ * 4, new int[0]);
             }
         }
         
@@ -363,7 +373,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 
      
         	
-        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 7 && this.AniID != 5 && this.AniID != 8) {
+        	if (this.motionX == 0 && this.motionZ == 0 && this.AniID != 7 && this.AniID != 5 && this.AniID != 8  && this.AniID != 9) {
         		this.Moving = false;
         		this.AniID = 0;
         	} else if (this.motionX != 0 || this.motionZ != 0) {
@@ -414,25 +424,84 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.AniFrame = 0;
 			this.AniID = 0;
 		}else if (this.AniID == 8 && this.AniFrame >= 15 && this.AniFrame <= 20){
-			float PartAng = AniFrame - 14; 
+			 
 			for (int i = 0; i < 40; ++i){
-				this.X = (PartAng * Math.cos(Math.toRadians(i * 9))) + this.posX;
-				this.Z = (PartAng * Math.sin(Math.toRadians(i * 9))) + this.posZ;
+				this.X = ((AniFrame - 14) * Math.cos(Math.toRadians(i * 9))) + this.posX;
+				this.Z = ((AniFrame - 14) * Math.sin(Math.toRadians(i * 9))) + this.posZ;
 				pos = new BlockPos(this.X, this.posY - 1, this.Z);
 				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos);
 				if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}
 			}
 			this.AniFrame++;
 		}else if (this.AniID == 8 && this.AniFrame > 29){
-			float PartAng = 0;
 			this.AniFrame = 0;
 			this.AniID = 0;
-		}else{
+		}else if (this.AniID == 9 && this.AniFrame == 13){
+			
+			this.target = findPlayerToAttack(); //need to remove this for AI stuff
+			
+			if (this.target != null){
+			this.targetX = target.posX;
+			this.targetZ = target.posZ;
+			this.jumpX = this.posX;
+			this.jumpZ = this.posZ;
+			} else {
+			this.targetX = this.posX;
+			this.targetZ = this.posZ;
+			this.jumpX = this.posX;
+			this.jumpZ = this.posZ;				
+			}
+			this.motionY = 1.5;
+			this.AniFrame++;
+		}else if (this.AniID == 9  && this.AniFrame >= 14 && this.AniFrame <= 20){
+		
+			if (this.target != null){
+				
+					//this.getLookHelper().setLookPosition(this.targetedEntity.posX, this.targetedEntity.posY + (double)this.targetedEntity.getEyeHeight(), this.targetedEntity.posZ, 10.0F, (float)this.getVerticalFaceSpeed());
+
+					double d0 = this.posX - this.target.posX;
+					double d2 = this.posZ - this.target.posZ;
+					double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+					float f = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+
+					this.rotationYaw = f + 180;
+
+				}
+				
+				
+			
+			
+			
+			for (int i = 0; i < 5; ++i){
+				this.projectile = new EntityFlameThrower(this.worldObj, this, 4, (rand.nextFloat() * 0.5F) - 1.5F, rand.nextFloat() + 4, rand.nextFloat() * 0.2F);
+				if (!worldObj.isRemote) {worldObj.spawnEntityInWorld(this.projectile);}
+				}
+			
+			for (int i = 0; i < 5; ++i){
+				this.projectile = new EntityFlameThrower(this.worldObj, this, 4, (rand.nextFloat() * 0.5F) + 1F, rand.nextFloat() + 4, rand.nextFloat() * 0.2F);
+				if (!worldObj.isRemote) {worldObj.spawnEntityInWorld(this.projectile);}
+				}			
+			
+			
+			this.AniFrame++;
+		}else if (this.AniID == 9  && this.AniFrame >= 55 && this.AniFrame <= 60){
+			for (int i = 0; i < 40; ++i){
+				this.X = ((AniFrame - 54) * Math.cos(Math.toRadians(i * 9))) + this.posX;
+				this.Z = ((AniFrame - 54) * Math.sin(Math.toRadians(i * 9))) + this.posZ;
+				pos = new BlockPos(this.X, this.posY - 1, this.Z);
+				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos);
+				if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}
+			}
+			this.AniFrame++;
+		}else if (this.AniID == 9 && this.AniFrame > 69){
+			this.AniFrame = 0;
+			this.AniID = 0;
+		}else if (!this.AniPause){
 			this.AniFrame++;
 		}
 		
 		
-		System.out.println("ID = " + this.AniID + " Frame = " + this.AniFrame);
+		
 		
 		
 		
@@ -477,7 +546,30 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		
 		
 		
+		int time = 5 * 20; // 20 ticks per second times 10 seconds
+		if (this.ticksExisted % time == (time - 1)) { // if you check against 0, it will drop an item immediately every time the world loads
+
+			this.AniID = 9;
+			
+		}
 		
+		
+		
+		 
+   		 if (this.onGround == false && target != null && this.AniID == 9){
+
+			 this.motionX = (this.jumpX - this.targetX) / -35;
+			 this.motionZ = (this.jumpZ - this.targetZ) / -35;
+
+		 }
+		 
+		 
+		
+
+    		 
+    		 
+    		 
+    		 
     		 
 
 
@@ -489,7 +581,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	
 	
 
-	
+
     /**
      * Pushes all entities inside the list away from the entity.
      */
