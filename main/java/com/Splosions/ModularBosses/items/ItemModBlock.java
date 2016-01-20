@@ -2,10 +2,11 @@ package com.Splosions.ModularBosses.items;
 
 import com.Splosions.ModularBosses.Reference;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -13,21 +14,39 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * 
- * Provides generic implementations of IModItem methods that should work for most items.
+ * Default ItemBlock class implementing IModItem
  *
  */
-public class BaseModItem extends Item implements IModItem
+public class ItemModBlock extends ItemBlock implements IModItem
 {
-	public BaseModItem() {
-		super();
+	private final String[] variants;
+
+	/**
+	 * At least one variant needs to be registered at some point
+	 */
+	public ItemModBlock(Block block) {
+		super(block);
+		this.variants = null;
 	}
 
 	/**
-	 * Returns "item.zss.unlocalized_name" for translation purposes
+	 * Standard ItemBlock constructor with optional variant names
+	 */
+	public ItemModBlock(Block block, String... variants) {
+		super(block);
+		this.variants = variants;
+		if (variants.length > 1) {
+			setMaxDamage(0);
+			setHasSubtypes(true);
+		}
+	}
+
+	/**
+	 * Returns "tile.zss.unlocalized_name" for translation purposes
 	 */
 	@Override
 	public String getUnlocalizedName() {
-		return super.getUnlocalizedName().replaceFirst("item.", "item.mb.");
+		return super.getUnlocalizedName().replaceFirst("tile.", "tile.mb.");
 	}
 
 	@Override
@@ -35,13 +54,7 @@ public class BaseModItem extends Item implements IModItem
 		return getUnlocalizedName();
 	}
 
-	/**
-	 * Default behavior returns NULL to not register any variants
-	 */
-	@Override
-	public String[] getVariants() {
-		return null;
-	}
+
 
 	/**
 	 * Default implementation suggested by {@link IModItem#registerVariants()}
@@ -72,5 +85,11 @@ public class BaseModItem extends Item implements IModItem
 		for (int i = 0; i < variants.length; ++i) {
 			mesher.register(this, i, new ModelResourceLocation(variants[i], "inventory"));
 		}
+	}
+
+	@Override
+	public String[] getVariants() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -148,5 +148,16 @@ public class ModularBossesItems {
 
 	}
 	
+	/**
+	 * Registers an ItemBlock to the item sorter for creative tabs sorting
+	 */
+	public static void registerItemBlock(Item block) {
+		if (block instanceof ItemBlock) {
+			ModularBossesItems.registerItemComparatorMapping(block);
+		} else {
+			ModularBosses.logger.warn("Tried to register a non-ItemBlock item for " + (block == null ? "NULL" : block.getUnlocalizedName()));
+		}
+	}
+	
 	
 }

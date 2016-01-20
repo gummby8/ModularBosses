@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses;
 import java.util.Collections;
 import java.util.List;
 
+import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,6 +34,13 @@ public class MBCreativeTabs
 		}
 	}
 
+	public static CreativeTabs tabBlocks = new MBCreativeTab("mb.blocks") {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public Item getTabIconItem() {
+			return Item.getItemFromBlock(ModularBossesBlocks.controlBlock);
+		}
+	};
 
 	public static CreativeTabs tabTools = new MBCreativeTab("mb.tools") {
 		@Override

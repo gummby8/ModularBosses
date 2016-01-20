@@ -424,22 +424,18 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.AniFrame = 0;
 			this.AniID = 0;
 		}else if (this.AniID == 8 && this.AniFrame >= 15 && this.AniFrame <= 20){
-			 
 			for (int i = 0; i < 40; ++i){
 				this.X = ((AniFrame - 14) * Math.cos(Math.toRadians(i * 9))) + this.posX;
 				this.Z = ((AniFrame - 14) * Math.sin(Math.toRadians(i * 9))) + this.posZ;
 				pos = new BlockPos(this.X, this.posY - 1, this.Z);
 				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos);
-				if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}
-			}
+				if (!this.worldObj.isRemote){this.worldObj.spawnEntityInWorld(falling);}}
 			this.AniFrame++;
 		}else if (this.AniID == 8 && this.AniFrame > 29){
 			this.AniFrame = 0;
 			this.AniID = 0;
 		}else if (this.AniID == 9 && this.AniFrame == 13){
-			
 			this.target = findPlayerToAttack(); //need to remove this for AI stuff
-			
 			if (this.target != null){
 			this.targetX = target.posX;
 			this.targetZ = target.posZ;
@@ -456,16 +452,11 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		}else if (this.AniID == 9  && this.AniFrame >= 14 && this.AniFrame <= 20){
 		
 			if (this.target != null){
-				
-					//this.getLookHelper().setLookPosition(this.targetedEntity.posX, this.targetedEntity.posY + (double)this.targetedEntity.getEyeHeight(), this.targetedEntity.posZ, 10.0F, (float)this.getVerticalFaceSpeed());
-
 					double d0 = this.posX - this.target.posX;
 					double d2 = this.posZ - this.target.posZ;
 					double d3 = (double)MathHelper.sqrt_double(d0 * d0 + d2 * d2);
 					float f = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
-
 					this.rotationYaw = f + 180;
-
 				}
 				
 				

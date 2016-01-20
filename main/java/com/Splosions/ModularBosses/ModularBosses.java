@@ -11,8 +11,10 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
 import com.Splosions.ModularBosses.client.entity.ModularBossesEntities;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
+import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
@@ -29,9 +31,11 @@ public class ModularBosses {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		ModularBossesBlocks.preInit();
 		ModularBossesItems.init();
 		ModularBossesItems.registerItems();
 		ModularBossesEntities.init();
+		PacketDispatcher.preInit();
 	}
 	
 	@EventHandler

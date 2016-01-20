@@ -44,7 +44,7 @@ public class ItemCustomVariantEgg extends ItemCustomEgg
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = ("" + StatCollector.translateToLocal("item.zss.spawn_egg.name")).trim();
+		String s = ("" + StatCollector.translateToLocal("item.mb.spawn_egg.name")).trim();
 		if (entityName != null) {
 			s = s + " " + StatCollector.translateToLocal("entity." + Reference.MOD_ID + "." + entityName + ".name." + stack.getItemDamage());
 		}

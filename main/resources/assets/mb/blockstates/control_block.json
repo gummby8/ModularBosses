@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "normal": { "model" : "mb:control_block" }
+     }
+}

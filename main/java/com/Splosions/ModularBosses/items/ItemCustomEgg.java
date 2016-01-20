@@ -18,6 +18,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.dispenser.IBehaviorDispenseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,7 +52,7 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
-		String s = ("" + StatCollector.translateToLocal("item.zss.spawn_egg.name")).trim();
+		String s = ("" + StatCollector.translateToLocal("item.mb.spawn_egg.name")).trim();
 		String entityName = CustomEntityList.getStringFromID(stack.getItemDamage());
 		if (entityName != null) {
 			s = s + " " + StatCollector.translateToLocal("entity." + Reference.MOD_ID + "." + entityName + ".name");
@@ -77,6 +78,8 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 			if (side == EnumFacing.UP && state.getBlock() instanceof BlockFence) {
 				dy = 0.5D;
 			}
+
+			
 			Entity entity = spawnCreature(world, stack.getItemDamage(), pos.getX() + 0.5D, pos.getY() + dy, pos.getZ() + 0.5D);
 			if (entity != null) {
 				if (entity instanceof EntityLivingBase && stack.hasDisplayName()) {
@@ -127,8 +130,14 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 		Entity entity = null;
 		Class<? extends Entity> oclass = CustomEntityList.getClassFromID(entityID);
 		if (CustomEntityList.entityEggs.containsKey(oclass)) {
+			//oclass = EntityList.getClassFromID(EntityList.getIDFromString("mb.HeavyChorp"));
 			entity = CustomEntityList.createEntity(oclass, world);
 			if (entity instanceof EntityLiving) {
+				
+				//for (int i = 0; i < 5; ++i){
+					System.out.println(EntityList.stringToClassMapping);
+					entity = EntityList.createEntityByName("mb.HeavyChorp", world);
+				//}
 				EntityLiving entityliving = (EntityLiving) entity;
 				entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 				entityliving.rotationYawHead = entityliving.rotationYaw;
