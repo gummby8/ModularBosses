@@ -10,9 +10,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
 import com.Splosions.ModularBosses.client.entity.ModularBossesEntities;
+import com.Splosions.ModularBosses.handler.GuiHandler;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
@@ -48,5 +50,10 @@ public class ModularBosses {
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		
+	}
+	
+	@Mod.EventHandler
+	public void load(FMLInitializationEvent event) {
+	NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 	}
 }

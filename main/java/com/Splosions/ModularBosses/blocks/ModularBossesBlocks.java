@@ -5,7 +5,6 @@ import java.lang.reflect.Field;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
-import com.Splosions.ModularBosses.items.ItemControlBlock;
 import com.Splosions.ModularBosses.items.ItemModBlock;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
@@ -30,7 +29,7 @@ public class ModularBossesBlocks
 
 		controlBlock = new BlockControlBlock(Material.rock).setUnlocalizedName("control_block");
 		
-		GameRegistry.registerBlock(controlBlock, ItemControlBlock.class, controlBlock.getUnlocalizedName().substring(5));
+		GameRegistry.registerBlock(controlBlock, ItemModBlock.class, controlBlock.getUnlocalizedName().substring(5));
 		
 		GameRegistry.registerTileEntity(TileEntityControlBlock.class, Reference.MOD_ID + ":tileEntityControlBlock");
 		

@@ -24,13 +24,7 @@ public class GuiHandler implements IGuiHandler
 		TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 		switch(id) {
 		case GUI_EDIT_CONTROL_BLOCK:
-			if (te == null) {
-				// modeled after vanilla sign editor handling, since TE is not yet available on client
-				te = new TileEntityControlBlock();
-				te.setWorldObj(world);
-				te.setPos(new BlockPos(x, y, z));
-			}
-			if (te instanceof TileEntityControlBlock) {
+			if (te instanceof TileEntityControlBlock) { 
 				return new GuiEditControlBlock((TileEntityControlBlock) te);
 			}
 			return null;

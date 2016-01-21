@@ -73,21 +73,23 @@ public class BlockControlBlock extends Block
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing face, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(pos);
-			if (!world.isRemote && te instanceof TileEntityControlBlock) {
+			if (world.isRemote && te instanceof TileEntityControlBlock) {
 				ItemStack helm = player.getEquipmentInSlot(0);
 				if (helm == null) {
 									
-
-					
+					System.out.println("GUI?");
+					player.openGui(ModularBosses.instance, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
 					
 				} else {
 			
-					String msg = ((TileEntityControlBlock) te).getMessage();
-					System.out.println(msg);
-					System.out.println(helm);
+					
+
 					
 				}
 			}
+			
+			String msg = ((TileEntityControlBlock) te).getMessage();
+			System.out.println(msg);
 		return true;
 	}
 	
