@@ -133,11 +133,6 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 			//oclass = EntityList.getClassFromID(EntityList.getIDFromString("mb.HeavyChorp"));
 			entity = CustomEntityList.createEntity(oclass, world);
 			if (entity instanceof EntityLiving) {
-				
-				//for (int i = 0; i < 5; ++i){
-					System.out.println(EntityList.stringToClassMapping);
-					entity = EntityList.createEntityByName("mb.HeavyChorp", world);
-				//}
 				EntityLiving entityliving = (EntityLiving) entity;
 				entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 				entityliving.rotationYawHead = entityliving.rotationYaw;

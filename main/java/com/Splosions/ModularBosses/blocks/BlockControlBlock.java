@@ -94,13 +94,7 @@ public class BlockControlBlock extends Block
 	}
 	
 	
-	@SideOnly(Side.CLIENT)
-	public void openGui(BlockPos pos, EntityPlayer player, EnumFacing face){
-		
-			System.out.println("Packet sent");
-			PacketDispatcher.sendTo(new OpenControlBlockEditorPacket(pos.offset(face)), (EntityPlayerMP) player);
-			
-	}
+
 
 		
 
@@ -117,11 +111,6 @@ public class BlockControlBlock extends Block
 
 
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
-		list.add(new ItemStack(item, 1, 0));
-		list.add(new ItemStack(item, 1, 8));
-	}
+
 	
 }

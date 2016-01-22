@@ -42,7 +42,7 @@ public class ItemModBlock extends ItemBlock implements IModItem
 	}
 
 	/**
-	 * Returns "tile.zss.unlocalized_name" for translation purposes
+	 * Returns "tile.mb.unlocalized_name" for translation purposes
 	 */
 	@Override
 	public String getUnlocalizedName() {

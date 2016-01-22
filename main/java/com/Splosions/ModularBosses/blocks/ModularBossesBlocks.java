@@ -18,7 +18,7 @@ public class ModularBossesBlocks
 {
 	public static Block
 	controlBlock;
-
+	
 	/**
 	 * Call during FMLPreInitializationEvent to initialize and register all blocks
 	 */
@@ -27,10 +27,10 @@ public class ModularBossesBlocks
 		// NOTE: pass getUnlocalizedString WITHOUT 'tile.' or blockstate=>model will get confused
 		// NOTE: new Object[]{args...} is required for vararg constructor invocation via Reflection
 
+		
+		
 		controlBlock = new BlockControlBlock(Material.rock).setUnlocalizedName("control_block");
-		
 		GameRegistry.registerBlock(controlBlock, ItemModBlock.class, controlBlock.getUnlocalizedName().substring(5));
-		
 		GameRegistry.registerTileEntity(TileEntityControlBlock.class, Reference.MOD_ID + ":tileEntityControlBlock");
 		
 		

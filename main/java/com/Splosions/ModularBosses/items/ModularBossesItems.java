@@ -118,6 +118,7 @@ public class ModularBossesItems {
 				if (Item.class.isAssignableFrom(f.getType())) {
 					Item item = (Item) f.get(null);
 					if (item != null) {
+						
 						ModularBossesItems.registerItemComparatorMapping(item);
 						String name = item.getUnlocalizedName();
 						GameRegistry.registerItem(item, name.substring(name.lastIndexOf(".") + 1));
@@ -154,6 +155,7 @@ public class ModularBossesItems {
 	public static void registerItemBlock(Item block) {
 		if (block instanceof ItemBlock) {
 			ModularBossesItems.registerItemComparatorMapping(block);
+			
 		} else {
 			ModularBosses.logger.warn("Tried to register a non-ItemBlock item for " + (block == null ? "NULL" : block.getUnlocalizedName()));
 		}

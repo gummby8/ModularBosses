@@ -2,7 +2,7 @@ package com.Splosions.ModularBosses.blocks;
 
 
 
-/**
+/** 
  * 
  * Allow automation of Block rotation types for blocks using a vanilla rotation pattern.
  *
