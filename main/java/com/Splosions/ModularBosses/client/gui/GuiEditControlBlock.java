@@ -1,12 +1,16 @@
 package com.Splosions.ModularBosses.client.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.Language;
 import net.minecraft.client.settings.GameSettings;
@@ -19,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -37,6 +42,9 @@ public class GuiEditControlBlock extends GuiScreen
 {
 	private final TileEntityControlBlock te;
 	private GuiButton btnDone;
+	private GuiButton btnScrollUp;
+	private GuiButton btnScrollDn;
+	private GuiButton btnRedstone;
 	private String message;
 	private GuiEditControlBlock.List list;
 	
@@ -49,8 +57,18 @@ public class GuiEditControlBlock extends GuiScreen
 	public void initGui() {
 		buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
-		btnDone = new GuiButton(0, width / 2 - 100, height / 4 + 120, StatCollector.translateToLocal("gui.done"));
+
+		
+		
+		btnDone = new GuiButton(0, width / 2 + 50, height / 4 + 160, 100 , 20 , "Done");
 		buttonList.add(btnDone);
+		
+		
+
+		
+		btnRedstone = new GuiButton(10, width / 2 + 50, height / 4 + 135, 100 , 20 ,"Redstone");
+		buttonList.add(btnRedstone);
+		
 		this.list = new GuiEditControlBlock.List(this.mc);
         this.list.registerScrollButtons(7, 8);
 	}
@@ -166,21 +184,39 @@ public class GuiEditControlBlock extends GuiScreen
 
         public List(Minecraft mcIn)
         {
-            super(mcIn, GuiEditControlBlock.this.width, GuiEditControlBlock.this.height, 32, GuiEditControlBlock.this.height - 65 + 4, 18);
+            super(mcIn, GuiEditControlBlock.this.width / 2, GuiEditControlBlock.this.height, 0, GuiEditControlBlock.this.height, 18);
+           
+            
             Iterator iterator = EntityList.getEntityNameList().iterator();
             
             while (iterator.hasNext())
             {
-            	
                 String name = (String) iterator.next();
-                Entity entity = EntityList.createEntityByName(name, te.getWorld());
-                
-                if (entity instanceof EntityLiving && entity != null) {
-                this.nameMap.put(name, name);
-                this.nameArray.add(name);
+                System.out.println(name);
+                if (name != "ThrownEnderpearl"){
+                	Entity entity = EntityList.createEntityByName(name, te.getWorld());
+                	//System.out.println(entity);
+                	if (entity instanceof EntityLiving && entity != null) {
+                		this.nameMap.put(name, name);
+                		this.nameArray.add(name);
+                	}
                 }
             }
+            java.util.Collections.sort(this.nameArray);
         }
+        
+        @Override
+        protected void overlayBackground(int p_148136_1_, int p_148136_2_, int p_148136_3_, int p_148136_4_)
+        {
+
+        }
+        
+        @Override
+        protected void drawContainerBackground(Tessellator tessellator)
+        {
+
+        }
+        
 
         protected int getSize()
         {
@@ -216,6 +252,7 @@ public class GuiEditControlBlock extends GuiScreen
             return this.getSize() * 18;
         }
 
+        @Override
         protected void drawBackground()
         {
         	GuiEditControlBlock.this.drawDefaultBackground();
@@ -223,8 +260,8 @@ public class GuiEditControlBlock extends GuiScreen
 
         protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_)
         {
-        	GuiEditControlBlock.this.fontRendererObj.setBidiFlag(true);
-            GuiEditControlBlock.this.drawCenteredString(GuiEditControlBlock.this.fontRendererObj, (this.nameMap.get(this.nameArray.get(entryID))).toString(), this.width / 2, p_180791_3_ + 1, 16777215);
+        	//GuiEditControlBlock.this.fontRendererObj.setBidiFlag(true);
+            GuiEditControlBlock.this.drawCenteredString(GuiEditControlBlock.this.fontRendererObj, (this.nameMap.get(this.nameArray.get(entryID))).toString(), this.width / 2, p_180791_3_ + 3, 16777215);
            // GuiEditControlBlock.this.fontRendererObj.setBidiFlag(GuiEditControlBlock.this.languageManager.getCurrentLanguage().isBidirectional());
         }
     }
