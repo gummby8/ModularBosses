@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
+import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -47,7 +48,15 @@ public class GuiEditControlBlock extends GuiScreen
 	private GuiButton btnRedstone;
 	private String message;
 	private GuiEditControlBlock.List list;
-	
+    private GuiTextField xCoord;
+    private GuiTextField yCoord;
+    private GuiTextField zCoord;
+    String StringXCoord;
+    String StringYCoord;
+    String StringZCoord;
+    int intXCoord;
+    int intYCoord;
+    int intZCoord;
 	
 	public GuiEditControlBlock(TileEntityControlBlock te) {
 		this.te = te;
@@ -58,28 +67,86 @@ public class GuiEditControlBlock extends GuiScreen
 		buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
 
+		xCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 + 30, 30, 14);
+		xCoord.setCanLoseFocus(true);
+		//xCoord.setText("HHHHHHHHHHHHHHHERP");
 		
+		yCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 + 30, 30, 14);
+		yCoord.setCanLoseFocus(true);
+		//yCoord.setText("HHHHHHHHHHHHHHHERP");
+		
+		zCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 + 30, 30, 14);
+		zCoord.setCanLoseFocus(true);
+		//zCoord.setText("HHHHHHHHHHHHHHHERP");
 		
 		btnDone = new GuiButton(0, width / 2 + 50, height / 4 + 160, 100 , 20 , "Done");
 		buttonList.add(btnDone);
-		
-		
 
-		
 		btnRedstone = new GuiButton(10, width / 2 + 50, height / 4 + 135, 100 , 20 ,"Redstone");
 		buttonList.add(btnRedstone);
 		
-		this.list = new GuiEditControlBlock.List(this.mc);
+		this.list = new GuiEditControlBlock.List(this.mc, te.getMessage());
         this.list.registerScrollButtons(7, 8);
 	}
 
 	@Override
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
+
+
+		StringXCoord = xCoord.getText().replaceAll("[^0-9]","");
+		if (StringXCoord != null && !StringXCoord.isEmpty()){
+		intXCoord = Integer.parseInt(StringXCoord);
+		System.out.println(intXCoord);
+		}
+		
+		StringYCoord = yCoord.getText().replaceAll("[^0-9]","");
+		if (StringYCoord != null && !StringYCoord.isEmpty()){
+		intYCoord = Integer.parseInt(StringYCoord);
+		System.out.println(intYCoord);
+		}
+		
+		StringZCoord = zCoord.getText().replaceAll("[^0-9]","");
+		if (StringZCoord != null && !StringZCoord.isEmpty()){
+		intZCoord = Integer.parseInt(StringZCoord);
+		System.out.println(intZCoord);
+		}
+		
 		message = this.list.selectedName;
-		te.setMessage(message);
-		PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(te));
+		if (message != null || message != ""){
+			te.setMessage(message);
+			PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(te));
+		}
 	}
+	
+    /**
+     * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
+     */
+    @Override
+    protected void mouseClicked(int x, int y, int button) throws IOException
+    {
+        super.mouseClicked(x, y, button);
+        xCoord.mouseClicked(x, y, button);
+        if (button == 1 && x >= xCoord.xPosition && x < xCoord.xPosition + xCoord.width && y >= xCoord.yPosition && y < xCoord.yPosition + xCoord.height) {
+        	xCoord.setText("");
+        }
+        
+        yCoord.mouseClicked(x, y, button);
+        if (button == 1 && x >= yCoord.xPosition && x < yCoord.xPosition + yCoord.width && y >= yCoord.yPosition && y < yCoord.yPosition + yCoord.height) {
+        	yCoord.setText("");
+        }
+        
+        zCoord.mouseClicked(x, y, button);
+        if (button == 1 && x >= zCoord.xPosition && x < zCoord.xPosition + zCoord.width && y >= zCoord.yPosition && y < zCoord.yPosition + zCoord.height) {
+        	zCoord.setText("");
+        }
+        
+        if (button == 0 && x >= btnRedstone.xPosition && x < btnRedstone.xPosition + btnRedstone.width && y >= btnRedstone.yPosition && y < btnRedstone.yPosition + btnRedstone.height) {
+        	btnRedstone.enabled = (btnRedstone.enabled == true)? false : true;
+        	btnRedstone.displayString = (btnRedstone.enabled == true)? "Off" : "On";
+        }
+        
+    }
 	
     /**
      * Handles mouse input.
@@ -124,43 +191,38 @@ public class GuiEditControlBlock extends GuiScreen
         }
 	}
 
+	
+	
 	@Override
-	protected void keyTyped(char c, int keyCode) {
+	protected void keyTyped(char c, int keyCode) throws IOException{
+		super.keyTyped(c, keyCode);
 		if (keyCode == Keyboard.KEY_ESCAPE) {
 			actionPerformed(btnDone);
+			
+			
+	       
 		} 
-		
-		/**
-		else if (keyCode == Keyboard.KEY_BACK && message.length() > 0) {
-			message.deleteCharAt(message.length() - 1);
-		} else if (keyCode == Keyboard.KEY_RETURN) {
-			message.append("\n");
-		} else if (ChatAllowedCharacters.isAllowedCharacter(c) && message.length() < TileEntityControlBlock.MAX_MESSAGE_LENGTH) {
-			message.append(c);
-		}
-		*/
+		xCoord.textboxKeyTyped(c, keyCode);
+		yCoord.textboxKeyTyped(c, keyCode);
+		zCoord.textboxKeyTyped(c, keyCode);
+
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		/**
-		drawDefaultBackground();
-		drawCenteredString(fontRendererObj, StatCollector.translateToLocal("Monster Spawn Control "), width / 2, 40, 16777215);
 		
-		String[] lines = StringUtils.wrapString(message.toString(), TileEntityControlBlock.LINE_LENGTH, 5);
-		for (int i = 0; i < lines.length; ++i) {
-			if (i == 0) {
-				lines[i] = "> " + lines[i];
-			} else if (i == lines.length - 1) {
-				lines[i] += " <";
-			}
-			fontRendererObj.drawString(lines[i], (width / 2) - (fontRendererObj.getStringWidth(lines[i]) / 2), 80 + i * fontRendererObj.FONT_HEIGHT, 16777215);
-		}
-		*/
 		this.list.drawScreen(mouseX, mouseY, partialTicks);
+		
+		
+		
+		this.fontRendererObj.drawString("X Off", width / 2 + 50, height / 4 + 20, 0xFFFFFF);
+		this.fontRendererObj.drawString("Y Off", width / 2 + 90, height / 4 + 20, 0xFFFFFF);
+		this.fontRendererObj.drawString("Z Off", width / 2 + 130, height / 4 + 20, 0xFFFFFF);
+		xCoord.drawTextBox();
+		yCoord.drawTextBox();
+		zCoord.drawTextBox();
+	
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		
-		
 	}
 	
 	
@@ -181,18 +243,19 @@ public class GuiEditControlBlock extends GuiScreen
         private final Map nameMap = Maps.newHashMap();
         public String selectedName;
         private static final String __OBFID = "CL_00000699";
+        
 
-        public List(Minecraft mcIn)
+        public List(Minecraft mcIn, String preSetName)
         {
             super(mcIn, GuiEditControlBlock.this.width / 2, GuiEditControlBlock.this.height, 0, GuiEditControlBlock.this.height, 18);
-           
+
+            this.selectedName = preSetName;
             
             Iterator iterator = EntityList.getEntityNameList().iterator();
             
             while (iterator.hasNext())
             {
                 String name = (String) iterator.next();
-                System.out.println(name);
                 if (name != "ThrownEnderpearl"){
                 	Entity entity = EntityList.createEntityByName(name, te.getWorld());
                 	//System.out.println(entity);
@@ -228,7 +291,7 @@ public class GuiEditControlBlock extends GuiScreen
          */
         protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY)
         {
-        	System.out.println((this.nameMap.get(this.nameArray.get(slotIndex))).toString());
+        	
         	this.selectedName = (this.nameMap.get(this.nameArray.get(slotIndex))).toString();
         }
 
@@ -237,6 +300,7 @@ public class GuiEditControlBlock extends GuiScreen
          */
         protected boolean isSelected(int slotIndex)
         {
+        	
         	if (this.selectedName != null){
             return this.selectedName.equals((this.nameMap.get(this.nameArray.get(slotIndex))).toString());
         	} else {
