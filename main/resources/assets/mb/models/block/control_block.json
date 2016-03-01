@@ -1,6 +1,10 @@
 {
-    "parent": "block/cube_all",
+    "parent": "minecraft:block/orientable",
     "textures": {
-        "all": "mb:blocks/control_block"
+        "top": "mb:blocks/control_block/control_block",
+        "south": "mb:blocks/control_block/input",
+        "east": "mb:blocks/control_block/",
+        "west": "mb:blocks/control_block/trigger",
+        "north": "mb:blocks/control_block/output"
     }
 }

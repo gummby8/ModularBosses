@@ -576,11 +576,11 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
     /**
      * Pushes all entities inside the list away from the entity.
      */
-    private void collideWithEntities(List p_70970_1_)
+    private void collideWithEntities(List list)
     {
         double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
         double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
-        Iterator iterator = p_70970_1_.iterator();
+        Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {

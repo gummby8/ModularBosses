@@ -42,21 +42,29 @@ import com.google.common.collect.Maps;
 public class GuiEditControlBlock extends GuiScreen
 {
 	private final TileEntityControlBlock te;
+
+	private String message;
+	private GuiEditControlBlock.List list;
+    private GuiTextField txtXCoord;
+    private GuiTextField txtYCoord;
+    private GuiTextField txtZCoord;
+    private GuiTextField txtSpnFreq;
+    private GuiTextField txtSpnDelay;
+    private GuiTextField txtSpnCount;
+    
 	private GuiButton btnDone;
 	private GuiButton btnScrollUp;
 	private GuiButton btnScrollDn;
-	private GuiButton btnRedstone;
-	private String message;
-	private GuiEditControlBlock.List list;
-    private GuiTextField xCoord;
-    private GuiTextField yCoord;
-    private GuiTextField zCoord;
-    String StringXCoord;
-    String StringYCoord;
-    String StringZCoord;
-    int intXCoord;
-    int intYCoord;
-    int intZCoord;
+	private GuiButton btnRedPwrReq;
+	private GuiButton btnRedPwrOut;
+	private GuiButton btnRedInstSpn;
+    
+    String StringtxtXCoord;
+    String StringtxtYCoord;
+    String StringtxtZCoord;
+    int inttxtXCoord;
+    int inttxtYCoord;
+    int inttxtZCoord;
 	
 	public GuiEditControlBlock(TileEntityControlBlock te) {
 		this.te = te;
@@ -67,23 +75,41 @@ public class GuiEditControlBlock extends GuiScreen
 		buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
 
-		xCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 + 30, 30, 14);
-		xCoord.setCanLoseFocus(true);
-		//xCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtXCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 - 30, 30, 14);
+		txtXCoord.setCanLoseFocus(true);
+		//txtXCoord.setText("HHHHHHHHHHHHHHHERP");
 		
-		yCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 + 30, 30, 14);
-		yCoord.setCanLoseFocus(true);
-		//yCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtYCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 - 30, 30, 14);
+		txtYCoord.setCanLoseFocus(true);
+		//txtYCoord.setText("HHHHHHHHHHHHHHHERP");
 		
-		zCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 + 30, 30, 14);
-		zCoord.setCanLoseFocus(true);
-		//zCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtZCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 - 30, 30, 14);
+		txtZCoord.setCanLoseFocus(true);
+		//txtZCoord.setText("HHHHHHHHHHHHHHHERP");
+
+		txtSpnCount = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 + 30, 30, 14);
+		txtSpnCount.setCanLoseFocus(true);
+		//txtXCoord.setText("HHHHHHHHHHHHHHHERP");
 		
+		txtSpnFreq = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 + 30, 30, 14);
+		txtSpnFreq.setCanLoseFocus(true);
+		//txtYCoord.setText("HHHHHHHHHHHHHHHERP");
+		
+		txtSpnDelay = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 + 30, 30, 14);
+		txtSpnDelay.setCanLoseFocus(true);
+		//txtZCoord.setText("HHHHHHHHHHHHHHHERP");
+		
+		btnRedPwrReq = new GuiButton(10, width / 2 + 50, height / 4 + 105, 100 , 20 ,"Redstone");
+		buttonList.add(btnRedPwrReq);
+		
+		btnRedPwrOut = new GuiButton(10, width / 2 + 50, height / 4 + 85, 100 , 20 ,"Redstone");
+		buttonList.add(btnRedPwrOut);
+		
+		btnRedInstSpn = new GuiButton(10, width / 2 + 50, height / 4 + 65, 100 , 20 ,"Redstone");
+		buttonList.add(btnRedInstSpn);
+
 		btnDone = new GuiButton(0, width / 2 + 50, height / 4 + 160, 100 , 20 , "Done");
 		buttonList.add(btnDone);
-
-		btnRedstone = new GuiButton(10, width / 2 + 50, height / 4 + 135, 100 , 20 ,"Redstone");
-		buttonList.add(btnRedstone);
 		
 		this.list = new GuiEditControlBlock.List(this.mc, te.getMessage());
         this.list.registerScrollButtons(7, 8);
@@ -94,22 +120,22 @@ public class GuiEditControlBlock extends GuiScreen
 		Keyboard.enableRepeatEvents(false);
 
 
-		StringXCoord = xCoord.getText().replaceAll("[^0-9]","");
-		if (StringXCoord != null && !StringXCoord.isEmpty()){
-		intXCoord = Integer.parseInt(StringXCoord);
-		System.out.println(intXCoord);
+		StringtxtXCoord = txtXCoord.getText().replaceAll("[^0-9]","");
+		if (StringtxtXCoord != null && !StringtxtXCoord.isEmpty()){
+		inttxtXCoord = Integer.parseInt(StringtxtXCoord);
+		System.out.println(inttxtXCoord);
 		}
 		
-		StringYCoord = yCoord.getText().replaceAll("[^0-9]","");
-		if (StringYCoord != null && !StringYCoord.isEmpty()){
-		intYCoord = Integer.parseInt(StringYCoord);
-		System.out.println(intYCoord);
+		StringtxtYCoord = txtYCoord.getText().replaceAll("[^0-9]","");
+		if (StringtxtYCoord != null && !StringtxtYCoord.isEmpty()){
+		inttxtYCoord = Integer.parseInt(StringtxtYCoord);
+		System.out.println(inttxtYCoord);
 		}
 		
-		StringZCoord = zCoord.getText().replaceAll("[^0-9]","");
-		if (StringZCoord != null && !StringZCoord.isEmpty()){
-		intZCoord = Integer.parseInt(StringZCoord);
-		System.out.println(intZCoord);
+		StringtxtZCoord = txtZCoord.getText().replaceAll("[^0-9]","");
+		if (StringtxtZCoord != null && !StringtxtZCoord.isEmpty()){
+		inttxtZCoord = Integer.parseInt(StringtxtZCoord);
+		System.out.println(inttxtZCoord);
 		}
 		
 		message = this.list.selectedName;
@@ -126,25 +152,51 @@ public class GuiEditControlBlock extends GuiScreen
     protected void mouseClicked(int x, int y, int button) throws IOException
     {
         super.mouseClicked(x, y, button);
-        xCoord.mouseClicked(x, y, button);
-        if (button == 1 && x >= xCoord.xPosition && x < xCoord.xPosition + xCoord.width && y >= xCoord.yPosition && y < xCoord.yPosition + xCoord.height) {
-        	xCoord.setText("");
+        txtXCoord.mouseClicked(x, y, button);
+        if (button == 1 && x >= txtXCoord.xPosition && x < txtXCoord.xPosition + txtXCoord.width && y >= txtXCoord.yPosition && y < txtXCoord.yPosition + txtXCoord.height) {
+        	txtXCoord.setText("");
         }
         
-        yCoord.mouseClicked(x, y, button);
-        if (button == 1 && x >= yCoord.xPosition && x < yCoord.xPosition + yCoord.width && y >= yCoord.yPosition && y < yCoord.yPosition + yCoord.height) {
-        	yCoord.setText("");
+        txtYCoord.mouseClicked(x, y, button);
+        if (button == 1 && x >= txtYCoord.xPosition && x < txtYCoord.xPosition + txtYCoord.width && y >= txtYCoord.yPosition && y < txtYCoord.yPosition + txtYCoord.height) {
+        	txtYCoord.setText("");
         }
         
-        zCoord.mouseClicked(x, y, button);
-        if (button == 1 && x >= zCoord.xPosition && x < zCoord.xPosition + zCoord.width && y >= zCoord.yPosition && y < zCoord.yPosition + zCoord.height) {
-        	zCoord.setText("");
+        txtZCoord.mouseClicked(x, y, button);
+        if (button == 1 && x >= txtZCoord.xPosition && x < txtZCoord.xPosition + txtZCoord.width && y >= txtZCoord.yPosition && y < txtZCoord.yPosition + txtZCoord.height) {
+        	txtZCoord.setText("");
         }
         
-        if (button == 0 && x >= btnRedstone.xPosition && x < btnRedstone.xPosition + btnRedstone.width && y >= btnRedstone.yPosition && y < btnRedstone.yPosition + btnRedstone.height) {
-        	btnRedstone.enabled = (btnRedstone.enabled == true)? false : true;
-        	btnRedstone.displayString = (btnRedstone.enabled == true)? "Off" : "On";
+        txtSpnCount.mouseClicked(x, y, button);
+        if (button == 1 && x >= txtSpnCount.xPosition && x < txtSpnCount.xPosition + txtSpnCount.width && y >= txtSpnCount.yPosition && y < txtSpnCount.yPosition + txtSpnCount.height) {
+        	txtSpnCount.setText("");
         }
+        
+        txtSpnFreq.mouseClicked(x, y, button);
+        if (button == 1 && x >= txtSpnFreq.xPosition && x < txtSpnFreq.xPosition + txtSpnFreq.width && y >= txtSpnFreq.yPosition && y < txtSpnFreq.yPosition + txtSpnFreq.height) {
+        	txtSpnFreq.setText("");
+        }
+        
+        txtSpnDelay.mouseClicked(x, y, button);
+        if (button == 1 && x >= txtSpnDelay.xPosition && x < txtSpnDelay.xPosition + txtSpnDelay.width && y >= txtSpnDelay.yPosition && y < txtSpnDelay.yPosition + txtSpnDelay.height) {
+        	txtSpnDelay.setText("");
+        }
+        
+        if (button == 0 && x >= btnRedPwrReq.xPosition && x < btnRedPwrReq.xPosition + btnRedPwrReq.width && y >= btnRedPwrReq.yPosition && y < btnRedPwrReq.yPosition + btnRedPwrReq.height) {
+        	btnRedPwrReq.enabled = (btnRedPwrReq.enabled == true)? false : true;
+        	btnRedPwrReq.displayString = (btnRedPwrReq.enabled == true)? "Off" : "On";
+        }
+        
+        if (button == 0 && x >= btnRedPwrOut.xPosition && x < btnRedPwrOut.xPosition + btnRedPwrOut.width && y >= btnRedPwrOut.yPosition && y < btnRedPwrOut.yPosition + btnRedPwrOut.height) {
+        	btnRedPwrOut.enabled = (btnRedPwrOut.enabled == true)? false : true;
+        	btnRedPwrOut.displayString = (btnRedPwrOut.enabled == true)? "Off" : "On";
+        }
+        
+        if (button == 0 && x >= btnRedInstSpn.xPosition && x < btnRedInstSpn.xPosition + btnRedInstSpn.width && y >= btnRedInstSpn.yPosition && y < btnRedInstSpn.yPosition + btnRedInstSpn.height) {
+        	btnRedInstSpn.enabled = (btnRedInstSpn.enabled == true)? false : true;
+        	btnRedInstSpn.displayString = (btnRedInstSpn.enabled == true)? "Off" : "On";
+        }
+        
         
     }
 	
@@ -202,9 +254,9 @@ public class GuiEditControlBlock extends GuiScreen
 			
 	       
 		} 
-		xCoord.textboxKeyTyped(c, keyCode);
-		yCoord.textboxKeyTyped(c, keyCode);
-		zCoord.textboxKeyTyped(c, keyCode);
+		txtXCoord.textboxKeyTyped(c, keyCode);
+		txtYCoord.textboxKeyTyped(c, keyCode);
+		txtZCoord.textboxKeyTyped(c, keyCode);
 
 	}
 
@@ -215,12 +267,16 @@ public class GuiEditControlBlock extends GuiScreen
 		
 		
 		
-		this.fontRendererObj.drawString("X Off", width / 2 + 50, height / 4 + 20, 0xFFFFFF);
-		this.fontRendererObj.drawString("Y Off", width / 2 + 90, height / 4 + 20, 0xFFFFFF);
-		this.fontRendererObj.drawString("Z Off", width / 2 + 130, height / 4 + 20, 0xFFFFFF);
-		xCoord.drawTextBox();
-		yCoord.drawTextBox();
-		zCoord.drawTextBox();
+		this.fontRendererObj.drawString("X Off", width / 2 + 50, height / 4 - 40, 0xFFFFFF);
+		this.fontRendererObj.drawString("Y Off", width / 2 + 90, height / 4 - 40, 0xFFFFFF);
+		this.fontRendererObj.drawString("Z Off", width / 2 + 130, height / 4 - 40, 0xFFFFFF);
+		txtXCoord.drawTextBox();
+		txtYCoord.drawTextBox();
+		txtZCoord.drawTextBox();
+		
+		txtSpnCount.drawTextBox();
+		txtSpnFreq.drawTextBox();
+		txtSpnDelay.drawTextBox();
 	
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
