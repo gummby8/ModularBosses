@@ -22,6 +22,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -31,6 +32,9 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 
@@ -44,8 +48,8 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	
 	public boolean powerBlock;
 		
-	public ArrayList<Integer> spawnList = new ArrayList<Integer>();
-	public ArrayList<Integer> foundList = new ArrayList<Integer>();
+	public ArrayList<String> spawnList = new ArrayList<String>();
+	public ArrayList<String> foundList = new ArrayList<String>();
 	public boolean triggerPower;
 	public boolean inputPower;
 	
@@ -73,36 +77,37 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 
 
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		message = compound.getString("message");
-		int[] ints = compound.getIntArray("spawnList");
-		
-		List<Integer> intList = new ArrayList<Integer>();
-	    for (int index = 0; index < ints.length; index++)
-	    {
-	        intList.add(ints[index]);
-	    }
-		
-		spawnList = new ArrayList<Integer>(intList);
-		
+		 NBTTagList tagList = compound.getTagList("MyStringList", Constants.NBT.TAG_COMPOUND);
+		 //System.out.println("TagCount = " + tagList.tagCount());
+		 for(int i = 0; i < tagList.tagCount(); i++) {
+		  NBTTagCompound tag = tagList.getCompoundTagAt(i);
+		  String s = tag.getString("MyString" + i);
+		  //System.out.println("ReadNBT = " + s);
+		  spawnList.add(i, s);
+		 }
+		 message = compound.getString("message");
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		compound.setString("message", message);
-		if (spawnList.size() != 0){
-		
-			 	int s = spawnList.size();
-			    int[] intArray = new int[s];
-			    for (int i = 0; i < s; i++) {
-			        intArray[i] = spawnList.get(i).intValue();
-			    }
-			
-		compound.setIntArray("spawnList", intArray);
+		NBTTagList tagList = new NBTTagList();
+		 for(int i = 0; i < spawnList.size(); i++){
+		  String s = spawnList.get(i);
+	  if(s != null){
+		  //System.out.println("WriteNBT = " + s);
+		  NBTTagCompound tag = new NBTTagCompound();
+		  tag.setString("MyString" + i, s);
+		  tagList.appendTag(tag);
+	  		}
 		}
+		 compound.setTag("MyStringList", tagList);
+		 compound.setString("message", message);
+		 markDirty();
 	}
 
 	@Override
@@ -125,7 +130,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 		if (triggerPower && !this.worldObj.isRemote){
 			findMobs();
-			spawnList = new ArrayList<Integer>(foundList);
+			spawnList = new ArrayList<String>(foundList);
 			while (spawnList.size() < 5){
 				spawnCreature(this.worldObj, message, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
 			}
@@ -136,9 +141,9 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			int time = 10 * 20; // 20 ticks per second times 10 seconds
 		if (this.ticksExisted % time == (time - 1) && inputPower && !this.worldObj.isRemote) { // if you check against 0, it will drop an item immediately every time the world loads
 			findMobs();
-	        System.out.println("spawnList = " + spawnList.size());
-	        System.out.println("foundList = " + foundList.size());
-			spawnList = new ArrayList<Integer>(foundList);
+	        //System.out.println("spawnList = " + spawnList.size());
+	        //System.out.println("foundList = " + foundList.size());
+			spawnList = new ArrayList<String>(foundList);
 			
 			if (spawnList.size() < 5){
 				spawnCreature(this.worldObj, message, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
@@ -158,10 +163,10 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
         while (iterator.hasNext())
         {
             Entity entity = (Entity)iterator.next();
-            System.out.println(entity.getUniqueID());
-        	if (spawnList.contains(entity.getEntityId())){
-        		foundList.add(entity.getEntityId());
-        		//System.out.println("found = " + entity.getEntityId());
+            
+        	if (spawnList.contains(entity.getUniqueID().toString())){
+        		foundList.add(entity.getUniqueID().toString());
+        		System.out.println(entity.getUniqueID().toString());
         	}
         }
         
@@ -181,7 +186,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 			entityliving.rotationYawHead = entityliving.rotationYaw;
 			entityliving.renderYawOffset = entityliving.rotationYaw;
-			spawnList.add(entity.getEntityId());
+			spawnList.add(entity.getUniqueID().toString());
 			world.spawnEntityInWorld(entity);
 			entityliving.playLivingSound();
 			System.out.println("Spawning");
