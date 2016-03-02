@@ -41,30 +41,37 @@ import com.google.common.collect.Maps;
 @SideOnly(Side.CLIENT)
 public class GuiEditControlBlock extends GuiScreen
 {
+
+
 	private final TileEntityControlBlock te;
 
 	private String message;
 	private GuiEditControlBlock.List list;
-    private GuiTextField txtXCoord;
-    private GuiTextField txtYCoord;
-    private GuiTextField txtZCoord;
+    
     private GuiTextField txtSpnFreq;
-    private GuiTextField txtSpnDelay;
+    //private GuiTextField txtSpnDelay;
     private GuiTextField txtSpnCount;
+    private String StringtxtSpnFreq;
+    //private String StringtxtSpnDelay;
+    private String StringtxtSpnCount;
+	private int inttxtSpnFreq = 1;
+	//private int inttxtSpnDelay;
+	private int inttxtSpnCount = 0;
     
 	private GuiButton btnDone;
 	private GuiButton btnScrollUp;
 	private GuiButton btnScrollDn;
-	private GuiButton btnRedPwrReq;
-	private GuiButton btnRedPwrOut;
-	private GuiButton btnRedInstSpn;
+	private GuiButton btnBorder;
     
-    String StringtxtXCoord;
-    String StringtxtYCoord;
-    String StringtxtZCoord;
-    int inttxtXCoord;
-    int inttxtYCoord;
-    int inttxtZCoord;
+	private GuiTextField txtXCoord;
+    private GuiTextField txtYCoord;
+    private GuiTextField txtZCoord;
+    private String StringtxtXCoord;
+    private String StringtxtYCoord;
+    private String StringtxtZCoord;
+    int inttxtXCoord = 10;
+    int inttxtYCoord = 10;
+    int inttxtZCoord = 10;
 	
 	public GuiEditControlBlock(TileEntityControlBlock te) {
 		this.te = te;
@@ -74,40 +81,47 @@ public class GuiEditControlBlock extends GuiScreen
 	public void initGui() {
 		buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
+		
+		 String[] mesArray = this.te.getMessage().split("\\|", -1);
+		//System.out.println("ReadNBT = " + mesArray.length);
+		 if (mesArray.length >= 7){
+			 inttxtXCoord = Integer.parseInt(mesArray[1]);
+			 inttxtYCoord = Integer.parseInt(mesArray[2]);
+			 inttxtZCoord = Integer.parseInt(mesArray[3]);
+			 inttxtSpnFreq = Integer.parseInt(mesArray[4]);
+			 inttxtSpnCount = Integer.parseInt(mesArray[5]);
+		 }
+		
 
 		txtXCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 - 30, 30, 14);
 		txtXCoord.setCanLoseFocus(true);
-		//txtXCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtXCoord.setText(inttxtXCoord + "");
 		
 		txtYCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 - 30, 30, 14);
 		txtYCoord.setCanLoseFocus(true);
-		//txtYCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtYCoord.setText(inttxtYCoord + "");
 		
 		txtZCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 - 30, 30, 14);
 		txtZCoord.setCanLoseFocus(true);
-		//txtZCoord.setText("HHHHHHHHHHHHHHHERP");
-
-		txtSpnCount = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 + 30, 30, 14);
-		txtSpnCount.setCanLoseFocus(true);
-		//txtXCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtZCoord.setText(inttxtZCoord + "");
 		
-		txtSpnFreq = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 + 30, 30, 14);
+		txtSpnFreq = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 10, 60, 14);
 		txtSpnFreq.setCanLoseFocus(true);
-		//txtYCoord.setText("HHHHHHHHHHHHHHHERP");
+		txtSpnFreq.setText(inttxtSpnFreq + "");
 		
-		txtSpnDelay = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 + 30, 30, 14);
+		txtSpnCount = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 50, 60, 14);
+		txtSpnCount.setCanLoseFocus(true);
+		txtSpnCount.setText(inttxtSpnCount + "");
+		
+		/**
+		txtSpnDelay = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 90, 60, 14);
 		txtSpnDelay.setCanLoseFocus(true);
 		//txtZCoord.setText("HHHHHHHHHHHHHHHERP");
+		*/
 		
-		btnRedPwrReq = new GuiButton(10, width / 2 + 50, height / 4 + 105, 100 , 20 ,"Redstone");
-		buttonList.add(btnRedPwrReq);
+		btnBorder = new GuiButton(10, width / 2 + 180, height / 4 + 160, 45 , 20 ,"Border");
+		buttonList.add(btnBorder);
 		
-		btnRedPwrOut = new GuiButton(10, width / 2 + 50, height / 4 + 85, 100 , 20 ,"Redstone");
-		buttonList.add(btnRedPwrOut);
-		
-		btnRedInstSpn = new GuiButton(10, width / 2 + 50, height / 4 + 65, 100 , 20 ,"Redstone");
-		buttonList.add(btnRedInstSpn);
-
 		btnDone = new GuiButton(0, width / 2 + 50, height / 4 + 160, 100 , 20 , "Done");
 		buttonList.add(btnDone);
 		
@@ -121,25 +135,45 @@ public class GuiEditControlBlock extends GuiScreen
 
 
 		StringtxtXCoord = txtXCoord.getText().replaceAll("[^0-9]","");
-		if (StringtxtXCoord != null && !StringtxtXCoord.isEmpty()){
+		if (StringtxtXCoord != null && !StringtxtXCoord.isEmpty() && StringtxtXCoord != ""){
 		inttxtXCoord = Integer.parseInt(StringtxtXCoord);
-		System.out.println(inttxtXCoord);
+		//System.out.println(inttxtXCoord);
 		}
 		
 		StringtxtYCoord = txtYCoord.getText().replaceAll("[^0-9]","");
-		if (StringtxtYCoord != null && !StringtxtYCoord.isEmpty()){
+		if (StringtxtYCoord != null && !StringtxtYCoord.isEmpty() && StringtxtYCoord != ""){
 		inttxtYCoord = Integer.parseInt(StringtxtYCoord);
-		System.out.println(inttxtYCoord);
+		//System.out.println(inttxtYCoord);
 		}
 		
 		StringtxtZCoord = txtZCoord.getText().replaceAll("[^0-9]","");
-		if (StringtxtZCoord != null && !StringtxtZCoord.isEmpty()){
+		if (StringtxtZCoord != null && !StringtxtZCoord.isEmpty() && StringtxtZCoord != ""){
 		inttxtZCoord = Integer.parseInt(StringtxtZCoord);
-		System.out.println(inttxtZCoord);
+		//System.out.println(inttxtZCoord);
 		}
 		
-		message = this.list.selectedName;
-		if (message != null || message != ""){
+		StringtxtSpnFreq = txtSpnFreq.getText().replaceAll("[^0-9]","");
+		if (StringtxtSpnFreq != null && !StringtxtSpnFreq.isEmpty() && StringtxtSpnFreq != ""){
+		inttxtSpnFreq = Integer.parseInt(StringtxtSpnFreq);
+		//System.out.println(inttxtSpnFreq);
+		}
+		
+		/**
+		StringtxtSpnDelay = txtSpnDelay.getText().replaceAll("[^0-9]","");
+		if (StringtxtSpnDelay != null && !StringtxtSpnDelay.isEmpty()){
+		inttxtSpnDelay = Integer.parseInt(StringtxtSpnDelay);
+		//System.out.println(inttxtSpnDelay);
+		}
+		*/
+		
+		StringtxtSpnCount = txtSpnCount.getText().replaceAll("[^0-9]","");
+		if (StringtxtSpnCount != null && !StringtxtSpnCount.isEmpty() && StringtxtSpnCount != ""){
+		inttxtSpnCount = Integer.parseInt(StringtxtSpnCount);
+		//System.out.println(inttxtSpnCount);
+		}
+		
+		message = this.list.selectedName + "|" + inttxtXCoord + "|" + inttxtYCoord + "|" + inttxtZCoord + "|" + inttxtSpnFreq + "|" + inttxtSpnCount + "|" + btnBorder.displayString;
+		if (message != null && message != ""){
 			te.setMessage(message);
 			PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(te));
 		}
@@ -177,24 +211,16 @@ public class GuiEditControlBlock extends GuiScreen
         	txtSpnFreq.setText("");
         }
         
+        /**
         txtSpnDelay.mouseClicked(x, y, button);
         if (button == 1 && x >= txtSpnDelay.xPosition && x < txtSpnDelay.xPosition + txtSpnDelay.width && y >= txtSpnDelay.yPosition && y < txtSpnDelay.yPosition + txtSpnDelay.height) {
         	txtSpnDelay.setText("");
         }
+        */
         
-        if (button == 0 && x >= btnRedPwrReq.xPosition && x < btnRedPwrReq.xPosition + btnRedPwrReq.width && y >= btnRedPwrReq.yPosition && y < btnRedPwrReq.yPosition + btnRedPwrReq.height) {
-        	btnRedPwrReq.enabled = (btnRedPwrReq.enabled == true)? false : true;
-        	btnRedPwrReq.displayString = (btnRedPwrReq.enabled == true)? "Off" : "On";
-        }
-        
-        if (button == 0 && x >= btnRedPwrOut.xPosition && x < btnRedPwrOut.xPosition + btnRedPwrOut.width && y >= btnRedPwrOut.yPosition && y < btnRedPwrOut.yPosition + btnRedPwrOut.height) {
-        	btnRedPwrOut.enabled = (btnRedPwrOut.enabled == true)? false : true;
-        	btnRedPwrOut.displayString = (btnRedPwrOut.enabled == true)? "Off" : "On";
-        }
-        
-        if (button == 0 && x >= btnRedInstSpn.xPosition && x < btnRedInstSpn.xPosition + btnRedInstSpn.width && y >= btnRedInstSpn.yPosition && y < btnRedInstSpn.yPosition + btnRedInstSpn.height) {
-        	btnRedInstSpn.enabled = (btnRedInstSpn.enabled == true)? false : true;
-        	btnRedInstSpn.displayString = (btnRedInstSpn.enabled == true)? "Off" : "On";
+        if (button == 0 && x >= btnBorder.xPosition && x < btnBorder.xPosition + btnBorder.width && y >= btnBorder.yPosition && y < btnBorder.yPosition + btnBorder.height) {
+        	btnBorder.enabled = (btnBorder.enabled == true)? false : true;
+        	btnBorder.displayString = (btnBorder.enabled == true)? "Border" : "On";
         }
         
         
@@ -257,7 +283,10 @@ public class GuiEditControlBlock extends GuiScreen
 		txtXCoord.textboxKeyTyped(c, keyCode);
 		txtYCoord.textboxKeyTyped(c, keyCode);
 		txtZCoord.textboxKeyTyped(c, keyCode);
-
+		
+		txtSpnFreq.textboxKeyTyped(c, keyCode);
+		//txtSpnDelay.textboxKeyTyped(c, keyCode);
+		txtSpnCount.textboxKeyTyped(c, keyCode);
 	}
 
 	@Override
@@ -270,13 +299,18 @@ public class GuiEditControlBlock extends GuiScreen
 		this.fontRendererObj.drawString("X Off", width / 2 + 50, height / 4 - 40, 0xFFFFFF);
 		this.fontRendererObj.drawString("Y Off", width / 2 + 90, height / 4 - 40, 0xFFFFFF);
 		this.fontRendererObj.drawString("Z Off", width / 2 + 130, height / 4 - 40, 0xFFFFFF);
+		
+		//this.fontRendererObj.drawString("Spawn Delay", width / 2 + 75, height / 4 + 0, 0xFFFFFF);
+		this.fontRendererObj.drawString("Spawn Frequency", width / 2 + 60, height / 4 + 0, 0xFFFFFF);
+		this.fontRendererObj.drawString("Spawn Count", width / 2 + 75, height / 4 + 40, 0xFFFFFF);
+		
 		txtXCoord.drawTextBox();
 		txtYCoord.drawTextBox();
 		txtZCoord.drawTextBox();
 		
 		txtSpnCount.drawTextBox();
 		txtSpnFreq.drawTextBox();
-		txtSpnDelay.drawTextBox();
+		//txtSpnDelay.drawTextBox();
 	
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -301,11 +335,13 @@ public class GuiEditControlBlock extends GuiScreen
         private static final String __OBFID = "CL_00000699";
         
 
-        public List(Minecraft mcIn, String preSetName)
+        public List(Minecraft mcIn, String message)
         {
             super(mcIn, GuiEditControlBlock.this.width / 2, GuiEditControlBlock.this.height, 0, GuiEditControlBlock.this.height, 18);
-
-            this.selectedName = preSetName;
+            
+            String[] mesArray = message.split("\\|", -1);
+            
+            this.selectedName = mesArray[0];
             
             Iterator iterator = EntityList.getEntityNameList().iterator();
             

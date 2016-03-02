@@ -3,8 +3,9 @@
     "textures": {
         "top": "mb:blocks/control_block/control_block",
         "south": "mb:blocks/control_block/input",
-        "east": "mb:blocks/control_block/",
         "west": "mb:blocks/control_block/trigger",
-        "north": "mb:blocks/control_block/output"
+        "front": "mb:blocks/control_block/output",
+        "east": "mb:blocks/control_block/blank",
+        "bottom": "mb:blocks/control_block/blank"
     }
 }

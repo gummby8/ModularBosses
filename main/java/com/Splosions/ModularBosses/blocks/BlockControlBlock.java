@@ -83,15 +83,15 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing face, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(pos);
-			if (world.isRemote && te instanceof TileEntityControlBlock) {
+			if (world.isRemote && te instanceof TileEntityControlBlock && player.getHeldItem() == null) {
 			
-					System.out.println("GUI?");
+					//System.out.println("GUI?");
 					player.openGui(ModularBosses.instance, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
 
 			}
 			
 			String msg = ((TileEntityControlBlock) te).getMessage();
-			System.out.println(msg);
+			//System.out.println(msg);
 		return true;
 	}
 	
@@ -189,8 +189,8 @@ public class BlockControlBlock extends Block implements IVanillaRotation
     	TileEntityControlBlock te = (TileEntityControlBlock) worldIn.getTileEntity(pos);
         EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
         EnumFacing enumfacing1 = enumfacing.rotateY();
-        te.triggerPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1) != 0 ? true : false;
-        te.inputPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing) != 0 ? true : false;
+        te.triggerPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1) != 0 ? 1 : 0;
+        te.inputPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing) != 0 ? 1 : 0;
         //System.out.println("Trigger = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1));
         //System.out.println("Input = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing));
     }

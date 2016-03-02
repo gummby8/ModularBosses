@@ -1,5 +1,6 @@
 package com.Splosions.ModularBosses.blocks.tileentity;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -50,11 +51,20 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		
 	public ArrayList<String> spawnList = new ArrayList<String>();
 	public ArrayList<String> foundList = new ArrayList<String>();
-	public boolean triggerPower;
-	public boolean inputPower;
+	public int triggerPower = 0;
+	public int inputPower = 0;
 	
+	String spawnMob;
+	int xOff = 1;
+	int yOff = 1;
+	int zOff = 1;
+	int spawnFreq = 1;
+	//int spawnDelay;
+	int spawnCount = 0;
 	
-
+	long targetTime = 0;
+	boolean startTime = false;
+	
 	
 	public TileEntityControlBlock() {}
 
@@ -71,6 +81,16 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	 */
 	public void setMessage(String message) {
 		this.message = message;
+		String[] mesArray = message.split("\\|", -1);
+		 if (mesArray.length >= 7){
+			spawnMob = mesArray[0];
+			xOff = Integer.parseInt(mesArray[1]);
+			yOff = Integer.parseInt(mesArray[2]);
+			zOff = Integer.parseInt(mesArray[3]);
+			spawnFreq = (Integer.parseInt(mesArray[4]) > 0) ? Integer.parseInt(mesArray[4]) : 1 ;
+			//spawnDelay = Integer.parseInt(mesArray[5]);
+			spawnCount = Integer.parseInt(mesArray[5]);
+		 }
 		markDirty();
 	}
 	
@@ -89,7 +109,11 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		  //System.out.println("ReadNBT = " + s);
 		  spawnList.add(i, s);
 		 }
+		 
 		 message = compound.getString("message");
+		 setMessage(message);
+		triggerPower = compound.getInteger("triggerPower");
+		inputPower = compound.getInteger("inputPower");
 	}
 
 	@Override
@@ -106,8 +130,13 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	  		}
 		}
 		 compound.setTag("MyStringList", tagList);
+		 
 		 compound.setString("message", message);
-		 markDirty();
+		 setMessage(message);
+		 
+			compound.setInteger("triggerPower", triggerPower);
+			compound.setInteger("inputPower", inputPower);
+			markDirty();
 	}
 
 	@Override
@@ -128,37 +157,32 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		ticksExisted++;
 		//called each tick just like onUpdate
 
-		if (triggerPower && !this.worldObj.isRemote){
+		if (triggerPower == 1 && !this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()){
 			findMobs();
 			spawnList = new ArrayList<String>(foundList);
-			while (spawnList.size() < 5){
-				spawnCreature(this.worldObj, message, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
+			while (spawnList.size() < spawnCount){
+				spawnCreature(this.worldObj, spawnMob, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
 			}
 		}
 		
-		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {findMobs();}//searches for mobs every 1 second		
+		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {findMobs();}//searches for mobs every 1 second
 		
-			int time = 10 * 20; // 20 ticks per second times 10 seconds
-		if (this.ticksExisted % time == (time - 1) && inputPower && !this.worldObj.isRemote) { // if you check against 0, it will drop an item immediately every time the world loads
-			findMobs();
-	        //System.out.println("spawnList = " + spawnList.size());
-	        //System.out.println("foundList = " + foundList.size());
+		
+		//time = spawnFreq * 20; // 20 ticks per second times spawnFreq seconds
+		if (Instant.now().getEpochSecond() >= targetTime && inputPower == 1 && !this.worldObj.isRemote) {
 			spawnList = new ArrayList<String>(foundList);
-			
-			if (spawnList.size() < 5){
-				spawnCreature(this.worldObj, message, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
-			} else {
-				System.out.println("Better count your chickens");
+			if (spawnList.size() < spawnCount){
+				spawnCreature(this.worldObj, spawnMob, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
+				targetTime = Instant.now().getEpochSecond() + spawnFreq;
+				startTime = true;
 			}
-					
-			
 		} 
 	}
 	
 	
 	public void findMobs(){
 		foundList.clear();
-		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, this.getRenderBoundingBox().expand(20, 20, 20));
+		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, this.getRenderBoundingBox().expand(xOff, yOff, zOff));
 		Iterator iterator = list.iterator();
         while (iterator.hasNext())
         {
@@ -166,8 +190,13 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
             
         	if (spawnList.contains(entity.getUniqueID().toString())){
         		foundList.add(entity.getUniqueID().toString());
-        		System.out.println(entity.getUniqueID().toString());
+        		//System.out.println(entity.getUniqueID().toString());
         	}
+        }
+        
+        if (startTime && foundList.size() < spawnCount){
+        	targetTime = Instant.now().getEpochSecond() + spawnFreq;
+        	startTime = false;
         }
         
         this.worldObj.notifyNeighborsOfStateChange(pos, blockType);
@@ -189,7 +218,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			spawnList.add(entity.getUniqueID().toString());
 			world.spawnEntityInWorld(entity);
 			entityliving.playLivingSound();
-			System.out.println("Spawning");
+			//System.out.println("Spawning");
 		} else if (entity == null){
 			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not a valid name");
 		} else {

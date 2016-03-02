@@ -34,7 +34,7 @@ public class SetControlBlockMessagePacket extends AbstractServerMessage<SetContr
 	@Override
 	protected void write(PacketBuffer buffer) throws IOException {
 		buffer.writeLong(this.pos.toLong());
-		System.out.println("Write? " + this.pos.getX());
+		//System.out.println("Write? " + this.pos.getX());
 		ByteBufUtils.writeUTF8String(buffer, this.message);
 	}
 
@@ -43,8 +43,7 @@ public class SetControlBlockMessagePacket extends AbstractServerMessage<SetContr
 		TileEntity te = player.worldObj.getTileEntity(this.pos);
 		if (te instanceof TileEntityControlBlock) {
 			((TileEntityControlBlock) te).setMessage(this.message);
-			System.out.println("Processed? " + this.message);
-			System.out.println("Processed? " + this.pos.getX());
+			//System.out.println("Processed? " + this.message);
 		}
 	}
 }
