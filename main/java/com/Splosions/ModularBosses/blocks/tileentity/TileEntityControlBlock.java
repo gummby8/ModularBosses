@@ -16,6 +16,7 @@ import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.client.OpenControlBlockEditorPacket;
 import com.jcraft.jorbis.Block;
 
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
@@ -165,19 +166,28 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			}
 		}
 		
+		
 		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {findMobs();}//searches for mobs every 1 second
 		
 		
-		//time = spawnFreq * 20; // 20 ticks per second times spawnFreq seconds
-		if (Instant.now().getEpochSecond() >= targetTime && inputPower == 1 && !this.worldObj.isRemote) {
-			spawnList = new ArrayList<String>(foundList);
-			if (spawnList.size() < spawnCount){
-				spawnCreature(this.worldObj, spawnMob, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
-				targetTime = Instant.now().getEpochSecond() + spawnFreq;
-				startTime = true;
-			}
-		} 
+
+		if (foundList.size() < spawnCount && inputPower == 1){
+			//System.out.println("DERP");
+			if (Instant.now().getEpochSecond() >= targetTime && inputPower == 1 && !this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
+				findMobs();
+				spawnList = new ArrayList<String>(foundList);
+					while (spawnList.size() < spawnCount){
+						spawnCreature(this.worldObj, spawnMob, this.pos.getX(),this.pos.getY() + 2, this.pos.getZ());
+					}
+				}
+		} else {
+			targetTime = Instant.now().getEpochSecond() + spawnFreq;
+		}
 	}
+	
+	
+	
+	
 	
 	
 	public void findMobs(){
@@ -193,12 +203,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
         		//System.out.println(entity.getUniqueID().toString());
         	}
         }
-        
-        if (startTime && foundList.size() < spawnCount){
-        	targetTime = Instant.now().getEpochSecond() + spawnFreq;
-        	startTime = false;
-        }
-        
         this.worldObj.notifyNeighborsOfStateChange(pos, blockType);
 	}
 	
@@ -212,6 +216,15 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		//System.out.println("Entity = " + entity);
 		if (entity instanceof EntityLiving && entity != null) {
 			EntityLiving entityliving = (EntityLiving) entity;
+			Random rn = new Random();
+			x += (rn.nextInt(4) - 2);
+			z += (rn.nextInt(4) - 2);
+		
+			/**
+			BlockPos pos = new BlockPos(x, y, z);
+			IBlockState block = this.worldObj.getBlockState(pos);
+			block.getBlock().getMaterial();
+			*/
 			entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 			entityliving.rotationYawHead = entityliving.rotationYaw;
 			entityliving.renderYawOffset = entityliving.rotationYaw;
@@ -219,6 +232,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			world.spawnEntityInWorld(entity);
 			entityliving.playLivingSound();
 			//System.out.println("Spawning");
+		
 		} else if (entity == null){
 			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not a valid name");
 		} else {
