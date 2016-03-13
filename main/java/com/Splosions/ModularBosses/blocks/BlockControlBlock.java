@@ -37,6 +37,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.RegistryNamespacedDefaultedByKey;
 import net.minecraft.util.StringUtils;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
@@ -92,6 +93,8 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 			
 			String msg = ((TileEntityControlBlock) te).getMessage();
 			//System.out.println(msg);
+			
+			System.out.println(net.minecraftforge.fml.common.registry.GameData.getBlockRegistry());
 		return true;
 	}
 	
@@ -104,6 +107,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 	@Override
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
 		if (world.isRemote) {
+			
 			return;
 		}
 

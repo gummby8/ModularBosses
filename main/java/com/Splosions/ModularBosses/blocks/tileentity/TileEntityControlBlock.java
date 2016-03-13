@@ -93,7 +93,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			spawnCount = Integer.parseInt(mesArray[5]);
 		 }
 		markDirty();
-		System.out.println(this.message);
+		//System.out.println(this.message);
 	}
 	
 
