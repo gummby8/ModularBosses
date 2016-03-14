@@ -42,7 +42,7 @@ public abstract class EntityMobThrowable extends EntityThrowable
 		double zOff = (double)(r4 * FrontToBack) + (double)(r11 * SideToSide);
 		
 		setLocationAndAngles(shooter.posX + xOff, this.posY - YOffset, shooter.posZ + zOff, 0, 0);
-		System.out.println("derp");
+
 	}
 	
 	/**

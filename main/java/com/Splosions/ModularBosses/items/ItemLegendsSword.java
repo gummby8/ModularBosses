@@ -6,6 +6,7 @@ import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 import com.Splosions.ModularBosses.client.render.items.ModelItemLegendsSword;
 import com.Splosions.ModularBosses.util.Schematic;
 
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -28,9 +29,12 @@ public class ItemLegendsSword extends ItemSword {
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
-    	System.out.println(playerIn.posX);
-    	Schematic HI = new Schematic("ForestDungeon.schematic");
-    	HI.generate(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ);
+
+    	if (!worldIn.isRemote){
+    	Schematic HI = new Schematic("ForestDungeon.schematic", worldIn, playerIn.posX, playerIn.posY, playerIn.posZ);
+    	System.out.println("Schematic?");
+    	}
+    	//HI.generate(worldIn, playerIn.posX, playerIn.posY, playerIn.posZ);
         return itemStackIn;
     }
 	

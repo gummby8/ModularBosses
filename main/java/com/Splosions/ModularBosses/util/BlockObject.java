@@ -12,10 +12,10 @@ public class BlockObject {
    private IBlockState state;
    private String message;
    
-   public BlockObject(BlockPos pos, IBlockState state, String message) {
+   public BlockObject(BlockPos pos, IBlockState state) {
       this.pos = pos;
       this.state = state;
-      this.message = message;
+
     }
 
    public BlockPos getPos() {
@@ -25,10 +25,7 @@ public class BlockObject {
    public IBlockState getState() {
       return state;
    }
-   
-   public String getMessage() {
-	      return message;
-	   }
+
    
    public BlockPos getPosWithOffset(int x, int y, int z) {
       return new BlockPos(x + pos.getX(), y + pos.getY(), z + pos.getZ());

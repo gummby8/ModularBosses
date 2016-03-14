@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.google.common.primitives.UnsignedBytes;
@@ -37,7 +38,8 @@ public class Schematic {
    private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
    
-   public Schematic(String fileName) {
+   public Schematic(String fileName, World world, double x, double y, double z) {
+	   if (!world.isRemote){
       try { 
          InputStream is = Schematic.class.getResourceAsStream("/assets/mb/schematics/2.schematic"); 
          NBTTagCompound nbtdata = CompressedStreamTools.readCompressed(is);
@@ -64,74 +66,74 @@ public class Schematic {
              final NBTTagCompound mapping = nbtdata.getCompoundTag("SchematicaMapping");
              final Set<String> names = mapping.getKeySet();
              for (final String name : names) {
-            	 System.out.println(name);
                  oldToNew.put(mapping.getShort(name), (short) BLOCK_REGISTRY.getId(name));
              }
          }
 
          
-         //final ISchematic schematic = new Schematic(icon, width, height, length);
+
          int counter = 0;
-         for(int Y = 0; Y < height; Y++) {
-            for(int Z = 0; Z < length; Z++) {
-               for(int X = 0; X < width; X++) {
+         for(int i = 0; i < height; i++) {
+            for(int j = 0; j < length; j++) {
+               for(int k = 0; k < width; k++) {
                   int blockId = UnsignedBytes.toInt(blockIDs[counter]);
-                  
-                  
+                  //Checks the id reference Map                 
                   if ((id = oldToNew.get((short) blockId)) != null) {
                       blockId = id;
                   }
-                  
-                  
-                  
-                  
-                  BlockPos pos = new BlockPos(X, Y, Z);
+
+                  BlockPos pos = new BlockPos(k, i, j);
                   IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
+ 
                   
+                  /**
                   String message = null;
-                  
                   NBTTagList tagList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
-         		  
                   for(int i = 0; i < tagList.tagCount(); i++) {
          		  NBTTagCompound tag = tagList.getCompoundTagAt(i);
          		  String gotMessage = tag.getString("message");
-         		  int x = tag.getInteger("x");
-         		  int y = tag.getInteger("y");
-         		  int z = tag.getInteger("z");
+         		  int Xx = tag.getInteger("x");
+         		  int Yy = tag.getInteger("y");
+         		  int Zz = tag.getInteger("z");
          		  
-         		  if (x == X && y == Y && z == Z){
+         		  if (Xx == X && Yy == Y && Zz == Z){
          			  message = gotMessage;
+         			  
          		  }
+         		  
+         		  
          		 }
+                  */
                   
-
                   
-                	  blockObjects[counter] = new BlockObject(pos, state, message);
-                	  counter++;
-                  
+               	  blockObjects[counter] = new BlockObject(pos, state);
+               	  world.setBlockState(blockObjects[counter].getPosWithOffset((int) x, (int) y, (int) z), state);
+               	  counter++; 
                }
             }
          }
+         
+         NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
+
+         for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
+             try {
+                 TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+                 if (tileEntity != null) {
+                	 world.removeTileEntity(tileEntity.getPos().add(x, y, z));
+                     world.setTileEntity(tileEntity.getPos().add(x, y, z), tileEntity);
+                     System.out.println(tileEntity);
+                 }
+             } catch (Exception e) {
+                 ModularBosses.logger.warn("TileEntity failed to load properly!", e);
+             }
+         }
+         
          
       } catch(Exception e) {
          e.printStackTrace();
       }
    }
-   
-   
-   
-   public void generate(World world, double x, double y, double z) {
-      for(BlockObject obj : blockObjects) {
-         world.setBlockState(obj.getPosWithOffset((int) x, (int) y, (int) z), obj.getState());
-         if(obj.getMessage() != null){
-        	 TileEntity te = world.getTileEntity(obj.getPosWithOffset((int) x, (int) y, (int) z));
-     		if (te instanceof TileEntityControlBlock) {
-     			((TileEntityControlBlock) te).setMessage(obj.getMessage());
-     		}
-         }
-
-      }
+	   
    }
    
-
 }

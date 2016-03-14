@@ -30,6 +30,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
@@ -162,6 +163,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 	@Override
 	public void update() {
+		if(!this.worldObj.isRemote){
 		ticksExisted++;
 		//called each tick just like onUpdate
 
@@ -190,6 +192,8 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		} else {
 			targetTime = Instant.now().getEpochSecond() + spawnFreq;
 		}
+		
+		}
 	}
 	
 	
@@ -199,7 +203,13 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	
 	public void findMobs(){
 		foundList.clear();
-		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, this.getRenderBoundingBox().expand(xOff, yOff, zOff));
+		
+		int i = this.pos.getX();
+        int j = this.pos.getY();
+        int k = this.pos.getZ();
+        AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1)));
+        
+		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, yOff, zOff));
 		Iterator iterator = list.iterator();
         while (iterator.hasNext())
         {
