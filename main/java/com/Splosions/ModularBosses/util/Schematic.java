@@ -82,7 +82,7 @@ public class Schematic {
                       blockId = id;
                   }
 
-                  BlockPos pos = new BlockPos(k, i, j);
+                  //BlockPos pos = new BlockPos(k, i, j);
                   IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
  
                   
@@ -106,8 +106,8 @@ public class Schematic {
                   */
                   
                   
-               	  blockObjects[counter] = new BlockObject(pos, state);
-               	  world.setBlockState(blockObjects[counter].getPosWithOffset((int) x, (int) y, (int) z), state);
+               	  //blockObjects[counter] = new BlockObject(pos, state);
+               	  world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
                	  counter++; 
                }
             }
@@ -119,8 +119,13 @@ public class Schematic {
              try {
                  TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
                  if (tileEntity != null) {
-                	 world.removeTileEntity(tileEntity.getPos().add(x, y, z));
-                     world.setTileEntity(tileEntity.getPos().add(x, y, z), tileEntity);
+                	 NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
+                	 int Xx = tag.getInteger("x");
+            		 int Yy = tag.getInteger("y");
+            		 int Zz = tag.getInteger("z");
+                	 BlockPos bPos = new BlockPos(x + Xx, y + Yy, z + Zz);
+                	 world.removeTileEntity(bPos);
+                     world.setTileEntity(bPos, tileEntity);
                      System.out.println(tileEntity);
                  }
              } catch (Exception e) {
