@@ -93,8 +93,6 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 			
 			String msg = ((TileEntityControlBlock) te).getMessage();
 			//System.out.println(msg);
-			
-			System.out.println(net.minecraftforge.fml.common.registry.GameData.getBlockRegistry());
 		return true;
 	}
 	
@@ -106,11 +104,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 
 	@Override
 	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
-		if (world.isRemote) {
-			
-			return;
-		}
-
+		return;
 	}
 
 	@Override
@@ -201,9 +195,11 @@ public class BlockControlBlock extends Block implements IVanillaRotation
     
     protected int getPowerOnSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
+    	
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
-        return this.canPowerSide(block) ? (block == Blocks.redstone_wire ? ((Integer)iblockstate.getValue(BlockRedstoneWire.POWER)).intValue() : worldIn.getStrongPower(pos, side)) : 0;
+        //System.out.println(block.isProvidingWeakPower(worldIn, pos, iblockstate, side));
+        return this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0;
     }
     
     

@@ -207,9 +207,9 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();
-        AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1), (double)(k + 1)));
+        AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double)i, (double)j, (double)k, (double)(i + 1), (double)(j + 1 + yOff), (double)(k + 1)));
         
-		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, yOff, zOff));
+		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, 0, zOff));
 		Iterator iterator = list.iterator();
         while (iterator.hasNext())
         {
