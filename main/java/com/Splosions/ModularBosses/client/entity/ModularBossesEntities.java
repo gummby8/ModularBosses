@@ -19,6 +19,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
+import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
@@ -69,7 +70,8 @@ public class ModularBossesEntities
 		//EntityRegistry.registerModEntity(EntitySpiritShard.class, "Spirit Shard", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlackHole.class, "Black Hole", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityFlameShot.class, "Flame SHot", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
-		
+		EntityRegistry.registerModEntity(EntityCartographer.class, "Cartographer", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+	
 		
 		// MOBS and egg colors
 		//EntityRegistry.registerGlobalEntityID(EntityEyeTest.class, "Eye Test", ++modEntityIndex);
@@ -134,12 +136,13 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
 		//RenderingRegistry.registerEntityRenderingHandler(EntitySenseiSteve.class, new RenderSenseiSteve(new ModelSenseiSteve(), 2));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityTestDummy.class, new RenderTestDummy(new ModelTestDummy(), 0.7F));
-		
+		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
 		
 		//projectiles
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpSlimeBlob.class, new RenderSnowball(manager, ModularBossesItems.slimeblob, itemRender));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlameThrower.class, new RenderFlameThrower(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomFallingBlock.class, new RenderCustomFallingBlock(manager));
+
 		//RenderingRegistry.registerEntityRenderingHandler(EntityBlueWave.class, new RenderBlueWave());
 		//RenderingRegistry.registerEntityRenderingHandler(EntitySpiritShard.class, new RenderSpiritShard());
 		//RenderingRegistry.registerEntityRenderingHandler(EntityBlackHole.class, new RenderBlackHole());

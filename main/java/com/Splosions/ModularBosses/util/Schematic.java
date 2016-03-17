@@ -1,4 +1,5 @@
 package com.Splosions.ModularBosses.util;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -39,13 +40,35 @@ public class Schematic {
 
    
    public Schematic(String fileName, World world, double x, double y, double z) {
+	   /**
+	   File theDir = new File("./NNNNNNERPDERP");
+		// if the directory does not exist, create it
+		if (!theDir.exists()) {
+		    System.out.println("creating directory: ");
+		    boolean result = false;
+		    try{
+		        theDir.mkdir();
+		        result = true;
+		    } 
+		    catch(SecurityException se){
+		        //handle it
+		    }        
+		    if(result) {    
+		        System.out.println("DIR created");  
+		    }
+		}
+	   */
+	   
 	   if (!world.isRemote){
-      try { 
-         InputStream is = Schematic.class.getResourceAsStream("/assets/mb/schematics/2.schematic"); 
-         NBTTagCompound nbtdata = CompressedStreamTools.readCompressed(is);
+      try {
+    	  File file = new File(fileName);
+          NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
+    	  
+         //InputStream is = Schematic.class.getResourceAsStream("/assets/mb/schematics/2.schematic"); 
+         //NBTTagCompound nbtdata = CompressedStreamTools.readCompressed(is);
       
-         is.close();
-         //System.out.println("Schematic?");
+         //is.close();
+         
          width = nbtdata.getShort("Width");
          height = nbtdata.getShort("Height");
          length = nbtdata.getShort("Length");
