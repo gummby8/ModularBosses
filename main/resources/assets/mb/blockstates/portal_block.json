@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "mb:portal_block" },
+        "inventory": { "model": "mb:portal_block" }
+    }
+}

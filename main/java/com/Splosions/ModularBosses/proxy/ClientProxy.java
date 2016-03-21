@@ -7,8 +7,10 @@ import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.ICustomStateMapper;
 import com.Splosions.ModularBosses.blocks.ISpecialRenderer;
 import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.entity.ModularBossesEntities;
+import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPortalBlock;
 import com.Splosions.ModularBosses.items.IModItem;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.google.common.collect.Maps;
@@ -22,6 +24,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ClientProxy extends CommonProxy{
@@ -35,6 +38,10 @@ public class ClientProxy extends CommonProxy{
 	/** Accessible version of EffectRenderer's IParticleFactory map */
 	public static Map<Integer, IParticleFactory> particleFactoryMap;
 	
+	
+	public void registerTESR(){
+       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPortalBlock.class, new RenderTileEntityPortalBlock());
+    }
 	
 	
 	@Override

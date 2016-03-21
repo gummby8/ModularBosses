@@ -12,6 +12,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelParagon;
 import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
 import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
+import com.Splosions.ModularBosses.client.render.entity.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock;
 import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
@@ -19,7 +20,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
-import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderCartographer;
+import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
@@ -71,6 +72,7 @@ public class ModularBossesEntities
 		//EntityRegistry.registerModEntity(EntityBlackHole.class, "Black Hole", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityFlameShot.class, "Flame SHot", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityCartographer.class, "Cartographer", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityTeleportBiped.class, "Teleport Model", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 	
 		
 		// MOBS and egg colors
@@ -137,6 +139,7 @@ public class ModularBossesEntities
 		//RenderingRegistry.registerEntityRenderingHandler(EntitySenseiSteve.class, new RenderSenseiSteve(new ModelSenseiSteve(), 2));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityTestDummy.class, new RenderTestDummy(new ModelTestDummy(), 0.7F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
 		
 		//projectiles
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpSlimeBlob.class, new RenderSnowball(manager, ModularBossesItems.slimeblob, itemRender));

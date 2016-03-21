@@ -78,9 +78,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		return message;
 	}
 
-	/**
-	 * Sets the message to display when a Gossip Stone is activated while wearing the Mask of Truth
-	 */
+
 	public void setMessage(String message) {
 		this.message = message;
 		String[] mesArray = message.split("\\|", -1);
@@ -106,18 +104,13 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		super.readFromNBT(compound);
 		 NBTTagList tagList = compound.getTagList("MyStringList", Constants.NBT.TAG_COMPOUND);
 		 //System.out.println("TagCount = " + tagList.tagCount());
+		
 		 for(int i = 0; i < tagList.tagCount(); i++) {
 		  NBTTagCompound tag = tagList.getCompoundTagAt(i);
 		  String s = tag.getString("MyString" + i);
 		  //System.out.println("ReadNBT = " + s);
 		  spawnList.add(i, s);
 		 }
-		 
-		 
-		 
-		 
-		 
-		 
 		 
 		 message = compound.getString("message");
 		 setMessage(message);

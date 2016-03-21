@@ -135,6 +135,7 @@ public class EntityCartographer extends Entity
             }
             dataArr.add(club); // Add the "club" info to the list of clubs.
         }
+        dataBR.close();
     }
     
     

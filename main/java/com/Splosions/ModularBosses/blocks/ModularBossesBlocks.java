@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.items.ItemModBlock;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
@@ -17,7 +18,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModularBossesBlocks
 {
 	public static Block
-	controlBlock;
+	controlBlock,
+	portalBlock;
 	
 	/**
 	 * Call during FMLPreInitializationEvent to initialize and register all blocks
@@ -32,6 +34,10 @@ public class ModularBossesBlocks
 		controlBlock = new BlockControlBlock(Material.rock).setUnlocalizedName("control_block");
 		GameRegistry.registerBlock(controlBlock, ItemModBlock.class, controlBlock.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityControlBlock.class, Reference.MOD_ID + ":tileEntityControlBlock");
+		
+		portalBlock = new BlockPortalBlock(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_block");
+		GameRegistry.registerBlock(portalBlock, ItemModBlock.class, portalBlock.getUnlocalizedName().substring(5));
+		GameRegistry.registerTileEntity(TileEntityPortalBlock.class, Reference.MOD_ID + ":tileEntityPortalBlock");
 		
 		
 		// register block items for creative tab comparator sorting:

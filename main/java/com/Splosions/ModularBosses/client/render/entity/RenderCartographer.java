@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.client.render.entity.projectiles;
+package com.Splosions.ModularBosses.client.render.entity;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.OpenGlHelper;

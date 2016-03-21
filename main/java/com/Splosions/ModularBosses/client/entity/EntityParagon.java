@@ -360,7 +360,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
         {
             for (int i = 0; i < 2; ++i)
             {
-              //  this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 3, 0, this.motionZ * 3, new int[0]);
+                this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 3, 0, this.motionZ * 3, new int[0]);
                // this.worldObj.spawnParticle(EnumParticleTypes.REDSTONE, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 2.5, 0, this.motionZ * 2.5, new int[0]);
                // this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, this.posX + (this.rand.nextDouble() - 0.5D), this.posY + 4.5D + this.rand.nextDouble(), this.posZ + this.rand.nextDouble() - 0.5D, this.motionX * 4, 0, this.motionZ * 4, new int[0]);
             }
