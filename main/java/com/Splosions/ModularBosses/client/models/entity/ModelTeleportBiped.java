@@ -24,13 +24,18 @@ public class ModelTeleportBiped extends ModelBase
     public ModelRenderer bipedRightLeg;
     /** The Biped's Left Leg */
     public ModelRenderer bipedLeftLeg;
+    
+    public ModelRenderer bipedHeadwear;
    
 
 
     public ModelTeleportBiped()
     {
-        this.textureWidth = 16;
-        this.textureHeight = 16;
+        this.textureWidth = 64;
+        this.textureHeight = 64;
+        this.bipedHeadwear = new ModelRenderer(this, 32, 0);
+        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8);
+        this.bipedHeadwear.setRotationPoint(0.0F, 0.0F, 0.0F);
         this.bipedHead = new ModelRenderer(this, 0, 0);
         this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8, 8, 8);
         this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
@@ -67,7 +72,7 @@ public class ModelTeleportBiped extends ModelBase
             this.bipedLeftArm.render(f5);
             this.bipedRightLeg.render(f5);
             this.bipedLeftLeg.render(f5);
- 
+            this.bipedHeadwear.render(f5);
         
 
         GlStateManager.popMatrix();

@@ -28,6 +28,10 @@ import com.google.common.base.Objects;
 public class RenderTeliportBiped extends Render
 {
 	protected ModelBase model;
+	float rot = 0;
+	float wScale = 1.3F;
+	float hScale = 1.3F;
+	float yOff = 0.5F;
 	
 	private  ResourceLocation texture = new ResourceLocation("mb:textures/mobs/blank.png");
 
@@ -47,15 +51,42 @@ public class RenderTeliportBiped extends Render
 	public void renderEntityModel(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntityTeleportBiped ent = (EntityTeleportBiped) entity;
 		
+		//wScale = 1.3f;
+		//hScale = 1.3f;
+		//yOff = 0.5F;
+
+		if (entity.ticksExisted <= 50 ){
+		wScale = 1.3f - (entity.ticksExisted * 0.02F);
+		wScale = (wScale <= 0.3F)? 0.3F : wScale ;
+		
+		hScale = 1.3f + (entity.ticksExisted * 0.02F);
+		hScale = (hScale >= 2.7F)? 2.7F : hScale ;
+		
+		yOff = 0.5F + (entity.ticksExisted * 0.035F);
+		yOff = (yOff >= 2F)? 2F : yOff ;
+		}
+
+		
+		if (entity.ticksExisted >= 70 ){
+		wScale = 1.3f - (entity.ticksExisted * 0.02F);
+		wScale = (wScale <= 0.3F)? 0.3F : wScale ;
+		
+		hScale = 2.7f - ((entity.ticksExisted - 70) * 0.27F);
+		hScale = (hScale >= 2.7F)? 2.7F : hScale ;
+		
+		yOff = 2F - ((entity.ticksExisted - 70) * 0.1F);
+		yOff = (yOff >= 2F)? 2F : yOff ;
+		}
+		
+		
+		rot = entity.ticksExisted * entity.ticksExisted; 
 		
 		GL11.glPushMatrix();
-		float scale = 1.3f;
 		bindTexture(getEntityTexture(ent));
-		
-		GL11.glTranslated(x, y + 0.5f, z);
-		GL11.glScalef(scale, scale, scale);
+		GL11.glTranslated(x, y + yOff, z);
+		GL11.glScalef(wScale, hScale, wScale);
 		GL11.glRotatef(180, 1, 0, 0);
-		GL11.glRotatef(yaw + (entity.ticksExisted * 50), 0, 1F, 0);
+		GL11.glRotatef(yaw + rot , 0, 1F, 0); //+ (entity.ticksExisted * 50)
 		
 		model.render(ent, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		
@@ -65,6 +96,7 @@ public class RenderTeliportBiped extends Render
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return texture;
+		EntityTeleportBiped etb = (EntityTeleportBiped) entity;
+		return etb.reLoc;
 	}
 }

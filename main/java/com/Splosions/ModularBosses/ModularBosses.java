@@ -45,7 +45,7 @@ public class ModularBosses {
 	public void Init(FMLInitializationEvent event)
 	{
 		proxy.registerRenders();
-		((ClientProxy) proxy).registerTESR();
+		
 	}
 	
 	@EventHandler

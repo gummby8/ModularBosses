@@ -183,7 +183,6 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
 		buffer.writeInt(this.bPos.getZ());
 		
 		buffer.writeDouble(this.motionY);
-		
 		buffer.writeFloat(this.rotationYaw);
 		}
 		
@@ -191,8 +190,6 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
 
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
-		
-		
 		int x = additionalData.readInt();
 		int y = additionalData.readInt();
 		int z = additionalData.readInt();

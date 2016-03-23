@@ -11,7 +11,7 @@ import net.minecraftforge.common.util.Constants;
 public class PortalLandingWorldData extends WorldSavedData {
 
 	
-	private NBTTagCompound lobbyPortals = new NBTTagCompound();
+
 	public ArrayList<String> portalLandingList = new ArrayList<String>();
 
 	
@@ -24,26 +24,20 @@ public class PortalLandingWorldData extends WorldSavedData {
 
 		@Override
 		public void readFromNBT(NBTTagCompound compound) {
-			NBTTagList tagList = compound.getTagList("portalLandings", Constants.NBT.TAG_COMPOUND);
-			 
+			NBTTagList tagList = compound.getTagList("portalLandings", Constants.NBT.TAG_STRING);
 			for(int i = 0; i < tagList.tagCount(); i++) {
-				  NBTTagCompound tag = tagList.getCompoundTagAt(i);
-				  String s = tag.getString("landing" + i);
+				  String s = tagList.getStringTagAt(i);
 				  portalLandingList.add(i, s);
 				 }
 		}
 
 		@Override
 		public void writeToNBT(NBTTagCompound compound) {
-			
 			NBTTagList tagList = new NBTTagList();
 			 for(int i = 0; i < portalLandingList.size(); i++){
 			  String s = portalLandingList.get(i);
 			  	if(s != null){
-			  		//System.out.println("WriteNBT = " + s);
-			  		//NBTTagCompound tag = new NBTTagCompound();
 			  		NBTTagString tag = new NBTTagString(s);
-			  		//tag.setString("landing" + i, s);
 			  		tagList.appendTag(tag);
 		  			}
 			 }
@@ -66,8 +60,6 @@ public class PortalLandingWorldData extends WorldSavedData {
 		}
 		
 		
-		public NBTTagCompound getPortalData() {
-			return lobbyPortals;
-		}
+
 	
 }

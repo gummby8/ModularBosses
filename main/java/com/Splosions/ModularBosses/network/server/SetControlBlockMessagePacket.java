@@ -9,6 +9,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.network.AbstractMessage.AbstractServerMessage;
 
 public class SetControlBlockMessagePacket extends AbstractServerMessage<SetControlBlockMessagePacket>
@@ -23,6 +24,13 @@ public class SetControlBlockMessagePacket extends AbstractServerMessage<SetContr
 		this.pos = te.getPos();
 		this.message = te.getMessage();
 	}
+	
+	public SetControlBlockMessagePacket(TileEntityPortalBlock te) {
+		 
+		this.pos = te.getPos();
+		this.message = te.getMessage();
+	}
+	
 
 	@Override
 	protected void read(PacketBuffer buffer) throws IOException {
@@ -34,7 +42,6 @@ public class SetControlBlockMessagePacket extends AbstractServerMessage<SetContr
 	@Override
 	protected void write(PacketBuffer buffer) throws IOException {
 		buffer.writeLong(this.pos.toLong());
-		//System.out.println("Write? " + this.pos.getX());
 		ByteBufUtils.writeUTF8String(buffer, this.message);
 	}
 
@@ -43,7 +50,10 @@ public class SetControlBlockMessagePacket extends AbstractServerMessage<SetContr
 		TileEntity te = player.worldObj.getTileEntity(this.pos);
 		if (te instanceof TileEntityControlBlock) {
 			((TileEntityControlBlock) te).setMessage(this.message);
-			//System.out.println("Processed? " + this.message);
-		}
+		} else
+		if (te instanceof TileEntityPortalBlock) {
+			((TileEntityPortalBlock) te).setMessage(this.message, player.getDisplayNameString());
+		
+		} 
 	}
 }

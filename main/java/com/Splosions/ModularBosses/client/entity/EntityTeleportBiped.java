@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 
 import io.netty.buffer.ByteBuf;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
@@ -25,6 +27,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -33,20 +36,22 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityTeleportBiped extends Entity
+public class EntityTeleportBiped extends Entity implements IEntityAdditionalSpawnData
 {
-   
+	Random rand = new Random();
+	public String strLoc;
+	public ResourceLocation reLoc;
     public EntityTeleportBiped(World worldIn)
     {
         super(worldIn);
     }
 
-    public EntityTeleportBiped(World worldIn, Entity shooter, double x, double y, double z, float yaw)
+    public EntityTeleportBiped(World worldIn, Entity shooter, double x, double y, double z, float yaw, String tLoc)
     {
         super(worldIn);
         this.setSize(1F, 1F);
         this.setPositionAndRotation(x, y, z, yaw, 0);
-              
+       	this.strLoc = tLoc;	
     } 
 
 
@@ -55,10 +60,20 @@ public class EntityTeleportBiped extends Entity
      */
     public void onUpdate()
     {
-    if (this.ticksExisted > 100){
+    
+    if (this.ticksExisted > 80 && this.worldObj.isRemote){
+   	 for (int l = 0; l < 20; ++l)
+     {
+		 this.worldObj.spawnParticle(EnumParticleTypes.CRIT_MAGIC, this.posX, this.posY + 1, this.posZ, rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F, 5);
+     }
     	setDead();
     }
-    	
+    
+    
+    if (this.ticksExisted > 100 && this.worldObj.isRemote){
+    	setDead();
+    }
+    
 
     }
 
@@ -79,10 +94,21 @@ public class EntityTeleportBiped extends Entity
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		ByteBufUtils.writeUTF8String(buffer, strLoc);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		String bytes = ByteBufUtils.readUTF8String(additionalData);
+		reLoc = new ResourceLocation(bytes);
+		
+	}
     
     
-    
-    
+
     
     
    

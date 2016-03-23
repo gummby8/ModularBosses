@@ -39,15 +39,14 @@ public class ClientProxy extends CommonProxy{
 	public static Map<Integer, IParticleFactory> particleFactoryMap;
 	
 	
-	public void registerTESR(){
-       ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPortalBlock.class, new RenderTileEntityPortalBlock());
-    }
 	
 	
 	@Override
 	public void registerRenders() {
 		ModularBossesEntities.registerRenderers();
 		ModularBossesItems.registerRenders();
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPortalBlock.class, new RenderTileEntityPortalBlock());
 		
 		try {
 			for (Field f: ModularBossesItems.class.getFields()) {
