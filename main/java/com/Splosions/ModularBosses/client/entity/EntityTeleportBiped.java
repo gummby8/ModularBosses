@@ -41,58 +41,60 @@ public class EntityTeleportBiped extends Entity implements IEntityAdditionalSpaw
 	Random rand = new Random();
 	public String strLoc;
 	public ResourceLocation reLoc;
-    public EntityTeleportBiped(World worldIn)
-    {
-        super(worldIn);
-    }
+	public EntityTeleportBiped(World worldIn)
+	{
+		super(worldIn);
+	}
 
-    public EntityTeleportBiped(World worldIn, Entity shooter, double x, double y, double z, float yaw, String tLoc)
-    {
-        super(worldIn);
-        this.setSize(1F, 1F);
-        this.setPositionAndRotation(x, y, z, yaw, 0);
-       	this.strLoc = tLoc;	
-    } 
+	public EntityTeleportBiped(World worldIn, Entity shooter, double x, double y, double z, float yaw, String tLoc)
+	{
+		super(worldIn);
+		this.setSize(1F, 1F);
+		this.setPositionAndRotation(x, y, z, yaw, 0);
+		this.strLoc = tLoc;	
+	} 
 
 
-    /**
-     * Called to update the entity's position/logic.
-     */
-    public void onUpdate()
-    {
-    
-    if (this.ticksExisted > 80 && this.worldObj.isRemote){
-   	 for (int l = 0; l < 20; ++l)
-     {
-		 this.worldObj.spawnParticle(EnumParticleTypes.CRIT_MAGIC, this.posX, this.posY + 1, this.posZ, rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F, 5);
-     }
-    	setDead();
-    }
-    
-    
-    if (this.ticksExisted > 100 && this.worldObj.isRemote){
-    	setDead();
-    }
-    
+	/**
+	 * Called to update the entity's position/logic.
+	 */
+	@Override
+	public void onUpdate()
+	{
 
-    }
+
+
+
+
+
+
+		if (this.ticksExisted > 80){
+			for (int l = 0; l < 20; ++l){
+				this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY + 1, this.posZ, rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F, 5);
+			}
+			
+			setDead();
+		}
+
+
+	}
 
 	@Override
 	protected void entityInit() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound tagCompund) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound tagCompound) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -104,12 +106,12 @@ public class EntityTeleportBiped extends Entity implements IEntityAdditionalSpaw
 	public void readSpawnData(ByteBuf additionalData) {
 		String bytes = ByteBufUtils.readUTF8String(additionalData);
 		reLoc = new ResourceLocation(bytes);
-		
-	}
-    
-    
 
-    
-    
-   
+	}
+
+
+
+
+
+
 }
