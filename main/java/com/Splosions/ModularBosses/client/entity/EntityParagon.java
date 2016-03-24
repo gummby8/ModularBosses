@@ -423,7 +423,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		}else if (this.AniID == 7 && this.AniFrame > 34){
 			this.AniFrame = 0;
 			this.AniID = 0;
-		}else if (this.AniID == 8 && this.AniFrame >= 15 && this.AniFrame <= 20){
+		}else if (this.AniID == 8 && this.AniFrame >= 15 && this.AniFrame <= 20 && !this.worldObj.isRemote){
 			for (int i = 0; i < 40; ++i){
 				this.X = ((AniFrame - 14) * Math.cos(Math.toRadians(i * 9))) + this.posX;
 				this.Z = ((AniFrame - 14) * Math.sin(Math.toRadians(i * 9))) + this.posZ;

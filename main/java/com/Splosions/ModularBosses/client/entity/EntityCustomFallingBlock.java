@@ -55,7 +55,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     {
         super(worldIn);
         this.bPos = pos;
-        this.fallTile = this.getWorldObj().getBlockState(pos);
+        this.fallTile = this.worldObj.getBlockState(pos);
         this.preventEntitySpawning = true;
         this.setSize(1F, 1F);
         this.setPositionAndRotation(x, y, z, yaw, 0);
