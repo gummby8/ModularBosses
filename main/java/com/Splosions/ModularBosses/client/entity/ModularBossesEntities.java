@@ -8,6 +8,7 @@ import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob
 import com.Splosions.ModularBosses.client.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelHeavyChorp;
+import com.Splosions.ModularBosses.client.models.entity.ModelMoldormAlpha;
 import com.Splosions.ModularBosses.client.models.entity.ModelParagon;
 import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
@@ -16,6 +17,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock;
 import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
+import com.Splosions.ModularBosses.client.render.entity.RenderMoldormAlpha;
 import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
@@ -85,12 +87,11 @@ public class ModularBossesEntities
 		//EntityRegistry.registerGlobalEntityID(EntityLavaBlob.class, "Lava Blob", ++modEntityIndex);
 		//CustomEntityList.addMapping(EntityLavaBlob.class, "Lava Blob", 0xF7FF00, 0xFF0000);
 		
-		//EntityRegistry.registerGlobalEntityID(EntityTestHead.class, "Test Head", ++modEntityIndex);
-		//CustomEntityList.addMapping(EntityTestHead.class, "Test Head", 0xF7FF00, 0xFF0000);
-		
 		EntityRegistry.registerModEntity(EntityChorpChorp.class, "Chorp Chorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityChorpChorp.class, "Chorp Chorp", 0x3F5A8C, 0xFFFFFF);
 		
+		EntityRegistry.registerModEntity(EntityMoldormAlpha.class, "Moldorm", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityMoldormAlpha.class, "Moldorm", 0x3F5A8C, 0xFFFFFF);
 		
 		
 		EntityRegistry.registerModEntity(EntityHeavyChorp.class, "HeavyChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
@@ -135,6 +136,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeavyChorp.class, new RenderHeavyChorp(manager, new ModelHeavyChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityParagon.class, new RenderParagon(manager, new ModelParagon(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
 		//RenderingRegistry.registerEntityRenderingHandler(EntitySenseiSteve.class, new RenderSenseiSteve(new ModelSenseiSteve(), 2));
 		//RenderingRegistry.registerEntityRenderingHandler(EntityTestDummy.class, new RenderTestDummy(new ModelTestDummy(), 0.7F));

@@ -57,11 +57,8 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 	
 	
 	Random rand = new Random();
-
-
-
-
-
+	
+	
 	@Override
 	public void update() {
 		
