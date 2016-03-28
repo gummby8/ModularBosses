@@ -110,7 +110,7 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 
 					EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.worldObj, player, player.posX, player.posY + 1, player.posZ, player.rotationYaw, playerSkins.get(playerNames.indexOf(player.getDisplayNameString())));
 					this.worldObj.spawnEntityInWorld(teleBiped);
-					player.setPositionAndUpdate(pX + 0.5, pY, pZ - 0.5);
+					player.setPositionAndUpdate(pX + 0.5, pY + 1, pZ + 0.5);
 				
 				}
 			}

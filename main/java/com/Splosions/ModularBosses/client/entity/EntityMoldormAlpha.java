@@ -2,8 +2,10 @@ package com.Splosions.ModularBosses.client.entity;
 
 
 
+import java.util.Random;
+
 import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob;
+
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -30,6 +32,7 @@ import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -46,7 +49,7 @@ public class EntityMoldormAlpha extends EntityMob
 	
 
 	
-
+	Random rand = new Random();
 	
 	public float part2Cur = 0;
 		
@@ -56,28 +59,30 @@ public class EntityMoldormAlpha extends EntityMob
 
 	public float part5Cur = 0;
 
+	public int ranPosX = 0;
+	public int ranPosZ = 0;
 
 
 	public EntityMoldormAlpha(World par1World) {
 		super(par1World);
 		//sets hitbox size
-		this.setSize(1F, 3F);
+		this.setSize(3F, 3F);
 		this.experienceValue = 10;
 		this.isImmuneToFire = false;
-
+		this.ignoreFrustumCheck = true;
+		this.maxHurtResistantTime = 40;
 		//AI STUFF
 		//this.getNavigator().setBreakDoors(true);
-		this.tasks.addTask(0, new EntityAISwimming(this));
 		//this.tasks.addTask(1, new EntityAIBreakDoor(this));
-		//this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityCow.class, 0.5D, true));
-		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
-		this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
+		//this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
+		//this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
 		//this.tasks.addTask(1, new EntityAIWander(this, 0.25D)); //Wander speed
 		//this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		//this.tasks.addTask(7, new EntityAILookIdle(this));
 		//this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		//this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityCow.class, false));
 		
 
@@ -185,20 +190,70 @@ public class EntityMoldormAlpha extends EntityMob
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
 
+    
+    /**
+     * Called when the entity is attacked.
+     */
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        if (this.isEntityInvulnerable(source))
+        {
+            return false;
+        }
+        else if (super.attackEntityFrom(source, amount))
+        {
+
+            Entity entity = source.getEntity();
+            return this.riddenByEntity != entity && this.ridingEntity != entity ? true : true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     
+	//stuns the mob
+    @Override
+    public boolean isMovementBlocked() {
+    	if (this.hurtResistantTime > 0){
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
     
     
+	private static int getRandomNumberInRange(int min, int max) {
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+	}
+    
+    
+    public void getRandomLocation(){
+    	
+    	
+    	
+    }
     
     
 	public void onLivingUpdate() {
+
+		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote){
+		
+		ranPosX = getRandomNumberInRange(-20, 20);
+		ranPosZ = getRandomNumberInRange(-20, 20);
+		this.getNavigator().tryMoveToXYZ(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
+		}
+		
+		this.moveHelper.setMoveTo(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
+		
+		
 		super.onLivingUpdate();
-
-
-		
-		
-		
-		
 	}
 	
 	

@@ -1,0 +1,11 @@
+{
+    "parent": "minecraft:block/orientable",
+    "textures": {
+        "top": "mb:blocks/portal_landing_top",
+        "south": "mb:blocks/portal_landing_side",
+        "west": "mb:blocks/portal_landing_side",
+        "front": "mb:blocks/portal_landing_side",
+        "east": "mb:blocks/portal_landing_side",
+        "bottom": "mb:blocks/portal_landing_top"
+    }
+}

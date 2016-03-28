@@ -26,7 +26,7 @@ public class RenderMoldormAlpha extends RenderLiving {
 	protected ResourceLocation getEntityTexture(Entity entity) {
 				
 		
-		return new ResourceLocation("mb:textures/mobs/MoldormAlpha.png");
+		return new ResourceLocation("mb:textures/mobs/Moldorm.png");
 	}
 	
 }

@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "normal": { "model": "mb:portal_landing"},
+        "inventory": { "model": "mb:portal_landing"},
+        "facing=down": { "model": "mb:portal_landing"},
+        "facing=up": { "model": "mb:portal_landing"},
+        "facing=north": { "model": "mb:portal_landing"},
+        "facing=south": { "model": "mb:portal_landing"},
+        "facing=west": { "model": "mb:portal_landing"},
+        "facing=east": { "model": "mb:portal_landing"}
+    }
+}
