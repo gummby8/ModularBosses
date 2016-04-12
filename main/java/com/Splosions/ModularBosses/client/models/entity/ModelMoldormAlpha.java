@@ -410,9 +410,9 @@ public class ModelMoldormAlpha extends ModelBase {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
     	this.Part1.render(f5);
     	this.Part2.render(f5);
-        //this.Part3.render(f5);
-        //this.Part4.render(f5);
-        //this.Part5.render(f5);
+        this.Part3.render(f5);
+        this.Part4.render(f5);
+        this.Part5.render(f5);
     }
 
     /**
@@ -449,12 +449,13 @@ public class ModelMoldormAlpha extends ModelBase {
     		this.pupilL.rotateAngleZ = 0;
     	}
     	
+    	/**
     	this.Part2.rotationPointX = (float) (worm.posX - worm.prevPosX) * -106;
     	this.Part2.rotationPointY = this.Part1.rotationPointY + 3;
     	this.Part2.rotationPointZ = (float) (worm.posZ - worm.prevPosZ) * -106;    	
     	System.out.println(this.Part2.rotationPointX);
-
-    	/**
+		*/
+    	
     	worm.part2Cur += ((worm.rotationYaw - worm.prevRotationYaw) * 0.2F) + ((0 - worm.part2Cur) * 0.02F);
     	this.Part2.rotateAngleY = (worm.part2Cur * 0.0174F) + 1.57F;
     	this.Part2.rotationPointX = (69 * MathHelper.cos(this.Part2.rotateAngleY));
@@ -482,7 +483,7 @@ public class ModelMoldormAlpha extends ModelBase {
     	this.Part5.rotationPointY = this.Part4.rotationPointY + 3;
     	this.Part5.rotationPointZ = (51 * MathHelper.sin(this.Part5.rotateAngleY)) + this.Part4.rotationPointZ;    	
     	this.Part5.rotateAngleY = (worm.part5Cur * -0.0174F);  
-		*/
+		
     	
     }
     
