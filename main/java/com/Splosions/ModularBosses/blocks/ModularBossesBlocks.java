@@ -20,7 +20,8 @@ public class ModularBossesBlocks
 	public static Block
 	controlBlock,
 	portalBlock,
-	portalLanding;
+	portalLanding,
+	phaseFire;
 	
 	/**
 	 * Call during FMLPreInitializationEvent to initialize and register all blocks
@@ -42,6 +43,9 @@ public class ModularBossesBlocks
 		
 		portalLanding = new BlockPortalLanding(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_landing");
 		GameRegistry.registerBlock(portalLanding, ItemModBlock.class, portalLanding.getUnlocalizedName().substring(5));
+		
+		phaseFire = new BlockPhaseFire(Material.barrier).setLightLevel(1).setUnlocalizedName("phase_fire");
+		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
 		
 		// register block items for creative tab comparator sorting:
 		try {

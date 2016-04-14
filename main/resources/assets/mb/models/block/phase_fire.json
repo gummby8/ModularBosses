@@ -1,0 +1,8 @@
+{
+    "parent": "minecraft:block/fire_floor",
+    "textures": {
+        "particle": "mb:blocks/phase_fire_layer_0",
+        "fire": "mb:blocks/phase_fire_layer_0"
+    }
+
+}

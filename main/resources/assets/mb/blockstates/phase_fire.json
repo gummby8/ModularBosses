@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "mb:phase_fire"},
+        "inventory": { "model": "mb:phase_fire"}
+    }
+}
