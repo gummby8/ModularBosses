@@ -9,7 +9,7 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockRotationData.Rotation;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
-import com.Splosions.ModularBosses.client.entity.CustomEntityList;
+import com.Splosions.ModularBosses.entity.CustomEntityList;
 import com.Splosions.ModularBosses.handler.GuiHandler;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.client.OpenControlBlockEditorPacket;

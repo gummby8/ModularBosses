@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -13,7 +14,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
-import com.Splosions.ModularBosses.client.entity.ModularBossesEntities;
+import com.Splosions.ModularBosses.client.MBEvents;
+import com.Splosions.ModularBosses.entity.ModularBossesEntities;
 import com.Splosions.ModularBosses.handler.GuiHandler;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
@@ -27,6 +29,8 @@ public class ModularBosses {
 	
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
+	
+	
 	
 	@Instance(Reference.MOD_ID)
 	public static ModularBosses instance;
@@ -57,5 +61,6 @@ public class ModularBosses {
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
 	NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+	MinecraftForge.EVENT_BUS.register(new MBEvents());
 	}
 }

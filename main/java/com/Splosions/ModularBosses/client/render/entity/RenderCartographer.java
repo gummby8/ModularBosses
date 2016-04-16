@@ -12,8 +12,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.Splosions.ModularBosses.client.entity.EntityCartographer;
 import com.Splosions.ModularBosses.client.models.projectiles.ModeCartographer;
+import com.Splosions.ModularBosses.entity.EntityCartographer;
 
 
 

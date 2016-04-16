@@ -1,13 +1,10 @@
-package com.Splosions.ModularBosses.client.entity;
+package com.Splosions.ModularBosses.entity;
 
 
-
-import java.util.Random;
 
 import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 
-
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -25,14 +22,12 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -40,55 +35,54 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityMoldormAlpha extends EntityMob
+public class EntityChorpChorp extends EntityMob
 {
 
-	
 
-	
-	
+    /** The Entity this EntityCreature is set to attack. */
+    public Entity entityToAttack;
+    
+	public int attackCounter;
+	public int deathTicks;
 
-	
-	Random rand = new Random();
-	
-	public float part2Cur = 0;
-		
-	public float part3Cur = 0;
+	private float randomMotionVecX;
+	private float randomMotionVecY;
+	private float randomMotionVecZ;
 
-	public float part4Cur = 0;
+	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
+	private float DeadRot;
 
-	public float part5Cur = 0;
-
-	public int ranPosX = 0;
-	public int ranPosZ = 0;
-
-
-	public EntityMoldormAlpha(World par1World) {
+	public EntityChorpChorp(World par1World) {
 		super(par1World);
 		//sets hitbox size
-		this.setSize(3F, 3F);
+		this.setSize(1F, 3F);
 		this.experienceValue = 10;
 		this.isImmuneToFire = false;
-		this.ignoreFrustumCheck = true;
-		this.maxHurtResistantTime = 40;
+
 		//AI STUFF
 		//this.getNavigator().setBreakDoors(true);
+		this.tasks.addTask(0, new EntityAISwimming(this));
 		//this.tasks.addTask(1, new EntityAIBreakDoor(this));
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityCow.class, 0.5D, true));
-		//this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
-		//this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
-		//this.tasks.addTask(1, new EntityAIWander(this, 0.25D)); //Wander speed
+		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
+		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
+		this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
+		this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); //Wander speed
 		//this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		//this.tasks.addTask(7, new EntityAILookIdle(this));
-		//this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
+		this.tasks.addTask(7, new EntityAILookIdle(this));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityCow.class, false));
-		
-
+		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
 	}
 
-	
+	//stuns the mob
+	public boolean isMovementBlocked() {
+		if (b0 == 1){
+			return true;
+		} else {
+			return false;
+		}
+	}
 	//won't despawn even if the chunk unloads
 	protected boolean canDespawn()
 	{
@@ -141,12 +135,57 @@ public class EntityMoldormAlpha extends EntityMob
 	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
 	 */
 	protected void onDeathUpdate() {
+
+
+
+		entityToAttack = null;
+		byte b1 = 1;
+		this.dataWatcher.updateObject(16, Byte.valueOf(b1));
+		b0 = this.dataWatcher.getWatchableObjectByte(16);
+
+		++this.deathTicks;
+
+
+		if (this.deathTicks == 100 && !this.worldObj.isRemote){
+			this.dropItem(Item.getItemById(3), 1);
 			this.setDead();   	
+		}
+
+
 	}
 
 
+	@SideOnly(Side.CLIENT)
+	public int DeathWatcher()
+	{
+		if (this.dataWatcher.getWatchableObjectByte(16) == 1) {
+			return this.deathTicks;
+		} else {
+			return -1;
+		}
+	}
 
+	//@SideOnly(Side.CLIENT)
+	public float DeathRotation()
+	{
+		if (this.dataWatcher.getWatchableObjectByte(16) == 1) {
+			this.DeadRot += 0.0003F;
+			if (this.DeadRot > 0.209F) {
+				this.DeadRot = 0.209F;
+			}
+		} else {
+			return 0;
+		}
+		return DeadRot;
+	}
 
+	/**
+	 * Returns the sound this mob makes while it's alive.
+
+    protected String getLivingSound() {
+        return "mob.zombie.say";
+    }
+	 */
 
 	/**
 	 * Returns the sound this mob makes when it is hurt.
@@ -190,75 +229,56 @@ public class EntityMoldormAlpha extends EntityMob
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
 
-    
-    /**
-     * Called when the entity is attacked.
-     */
-    @Override
-    public boolean attackEntityFrom(DamageSource source, float amount)
-    {
-        if (this.isEntityInvulnerable(source))
-        {
-            return false;
-        }
-        else if (super.attackEntityFrom(source, amount))
-        {
 
-            Entity entity = source.getEntity();
-            return this.riddenByEntity != entity && this.ridingEntity != entity ? true : true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    
-	//stuns the mob
-    @Override
-    public boolean isMovementBlocked() {
-    	if (this.hurtResistantTime > 0){
-    		return true;
-    	} else {
-    		return false;
-    	}
-    }
-    
-    
-	private static int getRandomNumberInRange(int min, int max) {
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
-		}
-		Random r = new Random();
-		return r.nextInt((max - min) + 1) + min;
-	}
-    
-    
-    public void getRandomLocation(){
-    	
-    	
-    	
-    }
-    
-    
 	public void onLivingUpdate() {
-
-		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote){
-		
-		ranPosX = getRandomNumberInRange(-20, 20);
-		ranPosZ = getRandomNumberInRange(-20, 20);
-		this.getNavigator().tryMoveToXYZ(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
-		}
-		
-		this.moveHelper.setMoveTo(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
-		
-		
 		super.onLivingUpdate();
+
+		float distance = 0.0F;
+
+
+		if (entityToAttack == null) {
+			entityToAttack = findPlayerToAttack();
+
+		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
+			distance = entityToAttack.getDistanceToEntity(this);
+			if (distance > 16.0F) {
+				entityToAttack = null;
+			} else if (canEntityBeSeen(entityToAttack)) {
+				faceEntity(entityToAttack, 30.0F, 120.0F);
+				attackEntity(entityToAttack, distance);
+			}
+		} else {
+			entityToAttack = null;
+		}
+
+
 	}
-	
-	
-	
-	
+
+
+	protected void attackEntity(Entity entity, float distance) {
+		EntityLivingBase ent = (EntityLivingBase) entity;
+		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
+			if (this.attackCounter == 40) {
+				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
+			}
+			if (this.attackCounter >= 40) {
+				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+				Entity projectile;
+				int difficulty = worldObj.getDifficulty().getDifficultyId();
+				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0,0,0).setDamage(f * difficulty);
+				if (!this.worldObj.isRemote){
+					worldObj.spawnEntityInWorld(projectile);
+				}
+			}
+			if (this.attackCounter >= 60) {
+				this.attackCounter = -40;
+			}
+		}
+
+		this.attackCounter++;
+		
+		
+	}
 
 
 }

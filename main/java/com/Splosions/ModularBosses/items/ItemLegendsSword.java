@@ -7,11 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.Splosions.ModularBosses.client.entity.EntityCartographer;
-import com.Splosions.ModularBosses.client.entity.EntityCustomFallingBlock;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 import com.Splosions.ModularBosses.client.render.items.ModelItemLegendsSword;
+import com.Splosions.ModularBosses.entity.EntityCartographer;
+import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
+import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.util.Schematic;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
@@ -54,7 +56,7 @@ public class ItemLegendsSword extends ItemSword {
     {
     	if (worldIn.isRemote){
     	
-    		ClientProxy.sobelShader();
+    		ClientProxy.clearShader();
     		
     	}
 

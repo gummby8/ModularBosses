@@ -1,9 +1,9 @@
-package com.Splosions.ModularBosses.client.entity;
+package com.Splosions.ModularBosses.entity;
 
 
 
 import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

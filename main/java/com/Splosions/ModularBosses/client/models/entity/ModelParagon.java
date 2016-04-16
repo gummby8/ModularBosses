@@ -1,6 +1,6 @@
 package com.Splosions.ModularBosses.client.models.entity;
 
-import com.Splosions.ModularBosses.client.entity.EntityParagon;
+import com.Splosions.ModularBosses.entity.EntityParagon;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;

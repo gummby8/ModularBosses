@@ -1,10 +1,11 @@
-package com.Splosions.ModularBosses.client.entity;
+package com.Splosions.ModularBosses.entity;
 
 
 
 import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -35,9 +36,90 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityChorpChorp extends EntityMob
+public class EntityTatters extends EntityMob
 {
 
+	
+	
+	
+	public float SHOULDERS;
+
+
+	public float[] StripF1 = new float[40];
+	public float[] StripF2 = new float[40];
+	public float[] StripF3 = new float[40];
+	public float[] StripF4 = new float[40];
+	public float[] StripF5 = new float[40];
+	public float[] StripF6 = new float[40];
+	public float[] StripF7 = new float[40];
+	public float[] StripF8 = new float[40];
+	public float[] StripF9 = new float[40];
+	public float[] StripF10 = new float[40];
+	public float[] StripF11 = new float[40];
+	public float[] StripF12 = new float[40];
+	public float[] StripF13 = new float[40];
+	public float[] StripF14 = new float[40];
+	public float[] StripF15 = new float[40];
+	public float[] StripF16 = new float[40];
+	public float[] StripF17 = new float[40];
+	public float[] StripF18 = new float[40];
+	public float[] StripF19 = new float[40];
+	
+	public float[] StripB1 = new float[40];
+	public float[] StripB2 = new float[40];
+	public float[] StripB3 = new float[40];
+	public float[] StripB4 = new float[40];
+	public float[] StripB5 = new float[40];
+	public float[] StripB6 = new float[40];
+	public float[] StripB7 = new float[40];
+	public float[] StripB8 = new float[40];
+	public float[] StripB9 = new float[40];
+	public float[] StripB10 = new float[40];
+	public float[] StripB11 = new float[40];
+	public float[] StripB12 = new float[40];
+	public float[] StripB13 = new float[40];
+	public float[] StripB14 = new float[40];
+	public float[] StripB15 = new float[40];
+	public float[] StripB16 = new float[40];
+	public float[] StripB17 = new float[40];
+	public float[] StripB18 = new float[40];
+	public float[] StripB19 = new float[40];
+	
+	public float[] StripL1 = new float[40];
+	public float[] StripL2 = new float[40];
+	public float[] StripL3 = new float[40];
+	public float[] StripL4 = new float[40];
+	public float[] StripL5 = new float[40];
+	public float[] StripL6 = new float[40];
+	public float[] StripL7 = new float[40];
+	public float[] StripL8 = new float[40];
+	public float[] StripL9 = new float[40];
+	public float[] StripL10 = new float[40];
+	public float[] StripL11 = new float[40];
+	public float[] StripL12 = new float[40];
+	public float[] StripL13 = new float[40];
+	public float[] StripL14 = new float[40];
+	
+	public float[] StripR1 = new float[40];
+	public float[] StripR2 = new float[40];
+	public float[] StripR3 = new float[40];
+	public float[] StripR4 = new float[40];
+	public float[] StripR5 = new float[40];
+	public float[] StripR6 = new float[40];
+	public float[] StripR7 = new float[40];
+	public float[] StripR8 = new float[40];
+	public float[] StripR9 = new float[40];
+	public float[] StripR10 = new float[40];
+	public float[] StripR11 = new float[40];
+	public float[] StripR12 = new float[40];
+	public float[] StripR13 = new float[40];
+	public float[] StripR14 = new float[40];
+	
+	
+	public float count;
+	public float Ccount;
+	
+	
 
     /** The Entity this EntityCreature is set to attack. */
     public Entity entityToAttack;
@@ -52,7 +134,10 @@ public class EntityChorpChorp extends EntityMob
 	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	private float DeadRot;
 
-	public EntityChorpChorp(World par1World) {
+
+	
+
+	public EntityTatters(World par1World) {
 		super(par1World);
 		//sets hitbox size
 		this.setSize(1F, 3F);
@@ -63,16 +148,18 @@ public class EntityChorpChorp extends EntityMob
 		//this.getNavigator().setBreakDoors(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		//this.tasks.addTask(1, new EntityAIBreakDoor(this));
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
+		//this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
 		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
 		this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
-		this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); //Wander speed
+		//this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); //Wander speed
 		//this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(7, new EntityAILookIdle(this));
+		//this.tasks.addTask(7, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+		//this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
+		
+
 	}
 
 	//stuns the mob
@@ -230,55 +317,25 @@ public class EntityChorpChorp extends EntityMob
     }
 
 
+    
+    
+    
+    
+    
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		float distance = 0.0F;
-
-
-		if (entityToAttack == null) {
-			entityToAttack = findPlayerToAttack();
-
-		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
-			distance = entityToAttack.getDistanceToEntity(this);
-			if (distance > 16.0F) {
-				entityToAttack = null;
-			} else if (canEntityBeSeen(entityToAttack)) {
-				faceEntity(entityToAttack, 30.0F, 120.0F);
-				attackEntity(entityToAttack, distance);
-			}
-		} else {
-			entityToAttack = null;
-		}
-
-
-	}
-
-
-	protected void attackEntity(Entity entity, float distance) {
-		EntityLivingBase ent = (EntityLivingBase) entity;
-		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
-			if (this.attackCounter == 40) {
-				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
-			}
-			if (this.attackCounter >= 40) {
-				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
-				Entity projectile;
-				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0,0,0).setDamage(f * difficulty);
-				if (!this.worldObj.isRemote){
-					worldObj.spawnEntityInWorld(projectile);
-				}
-			}
-			if (this.attackCounter >= 60) {
-				this.attackCounter = -40;
-			}
-		}
-
-		this.attackCounter++;
+	
+		
+		
+		
 		
 		
 	}
+	
+	
+	
+	
 
 
 }

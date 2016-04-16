@@ -15,9 +15,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-
-import com.Splosions.ModularBosses.client.entity.EntityTeleportBiped;
 import com.Splosions.ModularBosses.client.models.entity.ModelTeleportBiped;
+import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
 import com.google.common.base.Objects;
 
 

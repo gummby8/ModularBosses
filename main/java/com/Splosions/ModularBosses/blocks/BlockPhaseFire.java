@@ -3,6 +3,8 @@ package com.Splosions.ModularBosses.blocks;
 import java.util.Random;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 
 import net.minecraft.block.Block;
@@ -61,10 +63,14 @@ public class BlockPhaseFire extends Block
 	@Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
-        if (entityIn instanceof EntityPlayer && worldIn.isRemote){
-        	ClientProxy.sobelShader();
-        	
+        if (entityIn instanceof EntityPlayer && !worldIn.isRemote){
+        	MBExtendedPlayer.get((EntityPlayer)entityIn).limboTime = 100;
         }
+        
+        if (entityIn instanceof EntityPlayer && worldIn.isRemote){
+        	((ClientProxy) ModularBosses.proxy).sobelShader();
+        }
+        
         worldIn.setBlockToAir(pos);
     }
 	

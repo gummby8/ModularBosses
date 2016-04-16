@@ -15,8 +15,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import com.Splosions.ModularBosses.client.entity.EntityChorpChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
+import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 
 
 

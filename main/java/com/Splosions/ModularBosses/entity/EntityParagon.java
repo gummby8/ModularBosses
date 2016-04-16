@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.client.entity;
+package com.Splosions.ModularBosses.entity;
 
 
 
@@ -10,7 +10,7 @@ import java.util.Random;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityFlameThrower;
+import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

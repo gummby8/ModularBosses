@@ -1,7 +1,7 @@
 
 package com.Splosions.ModularBosses.client.models.entity;
 
-import com.Splosions.ModularBosses.client.entity.EntityChorpChorp;
+import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

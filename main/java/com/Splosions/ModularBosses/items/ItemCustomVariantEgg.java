@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.entity.CustomEntityList;
-import com.Splosions.ModularBosses.client.entity.IEntityVariant;
+import com.Splosions.ModularBosses.entity.CustomEntityList;
+import com.Splosions.ModularBosses.entity.IEntityVariant;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;

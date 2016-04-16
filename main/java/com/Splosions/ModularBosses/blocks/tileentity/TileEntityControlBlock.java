@@ -11,7 +11,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
-import com.Splosions.ModularBosses.client.entity.CustomEntityList;
+import com.Splosions.ModularBosses.entity.CustomEntityList;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.client.OpenControlBlockEditorPacket;
 import com.jcraft.jorbis.Block;

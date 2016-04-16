@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.entity.CustomEntityList;
+import com.Splosions.ModularBosses.entity.CustomEntityList;
 import com.Splosions.ModularBosses.items.dispenser.BehaviorDispenseCustomMobEgg;
 
 import net.minecraft.block.BlockFence;

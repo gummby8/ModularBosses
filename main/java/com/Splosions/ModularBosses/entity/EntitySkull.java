@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.client.entity;
+package com.Splosions.ModularBosses.entity;
 
 import java.util.Random;
 

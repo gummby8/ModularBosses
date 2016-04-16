@@ -1,7 +1,7 @@
 package com.Splosions.ModularBosses.client.models.entity;
 
-import com.Splosions.ModularBosses.client.entity.EntityParagon;
-import com.Splosions.ModularBosses.client.entity.EntityTatters;
+import com.Splosions.ModularBosses.entity.EntityParagon;
+import com.Splosions.ModularBosses.entity.EntityTatters;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

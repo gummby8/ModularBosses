@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.client.entity.projectile;
+package com.Splosions.ModularBosses.entity.projectile;
 
 import java.util.List;
 

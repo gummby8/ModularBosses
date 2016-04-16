@@ -1,11 +1,9 @@
-package com.Splosions.ModularBosses.client.entity;
+package com.Splosions.ModularBosses.entity;
 
 
 import java.util.logging.Level;
 
 import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityChorpSlimeBlob;
-import com.Splosions.ModularBosses.client.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelHeavyChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldormAlpha;
@@ -24,6 +22,8 @@ import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
 import net.minecraft.client.Minecraft;
