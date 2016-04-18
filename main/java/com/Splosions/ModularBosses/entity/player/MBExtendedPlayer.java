@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.entity.player;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,45 +56,26 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	
 	
 	public void onUpdate() {
+		
 
-		if (this.player.getEntityWorld().isRemote){
+		
+		
+		if (this.player.getEntityWorld().isRemote) {
 			this.limbo = this.player.getDataWatcher().getWatchableObjectInt(LIMBO_WATCHER);
-		}
-		
-		/*
-		 * Sets the datawatcher based on limboTime on the server
-		 */
-		if (this.limboTime > 0 && !this.player.getEntityWorld().isRemote){
-			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, 1);
-		} else if (!this.player.getEntityWorld().isRemote){
-			this.player.getDataWatcher().updateObject(LIMBO_WATCHER ,0);
-		}
-		
-		
-		/*
-		 * Sets the shader when the datawatcher changes to 1 clientside
-		 */
-		if (this.player.getEntityWorld().isRemote && this.preLimbo != this.limbo && this.limbo == 1){
-			
-	
-		}
-		
-		/*
-		 * Clears the shader when the datawatcher changes to 0 clientside
-		 */
-		if (this.player.getEntityWorld().isRemote && this.preLimbo != this.limbo && this.limbo == 0){
-			ClientProxy.clearShader();
-		}
-		
-		
-		
-		if (this.player.getEntityWorld().isRemote){
+			if (this.preLimbo != this.limbo && this.player == Minecraft.getMinecraft().thePlayer) {
+				if (this.limbo == 1) {
+					ClientProxy.sobelShader();
+				} else {
+					ClientProxy.clearShader();
+				}
+			}
 			this.preLimbo = this.limbo;
+		} else {
+			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (this.limboTime > 0 ? 1 : 0));
 		}
 		
-		if (!this.player.getEntityWorld().isRemote){
-			this.limboTime -= (this.limboTime > 0) ? 1 : 0;
-		}
+		this.limboTime -= (this.limboTime > 0) ? 1 : 0;
+		
 	}
 	
 	

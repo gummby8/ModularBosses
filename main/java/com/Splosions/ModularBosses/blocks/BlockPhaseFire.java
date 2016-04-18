@@ -67,10 +67,6 @@ public class BlockPhaseFire extends Block
         	MBExtendedPlayer.get((EntityPlayer)entityIn).limboTime = 100;
         }
         
-        if (entityIn instanceof EntityPlayer && worldIn.isRemote){
-        	((ClientProxy) ModularBosses.proxy).sobelShader();
-        }
-        
         worldIn.setBlockToAir(pos);
     }
 	

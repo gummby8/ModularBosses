@@ -39,7 +39,7 @@ public class ClientProxy extends CommonProxy{
 	
 	private final Minecraft mc = Minecraft.getMinecraft();
 
-	private Method f_loadShader;
+	private static Method f_loadShader;
 
 	
 	/** Stores all models which need to be replaced during {@link ModelBakeEvent} */
@@ -50,7 +50,7 @@ public class ClientProxy extends CommonProxy{
 	
 	
 	
-	public void sobelShader(){
+	public static void sobelShader(){
 		try {
 			f_loadShader.invoke(Minecraft.getMinecraft().entityRenderer, new ResourceLocation("shaders/post/sobel.json"));
 		} catch (Throwable e) {
