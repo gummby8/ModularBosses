@@ -56,10 +56,6 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	
 	
 	public void onUpdate() {
-		
-
-		
-		
 		if (this.player.getEntityWorld().isRemote) {
 			this.limbo = this.player.getDataWatcher().getWatchableObjectInt(LIMBO_WATCHER);
 			if (this.preLimbo != this.limbo && this.player == Minecraft.getMinecraft().thePlayer) {
@@ -73,9 +69,7 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 		} else {
 			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (this.limboTime > 0 ? 1 : 0));
 		}
-		
 		this.limboTime -= (this.limboTime > 0) ? 1 : 0;
-		
 	}
 	
 	
