@@ -7,6 +7,7 @@ import com.google.common.io.ByteArrayDataOutput;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
@@ -95,7 +96,7 @@ public class EntityFlameThrower extends EntityMobThrowable implements IEntityAdd
 	//set to 0 do have 0 spell drop
 	@Override
 	protected float getGravityVelocity() {
-		return 0.0F;
+		return 0.005F;
 	}
 
 
@@ -159,9 +160,12 @@ public class EntityFlameThrower extends EntityMobThrowable implements IEntityAdd
 	}
 
 	@Override
-	protected void onImpact(MovingObjectPosition p_70184_1_) {
-		//setDead();
-		
+	protected void onImpact(MovingObjectPosition mop) {
+		if (mop.entityHit instanceof EntityLiving){
+			mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
+			mop.entityHit.setFire(5);
+		}
+		setDead();
 	}
 
 

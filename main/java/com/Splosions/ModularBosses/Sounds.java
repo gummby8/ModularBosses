@@ -8,7 +8,20 @@ package com.Splosions.ModularBosses;
  */
 public class Sounds {
 
-	// SPECIAL EVENT SOUNDS
+	// MOB SOUNDS
+	public static final String PARAGON_LIVING = Reference.MOD_ID + ":paragon_living";
+	public static final String PARAGON_RFOOT = Reference.MOD_ID + ":paragon_walk_rfoot";
+	public static final String PARAGON_LFOOT = Reference.MOD_ID + ":paragon_walk_lfoot";
+	public static final String PARAGON_FURNACE_DEFLECT = Reference.MOD_ID + ":paragon_furnace_deflect";
+	public static final String PARAGON_FURNACE_HURT = Reference.MOD_ID + ":paragon_furnace_hurt";
+	public static final String PARAGON_KNEE_HURT = Reference.MOD_ID + ":paragon_knee_hurt";
+	public static final String PARAGON_CHEST_DOOR_CLOSE = Reference.MOD_ID + ":paragon_chest_door_close";
+	public static final String PARAGON_STAND_UP = Reference.MOD_ID + ":paragon_stand_up";
+	public static final String PARAGON_COLLAPSE = Reference.MOD_ID + ":paragon_collapse";
+	public static final String PARAGON_JUMP_JETS = Reference.MOD_ID + ":paragon_jump_jets";
+	public static final String PARAGON_FLAME_THROWER = Reference.MOD_ID + ":paragon_flame_thrower";
+	
+	
 	public static final String CHORP_SLIME = Reference.MOD_ID + ":chorp_slime";
 	public static final String CHORP_DEATH = Reference.MOD_ID + ":chorp_death";
 	public static final String CHORP_HURT = Reference.MOD_ID + ":chorp_hurt";

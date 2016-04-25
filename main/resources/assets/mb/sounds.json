@@ -1,8 +1,17 @@
 {
-"chorp_hurt": {"category": "hostile","sounds":["entity/chorp_hurt"]},
-"chorp_death": {"category": "hostile","sounds":["entity/chorp_death"]},
-"chorp_slime": {"category": "hostile","sounds":["entity/chorp_slime"]}
+"paragon_walk_rfoot": {"category": "hostile","sounds":["entity/Paragon/paragon_walk_rfoot"]},
+"paragon_walk_lfoot": {"category": "hostile","sounds":["entity/Paragon/paragon_walk_lfoot"]},
+"paragon_furnace_deflect": {"category": "hostile","sounds":["entity/Paragon/paragon_furnace_deflect_1","entity/Paragon/paragon_furnace_deflect_1"]},
+"paragon_furnace_hurt": {"category": "hostile","sounds":["entity/Paragon/paragon_furnace_hurt_1"]},
+"paragon_knee_hurt": {"category": "hostile","sounds":["entity/Paragon/paragon_knee_hurt_1","entity/Paragon/paragon_knee_hurt_2"]},
+"paragon_chest_door_close": {"category": "hostile","sounds":["entity/Paragon/paragon_chest_door_close"]},
+"paragon_stand_up": {"category": "hostile","sounds":["entity/Paragon/paragon_stand_up"]},
+"paragon_collapse": {"category": "hostile","sounds":["entity/Paragon/paragon_collapse"]},
+"paragon_jump_jets": {"category": "hostile","sounds":["entity/Paragon/paragon_jump_jets"]},
+"paragon_flame_thrower": {"category": "hostile","sounds":["entity/Paragon/paragon_flame_thrower"]},
+"paragon_living": {"category": "hostile","sounds":["entity/Paragon/paragon_living_1","entity/Paragon/paragon_living_2","entity/Paragon/paragon_living_3","entity/Paragon/paragon_living_4"]},
 
-
-
+"chorp_hurt": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_hurt"]},
+"chorp_death": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_death"]},
+"chorp_slime": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_slime"]}
 }
