@@ -51,7 +51,7 @@ public class BlockPhaseFire extends Block
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		//worldIn.setBlockToAir(pos);
+		worldIn.setBlockToAir(pos);
 		System.out.println("ERPDERP");
 		worldIn.scheduleUpdate(pos, this, 100);
 	}
@@ -64,7 +64,7 @@ public class BlockPhaseFire extends Block
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         if (entityIn instanceof EntityPlayer && !worldIn.isRemote){
-        	MBExtendedPlayer.get((EntityPlayer)entityIn).limboTime = 100;
+        	MBExtendedPlayer.get((EntityPlayer)entityIn).limboTime = 200;
         }
         
         worldIn.setBlockToAir(pos);

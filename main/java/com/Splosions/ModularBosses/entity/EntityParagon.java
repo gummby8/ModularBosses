@@ -79,8 +79,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	boolean Moving = false;
 
 	public int AniID = 0;
+	public int PrevAniID = 0;
 	public int AniFrame = 0;
-	public int PrevAniFrame = 0;
 	public int AniPause = 0;
 
 	public boolean sprintAttack = false;
@@ -123,7 +123,6 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	public int deathTicks;
 
 	Entity projectile;
-	private float DeadRot;
 
 	private boolean retaliation;
 
@@ -265,8 +264,9 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		super.onLivingUpdate();
 
 		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
-		this.AniFrame = (this.dataWatcher.getWatchableObjectInt(ANI_FRAME_WATCHER) == this.PrevAniFrame)? this.AniFrame : this.dataWatcher.getWatchableObjectInt(ANI_FRAME_WATCHER);
-		this.PrevAniFrame = this.AniFrame;
+		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
+		
+		
 
 		if(this.retaliation){
 			if (this.target.getDistanceToEntity(this) < 3) {
@@ -489,10 +489,11 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.motionX = (this.jumpX - this.targetX) / -35;
 			this.motionZ = (this.jumpZ - this.targetZ) / -35;
 		}
-
+		
+		this.PrevAniID = this.AniID;
 		if (!this.worldObj.isRemote) {
 			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
-			this.dataWatcher.updateObject(ANI_FRAME_WATCHER, AniFrame);
+			//this.dataWatcher.updateObject(ANI_FRAME_WATCHER, AniFrame);
 		}
 	}
 
@@ -606,10 +607,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 				this.playSound(Sounds.PARAGON_KNEE_HURT, 1F, 1.0F);
 				KneeHP--;
 			}
-		}
-		if (Part == this.paragonPartFurnace)
-
-		{
+		} else
+		if (Part == this.paragonPartFurnace){
 			if (this.AniID == COLLAPSE && this.AniFrame > 19 && this.AniFrame < 41) {
 				this.Damage(Source, DMGAmmount);
 				this.playSound(Sounds.PARAGON_FURNACE_HURT, 1F, 1.0F);

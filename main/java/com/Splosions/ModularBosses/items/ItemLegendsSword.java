@@ -14,6 +14,8 @@ import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
+import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.util.Schematic;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
@@ -54,11 +56,13 @@ public class ItemLegendsSword extends ItemSword {
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
-    	if (worldIn.isRemote){
-    	
-    		ClientProxy.clearShader();
+
+    		EntityScythe projectile = new EntityScythe(playerIn.worldObj, playerIn, playerIn, 0, 0, 0, 1, 0, 0, 0, 0);
+			if (!playerIn.worldObj.isRemote) {
+				playerIn.worldObj.spawnEntityInWorld(projectile);
+			}
     		
-    	}
+    	
 
 
     	

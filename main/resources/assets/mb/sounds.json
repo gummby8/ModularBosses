@@ -1,4 +1,6 @@
 {
+"limbo": {"category": "ambient","sounds":["ambient/limbo"]},
+
 "paragon_walk_rfoot": {"category": "hostile","sounds":["entity/Paragon/paragon_walk_rfoot"]},
 "paragon_walk_lfoot": {"category": "hostile","sounds":["entity/Paragon/paragon_walk_lfoot"]},
 "paragon_furnace_deflect": {"category": "hostile","sounds":["entity/Paragon/paragon_furnace_deflect_1","entity/Paragon/paragon_furnace_deflect_1"]},

@@ -7,7 +7,9 @@ package com.Splosions.ModularBosses;
  *
  */
 public class Sounds {
-
+	// AMBIENT SOUNDS
+	public static final String LIMBO = Reference.MOD_ID + ":limbo";
+	
 	// MOB SOUNDS
 	public static final String PARAGON_LIVING = Reference.MOD_ID + ":paragon_living";
 	public static final String PARAGON_RFOOT = Reference.MOD_ID + ":paragon_walk_rfoot";

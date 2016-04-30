@@ -1,6 +1,7 @@
 package com.Splosions.ModularBosses.entity.player;
 
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
@@ -61,6 +62,8 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 			if (this.preLimbo != this.limbo && this.player == Minecraft.getMinecraft().thePlayer) {
 				if (this.limbo == 1) {
 					ClientProxy.sobelShader();
+					Minecraft.getMinecraft().getSoundHandler().stopSounds();
+					this.player.playSound(Sounds.LIMBO, 1F, 1.0F);
 				} else {
 					ClientProxy.clearShader();
 				}
