@@ -34,6 +34,8 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 	protected final ModelLegendsSword swordModel;
 	private final IBakedModel baseModel;
 	private final IBakedModel emptyModel;
+	
+	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/StevesSword.png");
 
 	public ModelItemLegendsSword(IBakedModel baseModel) {
 		swordModel = new ModelLegendsSword();
@@ -48,7 +50,7 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 
 	@Override
 	public Pair<IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-		System.out.println("Rendering");
+
 		// gui renders as 2D sprite; this is apparently also what renders when the item is dropped
 		if (cameraTransformType == ItemCameraTransforms.TransformType.GUI) {
 			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
@@ -114,13 +116,12 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 	}
 
 	private ResourceLocation getTexture1() {
-		return RenderLegendsSword.texture;
+		return loc;
 	}
 
 
 	@Override
 	public IBakedModel handleItemState(ItemStack stack) {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 }
