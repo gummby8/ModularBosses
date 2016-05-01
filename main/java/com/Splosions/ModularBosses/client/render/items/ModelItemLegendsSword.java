@@ -48,11 +48,13 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 
 	@Override
 	public Pair<IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
+		System.out.println("Rendering");
 		// gui renders as 2D sprite; this is apparently also what renders when the item is dropped
 		if (cameraTransformType == ItemCameraTransforms.TransformType.GUI) {
 			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
 			return Pair.of(baseModel, null);
 		}
+		
 		GlStateManager.pushMatrix();
 		switch (cameraTransformType) {
 		case FIRST_PERSON:

@@ -48,10 +48,11 @@ import java.lang.reflect.*;
 
 
 
-public class ItemLegendsSword extends BaseModItem implements ISwapModel {
+public class ItemLegendsSword2 extends BaseModItem implements ISwapModel {
+
 	
 	
-	public ItemLegendsSword(ToolMaterial material) {
+	public ItemLegendsSword2(ToolMaterial material) {
 		super();
 	}
 	 
@@ -78,9 +79,9 @@ public class ItemLegendsSword extends BaseModItem implements ISwapModel {
 	@SideOnly(Side.CLIENT)
 	public Collection<ModelResourceLocation> getDefaultResources() {
 		List<ModelResourceLocation> resources = Lists.newArrayList();
-		
-			resources.add(new ModelResourceLocation("mb:Legends_Sword", "inventory"));
-		
+		for (String s : getVariants()) {
+			resources.add(new ModelResourceLocation(s, "inventory"));
+		}
 		return resources;
 	}
 

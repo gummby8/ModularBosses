@@ -94,6 +94,9 @@ public class ClientProxy extends CommonProxy{
 					if (item instanceof IModItem) {
 						((IModItem) item).registerRenderers(mc.getRenderItem().getItemModelMesher());
 					}
+					if (item instanceof ISwapModel) {
+						addModelToSwap((ISwapModel) item);
+					}
 				}
 			}
 		} catch(Exception e) {
@@ -142,7 +145,7 @@ public class ClientProxy extends CommonProxy{
 					ModularBosses.logger.warn("Conflicting models for resource " + resource.toString() + ": models=[old: " + smartModels.get(resource).getSimpleName() + ", new: " + swap.getNewModel().getSimpleName());
 				}
 			} else {
-				ModularBosses.logger.debug("Swapping model for " + resource.toString() + " to class " + swap.getNewModel().getSimpleName());
+				ModularBosses.logger.warn("Swapping model for " + resource.toString() + " to class " + swap.getNewModel().getSimpleName());
 				smartModels.put(resource, swap.getNewModel());
 			}
 		}

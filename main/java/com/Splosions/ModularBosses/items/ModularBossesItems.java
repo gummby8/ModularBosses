@@ -137,7 +137,7 @@ public class ModularBossesItems {
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders(){
-		registerRender(Legends_Sword);
+		//registerRender(Legends_Sword);
 		registerRender(slimeblob);
 		
 	}
