@@ -641,6 +641,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	 * Return the Entity parts making up this Entity (currently only for
 	 * dragons)
 	 */
+	@Override
 	public Entity[] getParts() {
 		return this.paragonPartArray;
 	}
@@ -668,8 +669,9 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		float f11 = MathHelper.sin(f3);
 		float f4 = MathHelper.cos(f3);
 
-		part.onUpdate();
 		part.setLocationAndAngles(this.posX + (double) (f11 * -FrontToBack) + (double) (f4 * SideToSide), this.posY + TopToBot, this.posZ + (double) (f4 * FrontToBack) + (double) (f11 * SideToSide), 0.0F, 0.0F);
+		part.onUpdate();
+		
 
 	}
 

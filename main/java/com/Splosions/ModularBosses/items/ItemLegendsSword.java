@@ -57,7 +57,7 @@ public class ItemLegendsSword extends ItemSword {
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
 
-    		EntityScythe projectile = new EntityScythe(playerIn.worldObj, playerIn, playerIn, 0, 0, 0, 1, 0, 0, 0, 0);
+    		EntityScythe projectile = new EntityScythe(playerIn.worldObj, playerIn, playerIn, 0, 0, 0, 1, 0, 1, 2);
 			if (!playerIn.worldObj.isRemote) {
 				playerIn.worldObj.spawnEntityInWorld(projectile);
 			}

@@ -63,7 +63,7 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 				if (this.limbo == 1) {
 					ClientProxy.sobelShader();
 					Minecraft.getMinecraft().getSoundHandler().stopSounds();
-					this.player.playSound(Sounds.LIMBO, 1F, 1.0F);
+					this.player.playSound(Sounds.LIMBO, 20F, 1.0F);
 				} else {
 					ClientProxy.clearShader();
 				}

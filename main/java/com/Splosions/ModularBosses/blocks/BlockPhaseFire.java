@@ -36,7 +36,6 @@ public class BlockPhaseFire extends Block
 		super(material);
 		disableStats();
 		setBlockUnbreakable();
-		setLightLevel(5.0F);
 		setStepSound(soundTypeStone);
 		setCreativeTab(MBCreativeTabs.tabBlocks);
 		this.setTickRandomly(true);

@@ -119,9 +119,7 @@ public class EntityTatters extends EntityMob
 	public float count;
 	public float Ccount;
 	
-	
-
-    /** The Entity this EntityCreature is set to attack. */
+	/** The Entity this EntityCreature is set to attack. */
     public Entity entityToAttack;
     
 	public int attackCounter;
@@ -134,7 +132,7 @@ public class EntityTatters extends EntityMob
 	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	private float DeadRot;
 
-
+	public int scytheCount = 0;
 	
 
 	public EntityTatters(World par1World) {

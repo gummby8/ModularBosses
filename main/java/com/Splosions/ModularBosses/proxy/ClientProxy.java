@@ -54,7 +54,6 @@ public class ClientProxy extends CommonProxy{
 		try {
 			f_loadShader.invoke(Minecraft.getMinecraft().entityRenderer, new ResourceLocation("shaders/post/sobel.json"));
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -64,9 +63,18 @@ public class ClientProxy extends CommonProxy{
 		try{
 			ReflectionHelper.setPrivateValue(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer, false, new String[]{"field_175083_ad", "useShader"});
 		} catch (Throwable e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static boolean getShader(){
+		boolean result = false;
+		try{
+			result = ReflectionHelper.getPrivateValue(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer, new String[]{"field_175083_ad", "useShader"});
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	

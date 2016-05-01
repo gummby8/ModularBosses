@@ -9,6 +9,9 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityMultiPart;
+import net.minecraft.entity.boss.EntityDragon;
+import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,7 +36,7 @@ public class EntityScythe extends EntityMobThrowable {
 
 	public EntityScythe(World world) {
 		super(world);
-		setSize(1, 2);
+		this.setSize(1, 2);
 
 	}
 
@@ -47,14 +50,10 @@ public class EntityScythe extends EntityMobThrowable {
 
 	public EntityScythe(World world, EntityLivingBase shooter, float wobble, float FrontToBack, float YOffset, float SideToSide) {
 		super(world, shooter, wobble, FrontToBack, YOffset, SideToSide);
-		this.motionX = 0;
-		this.motionY = 0;
-		this.motionZ = 0;
 	}
 
-	public EntityScythe(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2, int scale) {
+	public EntityScythe(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
-		setScale(scale);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
 		this.setPositionAndRotation(this.Shooter.posX, this.Shooter.posY + YOffset, this.Shooter.posZ, this.Shooter.rotationYaw, 0);
@@ -65,7 +64,7 @@ public class EntityScythe extends EntityMobThrowable {
 		super.entityInit();
 		dataWatcher.addObject(SHOOTER_INDEX, -1);
 		dataWatcher.addObject(SCALE, 1);
-		// SET SIZE HERE NEXT TIME
+		
 	}
 
 	public int getScale() {
@@ -98,8 +97,11 @@ public class EntityScythe extends EntityMobThrowable {
 
 		this.Shooter = (EntityLivingBase) getShooter();
 		this.noClip = true;
+		
+
 
 		if (this.Shooter != null) {
+
 			this.posY = this.Shooter.posY + 0.5F;
 
 			double x = this.posX - this.Shooter.posX;
@@ -120,10 +122,16 @@ public class EntityScythe extends EntityMobThrowable {
 				this.rotationYaw = -(angle + 180);
 				// System.out.println("-x +z = " + this.rotationYaw);
 			}
+
+			moveForward(0.1F);
+
+			attackEntitiesInList(this.worldObj.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox()));	
+
+			
 		}
-
-		moveForward(0.1F);
-
+		
+		
+		
 		/**
 		 * double d0 = this.Shooter.posX - this.posX; double d1 =
 		 * this.Shooter.posY + 1 - this.posY; double d2 = this.Shooter.posZ -
@@ -154,28 +162,28 @@ public class EntityScythe extends EntityMobThrowable {
 	/**
 	 * Attacks all entities inside this list, dealing 5 hearts of damage.
 	 */
-	private void attackEntitiesInList(List par1List) {
-		for (int i = 0; i < par1List.size(); ++i) {
-			Entity entity = (Entity) par1List.get(i);
-
-			if (entity instanceof EntityLivingBase && entity != this.Shooter) {
-
-				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-
-				System.out.println(entity);
+	private void attackEntitiesInList(List list) {
+		for (int i = 0; i < list.size(); ++i) {
+			Entity entity = (Entity) list.get(i);
+			if (entity instanceof IEntityMultiPart){
+				Entity[] entArray = entity.getParts();
+				for (int k = 0; k < entArray.length; ++k) {
+					EntityDragonPart part = (EntityDragonPart) entArray[k];
+					if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())){
+						System.out.println(part.partName);
+						part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+					}
+				}
+				
+			} else
+			if (entity != this.Shooter && entity != this) {
+				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+				//System.out.println(entity);
 			}
 		}
 	}
 
-	@Override
-	protected void onImpact(MovingObjectPosition mop) {
 
-		if (mop.entityHit == this.Shooter) {
-			// setDead();
-		} else if (mop.entityHit instanceof EntityLiving) {
-			mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
-		}
-	}
 
 	/**
 	 * Similar to setArrowHeading, it's point the throwable entity to a x, y, z
@@ -207,6 +215,12 @@ public class EntityScythe extends EntityMobThrowable {
 			part = destination;
 		}
 		return part;
+	}
+
+	@Override
+	protected void onImpact(MovingObjectPosition mop) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
