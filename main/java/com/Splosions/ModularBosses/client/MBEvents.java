@@ -60,7 +60,6 @@ public class MBEvents {
 	
 	@SubscribeEvent
 	public void onBakeModel(ModelBakeEvent event) {
-		System.out.println("ON BAKED MODEL EVENT");
 		for (ModelResourceLocation resource : ClientProxy.smartModels.keySet()) {
 			Object object =  event.modelRegistry.getObject(resource);
 			if (object instanceof IBakedModel) {

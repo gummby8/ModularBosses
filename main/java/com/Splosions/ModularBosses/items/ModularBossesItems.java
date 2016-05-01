@@ -94,7 +94,7 @@ public class ModularBossesItems {
 	
 	public static void init() {
 		
-		 Legends_Sword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
+		 Legends_Sword = new ItemLegendsSword().setUnlocalizedName("Legends_Sword");
 		 slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
 		 
 		 eggSpawner = new ItemCustomEgg().setUnlocalizedName("spawn_egg");

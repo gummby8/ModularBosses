@@ -51,9 +51,7 @@ import java.lang.reflect.*;
 public class ItemLegendsSword extends BaseModItem implements ISwapModel {
 	
 	
-	public ItemLegendsSword(ToolMaterial material) {
-		super();
-	}
+
 	 
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
