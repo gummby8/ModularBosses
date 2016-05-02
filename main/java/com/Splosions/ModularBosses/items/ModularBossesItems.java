@@ -41,7 +41,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.render.items.RenderLegendsSword;
+
 
 
 public class ModularBossesItems {
@@ -79,7 +79,9 @@ public class ModularBossesItems {
 	
 	//================ TOOLS TAB ================//
 	public static Item 
+	itemScythe,
 	Legends_Sword;
+	
 	
 	
 	//================ SPAWN EGGS TAB ================//
@@ -94,7 +96,9 @@ public class ModularBossesItems {
 	
 	public static void init() {
 		
-		 Legends_Sword = new ItemLegendsSword().setUnlocalizedName("Legends_Sword");
+		itemScythe = new ItemScythe(ToolMaterial.EMERALD).setUnlocalizedName("itemScythe");
+		 Legends_Sword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
+		 
 		 slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
 		 
 		 eggSpawner = new ItemCustomEgg().setUnlocalizedName("spawn_egg");

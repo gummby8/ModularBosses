@@ -25,21 +25,21 @@ import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
+import com.Splosions.ModularBosses.client.models.projectiles.ModelScythe;
 
 
 @SuppressWarnings("deprecation")
 @SideOnly(Side.CLIENT)
-public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAwareModel
+public class RenderItemScythe implements ISmartItemModel, IPerspectiveAwareModel
 {
-	protected final ModelLegendsSword swordModel;
+	protected final ModelScythe scytheModel;
 	private final IBakedModel baseModel;
 	private final IBakedModel emptyModel;
 	
-	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/StevesSword.png");
+	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/Scythe.png");
 
-	public ModelItemLegendsSword(IBakedModel baseModel) {
-		swordModel = new ModelLegendsSword();
+	public RenderItemScythe(IBakedModel baseModel) {
+		scytheModel = new ModelScythe();
 		this.baseModel = baseModel;
 		ModelResourceLocation resource = new ModelResourceLocation(Reference.MOD_ID + ":empty", "inventory");
 		this.emptyModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getModel(resource);
@@ -59,18 +59,17 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 		}
 
 		GlStateManager.pushMatrix();
-		GL11.glScalef(0.1F, 0.1F, 0.1F);
 		switch (cameraTransformType) {
 		case FIRST_PERSON:
-			GlStateManager.translate(0.5F, 0.5F, 0.5F);
+			GlStateManager.translate(0F, -0.3F, 0F);
 			GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(-40.0F, 0.0F, 1.0F, 0.0F);
-			GlStateManager.translate(-0.75F, 0.2F, 0.5F);
+			GlStateManager.rotate(40F, 0.0F, 1.0F, 0.0F);
+			//GlStateManager.translate(-0.75F, 0.2F, 0.5F);
 			break;
 		case THIRD_PERSON:
-			GlStateManager.rotate(100.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(90.0F, 0F, 1.0F, 0.0F);
-			GlStateManager.translate(0.3F, -0.3F, 0.2F);
+			GlStateManager.rotate(-10.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(180.0F, 0F, 1.0F, 0.0F);
+			//GlStateManager.translate(0.3F, -0.3F, 0.2F);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 			break;
 		default:
@@ -78,7 +77,7 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 		}
 		Minecraft.getMinecraft().getTextureManager().bindTexture(getTexture1());
 		// first Entity parameter not used for anything in ModelLegendsSword, so null is safe
-		swordModel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
+		scytheModel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GlStateManager.popMatrix();
 		// return empty model to render nothing - bomb model already rendered
 		return Pair.of(emptyModel, null);

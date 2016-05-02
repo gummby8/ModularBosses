@@ -11,7 +11,7 @@ import java.util.List;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
-import com.Splosions.ModularBosses.client.render.items.ModelItemLegendsSword;
+import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
@@ -48,12 +48,16 @@ import java.lang.reflect.*;
 
 
 
-public class ItemLegendsSword extends BaseModItem implements ISwapModel {
+public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	
 	
 
 	 
-    /**
+    public ItemLegendsSword(ToolMaterial material) {
+		super(material);
+	}
+
+	/**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
@@ -85,7 +89,7 @@ public class ItemLegendsSword extends BaseModItem implements ISwapModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Class<? extends IBakedModel> getNewModel() {
-		return ModelItemLegendsSword.class;
+		return RenderItemLegendsSword.class;
 	}
 
     
