@@ -21,6 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
@@ -56,17 +57,20 @@ public class ModelItemLegendsSword implements ISmartItemModel, IPerspectiveAware
 			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
 			return Pair.of(baseModel, null);
 		}
-		
+
 		GlStateManager.pushMatrix();
+		GL11.glScalef(0.1F, 0.1F, 0.1F);
 		switch (cameraTransformType) {
 		case FIRST_PERSON:
 			GlStateManager.translate(0.5F, 0.5F, 0.5F);
 			GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.translate(-0.75F, -0.5F, 0.5F);
+			GlStateManager.rotate(-40.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.translate(-0.75F, 0.2F, 0.5F);
 			break;
 		case THIRD_PERSON:
-			GlStateManager.rotate(80.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.translate(0.0F, -0.525F, -0.1F);
+			GlStateManager.rotate(100.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(90.0F, 0F, 1.0F, 0.0F);
+			GlStateManager.translate(0.3F, -0.3F, 0.2F);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 			break;
 		default:
