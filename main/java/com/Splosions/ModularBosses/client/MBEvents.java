@@ -57,7 +57,7 @@ public class MBEvents {
 	}
 		
 	
-	
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onBakeModel(ModelBakeEvent event) {
 		for (ModelResourceLocation resource : ClientProxy.smartModels.keySet()) {

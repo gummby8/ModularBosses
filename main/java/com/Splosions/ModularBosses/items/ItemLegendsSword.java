@@ -46,43 +46,44 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import java.lang.reflect.*;
 
-
-
 public class ItemLegendsSword extends BaseModSword implements ISwapModel {
-	
-	
 
-	 
-    public ItemLegendsSword(ToolMaterial material) {
+	public ItemLegendsSword(ToolMaterial material) {
 		super(material);
 	}
 
 	/**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
-    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
-    {
-
-    		EntityScythe projectile = new EntityScythe(playerIn.worldObj, playerIn, playerIn, 0, 0, 0, 1, 0, 1, 2);
-			if (!playerIn.worldObj.isRemote) {
-				playerIn.worldObj.spawnEntityInWorld(projectile);
-			}
-    		
-    	
-
-
-    	
+	 * Called whenever this item is equipped and the right mouse button is
+	 * pressed. Args: itemStack, world, entityPlayer
+	 */
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+        playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
         return itemStackIn;
-        
+	}
+	
+    /**
+     * How long it takes to use or consume an item
+     */
+    public int getMaxItemUseDuration(ItemStack stack)
+    {
+        return 72000;
     }
-    
-    @Override
+
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    public EnumAction getItemUseAction(ItemStack stack)
+    {
+        return EnumAction.BLOCK;
+    }
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public Collection<ModelResourceLocation> getDefaultResources() {
 		List<ModelResourceLocation> resources = Lists.newArrayList();
-		
-			resources.add(new ModelResourceLocation("mb:Legends_Sword", "inventory"));
-		
+
+		resources.add(new ModelResourceLocation("mb:Legends_Sword", "inventory"));
+
 		return resources;
 	}
 
@@ -92,5 +93,4 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 		return RenderItemLegendsSword.class;
 	}
 
-    
 }

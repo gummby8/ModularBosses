@@ -65,7 +65,7 @@ public class RenderItemLegendsSword implements ISmartItemModel, IPerspectiveAwar
 			GlStateManager.translate(0.5F, 0.5F, 0.5F);
 			GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(-40.0F, 0.0F, 1.0F, 0.0F);
-			GlStateManager.translate(-0.75F, 0.2F, 0.5F);
+			GlStateManager.translate(-0.75F, 1.5F, 0.5F);
 			break;
 		case THIRD_PERSON:
 			GlStateManager.rotate(100.0F, 1.0F, 0.0F, 0.0F);

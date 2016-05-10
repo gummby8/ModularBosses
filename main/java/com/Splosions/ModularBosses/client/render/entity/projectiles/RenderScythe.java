@@ -35,7 +35,7 @@ public class RenderScythe extends Render {
 		this.model.pt = partialTick;
 		EntityScythe ent = (EntityScythe) entity;
 
-		if (ent.Shooter != null) {
+		if (ent.Shooter != null && ent.thrown == 1) {
 			double ax = ent.posX - ent.Shooter.posX;
 			double az = ent.posZ - ent.Shooter.posZ;
 			double p = ax / az;
@@ -54,7 +54,8 @@ public class RenderScythe extends Render {
 				yaw = -((float) angle + 180);
 				
 			}
-			//System.out.println(yaw);
+		} else {
+			yaw = ent.rotationYaw + 180;
 		}
 		
 

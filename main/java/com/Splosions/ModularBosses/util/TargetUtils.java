@@ -10,10 +10,26 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class TargetUtils {
 
 
+	
+	/**
+	 * Returns a random number between the two numbers specified
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	public static int getRanNum(int min, int max) {
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+		Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+	}
+	
 
 	/**
 	 * Returns whether the target is in the seeker's field of view based on
@@ -77,6 +93,15 @@ public class TargetUtils {
 		return entityplayer != null && ((EntityLivingBase) entity).canEntityBeSeen(entityplayer) ? entityplayer : null;
 	}
 
+	
+	/**
+	 * Adds the stack to the player's inventory or, failing that, drops it as an EntityItem
+	 */
+	public static void addItemToInventory(EntityPlayer player, ItemStack stack) {
+		if (!player.inventory.addItemStackToInventory(stack)) {
+			player.dropPlayerItemWithRandomChoice(stack, false);
+		}
+	}
 	
 
 }

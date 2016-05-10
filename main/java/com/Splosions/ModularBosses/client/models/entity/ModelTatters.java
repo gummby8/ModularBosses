@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.client.models.entity;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.EntityTatters;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,7 +16,6 @@ import net.minecraft.util.MathHelper;
  * Created using Tabula 5.1.0
  */
 public class ModelTatters extends ModelBase {
-
  			public ModelRenderer HEAD;
     	    public ModelRenderer CLOTHSTRIPS;
     	    public ModelRenderer CLOTHSTRIPS2;
@@ -251,29 +251,101 @@ public class ModelTatters extends ModelBase {
     	    public ModelRenderer LShoulder52;
     	    public ModelRenderer LShoulder53;
 
+    	    public ModelRenderer SPINE;
+    	    public ModelRenderer spine;
+    	    public ModelRenderer spine_1;
+    	    public ModelRenderer spine_2;
+    	    public ModelRenderer spine_3;
+    	    public ModelRenderer spine_4;
+    	    public ModelRenderer spine_5;
+    	    public ModelRenderer spine_6;
+    	    public ModelRenderer spine_7;
+    	    public ModelRenderer spine_8;
+    	    public ModelRenderer spine_9;
+    	    public ModelRenderer spine_10;
+    	    public ModelRenderer spine_11;
+    	    public ModelRenderer spine_12;
+    	    public ModelRenderer spine_13;
+    	    public ModelRenderer spine_14;
+    	    public ModelRenderer spine_15;
+    	    public ModelRenderer spine_16;
+    	    public ModelRenderer spine_17;
+    	    public ModelRenderer spine_18;
+    	    public ModelRenderer spine_19;
+    	    public ModelRenderer spine_20;
+    	    public ModelRenderer spine_21;
+    	    public ModelRenderer spine_22;
+    	    public ModelRenderer spine_23;
+    	    public ModelRenderer spine_24;
+    	    public ModelRenderer spine_25;
+    	    public ModelRenderer spine_26;
+    	    public ModelRenderer spine_27;
+    	    public ModelRenderer spine_28;
+    	    public ModelRenderer spine_29;
+    	    public ModelRenderer spine_30;
+    	    public ModelRenderer spine_31;
+    	    public ModelRenderer spine_32;
+    	    public ModelRenderer spine_33;
+    	    public ModelRenderer spine_34;
+    	    public ModelRenderer spine_35;
+    	    public ModelRenderer spine_36;
+    	    public ModelRenderer spine_37;
+    	    public ModelRenderer spine_38;
+    	    public ModelRenderer spine_39;
+    	    public ModelRenderer spine_40;
+    	    public ModelRenderer spine_41;
+    	    public ModelRenderer spine_42;
+    	    public ModelRenderer spine_43;
+    	    public ModelRenderer spine_44;
+    	    public ModelRenderer spine_45;
+    	    public ModelRenderer spine_46;
+    	    public ModelRenderer spine_47;
+    	    public ModelRenderer spine_48;
+    	    public ModelRenderer spine_49;
+    	    public ModelRenderer spine_50;
+    	    public ModelRenderer spine_51;
+    	    public ModelRenderer spine_52;
+    	    public ModelRenderer spine_53;
+    	    public ModelRenderer spine_54;
+    	    public ModelRenderer RArm;
+    	    public ModelRenderer LArm;
+    	    public ModelRenderer RForearm;
+    	    public ModelRenderer RHand;
+    	    public ModelRenderer RF11;
+    	    public ModelRenderer RF21;
+    	    public ModelRenderer RF31;
+    	    public ModelRenderer RF41;
+    	    public ModelRenderer RF12;
+    	    public ModelRenderer RF22;
+    	    public ModelRenderer RF32;
+    	    public ModelRenderer RF42;
+    	    public ModelRenderer LForearm;
+    	    public ModelRenderer LHand;
+    	    public ModelRenderer LF11;
+    	    public ModelRenderer LF21;
+    	    public ModelRenderer LF31;
+    	    public ModelRenderer LF41;
+    	    public ModelRenderer LF12;
+    	    public ModelRenderer LF22;
+    	    public ModelRenderer LF32;
+    	    public ModelRenderer LF42;
 
 
     	    
     	    
-    	    public ModelRenderer[] StripF1 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF2 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF3 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF4 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF5 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF6 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF7 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF8 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF9 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF10 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF11 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF12 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF13 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF14 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF15 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF16 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF17 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF18 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripF19 = new ModelRenderer[40];
+    	    public ModelRenderer[] StripF5 = new ModelRenderer[3];
+    	    public ModelRenderer[] StripF6 = new ModelRenderer[5];
+    	    public ModelRenderer[] StripF7 = new ModelRenderer[8];
+    	    public ModelRenderer[] StripF8 = new ModelRenderer[10];
+    	    public ModelRenderer[] StripF9 = new ModelRenderer[8];
+    	    public ModelRenderer[] StripF10 = new ModelRenderer[5];
+
+    	    public ModelRenderer[] StripF14 = new ModelRenderer[3];
+    	    public ModelRenderer[] StripF15 = new ModelRenderer[5];
+    	    public ModelRenderer[] StripF16 = new ModelRenderer[8];
+    	    public ModelRenderer[] StripF17 = new ModelRenderer[10];
+    	    public ModelRenderer[] StripF18 = new ModelRenderer[8];
+    	    public ModelRenderer[] StripF19 = new ModelRenderer[5];
     	    
     	    public ModelRenderer[] StripB1 = new ModelRenderer[40];
     	    public ModelRenderer[] StripB2 = new ModelRenderer[40];
@@ -296,36 +368,7 @@ public class ModelTatters extends ModelBase {
     	    public ModelRenderer[] StripB19 = new ModelRenderer[40];
     	    
     	    
-    	    public ModelRenderer[] StripL1 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL2 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL3 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL4 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL5 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL6 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL7 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL8 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL9 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL10 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL11 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL12 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL13 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripL14 = new ModelRenderer[40];
-    	    
-    	    
-    	    public ModelRenderer[] StripR1 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR2 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR3 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR4 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR5 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR6 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR7 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR8 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR9 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR10 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR11 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR12 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR13 = new ModelRenderer[40];
-    	    public ModelRenderer[] StripR14 = new ModelRenderer[40];
+    	   
     	    
     	    public ModelTatters() {
     	        this.textureWidth = 128;
@@ -381,7 +424,7 @@ public class ModelTatters extends ModelBase {
     	        this.RShoulder10.addBox(-3.0F, 0.0F, -2.0F, 3, 0, 4, 0.0F);
     	        this.setRotateAngle(RShoulder10, 0.0F, 0.0F, 0.3490658503988659F);
     	        this.HEADBLOCK = new ModelRenderer(this, 31, 0);
-    	        this.HEADBLOCK.setRotationPoint(0.0F, 0.0F, -1.1F);
+    	        this.HEADBLOCK.setRotationPoint(0.0F, -35.0F, -1.1F);
     	        this.HEADBLOCK.addBox(-2.0F, -5.0F, -3.0F, 4, 11, 2, 0.0F);
     	        this.Hood41 = new ModelRenderer(this, 105, 0);
     	        this.Hood41.setRotationPoint(4.5F, 8.7F, -1.5F);
@@ -913,7 +956,7 @@ public class ModelTatters extends ModelBase {
     	        this.Hood94.addBox(0.0F, -0.35F, -1.0F, 3, 0, 1, 0.0F);
     	        this.setRotateAngle(Hood94, -0.3490658503988659F, 3.141592653589793F, -1.2217304763960306F);
     	        this.HOOD = new ModelRenderer(this, 106, 0);
-    	        this.HOOD.setRotationPoint(0.0F, -5.2F, 0.0F);
+    	        this.HOOD.setRotationPoint(0.0F, -40.2F, 0.0F);
     	        this.HOOD.addBox(-2.0F, 0.0F, -3.5F, 4, 0, 4, 0.0F);
     	        this.LShoulder3 = new ModelRenderer(this, 109, 0);
     	        this.LShoulder3.setRotationPoint(0.0F, 0.0F, -1.0F);
@@ -1230,8 +1273,6 @@ public class ModelTatters extends ModelBase {
     	        this.LShoulder20.setRotationPoint(0.0F, 0.0F, -2.0F);
     	        this.LShoulder20.addBox(-2.95F, 0.0F, -2.0F, 3, 0, 2, 0.0F);
     	        this.setRotateAngle(LShoulder20, -0.5235987755982988F, 0.0F, 0.0F);
-    	        
-    	        
     	        this.CLOTHSTRIPS = new ModelRenderer(this, 0, 0);
     	        this.CLOTHSTRIPS.setRotationPoint(0.0F, -29F, -1.5F);
     	        this.CLOTHSTRIPS.addBox(0.0F, 0.0F, 0.0F, 0, 0, 0, 0.0F);
@@ -1239,6 +1280,307 @@ public class ModelTatters extends ModelBase {
     	        this.Hood62.setRotationPoint(-2.0F, 0.0F, 0.5F);
     	        this.Hood62.addBox(0.0F, 0.0F, -1.0F, 2, 0, 1, 0.0F);
     	        this.setRotateAngle(Hood62, 0.3490658503988659F, 3.141592653589793F, -0.5235987755982988F);
+
+    	        
+    	        this.spine_21 = new ModelRenderer(this, 0, 0);
+    	        this.spine_21.setRotationPoint(-3.3F, 9.0F, 2.4F);
+    	        this.spine_21.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_21, 0.296705972839036F, -0.5585053606381855F, -0.17453292519943295F);
+    	        this.spine_54 = new ModelRenderer(this, 0, 0);
+    	        this.spine_54.setRotationPoint(0.0F, 6.0F, 2.0F);
+    	        this.spine_54.addBox(0.0F, -0.4F, 0.0F, 11, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_54, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.spine_33 = new ModelRenderer(this, 0, 0);
+    	        this.spine_33.setRotationPoint(4.0F, 14.8F, -3.0F);
+    	        this.spine_33.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_33, 0.06981317007977318F, 2.96705972839036F, -0.06981317007977318F);
+    	        this.spine_40 = new ModelRenderer(this, 0, 0);
+    	        this.spine_40.setRotationPoint(-3.0F, 18.0F, 1.7F);
+    	        this.spine_40.addBox(-1.0F, -0.4F, 0.0F, 8, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_40, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.RF32 = new ModelRenderer(this, 0, 0);
+    	        this.RF32.setRotationPoint(0.0F, 2.0F, 0.0F);
+    	        this.RF32.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.RF31 = new ModelRenderer(this, 0, 0);
+    	        this.RF31.setRotationPoint(-0.5F, 3.0F, -1.2F);
+    	        this.RF31.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.LF41 = new ModelRenderer(this, 0, 0);
+    	        this.LF41.setRotationPoint(-1.0F, 0.5F, -0.8F);
+    	        this.LF41.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.RF12 = new ModelRenderer(this, 0, 0);
+    	        this.RF12.setRotationPoint(0.0F, 2.0F, 0.0F);
+    	        this.RF12.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_41 = new ModelRenderer(this, 0, 0);
+    	        this.spine_41.setRotationPoint(-3.6F, 16.9F, -3.4F);
+    	        this.spine_41.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_41, 0.5410520681182421F, -1.9896753472735356F, -0.5235987755982988F);
+    	        this.spine_47 = new ModelRenderer(this, 0, 0);
+    	        this.spine_47.setRotationPoint(0.5F, 16.5F, -3.5F);
+    	        this.spine_47.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_47, 0.06981317007977318F, 2.96705972839036F, 0.593411945678072F);
+    	        this.spine_35 = new ModelRenderer(this, 0, 0);
+    	        this.spine_35.setRotationPoint(-3.2F, 14.8F, -3.6F);
+    	        this.spine_35.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_35, 0.06981317007977318F, -2.007128639793479F, 0.0F);
+    	        this.spine_5 = new ModelRenderer(this, 0, 0);
+    	        this.spine_5.setRotationPoint(-3.3F, 6.0F, 2.4F);
+    	        this.spine_5.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_5, 0.17453292519943295F, -0.7853981633974483F, -0.3490658503988659F);
+    	        this.spine_7 = new ModelRenderer(this, 0, 0);
+    	        this.spine_7.setRotationPoint(5.0F, 6.6F, 0.7F);
+    	        this.spine_7.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_7, 1.0471975511965976F, 0.9599310885968813F, 1.2217304763960306F);
+    	        this.spine_22 = new ModelRenderer(this, 0, 0);
+    	        this.spine_22.setRotationPoint(-3.0F, 12.0F, 2.2F);
+    	        this.spine_22.addBox(-1.0F, -0.4F, 0.0F, 8, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_22, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.RArm = new ModelRenderer(this, 0, 0);
+    	        this.RArm.setRotationPoint(-11.0F, 6.0F, 1.0F);
+    	        this.RArm.addBox(-1.0F, 0.0F, -1.0F, 2, 11, 2, 0.0F);
+    	        this.LF31 = new ModelRenderer(this, 0, 0);
+    	        this.LF31.setRotationPoint(0.5F, 3.0F, -1.2F);
+    	        this.LF31.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_3 = new ModelRenderer(this, 0, 0);
+    	        this.spine_3.setRotationPoint(0.0F, 6.0F, 2.0F);
+    	        this.spine_3.addBox(-11.0F, -0.4F, 0.0F, 11, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_3, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.spine_18 = new ModelRenderer(this, 0, 0);
+    	        this.spine_18.setRotationPoint(6.5F, 9.2F, 1.0F);
+    	        this.spine_18.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_18, 2.1816615649929116F, 0.9948376736367678F, 2.600540585471551F);
+    	        this.spine_12 = new ModelRenderer(this, 0, 0);
+    	        this.spine_12.setRotationPoint(0.0F, 16.5F, 1.1F);
+    	        this.spine_12.addBox(-1.0F, 0.0F, 0.0F, 2, 12, 2, 0.0F);
+    	        this.spine_24 = new ModelRenderer(this, 0, 0);
+    	        this.spine_24.setRotationPoint(-4.0F, 12.3F, -2.8F);
+    	        this.spine_24.addBox(-5.0F, -0.5F, 0.0F, 5, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_24, -0.6283185307179586F, -2.96705972839036F, 0.13962634015954636F);
+    	        this.spine_45 = new ModelRenderer(this, 0, 0);
+    	        this.spine_45.setRotationPoint(-3.0F, 21.0F, 1.7F);
+    	        this.spine_45.addBox(-1.0F, -0.4F, 0.0F, 8, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_45, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.RForearm = new ModelRenderer(this, 0, 0);
+    	        this.RForearm.setRotationPoint(0.0F, 10.0F, 0.0F);
+    	        this.RForearm.addBox(-1.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F);
+    	        this.LF11 = new ModelRenderer(this, 0, 0);
+    	        this.LF11.setRotationPoint(0.5F, 3.0F, 1.2F);
+    	        this.LF11.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_9 = new ModelRenderer(this, 0, 0);
+    	        this.spine_9.setRotationPoint(5.9F, 7.8F, -0.7F);
+    	        this.spine_9.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_9, -0.6981317007977318F, 2.408554367752175F, -0.24434609527920614F);
+    	        this.spine_31 = new ModelRenderer(this, 0, 0);
+    	        this.spine_31.setRotationPoint(-3.0F, 15.0F, 1.7F);
+    	        this.spine_31.addBox(-1.0F, -0.4F, 0.0F, 8, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_31, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.spine_16 = new ModelRenderer(this, 0, 0);
+    	        this.spine_16.setRotationPoint(-5.9F, 9.8F, -0.7F);
+    	        this.spine_16.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_16, -0.6981317007977318F, -2.408554367752175F, 0.24434609527920614F);
+    	        this.spine_23 = new ModelRenderer(this, 0, 0);
+    	        this.spine_23.setRotationPoint(4.0F, 12.3F, -2.8F);
+    	        this.spine_23.addBox(0.0F, -0.5F, 0.0F, 5, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_23, -0.6283185307179586F, 2.96705972839036F, -0.13962634015954636F);
+    	        this.spine_1 = new ModelRenderer(this, 0, 0);
+    	        this.spine_1.setRotationPoint(0.0F, 5.1F, 2.3F);
+    	        this.spine_1.addBox(-1.0F, 0.0F, 0.0F, 2, 12, 2, 0.0F);
+    	        this.setRotateAngle(spine_1, -0.10471975511965977F, 0.0F, 0.0F);
+    	        this.spine_25 = new ModelRenderer(this, 0, 0);
+    	        this.spine_25.setRotationPoint(-5.9F, 12.2F, -0.7F);
+    	        this.spine_25.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_25, -0.4363323129985824F, -2.478367537831948F, 0.13962634015954636F);
+    	        this.spine_2 = new ModelRenderer(this, 0, 0);
+    	        this.spine_2.setRotationPoint(0.0F, 7.0F, -4.0F);
+    	        this.spine_2.addBox(-1.0F, 0.0F, 0.0F, 2, 10, 1, 0.0F);
+    	        this.setRotateAngle(spine_2, -0.08726646259971647F, 0.0F, 0.0F);
+    	        this.spine_34 = new ModelRenderer(this, 0, 0);
+    	        this.spine_34.mirror = true;
+    	        this.spine_34.setRotationPoint(3.2F, 14.8F, -3.6F);
+    	        this.spine_34.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_34, 0.06981317007977318F, 2.007128639793479F, 0.0F);
+    	        this.spine_42 = new ModelRenderer(this, 0, 0);
+    	        this.spine_42.mirror = true;
+    	        this.spine_42.setRotationPoint(3.6F, 16.9F, -3.4F);
+    	        this.spine_42.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_42, 0.5410520681182421F, 1.9896753472735356F, 0.5235987755982988F);
+    	        this.RF22 = new ModelRenderer(this, 0, 0);
+    	        this.RF22.setRotationPoint(0.0F, 2.0F, 0.0F);
+    	        this.RF22.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_19 = new ModelRenderer(this, 0, 0);
+    	        this.spine_19.setRotationPoint(-6.5F, 9.2F, 1.0F);
+    	        this.spine_19.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_19, 2.1816615649929116F, -0.9948376736367678F, -2.600540585471551F);
+    	        this.spine_32 = new ModelRenderer(this, 0, 0);
+    	        this.spine_32.setRotationPoint(-4.0F, 14.8F, -3.0F);
+    	        this.spine_32.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_32, 0.06981317007977318F, -2.96705972839036F, 0.06981317007977318F);
+    	        this.LForearm = new ModelRenderer(this, 0, 0);
+    	        this.LForearm.setRotationPoint(0.0F, 10.0F, 0.0F);
+    	        this.LForearm.addBox(-1.0F, 0.0F, -1.0F, 2, 8, 2, 0.0F);
+    	        this.spine_48 = new ModelRenderer(this, 0, 0);
+    	        this.spine_48.mirror = true;
+    	        this.spine_48.setRotationPoint(3.1F, 18.6F, -3.4F);
+    	        this.spine_48.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_48, 0.5410520681182421F, 2.0594885173533086F, 0.890117918517108F);
+    	        this.LF32 = new ModelRenderer(this, 0, 0);
+    	        this.LF32.setRotationPoint(0.0F, 2.0F, 0.0F);
+    	        this.LF32.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_20 = new ModelRenderer(this, 0, 0);
+    	        this.spine_20.setRotationPoint(3.3F, 9.0F, 2.4F);
+    	        this.spine_20.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_20, 0.296705972839036F, 0.5585053606381855F, 0.17453292519943295F);
+    	        this.spine_49 = new ModelRenderer(this, 0, 0);
+    	        this.spine_49.setRotationPoint(-3.1F, 18.6F, -3.4F);
+    	        this.spine_49.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_49, 0.5410520681182421F, -2.0594885173533086F, -0.890117918517108F);
+    	        this.spine_6 = new ModelRenderer(this, 0, 0);
+    	        this.spine_6.setRotationPoint(-5.0F, 6.6F, 0.8F);
+    	        this.spine_6.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_6, 1.0471975511965976F, -0.9599310885968813F, -1.2217304763960306F);
+    	        this.RF21 = new ModelRenderer(this, 0, 0);
+    	        this.RF21.setRotationPoint(-0.5F, 3.0F, 0.0F);
+    	        this.RF21.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_37 = new ModelRenderer(this, 0, 0);
+    	        this.spine_37.mirror = true;
+    	        this.spine_37.setRotationPoint(4.9F, 14.9F, -0.5F);
+    	        this.spine_37.addBox(-3.5F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_37, 0.06981317007977318F, 0.9075712110370513F, 0.0F);
+    	        this.spine_46 = new ModelRenderer(this, 0, 0);
+    	        this.spine_46.setRotationPoint(-0.5F, 16.5F, -3.5F);
+    	        this.spine_46.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_46, 0.06981317007977318F, -2.96705972839036F, -0.593411945678072F);
+    	        this.spine_14 = new ModelRenderer(this, 0, 0);
+    	        this.spine_14.setRotationPoint(4.0F, 10.3F, -2.6F);
+    	        this.spine_14.addBox(0.0F, -0.5F, 0.0F, 5, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_14, -0.6283185307179586F, 2.96705972839036F, -0.13962634015954636F);
+    	        this.spine_29 = new ModelRenderer(this, 0, 0);
+    	        this.spine_29.setRotationPoint(-3.3F, 12.0F, 2.4F);
+    	        this.spine_29.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_29, 0.296705972839036F, -0.6981317007977318F, -0.13962634015954636F);
+    	        this.spine_38 = new ModelRenderer(this, 0, 0);
+    	        this.spine_38.setRotationPoint(-0.5F, 16.5F, -3.5F);
+    	        this.spine_38.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_38, 0.06981317007977318F, -2.96705972839036F, -0.13962634015954636F);
+    	        this.LArm = new ModelRenderer(this, 0, 0);
+    	        this.LArm.setRotationPoint(11.0F, 6.0F, 1.0F);
+    	        this.LArm.addBox(-1.0F, 0.0F, -1.0F, 2, 11, 2, 0.0F);
+    	        this.RF11 = new ModelRenderer(this, 0, 0);
+    	        this.RF11.setRotationPoint(-0.5F, 3.0F, 1.2F);
+    	        this.RF11.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.LHand = new ModelRenderer(this, 0, 0);
+    	        this.LHand.setRotationPoint(0.0F, 8.0F, 0.0F);
+    	        this.LHand.addBox(-0.5F, 0.0F, -1.5F, 2, 3, 3, 0.0F);
+    	        this.spine_4 = new ModelRenderer(this, 0, 0);
+    	        this.spine_4.setRotationPoint(3.3F, 6.0F, 2.4F);
+    	        this.spine_4.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_4, 0.17453292519943295F, 0.7853981633974483F, 0.3490658503988659F);
+    	        this.spine_11 = new ModelRenderer(this, 0, 0);
+    	        this.spine_11.setRotationPoint(4.0F, 8.3F, -2.5F);
+    	        this.spine_11.addBox(0.0F, -0.5F, 0.0F, 5, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_11, -0.6283185307179586F, 2.96705972839036F, -0.13962634015954636F);
+    	        this.spine_39 = new ModelRenderer(this, 0, 0);
+    	        this.spine_39.setRotationPoint(0.5F, 16.5F, -3.5F);
+    	        this.spine_39.addBox(-4.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_39, 0.06981317007977318F, 2.96705972839036F, 0.13962634015954636F);
+    	        this.SPINE = new ModelRenderer(this, 0, 0);
+    	        this.SPINE.setRotationPoint(0.0F, -29.0F, -3.0F);
+    	        this.SPINE.addBox(0.0F, 0.0F, 0.0F, 0, 0, 0, 0.0F);
+    	        this.LF42 = new ModelRenderer(this, 0, 0);
+    	        this.LF42.setRotationPoint(0.0F, 1.5F, 0.0F);
+    	        this.LF42.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_10 = new ModelRenderer(this, 0, 0);
+    	        this.spine_10.setRotationPoint(-4.0F, 8.3F, -2.5F);
+    	        this.spine_10.addBox(-5.0F, -0.5F, 0.0F, 5, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_10, -0.6283185307179586F, -2.96705972839036F, 0.13962634015954636F);
+    	        this.spine_15 = new ModelRenderer(this, 0, 0);
+    	        this.spine_15.setRotationPoint(-4.0F, 10.3F, -2.6F);
+    	        this.spine_15.addBox(-5.0F, -0.5F, 0.0F, 5, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_15, -0.6283185307179586F, -2.96705972839036F, 0.13962634015954636F);
+    	        this.spine_44 = new ModelRenderer(this, 0, 0);
+    	        this.spine_44.mirror = true;
+    	        this.spine_44.setRotationPoint(4.9F, 17.6F, -0.5F);
+    	        this.spine_44.addBox(-3.5F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_44, -0.20943951023931953F, 0.8726646259971648F, -0.24434609527920614F);
+    	        this.spine_53 = new ModelRenderer(this, 0, 0);
+    	        this.spine_53.setRotationPoint(-4.9F, 17.6F, -0.5F);
+    	        this.spine_53.addBox(-0.5F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_53, -0.20943951023931953F, -0.8726646259971648F, 0.24434609527920614F);
+    	        this.spine_17 = new ModelRenderer(this, 0, 0);
+    	        this.spine_17.setRotationPoint(5.9F, 9.8F, -0.7F);
+    	        this.spine_17.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_17, -0.6981317007977318F, 2.408554367752175F, -0.24434609527920614F);
+    	        this.spine_28 = new ModelRenderer(this, 0, 0);
+    	        this.spine_28.setRotationPoint(-6.2F, 12.0F, 1.0F);
+    	        this.spine_28.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_28, -0.593411945678072F, -2.0245819323134224F, 0.3490658503988659F);
+    	        this.spine_30 = new ModelRenderer(this, 0, 0);
+    	        this.spine_30.setRotationPoint(3.3F, 12.0F, 2.4F);
+    	        this.spine_30.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_30, 0.296705972839036F, 0.6981317007977318F, 0.13962634015954636F);
+    	        this.LF21 = new ModelRenderer(this, 0, 0);
+    	        this.LF21.setRotationPoint(0.5F, 3.0F, 0.0F);
+    	        this.LF21.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_50 = new ModelRenderer(this, 0, 0);
+    	        this.spine_50.mirror = true;
+    	        this.spine_50.setRotationPoint(4.4F, 19.9F, -0.5F);
+    	        this.spine_50.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_50, -0.9599310885968813F, 1.0471975511965976F, -0.6806784082777886F);
+    	        this.RHand = new ModelRenderer(this, 0, 0);
+    	        this.RHand.setRotationPoint(0.0F, 8.0F, 0.0F);
+    	        this.RHand.addBox(-1.5F, 0.0F, -1.5F, 2, 3, 3, 0.0F);
+    	        this.spine_26 = new ModelRenderer(this, 0, 0);
+    	        this.spine_26.setRotationPoint(5.9F, 12.2F, -0.7F);
+    	        this.spine_26.addBox(0.0F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_26, -0.4363323129985824F, 2.478367537831948F, -0.13962634015954636F);
+    	        this.spine_43 = new ModelRenderer(this, 0, 0);
+    	        this.spine_43.setRotationPoint(-4.5F, 19.9F, -0.5F);
+    	        this.spine_43.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_43, -0.9599310885968813F, -1.0471975511965976F, 0.6806784082777886F);
+    	        this.spine_52 = new ModelRenderer(this, 0, 0);
+    	        this.spine_52.setRotationPoint(-0.5F, 7.5F, -3.5F);
+    	        this.spine_52.addBox(-12.0F, -0.5F, -0.5F, 12, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_52, 0.0F, 0.3490658503988659F, 0.08726646259971647F);
+    	        this.LF12 = new ModelRenderer(this, 0, 0);
+    	        this.LF12.setRotationPoint(0.0F, 2.0F, 0.0F);
+    	        this.LF12.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_13 = new ModelRenderer(this, 0, 0);
+    	        this.spine_13.setRotationPoint(-3.0F, 9.0F, 2.2F);
+    	        this.spine_13.addBox(-1.0F, -0.4F, 0.0F, 8, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_13, 0.17453292519943295F, 0.0F, 0.0F);
+    	        this.RF42 = new ModelRenderer(this, 0, 0);
+    	        this.RF42.setRotationPoint(0.0F, 1.5F, 0.0F);
+    	        this.RF42.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_36 = new ModelRenderer(this, 0, 0);
+    	        this.spine_36.setRotationPoint(-4.9F, 14.9F, -0.5F);
+    	        this.spine_36.addBox(-0.5F, -0.5F, 0.0F, 4, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_36, 0.06981317007977318F, -0.9093165402890457F, 0.0F);
+    	        this.spine = new ModelRenderer(this, 0, 0);
+    	        this.spine.setRotationPoint(0.0F, 0.0F, 0.0F);
+    	        this.spine.addBox(-1.0F, 0.0F, 0.0F, 2, 7, 2, 0.0F);
+    	        this.setRotateAngle(spine, 0.3490658503988659F, 0.0F, 0.0F);
+    	        this.LF22 = new ModelRenderer(this, 0, 0);
+    	        this.LF22.setRotationPoint(0.0F, 2.0F, 0.0F);
+    	        this.LF22.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        this.spine_51 = new ModelRenderer(this, 0, 0);
+    	        this.spine_51.setRotationPoint(0.5F, 7.5F, -3.5F);
+    	        this.spine_51.addBox(0.0F, -0.5F, -0.5F, 12, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_51, 0.0F, -0.3490658503988659F, -0.08726646259971647F);
+    	        this.spine_8 = new ModelRenderer(this, 0, 0);
+    	        this.spine_8.setRotationPoint(-5.9F, 7.8F, -0.7F);
+    	        this.spine_8.addBox(-3.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_8, -0.6981317007977318F, -2.408554367752175F, 0.24434609527920614F);
+    	        this.spine_27 = new ModelRenderer(this, 0, 0);
+    	        this.spine_27.setRotationPoint(6.2F, 12.0F, 1.0F);
+    	        this.spine_27.addBox(0.0F, -0.5F, 0.0F, 3, 1, 1, 0.0F);
+    	        this.setRotateAngle(spine_27, -0.593411945678072F, 2.0245819323134224F, -0.3490658503988659F);
+    	        this.RF41 = new ModelRenderer(this, 0, 0);
+    	        this.RF41.setRotationPoint(1.0F, 0.5F, -0.8F);
+    	        this.RF41.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1, 0.0F);
+    	        
+    	        
+    	        
+    	        
+    	        
     	        
     	        this.Hood79.addChild(this.Hood80);
     	        this.LSHOULDER.addChild(this.LShoulder1);
@@ -1254,7 +1596,7 @@ public class ModelTatters extends ModelBase {
     	        this.Hood92.addChild(this.Hood93);
     	        this.Hood19.addChild(this.Hood20);
     	        this.RShoulder5.addChild(this.RShoulder10);
-    	        this.HEAD.addChild(this.HEADBLOCK);
+    	   
     	        this.HOOD.addChild(this.Hood41);
     	       
     	        this.Hood51.addChild(this.Hood52);
@@ -1416,7 +1758,7 @@ public class ModelTatters extends ModelBase {
     	        this.RShoulder44.addChild(this.RShoulder45);
 
     	        this.HOOD.addChild(this.Hood94);
-    	        this.HEAD.addChild(this.HOOD);
+
     	        this.LShoulder2.addChild(this.LShoulder3);
 
     	        this.Hood29.addChild(this.Hood30);
@@ -1515,343 +1857,248 @@ public class ModelTatters extends ModelBase {
 
     	       
     	        this.HOOD.addChild(this.Hood62);
-    	        
+    	        this.SPINE.addChild(this.spine_21);
+    	        this.SPINE.addChild(this.spine_54);
+    	        this.SPINE.addChild(this.spine_33);
+    	        this.SPINE.addChild(this.spine_40);
+    	        this.RF31.addChild(this.RF32);
+    	        this.RHand.addChild(this.RF31);
+    	        this.LHand.addChild(this.LF41);
+    	        this.RF11.addChild(this.RF12);
+    	        this.SPINE.addChild(this.spine_41);
+    	        this.SPINE.addChild(this.spine_47);
+    	        this.SPINE.addChild(this.spine_35);
+    	        this.SPINE.addChild(this.spine_5);
+    	        this.SPINE.addChild(this.spine_7);
+    	        this.SPINE.addChild(this.spine_22);
+    	        this.SPINE.addChild(this.RArm);
+    	        this.LHand.addChild(this.LF31);
+    	        this.SPINE.addChild(this.spine_3);
+    	        this.SPINE.addChild(this.spine_18);
+    	        this.SPINE.addChild(this.spine_12);
+    	        this.SPINE.addChild(this.spine_24);
+    	        this.SPINE.addChild(this.spine_45);
+    	        this.RArm.addChild(this.RForearm);
+    	        this.LHand.addChild(this.LF11);
+    	        this.SPINE.addChild(this.spine_9);
+    	        this.SPINE.addChild(this.spine_31);
+    	        this.SPINE.addChild(this.spine_16);
+    	        this.SPINE.addChild(this.spine_23);
+    	        this.SPINE.addChild(this.spine_1);
+    	        this.SPINE.addChild(this.spine_25);
+    	        this.SPINE.addChild(this.spine_2);
+    	        this.SPINE.addChild(this.spine_34);
+    	        this.SPINE.addChild(this.spine_42);
+    	        this.RF21.addChild(this.RF22);
+    	        this.SPINE.addChild(this.spine_19);
+    	        this.SPINE.addChild(this.spine_32);
+    	        this.LArm.addChild(this.LForearm);
+    	        this.SPINE.addChild(this.spine_48);
+    	        this.LF31.addChild(this.LF32);
+    	        this.SPINE.addChild(this.spine_20);
+    	        this.SPINE.addChild(this.spine_49);
+    	        this.SPINE.addChild(this.spine_6);
+    	        this.RHand.addChild(this.RF21);
+    	        this.SPINE.addChild(this.spine_37);
+    	        this.SPINE.addChild(this.spine_46);
+    	        this.SPINE.addChild(this.spine_14);
+    	        this.SPINE.addChild(this.spine_29);
+    	        this.SPINE.addChild(this.spine_38);
+    	        this.SPINE.addChild(this.LArm);
+    	        this.RHand.addChild(this.RF11);
+    	        this.LForearm.addChild(this.LHand);
+    	        this.SPINE.addChild(this.spine_4);
+    	        this.SPINE.addChild(this.spine_11);
+    	        this.SPINE.addChild(this.spine_39);
+    	        this.LF41.addChild(this.LF42);
+    	        this.SPINE.addChild(this.spine_10);
+    	        this.SPINE.addChild(this.spine_15);
+    	        this.SPINE.addChild(this.spine_44);
+    	        this.SPINE.addChild(this.spine_53);
+    	        this.SPINE.addChild(this.spine_17);
+    	        this.SPINE.addChild(this.spine_28);
+    	        this.SPINE.addChild(this.spine_30);
+    	        this.LHand.addChild(this.LF21);
+    	        this.SPINE.addChild(this.spine_50);
+    	        this.RForearm.addChild(this.RHand);
+    	        this.SPINE.addChild(this.spine_26);
+    	        this.SPINE.addChild(this.spine_43);
+    	        this.SPINE.addChild(this.spine_52);
+    	        this.LF11.addChild(this.LF12);
+    	        this.SPINE.addChild(this.spine_13);
+    	        this.RF41.addChild(this.RF42);
+    	        this.SPINE.addChild(this.spine_36);
+    	        this.SPINE.addChild(this.spine);
+    	        this.LF21.addChild(this.LF22);
+    	        this.SPINE.addChild(this.spine_51);
+    	        this.SPINE.addChild(this.spine_8);
+    	        this.SPINE.addChild(this.spine_27);
+    	        this.RHand.addChild(this.RF41);
     	        
 
     	        
-    	        for (int i = 0; i < this.StripF1.length; ++i){
-    	        this.StripF1[i] = new ModelRenderer(this, 101, 0);
-    	        this.StripF1[i].setRotationPoint(0.0F, 0F, -5.4F);
-    	        this.StripF1[i].addBox(-1.0F, 0F, 0F, 2, 1, 0, 0.0F);}
-    	        for (int i = 0; i < this.StripF2.length; ++i){
-    	        this.StripF2[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripF2[i].setRotationPoint(1.5F, 4F, -5.4F);
-    	        this.StripF2[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
-    	        for (int i = 0; i < this.StripF3.length; ++i){
-    	        this.StripF3[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripF3[i].setRotationPoint(2.5F, 5.8F, -5.4F);
-    	        this.StripF3[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
-    	        for (int i = 0; i < this.StripF4.length; ++i){
-    	        this.StripF4[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripF4[i].setRotationPoint(3.5F, 6.4F, -5.4F);
-    	        this.StripF4[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+ 
     	        for (int i = 0; i < this.StripF5.length; ++i){
-    	        this.StripF5[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF5[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF5[i].setRotationPoint(4.5F, 7F, -5.4F);
-    	        this.StripF5[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF5[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF6.length; ++i){
-    	        this.StripF6[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF6[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF6[i].setRotationPoint(5.5F, 7.5F, -5.4F);
-    	        this.StripF6[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF6[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF7.length; ++i){
-    	        this.StripF7[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF7[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF7[i].setRotationPoint(6.5F, 8.0F, -5.4F);
-    	        this.StripF7[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF7[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF8.length; ++i){
-    	        this.StripF8[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF8[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF8[i].setRotationPoint(7.5F, 8.2F, -5.4F);
-    	        this.StripF8[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF8[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF9.length; ++i){
-    	        this.StripF9[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF9[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF9[i].setRotationPoint(8.5F, 8.4F, -5.4F);
-    	        this.StripF9[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF9[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF10.length; ++i){
-    	        this.StripF10[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF10[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF10[i].setRotationPoint(9.5F, 8.5F, -5.4F);
-    	        this.StripF10[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
-    	        for (int i = 0; i < this.StripF11.length; ++i){
-    	        this.StripF11[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripF11[i].setRotationPoint(-1.5F, 4F, -5.4F);
-    	        this.StripF11[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
-    	        for (int i = 0; i < this.StripF12.length; ++i){
-    	        this.StripF12[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripF12[i].setRotationPoint(-2.5F, 5.8F, -5.4F);
-    	        this.StripF12[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
-    	        for (int i = 0; i < this.StripF13.length; ++i){
-    	        this.StripF13[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripF13[i].setRotationPoint(-3.5F, 6.4F, -5.4F);
-    	        this.StripF13[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF10[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF14.length; ++i){
-    	        this.StripF14[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF14[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF14[i].setRotationPoint(-4.5F, 7.0F, -5.4F);
-    	        this.StripF14[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF14[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF15.length; ++i){
-    	        this.StripF15[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF15[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF15[i].setRotationPoint(-5.5F, 7.5F, -5.4F);
-    	        this.StripF15[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF15[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF16.length; ++i){
-    	        this.StripF16[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF16[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF16[i].setRotationPoint(-6.5F, 8.0F, -5.4F);
-    	        this.StripF16[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF16[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF17.length; ++i){
-    	        this.StripF17[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF17[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF17[i].setRotationPoint(-7.5F, 8.2F, -5.4F);
-    	        this.StripF17[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}    
+    	        this.StripF17[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}    
     	        for (int i = 0; i < this.StripF18.length; ++i){
-    	        this.StripF18[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF18[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF18[i].setRotationPoint(-8.5F, 8.4F, -5.4F);
-    	        this.StripF18[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF18[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripF19.length; ++i){
-    	        this.StripF19[i] = new ModelRenderer(this, 102, 0);
+    	        this.StripF19[i] = new ModelRenderer(this, 90, 1);
     	        this.StripF19[i].setRotationPoint(-9.5F, 8.5F, -5.4F);
-    	        this.StripF19[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripF19[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
        
 
     	        
     	        for (int i = 0; i < this.StripB1.length; ++i){
-    	        this.StripB1[i] = new ModelRenderer(this, 101, 0);
-    	        this.StripB1[i].setRotationPoint(0.0F, 0F, 5.4F);
-    	        this.StripB1[i].addBox(-1.0F, 0F, 0F, 2, 1, 0, 0.0F);}
+    	        this.StripB1[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB1[i].setRotationPoint(0.0F, 0F, 4.4F);
+    	        this.StripB1[i].addBox(-1.0F, 0F, 0F, 2, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB2.length; ++i){
-    	        this.StripB2[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB2[i].setRotationPoint(1.5F, 4F, 5.4F);
-    	        this.StripB2[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB2[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB2[i].setRotationPoint(1.5F, 4F, 4.4F);
+    	        this.StripB2[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB3.length; ++i){
-    	        this.StripB3[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB3[i].setRotationPoint(2.5F, 5.8F, 5.4F);
-    	        this.StripB3[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB3[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB3[i].setRotationPoint(2.5F, 5.8F, 4.4F);
+    	        this.StripB3[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB4.length; ++i){
-    	        this.StripB4[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB4[i].setRotationPoint(3.5F, 6.4F, 5.4F);
-    	        this.StripB4[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB4[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB4[i].setRotationPoint(3.5F, 6.4F, 4.4F);
+    	        this.StripB4[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB5.length; ++i){
-    	        this.StripB5[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB5[i].setRotationPoint(4.5F, 7F, 5.4F);
-    	        this.StripB5[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB5[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB5[i].setRotationPoint(4.5F, 7F, 4.4F);
+    	        this.StripB5[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB6.length; ++i){
-    	        this.StripB6[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB6[i].setRotationPoint(5.5F, 7.5F, 5.4F);
-    	        this.StripB6[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB6[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB6[i].setRotationPoint(5.5F, 7.5F, 4.4F);
+    	        this.StripB6[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB7.length; ++i){
-    	        this.StripB7[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB7[i].setRotationPoint(6.5F, 8.0F, 5.4F);
-    	        this.StripB7[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB7[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB7[i].setRotationPoint(6.5F, 8.0F, 4.4F);
+    	        this.StripB7[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB8.length; ++i){
-    	        this.StripB8[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB8[i].setRotationPoint(7.5F, 8.2F, 5.4F);
-    	        this.StripB8[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB8[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB8[i].setRotationPoint(7.5F, 8.2F, 4.4F);
+    	        this.StripB8[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB9.length; ++i){
-    	        this.StripB9[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB9[i].setRotationPoint(8.5F, 8.4F, 5.4F);
-    	        this.StripB9[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB9[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB9[i].setRotationPoint(8.5F, 8.4F, 4.4F);
+    	        this.StripB9[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB10.length; ++i){
-    	        this.StripB10[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB10[i].setRotationPoint(9.5F, 8.5F, 5.4F);
-    	        this.StripB10[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB10[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB10[i].setRotationPoint(9.5F, 8.5F, 4.4F);
+    	        this.StripB10[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB11.length; ++i){
-    	        this.StripB11[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB11[i].setRotationPoint(-1.5F, 4F, 5.4F);
-    	        this.StripB11[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB11[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB11[i].setRotationPoint(-1.5F, 4F, 4.4F);
+    	        this.StripB11[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB12.length; ++i){
-    	        this.StripB12[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB12[i].setRotationPoint(-2.5F, 5.8F, 5.4F);
-    	        this.StripB12[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB12[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB12[i].setRotationPoint(-2.5F, 5.8F, 4.4F);
+    	        this.StripB12[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB13.length; ++i){
-    	        this.StripB13[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB13[i].setRotationPoint(-3.5F, 6.4F, 5.4F);
-    	        this.StripB13[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB13[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB13[i].setRotationPoint(-3.5F, 6.4F, 4.4F);
+    	        this.StripB13[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB14.length; ++i){
-    	        this.StripB14[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB14[i].setRotationPoint(-4.5F, 7.0F, 5.4F);
-    	        this.StripB14[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB14[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB14[i].setRotationPoint(-4.5F, 7.0F, 4.4F);
+    	        this.StripB14[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB15.length; ++i){
-    	        this.StripB15[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB15[i].setRotationPoint(-5.5F, 7.5F, 5.4F);
-    	        this.StripB15[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB15[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB15[i].setRotationPoint(-5.5F, 7.5F, 4.4F);
+    	        this.StripB15[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB16.length; ++i){
-    	        this.StripB16[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB16[i].setRotationPoint(-6.5F, 8.0F, 5.4F);
-    	        this.StripB16[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB16[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB16[i].setRotationPoint(-6.5F, 8.0F, 4.4F);
+    	        this.StripB16[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB17.length; ++i){
-    	        this.StripB17[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB17[i].setRotationPoint(-7.5F, 8.2F, 5.4F);
-    	        this.StripB17[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}    
+    	        this.StripB17[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB17[i].setRotationPoint(-7.5F, 8.2F, 4.4F);
+    	        this.StripB17[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}    
     	        for (int i = 0; i < this.StripB18.length; ++i){
-    	        this.StripB18[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB18[i].setRotationPoint(-8.5F, 8.4F, 5.4F);
-    	        this.StripB18[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB18[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB18[i].setRotationPoint(-8.5F, 8.4F, 4.4F);
+    	        this.StripB18[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
     	        for (int i = 0; i < this.StripB19.length; ++i){
-    	        this.StripB19[i] = new ModelRenderer(this, 102, 0);
-    	        this.StripB19[i].setRotationPoint(-9.5F, 8.5F, 5.4F);
-    	        this.StripB19[i].addBox(-0.5F, 0F, 0F, 1, 1, 0, 0.0F);}
+    	        this.StripB19[i] = new ModelRenderer(this, 90, 0);
+    	        this.StripB19[i].setRotationPoint(-9.5F, 8.5F, 4.4F);
+    	        this.StripB19[i].addBox(-0.5F, 0F, 0F, 1, 1, 1, 0.0F);}
 
     	        
-    	        
-    	        
-    	        for (int i = 0; i < this.StripR1.length; ++i){
-       	        this.StripR1[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR1[i].setRotationPoint(-11.0F, 11.2F, 4.35F);
-       	        this.StripR1[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR1[i], -2.792526803190927F, 0.0F, -1.5707963267948966F);}
-          	    for (int i = 0; i < this.StripR2.length; ++i){
-       	        this.StripR2[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR2[i].setRotationPoint(-11.93F, 11.2F, 4.0F);
-       	        this.StripR2[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR2[i], -2.705260340591211F, 0.0F, -1.5707963267948966F);}
-      	        for (int i = 0; i < this.StripR3.length; ++i){
-       	        this.StripR3[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR3[i].setRotationPoint(-12.8F, 11.2F, 3.49F);
-       	        this.StripR3[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripR3[i], -2.530727415391778F, 0.0F, -1.5707963267948966F);}
-      	        for (int i = 0; i < this.StripR4.length; ++i){
-       	        this.StripR4[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR4[i].setRotationPoint(-13.42F, 11.2F, 2.75F);
-       	        this.StripR4[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR4[i], -2.007128639793479F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripR5.length; ++i){
-       	        this.StripR5[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR5[i].setRotationPoint(-13.85F, 11.2F, 1.85F);
-       	        this.StripR5[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR5[i], -2.007128639793479F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR6.length; ++i){
-       	        this.StripR6[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR6[i].setRotationPoint(-14.05F, 11.2F, 0.9F);
-       	        this.StripR6[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR6[i], -1.5707963267948966F, 0.0F, -1.5707963267948966F);}
-      	        for (int i = 0; i < this.StripR7.length; ++i){
-       	        this.StripR7[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR7[i].setRotationPoint(-14.05F, 11.2F, -0.1F);
-       	        this.StripR7[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR7[i], -1.5707963267948966F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR8.length; ++i){
-       	        this.StripR8[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR8[i].setRotationPoint(-14.05F, 11.2F, -1.1F);
-       	        this.StripR8[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripR8[i], -1.5707963267948966F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR9.length; ++i){
-       	        this.StripR9[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR9[i].setRotationPoint(-13.9F, 11.2F, -2.1F);
-       	        this.StripR9[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR9[i], -1.3089969389957472F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR10.length; ++i){
-       	        this.StripR10[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR10[i].setRotationPoint(-13.55F, 11.2F, -3.04F);
-       	        this.StripR10[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR10[i], -1.1344640137963142F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR11.length; ++i){
-       	        this.StripR11[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR11[i].setRotationPoint(-13.05F, 11.2F, -3.85F);
-       	        this.StripR11[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR11[i], -0.7853981633974483F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR12.length; ++i){
-       	        this.StripR12[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR12[i].setRotationPoint(-12.25F, 11.2F, -4.45F);
-       	        this.StripR12[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-      	        this.setRotateAngle(StripR12[i], -0.5235987755982988F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR13.length; ++i){
-       	        this.StripR13[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR13[i].setRotationPoint(-11.38F, 11.2F, -4.9F);
-       	        this.StripR13[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR13[i], -0.3839724354387525F, 0.0F, -1.5707963267948966F);}
-       	        for (int i = 0; i < this.StripR14.length; ++i){
-       	        this.StripR14[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripR14[i].setRotationPoint(-10.45F, 11.2F, -5.2F);
-       	        this.StripR14[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripR14[i], -0.3490658503988659F, 0.0F, -1.5707963267948966F);} 		
-    	        		
-    	        		
-    	        		
- 
-    	        for (int i = 0; i < this.StripL1.length; ++i){
-        	    this.StripL1[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL1[i].setRotationPoint(11.0F, 11.2F, 4.35F);
-        	    this.StripL1[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL1[i], 2.792526803190927F, 0.0F, -1.5707963267948966F);}
-        	    for (int i = 0; i < this.StripL2.length; ++i){
-        	    this.StripL2[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL2[i].setRotationPoint(11.93F, 11.2F, 4.0F);
-        	    this.StripL2[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL2[i], 2.705260340591211F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL3.length; ++i){
-       	        this.StripL3[i] = new ModelRenderer(this, 85, 60);
-       	        this.StripL3[i].setRotationPoint(12.8F, 11.2F, 3.49F);
-       	        this.StripL3[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-       	        this.setRotateAngle(StripL3[i], 2.530727415391778F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL4.length; ++i){
-        	    this.StripL4[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL4[i].setRotationPoint(13.42F, 11.2F, 2.75F);
-        	    this.StripL4[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL4[i], 2.007128639793479F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL5.length; ++i){
-        	    this.StripL5[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL5[i].setRotationPoint(13.85F, 11.2F, 1.85F);
-        	    this.StripL5[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL5[i], 2.007128639793479F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL6.length; ++i){
-        	    this.StripL6[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL6[i].setRotationPoint(14.05F, 11.2F, 0.9F);
-        	    this.StripL6[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL6[i], 1.5707963267948966F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL7.length; ++i){
-    	        this.StripL7[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL7[i].setRotationPoint(14.05F, 11.2F, -0.1F);
-        	    this.StripL7[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL7[i], 1.5707963267948966F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL8.length; ++i){
-        	    this.StripL8[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL8[i].setRotationPoint(14.05F, 11.2F, -1.1F);
-        	    this.StripL8[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL8[i], 1.5707963267948966F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL9.length; ++i){
-        	    this.StripL9[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL9[i].setRotationPoint(13.9F, 11.2F, -2.1F);
-        	    this.StripL9[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL9[i], 1.3089969389957472F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL10.length; ++i){
-        	    this.StripL10[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL10[i].setRotationPoint(13.55F, 11.2F, -3.04F);
-        	    this.StripL10[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL10[i], 1.1344640137963142F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL11.length; ++i){
-        	    this.StripL11[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL11[i].setRotationPoint(13.05F, 11.2F, -3.85F);
-        	    this.StripL11[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL11[i], 0.7853981633974483F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL12.length; ++i){
-        	    this.StripL12[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL12[i].setRotationPoint(12.25F, 11.2F, -4.45F);
-        	    this.StripL12[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL12[i], 0.5235987755982988F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL13.length; ++i){
-        	    this.StripL13[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL13[i].setRotationPoint(11.38F, 11.2F, -4.9F);
-        	    this.StripL13[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL13[i], 0.3839724354387525F, 0.0F, -1.5707963267948966F);}
-    	        for (int i = 0; i < this.StripL14.length; ++i){
-        	    this.StripL14[i] = new ModelRenderer(this, 85, 60);
-        	    this.StripL14[i].setRotationPoint(10.45F, 11.2F, -5.2F);
-        	    this.StripL14[i].addBox(-1.0F, -0.5F, 0.0F, 1, 1, 0, 0.0F);
-        	    this.setRotateAngle(StripL14[i], 0.3490658503988659F, 0.0F, -1.5707963267948966F);}  
-    	        
-    	        
-    	        
-    	        
-    	        
-    	        
+	        
     }
 
+
+    	    
+    float shade;	    
+    float dist;
+    	    
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-    	
-    	this.HEAD.render(f5);
+    	dist = entity.getDistanceToEntity(Minecraft.getMinecraft().getRenderViewEntity());
+    	shade = 1.6F / dist;
+    	this.SPINE.render(f5);
+    	this.HEADBLOCK.render(f5);
+    	this.HOOD.render(f5);
     	this.SHOULDERS.render(f5);
+    	GlStateManager.color(shade, shade, shade);
+    	this.HEAD.render(f5);
+    	shade = 1F;
+    	GlStateManager.color(shade, shade, shade);
+
     	
     	
     
     	
-        for (int i = 0; i < this.StripF1.length; ++i){this.StripF1[i].render(f5);}
-        for (int i = 0; i < this.StripF2.length; ++i){this.StripF2[i].render(f5);}
-        for (int i = 0; i < this.StripF3.length; ++i){this.StripF3[i].render(f5);}
-        for (int i = 0; i < this.StripF4.length; ++i){this.StripF4[i].render(f5);}
+
         for (int i = 0; i < this.StripF5.length; ++i){this.StripF5[i].render(f5);}
         for (int i = 0; i < this.StripF6.length; ++i){this.StripF6[i].render(f5);}
         for (int i = 0; i < this.StripF7.length; ++i){this.StripF7[i].render(f5);}
         for (int i = 0; i < this.StripF8.length; ++i){this.StripF8[i].render(f5);}
         for (int i = 0; i < this.StripF9.length; ++i){this.StripF9[i].render(f5);}
         for (int i = 0; i < this.StripF10.length; ++i){this.StripF10[i].render(f5);}        
-        for (int i = 0; i < this.StripF11.length; ++i){this.StripF11[i].render(f5);}
-        for (int i = 0; i < this.StripF12.length; ++i){this.StripF12[i].render(f5);}
-        for (int i = 0; i < this.StripF13.length; ++i){this.StripF13[i].render(f5);}
         for (int i = 0; i < this.StripF14.length; ++i){this.StripF14[i].render(f5);}
         for (int i = 0; i < this.StripF15.length; ++i){this.StripF15[i].render(f5);}
         for (int i = 0; i < this.StripF16.length; ++i){this.StripF16[i].render(f5);}
@@ -1879,37 +2126,7 @@ public class ModelTatters extends ModelBase {
         for (int i = 0; i < this.StripB18.length; ++i){this.StripB18[i].render(f5);}
         for (int i = 0; i < this.StripB19.length; ++i){this.StripB19[i].render(f5);}
     	
-        
-        for (int i = 0; i < this.StripL1.length; ++i){this.StripL1[i].render(f5);}
-        for (int i = 0; i < this.StripL2.length; ++i){this.StripL2[i].render(f5);}
-        for (int i = 0; i < this.StripL3.length; ++i){this.StripL3[i].render(f5);}
-        for (int i = 0; i < this.StripL4.length; ++i){this.StripL4[i].render(f5);}
-        for (int i = 0; i < this.StripL5.length; ++i){this.StripL5[i].render(f5);}
-        for (int i = 0; i < this.StripL6.length; ++i){this.StripL6[i].render(f5);}
-        for (int i = 0; i < this.StripL7.length; ++i){this.StripL7[i].render(f5);}
-        for (int i = 0; i < this.StripL8.length; ++i){this.StripL8[i].render(f5);}
-        for (int i = 0; i < this.StripL9.length; ++i){this.StripL9[i].render(f5);}
-        for (int i = 0; i < this.StripL10.length; ++i){this.StripL10[i].render(f5);}        
-        for (int i = 0; i < this.StripL11.length; ++i){this.StripL11[i].render(f5);}
-        for (int i = 0; i < this.StripL12.length; ++i){this.StripL12[i].render(f5);}
-        for (int i = 0; i < this.StripL13.length; ++i){this.StripL13[i].render(f5);}
-        for (int i = 0; i < this.StripL14.length; ++i){this.StripL14[i].render(f5);}
-        
-        for (int i = 0; i < this.StripR1.length; ++i){this.StripR1[i].render(f5);}
-        for (int i = 0; i < this.StripR2.length; ++i){this.StripR2[i].render(f5);}
-        for (int i = 0; i < this.StripR3.length; ++i){this.StripR3[i].render(f5);}
-        for (int i = 0; i < this.StripR4.length; ++i){this.StripR4[i].render(f5);}
-        for (int i = 0; i < this.StripR5.length; ++i){this.StripR5[i].render(f5);}
-        for (int i = 0; i < this.StripR6.length; ++i){this.StripR6[i].render(f5);}
-        for (int i = 0; i < this.StripR7.length; ++i){this.StripR7[i].render(f5);}
-        for (int i = 0; i < this.StripR8.length; ++i){this.StripR8[i].render(f5);}
-        for (int i = 0; i < this.StripR9.length; ++i){this.StripR9[i].render(f5);}
-        for (int i = 0; i < this.StripR10.length; ++i){this.StripR10[i].render(f5);}        
-        for (int i = 0; i < this.StripR11.length; ++i){this.StripR11[i].render(f5);}
-        for (int i = 0; i < this.StripR12.length; ++i){this.StripR12[i].render(f5);}
-        for (int i = 0; i < this.StripR13.length; ++i){this.StripR13[i].render(f5);}
-        for (int i = 0; i < this.StripR14.length; ++i){this.StripR14[i].render(f5);}
-        
+      
     }
 
     
@@ -1938,38 +2155,66 @@ public class ModelTatters extends ModelBase {
 
     	
     	EntityTatters Tatters = (EntityTatters)Entity;
+    	
+    	dist = Entity.getDistanceToEntity(Minecraft.getMinecraft().getRenderViewEntity());
+    	
+    	
+    	HEADBLOCK.rotationPointZ = 1.9F - clamp(dist / 1.9F, 0, 3);
+
 
     	
-    	
-
-    	
-    	Swing = (par2 <= 0.01) ? 15 : 30;
+    	Swing = (par2 <= 0.01) ? 7 : 15;
     	Speed = (par2 <= 0.01) ? 15 : 5;
     	Tatters.count = (par2 <= 0.01) ? Tatters.count - 2 : Tatters.count + 2F;
-    	Tatters.count = clamp(Tatters.count, 0, 60);
+    	Tatters.count = clamp(Tatters.count, 0, 15);
     	
     	Tatters.Ccount = (par2 <= 0.01) ? Tatters.Ccount - 1 : Tatters.Ccount + 1F;
     	Tatters.Ccount = clamp(Tatters.Ccount, 0, 120);
     	
     	SHOULDERS.rotateAngleX = Tatters.count * 0.0174533F; //Tatters.count * 0.0174533F
+    	X = (Tatters.Ccount == 0 || Tatters.Ccount == 120) ? (MathHelper.sin((float)Tatters.ticksExisted / 15) * 7 * 0.0174533F) : 0;
+    	this.LArm.rotateAngleY = (float) (-X + Math.toRadians(-10));
+    	this.RArm.rotateAngleY = (float) (X + Math.toRadians(10));
+    	this.LArm.rotateAngleZ = (float) (-X + Math.toRadians(-10));
+    	this.RArm.rotateAngleZ = (float) (X + Math.toRadians(10));
+    	this.LForearm.rotateAngleX = this.RForearm.rotateAngleX = (float) (X + Math.toRadians(-40 ));
+    	this.RForearm.rotateAngleZ = (float) (X + Math.toRadians(-10));
+    	this.LForearm.rotateAngleZ = (float) (-X + Math.toRadians(10));
     	X = (Tatters.Ccount == 0 || Tatters.Ccount == 120) ? (MathHelper.sin((float)Tatters.ticksExisted / Speed) * Swing * 0.0174533F) : 0; 
     	  	
     	
-    	HEAD.rotationPointY = -35 + X;
-    	SHOULDERS.rotationPointY = -31 + (X * 2);
+    	HEAD.rotationPointY = -30 + (X * 3);
+    	SPINE.rotationPointY = -24 + (X * 3);
+    	HEADBLOCK.rotationPointY = -30 + (X * 3);
+    	HOOD.rotationPointY = -35.2F + (X * 3);
+    	SHOULDERS.rotationPointY = -26 + (X * 3);
+
+
 
     	
-
-
+    	//FINGER WIGGLE
+    	this.RF11.rotateAngleZ = (MathHelper.cos(par3 / 8) / 6) - 0.25F;
+    	this.RF12.rotateAngleZ = (MathHelper.cos(par3 / 8) / 3) - 0.4F;
+    	this.RF21.rotateAngleZ = (MathHelper.cos((par3 + 5) / 8) / 6) - 0.25F;
+    	this.RF22.rotateAngleZ = (MathHelper.cos((par3 + 5) / 8) / 3) - 0.4F;
+    	this.RF31.rotateAngleZ = (MathHelper.cos((par3 + 10) / 8) / 6) - 0.25F;
+    	this.RF32.rotateAngleZ = (MathHelper.cos((par3 + 10) / 8) / 3) - 0.4F;
+    	this.RF41.rotateAngleZ = (MathHelper.cos((par3 + 20) / 8) / 6) - 0.25F;
+    	this.RF42.rotateAngleZ = (MathHelper.cos((par3 + 20) / 8) / 3) - 0.4F;
+    	
+    	this.LF11.rotateAngleZ = ((MathHelper.cos(par3 / 8) / 6) - 0.25F) * -1;
+    	this.LF12.rotateAngleZ = ((MathHelper.cos(par3 / 8) / 3) - 0.4F) * -1;
+    	this.LF21.rotateAngleZ = (( MathHelper.cos((par3 + 5) / 8) / 6) - 0.25F) * -1;
+    	this.LF22.rotateAngleZ = ((MathHelper.cos((par3 + 5) / 8) / 3) - 0.4F) * -1;
+    	this.LF31.rotateAngleZ = ((MathHelper.cos((par3 + 10) / 8) / 6) - 0.25F) * -1;
+    	this.LF32.rotateAngleZ = ((MathHelper.cos((par3 + 10) / 8) / 3) - 0.4F) * -1;
+    	this.LF41.rotateAngleZ = ((MathHelper.cos((par3 + 20) / 8) / 6) - 0.25F) * -1;
+    	this.LF42.rotateAngleZ = ((MathHelper.cos((par3 + 20) / 8) / 3) - 0.4F) * -1;
+    	
     	
     	// Y = (Width * (sin(Angle)) + (Length * (cos(Angle)))
     	// Z = (Width * (cos(Angle)) - (Length * (sin(Angle))) 
     	// Child, Width, Height, Xoff, Yoff, Tatters.Part
-    	ClothChild(StripF1, -5.4F, 2F, 0F, Tatters.StripF1);
-    	
-    	ClothChild(StripF2, -5.4F, 4.0F, 1.5F, Tatters.StripF2);
-    	ClothChild(StripF3, -5.4F, 5.8F, 2.5F, Tatters.StripF3);
-    	ClothChild(StripF4, -5.4F, 6.4F, 3.5F, Tatters.StripF4);
     	ClothChild(StripF5, -5.4F, 7.0F, 4.5F, Tatters.StripF5);
     	ClothChild(StripF6, -5.4F, 7.5F, 5.5F, Tatters.StripF6);
     	ClothChild(StripF7, -5.4F, 8.0F, 6.5F, Tatters.StripF7);
@@ -1977,9 +2222,6 @@ public class ModelTatters extends ModelBase {
     	ClothChild(StripF9, -5.4F, 8.4F, 8.5F, Tatters.StripF9);
     	ClothChild(StripF10, -5.4F, 8.5F, 9.5F, Tatters.StripF10);
     	
-    	ClothChild(StripF11, -5.4F, 4.0F, -1.5F, Tatters.StripF11);
-    	ClothChild(StripF12, -5.4F, 5.8F, -2.5F, Tatters.StripF12);
-    	ClothChild(StripF13, -5.4F, 6.4F, -3.5F, Tatters.StripF13);
     	ClothChild(StripF14, -5.4F, 7.0F, -4.5F, Tatters.StripF14);
     	ClothChild(StripF15, -5.4F, 7.5F, -5.5F, Tatters.StripF15);
     	ClothChild(StripF16, -5.4F, 8.0F, -6.5F, Tatters.StripF16);
@@ -1989,59 +2231,29 @@ public class ModelTatters extends ModelBase {
 
     	
     	
-    	ClothChild(StripB1, 4.5F, 2F, 0F, Tatters.StripB1);
+    	ClothChild(StripB1, 3.5F, 2F, 0F, Tatters.StripB1);
     	
-    	ClothChild(StripB2, 4.5F, 3.0F, 1.5F, Tatters.StripB2);
-    	ClothChild(StripB3, 4.5F, 4.7F, 2.5F, Tatters.StripB3);
-    	ClothChild(StripB4, 4.5F, 5.7F, 3.5F, Tatters.StripB4);
-    	ClothChild(StripB5, 4.5F, 6.3F, 4.5F, Tatters.StripB5);
-    	ClothChild(StripB6, 4.5F, 6.8F, 5.5F, Tatters.StripB6);
-    	ClothChild(StripB7, 4.5F, 7.5F, 6.5F, Tatters.StripB7);
-    	ClothChild(StripB8, 4.5F, 7.7F, 7.5F, Tatters.StripB8);
-    	ClothChild(StripB9, 4.5F, 7.8F, 8.5F, Tatters.StripB9);
-    	ClothChild(StripB10, 4.5F, 8.1F, 9.5F, Tatters.StripB10);
+    	ClothChild(StripB2, 3.5F, 3.0F, 1.5F, Tatters.StripB2);
+    	ClothChild(StripB3, 3.5F, 4.7F, 2.5F, Tatters.StripB3);
+    	ClothChild(StripB4, 3.5F, 5.7F, 3.5F, Tatters.StripB4);
+    	ClothChild(StripB5, 3.5F, 6.3F, 4.5F, Tatters.StripB5);
+    	ClothChild(StripB6, 3.5F, 6.8F, 5.5F, Tatters.StripB6);
+    	ClothChild(StripB7, 3.5F, 7.5F, 6.5F, Tatters.StripB7);
+    	ClothChild(StripB8, 3.5F, 7.7F, 7.5F, Tatters.StripB8);
+    	ClothChild(StripB9, 3.5F, 7.8F, 8.5F, Tatters.StripB9);
+    	ClothChild(StripB10, 3.5F, 8.1F, 9.5F, Tatters.StripB10);
     	
-    	ClothChild(StripB11, 4.5F, 3.0F, -1.5F, Tatters.StripB11);
-    	ClothChild(StripB12, 4.5F, 4.7F, -2.5F, Tatters.StripB12);
-    	ClothChild(StripB13, 4.5F, 5.7F, -3.5F, Tatters.StripB13);
-    	ClothChild(StripB14, 4.5F, 6.3F, -4.5F, Tatters.StripB14);
-    	ClothChild(StripB15, 4.5F, 6.8F, -5.5F, Tatters.StripB15);
-    	ClothChild(StripB16, 4.5F, 7.5F, -6.5F, Tatters.StripB16);
-    	ClothChild(StripB17, 4.5F, 7.7F, -7.5F, Tatters.StripB17);
-    	ClothChild(StripB18, 4.5F, 7.8F, -8.5F, Tatters.StripB18);
-    	ClothChild(StripB19, 4.5F, 8.1F, -9.5F, Tatters.StripB19);
+    	ClothChild(StripB11, 3.5F, 3.0F, -1.5F, Tatters.StripB11);
+    	ClothChild(StripB12, 3.5F, 4.7F, -2.5F, Tatters.StripB12);
+    	ClothChild(StripB13, 3.5F, 5.7F, -3.5F, Tatters.StripB13);
+    	ClothChild(StripB14, 3.5F, 6.3F, -4.5F, Tatters.StripB14);
+    	ClothChild(StripB15, 3.5F, 6.8F, -5.5F, Tatters.StripB15);
+    	ClothChild(StripB16, 3.5F, 7.5F, -6.5F, Tatters.StripB16);
+    	ClothChild(StripB17, 3.5F, 7.7F, -7.5F, Tatters.StripB17);
+    	ClothChild(StripB18, 3.5F, 7.8F, -8.5F, Tatters.StripB18);
+    	ClothChild(StripB19, 3.5F, 8.1F, -9.5F, Tatters.StripB19);
     	
 
-    	ClothChild(StripL1, 4.35F, 11.2F, 11.00F, Tatters.StripL1);
-    	ClothChild(StripL2, 4.00F, 11.2F, 11.93F, Tatters.StripL2);
-    	ClothChild(StripL3, 3.49F, 11.2F, 12.80F, Tatters.StripL3);
-    	ClothChild(StripL4, 2.75F, 11.2F, 13.42F, Tatters.StripL4);
-    	ClothChild(StripL5, 1.85F, 11.2F, 13.85F, Tatters.StripL5);
-    	ClothChild(StripL6, 0.90F, 11.2F, 14.05F, Tatters.StripL6);
-    	ClothChild(StripL7, -0.1F, 11.2F, 14.05F, Tatters.StripL7);
-    	ClothChild(StripL8, -1.1F, 11.2F, 14.05F, Tatters.StripL8);
-    	ClothChild(StripL9, -2.1F, 11.2F, 13.90F, Tatters.StripL9);
-    	ClothChild(StripL10, -3.04F, 11.2F, 13.55F, Tatters.StripL10);
-    	ClothChild(StripL11, -3.85F, 11.2F, 13.05F, Tatters.StripL11);
-    	ClothChild(StripL12, -4.45F, 11.2F, 12.25F, Tatters.StripL12);
-    	ClothChild(StripL13, -4.90F, 11.2F, 11.38F, Tatters.StripL13);
-    	ClothChild(StripL14, -5.20F, 11.2F, 10.45F, Tatters.StripL14);
-
-    	
-    	ClothChild(StripR1, 4.35F, 11.2F, -11.00F, Tatters.StripR1);
-    	ClothChild(StripR2, 4.00F, 11.2F, -11.93F, Tatters.StripR2);
-    	ClothChild(StripR3, 3.49F, 11.2F, -12.80F, Tatters.StripR3);
-    	ClothChild(StripR4, 2.75F, 11.2F, -13.42F, Tatters.StripR4);
-    	ClothChild(StripR5, 1.85F, 11.2F, -13.85F, Tatters.StripR5);
-    	ClothChild(StripR6, 0.90F, 11.2F, -14.05F, Tatters.StripR6);
-    	ClothChild(StripR7, -0.1F, 11.2F, -14.05F, Tatters.StripR7);
-    	ClothChild(StripR8, -1.1F, 11.2F, -14.05F, Tatters.StripR8);
-    	ClothChild(StripR9, -2.1F, 11.2F, -13.90F, Tatters.StripR9);
-    	ClothChild(StripR10, -3.04F, 11.2F, -13.55F, Tatters.StripR10);
-    	ClothChild(StripR11, -3.85F, 11.2F, -13.05F, Tatters.StripR11);
-    	ClothChild(StripR12, -4.45F, 11.2F, -12.25F, Tatters.StripR12);
-    	ClothChild(StripR13, -4.90F, 11.2F, -11.38F, Tatters.StripR13);
-    	ClothChild(StripR14, -5.20F, 11.2F, -10.45F, Tatters.StripR14);    	
     }
     
     
@@ -2062,6 +2274,9 @@ public class ModelTatters extends ModelBase {
     	float result = input * ((float)Math.PI / 180);
     	return result;
     }
+    
+    
+
     
     
     public void ClothChild (ModelRenderer[] Child, float Width, float Height, float Xoff, float TattersPart[]){

@@ -196,7 +196,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	
 	public void findMobs(){
 		foundList.clear();
-		
 		int i = this.pos.getX();
         int j = this.pos.getY();
         int k = this.pos.getZ();

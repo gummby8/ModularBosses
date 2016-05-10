@@ -2,10 +2,14 @@ package com.Splosions.ModularBosses.client.models.projectiles;
 
 
 
+import com.Splosions.ModularBosses.entity.EntityTatters;
+import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Scythe - Undefined
@@ -770,10 +774,13 @@ public class ModelScythe extends ModelBase {
         modelRenderer.rotateAngleZ = z;
     }
     
-    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity)  {
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity)  {
     	this.shape285.rotateAngleY = 3.14F; 
-    	//this.shape285.rotateAngleX = (par7Entity.ticksExisted + this.pt) * 0.0174533F * 40;  
-    	//this.shape285.rotateAngleX = 3.14F;
-    	 
+    	if (entity != null){
+    		this.shape285.rotateAngleY = 6.28F;
+    		EntityScythe scythe = (EntityScythe) entity;
+    			this.shape285.rotateAngleX = (float) Math.toRadians((entity.ticksExisted + this.pt) * scythe.spin);
+    	}
     }
+    
 }
