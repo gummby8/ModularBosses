@@ -625,6 +625,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	/**
 	 * Called when the entity is attacked.
 	 */
+	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source instanceof EntityDamageSource && ((EntityDamageSource) source).getIsThornsDamage()) {
 			this.Damage(source, amount);

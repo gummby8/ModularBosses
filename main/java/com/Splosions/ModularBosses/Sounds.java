@@ -23,6 +23,11 @@ public class Sounds {
 	public static final String PARAGON_JUMP_JETS = Reference.MOD_ID + ":paragon_jump_jets";
 	public static final String PARAGON_FLAME_THROWER = Reference.MOD_ID + ":paragon_flame_thrower";
 	
+
+	public static final String TATTERS_LIVE = Reference.MOD_ID + ":tatters_live";
+	public static final String TATTERS_HURT = Reference.MOD_ID + ":tatters_hurt";
+	public static final String TATTERS_TELEPORT = Reference.MOD_ID + ":tatters_teleport";
+	public static final String TATTERS_DEATH = Reference.MOD_ID + ":tatters_death";		
 	
 	public static final String CHORP_SLIME = Reference.MOD_ID + ":chorp_slime";
 	public static final String CHORP_DEATH = Reference.MOD_ID + ":chorp_death";

@@ -30,7 +30,7 @@ public class RenderTatters extends RenderLiving {
 		
 		}
 		
-		return new ResourceLocation("mb:textures/mobs/TEST.png");
+		return new ResourceLocation("mb:textures/mobs/Tatters.png");
 	}
 	
 }

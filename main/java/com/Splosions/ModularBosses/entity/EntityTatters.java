@@ -30,6 +30,9 @@ import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
@@ -87,7 +90,6 @@ public class EntityTatters extends EntityMob {
 	/** The Entity this EntityCreature is set to attack. */
 	public Entity entityToAttack;
 
-	
 	public int deathTicks;
 
 	private float randomMotionVecX;
@@ -103,7 +105,7 @@ public class EntityTatters extends EntityMob {
 
 	private static final int TELEPORT = 20;
 	public int teleport = 0;
-	
+
 	public EntityTatters(World par1World) {
 		super(par1World);
 		// sets hitbox size
@@ -185,33 +187,19 @@ public class EntityTatters extends EntityMob {
 
 	}
 
-	/**
-	 * Returns the sound this mob makes while it's alive.
-	 * 
-	 * protected String getLivingSound() { return "mob.zombie.say"; }
-	 */
-
-	/**
-	 * Returns the sound this mob makes when it is hurt.
-	 */
 	@Override
 	protected String getHurtSound() {
-		return Sounds.CHORP_HURT;
+		return Sounds.TATTERS_HURT;
 	}
 
-	/**
-	 * Returns the sound this mob makes on death.
-	 */
 	@Override
 	protected String getDeathSound() {
-		return Sounds.CHORP_DEATH;
+		return Sounds.TATTERS_DEATH;
 	}
 
-	/**
-	 * Plays step sound at given x, y, z for the entity
-	 */
-	protected void playStepSound(int par1, int par2, int par3, int par4) {
-		this.playSound("mob.zombie.step", 0.15F, 1.0F);
+	@Override
+	protected String getLivingSound() {
+		return Sounds.TATTERS_LIVE;
 	}
 
 	public EnumCreatureAttribute getCreatureAttribute() {
@@ -223,7 +211,6 @@ public class EntityTatters extends EntityMob {
 		for (int i = 0; i < this.scytheCountMax; i++) {
 			num += (this.scythes[i].thrown == 1) ? 1 : 0;
 		}
-		System.out.println("" + num);
 		return num;
 	}
 
@@ -256,6 +243,7 @@ public class EntityTatters extends EntityMob {
 						this.scythes[i].moveForward(2F);
 						this.lastAttackCounter = (countScythes() == this.scytheCountMax) ? 100 : 20;
 						if (this.lastAttackCounter == 100) {
+							this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
 							teleport();
 						}
 						break;
@@ -265,16 +253,33 @@ public class EntityTatters extends EntityMob {
 		}
 	}
 
-	
 	public void teleport() {
-		this.dataWatcher.updateObject(TELEPORT, 1);
-		this.setPosition(this.target.posX + TargetUtils.getRanNum(-10, 10), this.target.posY, this.target.posZ + TargetUtils.getRanNum(-10, 10));
-		this.faceEntity(this.target, 360, 1);
+		if (this.target != null) {
+			this.dataWatcher.updateObject(TELEPORT, 1);
+			this.setPosition(this.target.posX + TargetUtils.getRanNum(-10, 10), this.target.posY, this.target.posZ + TargetUtils.getRanNum(-10, 10));
+			this.faceEntity(this.target, 360, 1);
+		}
+	}
+
+	/**
+	 * Called when the entity is attacked.
+	 */
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (rand.nextInt(2) == 0 && !this.worldObj.isRemote) {
+			this.teleport();
+			return false;
+		}
+		return super.attackEntityFrom(source, amount);
 	}
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
+		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote){
+			System.out.println(this.getHealth());	
+		}
+		
 		
 		if (this.dataWatcher.getWatchableObjectInt(TELEPORT) == 1) {
 			for (int i = 0; i < 300; ++i) {
@@ -285,7 +290,6 @@ public class EntityTatters extends EntityMob {
 			}
 			this.dataWatcher.updateObject(TELEPORT, 0);
 		}
-		
 
 		this.lastAttackCounter -= (this.lastAttackCounter <= 0) ? 0 : 1;
 
