@@ -45,14 +45,13 @@ public class BlockPhaseFire extends Block
 	
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
-		worldIn.scheduleUpdate(pos, this, 100);		
+		worldIn.scheduleUpdate(pos, this, 200);		
 	}
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		worldIn.setBlockToAir(pos);
-		System.out.println("ERPDERP");
-		worldIn.scheduleUpdate(pos, this, 100);
+		//worldIn.scheduleUpdate(pos, this, 100);
 	}
 		
 	

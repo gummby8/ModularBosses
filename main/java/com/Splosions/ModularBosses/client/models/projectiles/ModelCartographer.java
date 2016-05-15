@@ -12,7 +12,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 
-public class ModeCartographer extends ModelBase
+public class ModelCartographer extends ModelBase
 {
 	
 
@@ -20,7 +20,7 @@ public class ModeCartographer extends ModelBase
 
 	 public ModelRenderer part;
  
-  public ModeCartographer()
+  public ModelCartographer()
   {
     textureWidth = 10;
     textureHeight = 10;

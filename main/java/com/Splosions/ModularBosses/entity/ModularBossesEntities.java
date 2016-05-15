@@ -5,6 +5,7 @@ import java.util.logging.Level;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
+import com.Splosions.ModularBosses.client.models.entity.ModelGolem;
 import com.Splosions.ModularBosses.client.models.entity.ModelHeavyChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldormAlpha;
 import com.Splosions.ModularBosses.client.models.entity.ModelParagon;
@@ -14,6 +15,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock;
+import com.Splosions.ModularBosses.client.render.entity.RenderGolem;
 import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderMoldormAlpha;
 import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
@@ -21,8 +23,10 @@ import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
+import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBoulder;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderScythe;
+import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
@@ -69,6 +73,7 @@ public class ModularBossesEntities
 		int modEntityIndex = 0;
 		//Effect Entities
 		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
@@ -81,29 +86,20 @@ public class ModularBossesEntities
 	
 		
 		// MOBS and egg colors
-		//EntityRegistry.registerGlobalEntityID(EntityEyeTest.class, "Eye Test", ++modEntityIndex);
-		//CustomEntityList.addMapping(EntityEyeTest.class, "Eye Test", 0x3c768c, 0xb50000);
-		
 		EntityRegistry.registerModEntity(EntitySkull.class, "Skull", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntitySkull.class, "Skull", 0xFFFBAF, 0x000000);
 		
-		//EntityRegistry.registerGlobalEntityID(EntityLavaBlob.class, "Lava Blob", ++modEntityIndex);
-		//CustomEntityList.addMapping(EntityLavaBlob.class, "Lava Blob", 0xF7FF00, 0xFF0000);
+		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
-		EntityRegistry.registerModEntity(EntityChorpChorp.class, "Chorp Chorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityChorpChorp.class, "Chorp Chorp", 0x3F5A8C, 0xFFFFFF);
+		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
 		
 		EntityRegistry.registerModEntity(EntityMoldormAlpha.class, "Moldorm", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityMoldormAlpha.class, "Moldorm", 0x3F5A8C, 0xFFFFFF);
+		CustomEntityList.addMapping(EntityMoldormAlpha.class, "Moldorm", 0x89FF01, 0xDEFF01);
 		
 		EntityRegistry.registerModEntity(EntityHeavyChorp.class, "HeavyChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityHeavyChorp.class, "HeavyChorp", 0x8C713F, 0xFFFFFF);
-		
-		//EntityRegistry.registerGlobalEntityID(EntitySenseiSteve.class, "SenseiSteve", ++modEntityIndex);
-		//CustomEntityList.addMapping(EntitySenseiSteve.class, "SenseiSteve", 0x3c768c, 0x000000);
-		
-		//EntityRegistry.registerGlobalEntityID(EntityTestDummy.class, "Test Dummy", ++modEntityIndex);
-		//CustomEntityList.addMapping(EntityTestDummy.class, "Test Dummy", 0xF2FF00, 0x000000);
 		
 		EntityRegistry.registerModEntity(EntityParagon.class, "Paragon", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityParagon.class, "Paragon", 0x5C2918, 0xE30000);
@@ -130,23 +126,20 @@ public class ModularBossesEntities
 		
 		
 		//mobs
-		//RenderingRegistry.registerEntityRenderingHandler(EntityEyeTest.class, new RenderEyeTest(new ModelEyeTest(), 0.7F));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkull.class, new RenderSkull(manager, new ModelSkull(), 1));
-		//RenderingRegistry.registerEntityRenderingHandler(EntityLavaBlob.class, new RenderLavaBlob(new ModelLavaBlob(), 0.7F));
-		//RenderingRegistry.registerEntityRenderingHandler(EntityTestHead.class, new RenderTestHead(new ModelTestHead(), 0.7F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpChorp.class, new RenderChorpChorp(manager, new ModelChorpChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeavyChorp.class, new RenderHeavyChorp(manager, new ModelHeavyChorp(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityGolem.class, new RenderGolem(manager, new ModelGolem(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityParagon.class, new RenderParagon(manager, new ModelParagon(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
-		//RenderingRegistry.registerEntityRenderingHandler(EntitySenseiSteve.class, new RenderSenseiSteve(new ModelSenseiSteve(), 2));
-		//RenderingRegistry.registerEntityRenderingHandler(EntityTestDummy.class, new RenderTestDummy(new ModelTestDummy(), 0.7F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
 		
 		//projectiles
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpSlimeBlob.class, new RenderSnowball(manager, ModularBossesItems.slimeblob, itemRender));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBoulder.class, new RenderBoulder(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlameThrower.class, new RenderFlameThrower(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityScythe.class, new RenderScythe(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomFallingBlock.class, new RenderCustomFallingBlock(manager));

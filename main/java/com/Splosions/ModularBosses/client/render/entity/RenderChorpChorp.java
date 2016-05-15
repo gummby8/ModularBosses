@@ -25,6 +25,7 @@ public class RenderChorpChorp extends RenderLiving
 {
     private static final ResourceLocation ChorpChorpEyesTextures = new ResourceLocation("mb:textures/mobs/ChorpChorpGlow.png");
     private static final ResourceLocation ChorpChorpTextures = new ResourceLocation("mb:textures/mobs/ChorpChorp.png");
+    //private static final ResourceLocation ChorpChorpTextures = new ResourceLocation("minecraft:textures/blocks/brick.png");
 
     public RenderChorpChorp(RenderManager renderManager, ModelBase model, float shadowSize) {
 		super(renderManager, model, shadowSize);

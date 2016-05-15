@@ -80,7 +80,8 @@ public class ModularBossesItems {
 	//================ TOOLS TAB ================//
 	public static Item 
 	itemScythe,
-	Legends_Sword;
+	itemLegendsBow,
+	itemLegendsSword;
 	
 	
 	
@@ -97,7 +98,8 @@ public class ModularBossesItems {
 	public static void init() {
 		
 		itemScythe = new ItemScythe(ToolMaterial.EMERALD).setUnlocalizedName("itemScythe");
-		 Legends_Sword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
+		itemLegendsBow = new ItemLegendsBow(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Bow");
+		itemLegendsSword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
 		 
 		 slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
 		 

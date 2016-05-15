@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.Splosions.ModularBosses.client.models.projectiles.ModeCartographer;
+import com.Splosions.ModularBosses.client.models.projectiles.ModelCartographer;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
 
 
@@ -27,7 +27,7 @@ public class RenderCartographer extends Render
 
 	public RenderCartographer(RenderManager renderManager) {
 		super(renderManager);
-		this.model = new ModeCartographer();
+		this.model = new ModelCartographer();
 	}
 
 

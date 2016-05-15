@@ -6,6 +6,7 @@ import java.util.List;
 import javax.vecmath.Matrix4f;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -25,21 +26,22 @@ import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
+import com.Splosions.ModularBosses.client.models.item.ModelLegendsBow;
 import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 
 
 @SuppressWarnings("deprecation")
 @SideOnly(Side.CLIENT)
-public class RenderItemLegendsSword implements ISmartItemModel, IPerspectiveAwareModel
+public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareModel
 {
-	protected final ModelLegendsSword swordModel;
+	protected final ModelBase bowModel;
 	private final IBakedModel baseModel;
 	private final IBakedModel emptyModel;
 	
-	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/LegendsSword.png");
+	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/LegendsBow.png");
 
-	public RenderItemLegendsSword(IBakedModel baseModel) {
-		swordModel = new ModelLegendsSword();
+	public RenderItemLegendsBow(IBakedModel baseModel) {
+		bowModel = new ModelLegendsBow();
 		this.baseModel = baseModel;
 		ModelResourceLocation resource = new ModelResourceLocation(Reference.MOD_ID + ":empty", "inventory");
 		this.emptyModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getModel(resource);
@@ -56,20 +58,19 @@ public class RenderItemLegendsSword implements ISmartItemModel, IPerspectiveAwar
 			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
 			return Pair.of(baseModel, null);
 		}
-
 		GlStateManager.pushMatrix();
 		GL11.glScalef(0.1F, 0.1F, 0.1F);
 		switch (cameraTransformType) {
 		case FIRST_PERSON:
 			GlStateManager.translate(0.5F, 0.5F, 0.5F);
-			GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(-40.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(-55.0F, 0.0F, 1.0F, 0.0F);
 			GlStateManager.translate(-0.75F, 1.5F, 0.5F);
 			break;
 		case THIRD_PERSON:
 			GlStateManager.rotate(100.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(90.0F, 0F, 1.0F, 0.0F);
-			GlStateManager.translate(0.3F, -0.3F, 0.2F);
+			GlStateManager.rotate(0.0F, 0F, 1.0F, 0.0F);
+			GlStateManager.translate(0F, -0.3F, -0.4F);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 			break;
 		default:
@@ -77,7 +78,7 @@ public class RenderItemLegendsSword implements ISmartItemModel, IPerspectiveAwar
 		}
 		Minecraft.getMinecraft().getTextureManager().bindTexture(getTexture1());
 		// first Entity parameter not used for anything in ModelLegendsSword, so null is safe
-		swordModel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
+		bowModel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GlStateManager.popMatrix();
 		// return empty model to render nothing - bomb model already rendered
 		return Pair.of(emptyModel, null);

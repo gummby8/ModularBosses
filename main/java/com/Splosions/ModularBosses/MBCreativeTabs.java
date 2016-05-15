@@ -46,7 +46,7 @@ public class MBCreativeTabs
 		@Override
 		@SideOnly(Side.CLIENT)
 		public Item getTabIconItem() {
-			return  ModularBossesItems.Legends_Sword;
+			return  ModularBossesItems.itemLegendsSword;
 		}
 	};
 

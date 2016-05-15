@@ -9,50 +9,29 @@ import java.util.Collection;
 import java.util.List;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
-import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
-import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
-import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
-import com.Splosions.ModularBosses.entity.EntityCartographer;
-import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
-import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
-import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
-import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
-import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
-import com.Splosions.ModularBosses.proxy.ClientProxy;
-import com.Splosions.ModularBosses.util.Schematic;
-import com.Splosions.ModularBosses.world.PortalLandingWorldData;
+import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsBow;
 import com.google.common.collect.Lists;
-import com.google.gson.JsonSyntaxException;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.client.shader.ShaderGroup;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldSavedData;
-import net.minecraft.world.storage.MapStorage;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import java.lang.reflect.*;
 
-public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 
-	public ItemLegendsSword(ToolMaterial material) {
-		super(material);
+
+public class ItemLegendsBow extends BaseModItem implements ISwapModel {
+
+	public ItemLegendsBow(ToolMaterial material) {
+		setCreativeTab(MBCreativeTabs.tabTools);
+		setMaxStackSize(1);
 	}
 
+	
 	/**
 	 * Called whenever this item is equipped and the right mouse button is
 	 * pressed. Args: itemStack, world, entityPlayer
@@ -75,7 +54,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
      */
     public EnumAction getItemUseAction(ItemStack stack)
     {
-        return EnumAction.BLOCK;
+        return EnumAction.BOW;
     }
 
 	@Override
@@ -83,7 +62,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public Collection<ModelResourceLocation> getDefaultResources() {
 		List<ModelResourceLocation> resources = Lists.newArrayList();
 
-		resources.add(new ModelResourceLocation("mb:Legends_Sword", "inventory"));
+		resources.add(new ModelResourceLocation("mb:Legends_Bow", "inventory"));
 
 		return resources;
 	}
@@ -91,7 +70,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Class<? extends IBakedModel> getNewModel() {
-		return RenderItemLegendsSword.class;
+		return RenderItemLegendsBow.class;
 	}
 
 }
