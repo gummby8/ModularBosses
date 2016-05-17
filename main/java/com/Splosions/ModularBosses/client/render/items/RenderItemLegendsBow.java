@@ -40,8 +40,8 @@ import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareModel
 {
 	protected  ModelBase bowModel;
-	private  IBakedModel baseModel;
-	private IBakedModel emptyModel;
+	public  IBakedModel baseModel;
+	public IBakedModel emptyModel;
 	public int aniCount = 0;
 	
 	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/LegendsBow.png");
@@ -51,7 +51,7 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 		bowModel = new ModelLegendsBow();
 		this.baseModel = baseModel;
 
-		ModelResourceLocation resource = new ModelResourceLocation("mb:empty", "inventory");
+		ModelResourceLocation resource = new ModelResourceLocation("mb:invisible_block", "inventory");
 		this.emptyModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getModel(resource);
 		IBakedModel def = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getMissingModel(); 
 		if (emptyModel == def) {

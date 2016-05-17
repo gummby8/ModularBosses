@@ -49,7 +49,7 @@ public class RenderItemScythe implements ISmartItemModel, IPerspectiveAwareModel
 		scytheModel = new ModelScythe();
 		swordModel = new ModelLegendsSword();
 		this.baseModel = baseModel;
-		ModelResourceLocation resource = new ModelResourceLocation(Reference.MOD_ID + ":empty", "inventory");
+		ModelResourceLocation resource = new ModelResourceLocation("mb:invisible_block", "inventory");
 		this.emptyModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getModel(resource);
 		if (emptyModel == null) {
 			ModularBosses.logger.warn("Failed to retrieve model for resource location: " + resource);

@@ -150,7 +150,6 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
 	@SideOnly(Side.CLIENT)
 	public Collection<ModelResourceLocation> getDefaultResources() {
 		List<ModelResourceLocation> resources = Lists.newArrayList();
-
 		resources.add(new ModelResourceLocation("mb:Legends_Bow", "inventory"));
 
 		return resources;

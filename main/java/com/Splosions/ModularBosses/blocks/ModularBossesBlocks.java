@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModularBossesBlocks
 {
 	public static Block
+	invisibleBlock,
 	controlBlock,
 	portalBlock,
 	portalLanding,
@@ -46,6 +47,9 @@ public class ModularBossesBlocks
 		
 		phaseFire = new BlockPhaseFire(Material.barrier).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
 		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
+		
+		invisibleBlock = new BlockInvisible(Material.barrier).setUnlocalizedName("invisible_block");
+		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));
 		
 		// register block items for creative tab comparator sorting:
 		try {
