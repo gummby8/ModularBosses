@@ -39,9 +39,9 @@ import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 @SideOnly(Side.CLIENT)
 public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareModel
 {
-	protected final ModelBase bowModel;
-	private final IBakedModel baseModel;
-	private final IBakedModel emptyModel;
+	protected  ModelBase bowModel;
+	private  IBakedModel baseModel;
+	private IBakedModel emptyModel;
 	public int aniCount = 0;
 	
 	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/LegendsBow.png");
@@ -50,9 +50,11 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 	public RenderItemLegendsBow(IBakedModel baseModel) {
 		bowModel = new ModelLegendsBow();
 		this.baseModel = baseModel;
-		ModelResourceLocation resource = new ModelResourceLocation(Reference.MOD_ID + ":empty", "inventory");
+
+		ModelResourceLocation resource = new ModelResourceLocation("mb:empty", "inventory");
 		this.emptyModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getModel(resource);
-		if (emptyModel == null) {
+		IBakedModel def = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getMissingModel(); 
+		if (emptyModel == def) {
 			ModularBosses.logger.warn("Failed to retrieve model for resource location: " + resource);
 		}
 		
@@ -61,6 +63,12 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 
 	@Override
 	public Pair<IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
+		
+		float scale = ((aniCount < 960 && aniCount > 980)? 20 : 980 - aniCount);
+		scale = (aniCount == 0 || scale < 0)? 0 : scale / 20;
+		scale = (scale >= 1)? 1 : scale;
+		
+		
 		// gui renders as 2D sprite; this is apparently also what renders when the item is dropped
 		if (cameraTransformType == ItemCameraTransforms.TransformType.GUI) {
 			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
@@ -76,7 +84,7 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 			GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
 			GlStateManager.rotate(-20.0F, 1.0F, 0.0F, 0.0F);
 			//if (aniCount < 980 && aniCount != 0){
-			miniSun(0.1F, 1.05F, -0.3F, 2.5F);
+			miniSun(scale * 0.1F, 1.05F, -0.3F, 2.5F);
 			//}
 			break;
 		case THIRD_PERSON:
@@ -85,7 +93,7 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 			GlStateManager.translate(0.8F, -0.3F, -0.9F);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 			if (aniCount < 980 && aniCount != 0){
-			miniSun(0.2F, 0, 0, -1.5F);
+			miniSun(scale * 0.2F, 0, 0, -1.5F);
 			}
 			break;
 		default:
