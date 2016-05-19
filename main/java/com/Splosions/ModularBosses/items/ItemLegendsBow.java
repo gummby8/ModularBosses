@@ -11,12 +11,15 @@ import java.util.List;
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsBow;
+import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
+import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.google.common.collect.Lists;
 
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
@@ -118,10 +121,13 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
             if (!worldIn.isRemote)
             {
             	if (f == 1.0F){
-            		
+            		EntityEnergyArrow entityEnergyArrow = new EntityEnergyArrow(worldIn, playerIn, playerIn, 3F, 0, 0, 0, 0,1,1,1);
+            		worldIn.spawnEntityInWorld(entityEnergyArrow);
+            		worldIn.playSoundAtEntity(playerIn,"random.fizz",1,1);
             	} else {
             	worldIn.playSoundAtEntity(playerIn, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
                 worldIn.spawnEntityInWorld(entityarrow);
+                
             	}
             }
         }

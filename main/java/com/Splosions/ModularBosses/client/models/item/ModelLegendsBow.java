@@ -1505,7 +1505,7 @@ public class ModelLegendsBow extends ModelBase {
 
     @Override
     public void render(Entity entity, float aniCount, float f1, float f2, float f3, float f4, float f5) { 
-        if (aniCount > 0){	this.ARROW.render(f5); }
+        
         //at max draw bend = 2
         float bend = ((aniCount < 980)? 20 : 1000 - aniCount) / 10;
         bend = (aniCount == 0)? 0 : bend;
@@ -1526,6 +1526,7 @@ public class ModelLegendsBow extends ModelBase {
         this.ARROW.rotationPointZ = 72 + (bend * 41.5F);
         
         this.HandleBase.render(f5);
+        if (aniCount > 0){	this.ARROW.render(f5); }
        
     }
 

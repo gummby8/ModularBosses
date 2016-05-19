@@ -28,7 +28,8 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 
 	public EntityEnergyArrow(World world) {
 		super(world);
-		setSize(1,2);
+		setSize(0.1F,0.1F);
+		this.ignoreFrustumCheck = true;
 
 
 
@@ -59,6 +60,8 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 		setScale(scale);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
+		this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
+		this.Dmg = 40;
 	}
 
 
@@ -96,7 +99,7 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 	//set to 0 do have 0 spell drop
 	@Override
 	protected float getGravityVelocity() {
-		return 0.005F;
+		return 0.000F;
 	}
 
 
@@ -105,21 +108,11 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 	public void onUpdate() {
 		super.onUpdate();
 
-
-		this.Shooter = (EntityLivingBase) getShooter();
-	
-		this.noClip = true;
 		
-		//this.attackEntitiesInList(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getBoundingBox()));
 		
-
-
-		//damage drops off the farhter the wave travels
-		this.Dmg = 20 - (this.ticksExisted / 10);
-
 
 		//wave will last for 5 seconds
-		if (this.ticksExisted > 30){
+		if (this.ticksExisted > 1000){
 			setDead();
 		}
 
@@ -161,10 +154,13 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
-		if (mop.entityHit instanceof EntityLiving){
+        if (mop != null)
+        {
+            if (mop.entityHit != null)
+            {
 			mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-			mop.entityHit.setFire(5);
 		}
+        }
 		setDead();
 	}
 
