@@ -48,11 +48,9 @@ public class RenderEnergyArrow extends Render
 		GL11.glTranslated(x, y, z);
 		GL11.glScalef(scale, scale, scale);
 		GL11.glRotatef(yaw, 0, 1F, 0);
-		GL11.glRotatef(ent.getShooter().rotationPitch, 1, 0, 0);
+		GL11.glRotatef(-ent.rotationPitch, 1, 0, 0);
 		GL11.glTranslated(0F, 0.05F, 0.5F);
 		GL11.glRotatef(90, 1F, 0, 0);
-		GL11.glRotatef(yaw, 0, 1F, 0);
-		
 		model.render(ent, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(GL11.GL_ALPHA_TEST);

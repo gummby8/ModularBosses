@@ -35,14 +35,14 @@ public class RenderFlameThrower extends Render
 		renderEntityModel(FlameShot, x, y, z, yaw, partialTick);
 	}
 
-	public void renderEntityModel(Entity FlameShot, double x, double y, double z, float yaw, float partialTick) {
-		EntityFlameThrower Blue = (EntityFlameThrower) FlameShot;
+	public void renderEntityModel(Entity entity, double x, double y, double z, float yaw, float partialTick) {
+		EntityFlameThrower ent = (EntityFlameThrower) entity;
 		GL11.glPushMatrix();
 		float scale = 1;
-		bindTexture(getEntityTexture(Blue));
+		bindTexture(getEntityTexture(ent));
 		GL11.glTranslated(x, y, z);
 		GL11.glScalef(scale, scale, scale);
-		model.render(Blue, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
+		model.render(ent, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GL11.glPopMatrix();
 	}
 
