@@ -6,7 +6,7 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class ModelUtils {
 
-	public static void teleportPart(ModelRenderer targetPart, FakeModelRenderer destinationPart){
+	public static void teleportPiece(ModelRenderer targetPart, FakeModelRenderer destinationPart){
 		targetPart.rotateAngleX = destinationPart.rotateAngleX;
 		targetPart.rotateAngleY = destinationPart.rotateAngleY;
 		targetPart.rotateAngleZ = destinationPart.rotateAngleZ;
@@ -16,7 +16,7 @@ public class ModelUtils {
 		targetPart.rotationPointZ = destinationPart.rotationPointZ;
 	}
 	
-	public static void movePartOverTime(ModelRenderer targetPart, FakeModelRenderer destinationPart, int ticks){
+	public static void movePieceOverTime(ModelRenderer targetPart, FakeModelRenderer destinationPart, int ticks){
 		
 		destinationPart.rotateAngleXDist = (destinationPart.rotateAngleXDist == 0)? targetPart.rotateAngleX - destinationPart.rotateAngleX : destinationPart.rotateAngleXDist;  
 		targetPart.rotateAngleX = movePart(targetPart.rotateAngleX, destinationPart.rotateAngleX, destinationPart.rotateAngleXDist / ticks);
@@ -50,5 +50,18 @@ public class ModelUtils {
 		return part;
 	}
 	
+	
+	
+	public static void movePiecePos(ModelRenderer targetPart, FakeModelRenderer destinationPart, float speed){
+		targetPart.rotationPointX += ((destinationPart.rotationPointX - targetPart.rotationPointX) / speed);
+		targetPart.rotationPointY += ((destinationPart.rotationPointY - targetPart.rotationPointY) / speed);
+		targetPart.rotationPointZ += ((destinationPart.rotationPointZ - targetPart.rotationPointZ) / speed);
+	}
+	
+	public static void movePieceAng(ModelRenderer targetPart, FakeModelRenderer destinationPart, float speed){
+		targetPart.rotateAngleX += ((destinationPart.rotateAngleX - targetPart.rotateAngleX) / speed);
+		targetPart.rotateAngleY += ((destinationPart.rotateAngleY - targetPart.rotateAngleY) / speed);
+		targetPart.rotateAngleZ += ((destinationPart.rotateAngleZ - targetPart.rotateAngleZ) / speed);
+	}
 
 }

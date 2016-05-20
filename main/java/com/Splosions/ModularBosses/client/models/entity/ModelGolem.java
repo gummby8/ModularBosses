@@ -252,38 +252,38 @@ public class ModelGolem extends ModelBase {
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		if (entity.ticksExisted <= 1){
-			ModelUtils.teleportPart(WAIST, FWAIST);
-			ModelUtils.teleportPart(RARM, FRARM);
-			ModelUtils.teleportPart(LARM, FLARM);
-			ModelUtils.teleportPart(LRShoulder2, FLRShoulder2);
-			ModelUtils.teleportPart(LFShoulder2, FLFShoulder2);
-			ModelUtils.teleportPart(RFShoulder2, FRFShoulder2);
-			ModelUtils.teleportPart(RRShoulder2, FRRShoulder2);
-			ModelUtils.teleportPart(RFShoulder1, FRFShoulder1);
-			ModelUtils.teleportPart(RRShoulder1, FRRShoulder1);
-			ModelUtils.teleportPart(LRShoulder1, FLRShoulder1);
-			ModelUtils.teleportPart(LFShoulder1, FLFShoulder1);
-			ModelUtils.teleportPart(RChest, FRChest);
-			ModelUtils.teleportPart(LChest, FLChest);
-			ModelUtils.teleportPart(HEAD, FHEAD);
-			ModelUtils.teleportPart(RArm1, FRArm1);
-			ModelUtils.teleportPart(RArm2, FRArm2);
-			ModelUtils.teleportPart(LArm1, FLArm1);
-			ModelUtils.teleportPart(LArm2, FLArm2);
+			ModelUtils.teleportPiece(WAIST, FWAIST);
+			ModelUtils.teleportPiece(RARM, FRARM);
+			ModelUtils.teleportPiece(LARM, FLARM);
+			ModelUtils.teleportPiece(LRShoulder2, FLRShoulder2);
+			ModelUtils.teleportPiece(LFShoulder2, FLFShoulder2);
+			ModelUtils.teleportPiece(RFShoulder2, FRFShoulder2);
+			ModelUtils.teleportPiece(RRShoulder2, FRRShoulder2);
+			ModelUtils.teleportPiece(RFShoulder1, FRFShoulder1);
+			ModelUtils.teleportPiece(RRShoulder1, FRRShoulder1);
+			ModelUtils.teleportPiece(LRShoulder1, FLRShoulder1);
+			ModelUtils.teleportPiece(LFShoulder1, FLFShoulder1);
+			ModelUtils.teleportPiece(RChest, FRChest);
+			ModelUtils.teleportPiece(LChest, FLChest);
+			ModelUtils.teleportPiece(HEAD, FHEAD);
+			ModelUtils.teleportPiece(RArm1, FRArm1);
+			ModelUtils.teleportPiece(RArm2, FRArm2);
+			ModelUtils.teleportPiece(LArm1, FLArm1);
+			ModelUtils.teleportPiece(LArm2, FLArm2);
 			
-			ModelUtils.teleportPart(RFHip, FRFHip);
-			ModelUtils.teleportPart(RRHip, FRRHip);
+			ModelUtils.teleportPiece(RFHip, FRFHip);
+			ModelUtils.teleportPiece(RRHip, FRRHip);
 
-			ModelUtils.teleportPart(LFHip, FLFHip);
-			ModelUtils.teleportPart(LRHip, FLRHip);
+			ModelUtils.teleportPiece(LFHip, FLFHip);
+			ModelUtils.teleportPiece(LRHip, FLRHip);
 			
-			ModelUtils.teleportPart(LLEG, FLLEG);
-			ModelUtils.teleportPart(LLeg1, FLLeg1);
-			ModelUtils.teleportPart(LLeg2, FLLeg2);
+			ModelUtils.teleportPiece(LLEG, FLLEG);
+			ModelUtils.teleportPiece(LLeg1, FLLeg1);
+			ModelUtils.teleportPiece(LLeg2, FLLeg2);
 			
-			ModelUtils.teleportPart(RLEG, FRLEG);
-			ModelUtils.teleportPart(RLeg1, FRLeg1);
-			ModelUtils.teleportPart(RLeg2, FRLeg2);
+			ModelUtils.teleportPiece(RLEG, FRLEG);
+			ModelUtils.teleportPiece(RLeg1, FRLeg1);
+			ModelUtils.teleportPiece(RLeg2, FRLeg2);
 		}
 		
 		this.WAIST.render(f5);
@@ -312,43 +312,43 @@ public class ModelGolem extends ModelBase {
 	private void setLivingAnimations(EntityGolem entity, float moveCounter, float speed, float PartialTick) {
 
 		if (entity.ticksExisted > 1 && entity.ticksExisted < 110){
-			ModelUtils.movePartOverTime(WAIST, entity.WAIST, 100);
-			ModelUtils.movePartOverTime(RARM, entity.RARM, 100);
-			ModelUtils.movePartOverTime(RArm1, entity.RArm1, 100);
-			ModelUtils.movePartOverTime(RArm2, entity.RArm2, 100);
+			ModelUtils.movePieceOverTime(WAIST, entity.WAIST, 100);
+			ModelUtils.movePieceOverTime(RARM, entity.RARM, 100);
+			ModelUtils.movePieceOverTime(RArm1, entity.RArm1, 100);
+			ModelUtils.movePieceOverTime(RArm2, entity.RArm2, 100);
 			
-			ModelUtils.movePartOverTime(LARM, entity.LARM, 100);
-			ModelUtils.movePartOverTime(LArm1, entity.LArm1, 100);
-			ModelUtils.movePartOverTime(LArm2, entity.LArm2, 100);
+			ModelUtils.movePieceOverTime(LARM, entity.LARM, 100);
+			ModelUtils.movePieceOverTime(LArm1, entity.LArm1, 100);
+			ModelUtils.movePieceOverTime(LArm2, entity.LArm2, 100);
 		
-			ModelUtils.movePartOverTime(LRShoulder1, entity.LRShoulder1, 100);
-			ModelUtils.movePartOverTime(LFShoulder1, entity.LFShoulder1, 100);
-			ModelUtils.movePartOverTime(LRShoulder2, entity.LRShoulder2, 100);
-			ModelUtils.movePartOverTime(LFShoulder2, entity.LFShoulder2, 100);
+			ModelUtils.movePieceOverTime(LRShoulder1, entity.LRShoulder1, 100);
+			ModelUtils.movePieceOverTime(LFShoulder1, entity.LFShoulder1, 100);
+			ModelUtils.movePieceOverTime(LRShoulder2, entity.LRShoulder2, 100);
+			ModelUtils.movePieceOverTime(LFShoulder2, entity.LFShoulder2, 100);
 			
-			ModelUtils.movePartOverTime(RFShoulder1, entity.RFShoulder1, 100);
-			ModelUtils.movePartOverTime(RRShoulder1, entity.RRShoulder1, 100);
-			ModelUtils.movePartOverTime(RFShoulder2, entity.RFShoulder2, 100);
-			ModelUtils.movePartOverTime(RRShoulder2, entity.RRShoulder2, 100);
+			ModelUtils.movePieceOverTime(RFShoulder1, entity.RFShoulder1, 100);
+			ModelUtils.movePieceOverTime(RRShoulder1, entity.RRShoulder1, 100);
+			ModelUtils.movePieceOverTime(RFShoulder2, entity.RFShoulder2, 100);
+			ModelUtils.movePieceOverTime(RRShoulder2, entity.RRShoulder2, 100);
 						
-			ModelUtils.movePartOverTime(RChest, entity.RChest, 100);
-			ModelUtils.movePartOverTime(LChest, entity.LChest, 100);
+			ModelUtils.movePieceOverTime(RChest, entity.RChest, 100);
+			ModelUtils.movePieceOverTime(LChest, entity.LChest, 100);
 			
-			ModelUtils.movePartOverTime(HEAD, entity.HEAD, 100);
+			ModelUtils.movePieceOverTime(HEAD, entity.HEAD, 100);
 			
-			ModelUtils.movePartOverTime(LFHip, entity.LFHip, 100);
-			ModelUtils.movePartOverTime(LRHip, entity.LRHip, 100);
+			ModelUtils.movePieceOverTime(LFHip, entity.LFHip, 100);
+			ModelUtils.movePieceOverTime(LRHip, entity.LRHip, 100);
 			
-			ModelUtils.movePartOverTime(RFHip, entity.RFHip, 100);
-			ModelUtils.movePartOverTime(RRHip, entity.RRHip, 100);
+			ModelUtils.movePieceOverTime(RFHip, entity.RFHip, 100);
+			ModelUtils.movePieceOverTime(RRHip, entity.RRHip, 100);
 
-			ModelUtils.movePartOverTime(LLEG, entity.LLEG, 100);
-			ModelUtils.movePartOverTime(LLeg1, entity.LLeg1, 100);
-			ModelUtils.movePartOverTime(LLeg2, entity.LLeg2, 100);
+			ModelUtils.movePieceOverTime(LLEG, entity.LLEG, 100);
+			ModelUtils.movePieceOverTime(LLeg1, entity.LLeg1, 100);
+			ModelUtils.movePieceOverTime(LLeg2, entity.LLeg2, 100);
 			
-			ModelUtils.movePartOverTime(RLEG, entity.RLEG, 100);
-			ModelUtils.movePartOverTime(RLeg1, entity.RLeg1, 100);
-			ModelUtils.movePartOverTime(RLeg2, entity.RLeg2, 100);
+			ModelUtils.movePieceOverTime(RLEG, entity.RLEG, 100);
+			ModelUtils.movePieceOverTime(RLeg1, entity.RLeg1, 100);
+			ModelUtils.movePieceOverTime(RLeg2, entity.RLeg2, 100);
 			System.out.println(RLeg1.rotationPointY);
 
 		} else {

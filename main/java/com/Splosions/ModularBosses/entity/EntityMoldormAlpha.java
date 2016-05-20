@@ -5,7 +5,7 @@ package com.Splosions.ModularBosses.entity;
 import java.util.Random;
 
 import com.Splosions.ModularBosses.Sounds;
-
+import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
@@ -43,24 +43,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityMoldormAlpha extends EntityMob
 {
 
-	
 
-	
-	
-
-	
 	Random rand = new Random();
+
+	public FakeModelRenderer part2 = new FakeModelRenderer();
+	public FakeModelRenderer part3 = new FakeModelRenderer();
+	public FakeModelRenderer part4 = new FakeModelRenderer();
+	public FakeModelRenderer part5 = new FakeModelRenderer();
 	
-	public float part2Cur = 0;
-		
-	public float part3Cur = 0;
-
-	public float part4Cur = 0;
-
-	public float part5Cur = 0;
-
 	public int ranPosX = 0;
 	public int ranPosZ = 0;
+	public int flip;
+	public int ranTicks = 20;
 
 
 	public EntityMoldormAlpha(World par1World) {
@@ -68,22 +62,12 @@ public class EntityMoldormAlpha extends EntityMob
 		//sets hitbox size
 		this.setSize(3F, 3F);
 		this.experienceValue = 10;
-		this.isImmuneToFire = false;
+		this.isImmuneToFire = true;
 		this.ignoreFrustumCheck = true;
 		this.maxHurtResistantTime = 40;
 		//AI STUFF
-		//this.getNavigator().setBreakDoors(true);
-		//this.tasks.addTask(1, new EntityAIBreakDoor(this));
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityCow.class, 0.5D, true));
-		//this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
-		//this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
-		//this.tasks.addTask(1, new EntityAIWander(this, 0.25D)); //Wander speed
-		//this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		//this.tasks.addTask(7, new EntityAILookIdle(this));
-		//this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityCow.class, false));
+
 		
 
 	}
@@ -92,7 +76,7 @@ public class EntityMoldormAlpha extends EntityMob
 	//won't despawn even if the chunk unloads
 	protected boolean canDespawn()
 	{
-		return true;
+		return false;
 	}
 
 	public boolean isBurning()
@@ -106,7 +90,7 @@ public class EntityMoldormAlpha extends EntityMob
 	}
 
 	protected boolean isAIEnabled() {
-		return true;
+		return false;
 	}
 
 	protected void applyEntityAttributes()
@@ -123,17 +107,6 @@ public class EntityMoldormAlpha extends EntityMob
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
 	}
-
-
-	protected void entityInit()
-	{
-		super.entityInit();
-		this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
-
-	}
-
-
-
 
 
 
@@ -179,41 +152,6 @@ public class EntityMoldormAlpha extends EntityMob
 		return EnumCreatureAttribute.ARTHROPOD;
 	}
 
-
-    /**
-     * Finds the closest player within 16 blocks to attack, or null if this Entity isn't interested in attacking
-     * (Animals, Spiders at day, peaceful PigZombies).
-     */
-    protected Entity findPlayerToAttack()
-    {
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 16.0D);
-        return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
-    }
-
-    
-    /**
-     * Called when the entity is attacked.
-     */
-    @Override
-    public boolean attackEntityFrom(DamageSource source, float amount)
-    {
-        if (this.isEntityInvulnerable(source))
-        {
-            return false;
-        }
-        else if (super.attackEntityFrom(source, amount))
-        {
-
-            Entity entity = source.getEntity();
-            return this.riddenByEntity != entity && this.ridingEntity != entity ? true : true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    
 	//stuns the mob
     @Override
     public boolean isMovementBlocked() {
@@ -234,31 +172,31 @@ public class EntityMoldormAlpha extends EntityMob
 	}
     
     
-    public void getRandomLocation(){
-    	
-    	
-    	
-    }
     
     
 	public void onLivingUpdate() {
-
-		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote){
+		if (this.ticksExisted % this.ranTicks== (20 - 1) && !this.worldObj.isRemote){
 		
-		ranPosX = getRandomNumberInRange(-20, 20);
-		ranPosZ = getRandomNumberInRange(-20, 20);
+		this.ranTicks = getRandomNumberInRange(20, 40);
+		this.ranPosX = getRandomNumberInRange(-20, 20);
+		this.ranPosZ = getRandomNumberInRange(-20, 20);
+		
 		this.getNavigator().tryMoveToXYZ(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
 		}
 		
+		if (this.isCollidedHorizontally && !this.worldObj.isRemote && this.flip == 0){
+			this.ranPosX *= -1;
+			this.ranPosZ *= -1;
+			this.flip = 10;
+		} 
+		
+		if (!this.worldObj.isRemote){
+			this.flip -=(this.flip <= 0)? 0 : 1;
+		}
+		
 		this.moveHelper.setMoveTo(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
-		
-		
 		super.onLivingUpdate();
 	}
 	
-	
-	
-	
-
 
 }

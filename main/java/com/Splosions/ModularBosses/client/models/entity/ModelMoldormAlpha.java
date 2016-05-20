@@ -2,7 +2,9 @@ package com.Splosions.ModularBosses.client.models.entity;
 
 
 
+import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.entity.EntityMoldormAlpha;
+import com.Splosions.ModularBosses.util.ModelUtils;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
@@ -407,12 +409,34 @@ public class ModelMoldormAlpha extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float yaw, float f1, float f2, float f3, float f4, float f5) { 
+    	EntityMoldormAlpha worm = (EntityMoldormAlpha) entity;
+    	this.Part1.rotateAngleY = (float)Math.toRadians(yaw);
+    	
+    	FakePseudoChild (this.Part1, 45.0F, worm.part2);
+    	FakePseudoChild (this.Part2, 40.0F, worm.part3);
+    	FakePseudoChild (this.Part3, 35.0F, worm.part4);
+    	FakePseudoChild (this.Part4, 30.0F, worm.part5);
+    	
+    	
+    	ModelUtils.movePiecePos(this.Part2, worm.part2, 25F);
+    	ModelUtils.movePieceAng(this.Part2, worm.part2, 25F);
+
+    	ModelUtils.movePiecePos(this.Part3, worm.part3, 12F);
+    	ModelUtils.movePieceAng(this.Part3, worm.part3, 25F);
+
+    	ModelUtils.movePiecePos(this.Part4, worm.part4, 8F);
+    	ModelUtils.movePieceAng(this.Part4, worm.part4, 25F);
+    	
+    	ModelUtils.movePiecePos(this.Part5, worm.part5, 3F);
+    	ModelUtils.movePieceAng(this.Part5, worm.part5, 25F);
+    	
     	this.Part1.render(f5);
     	this.Part2.render(f5);
         this.Part3.render(f5);
         this.Part4.render(f5);
         this.Part5.render(f5);
+        
     }
 
     /**
@@ -449,12 +473,10 @@ public class ModelMoldormAlpha extends ModelBase {
     		this.pupilL.rotateAngleZ = 0;
     	}
     	
+    	
+    	
+    	
     	/**
-    	this.Part2.rotationPointX = (float) (worm.posX - worm.prevPosX) * -106;
-    	this.Part2.rotationPointY = this.Part1.rotationPointY + 3;
-    	this.Part2.rotationPointZ = (float) (worm.posZ - worm.prevPosZ) * -106;    	
-    	System.out.println(this.Part2.rotationPointX);
-		*/
     	
     	worm.part2Cur += ((worm.rotationYaw - worm.prevRotationYaw) * 0.2F) + ((0 - worm.part2Cur) * 0.02F);
     	this.Part2.rotateAngleY = (worm.part2Cur * 0.0174F) + 1.57F;
@@ -483,16 +505,12 @@ public class ModelMoldormAlpha extends ModelBase {
     	this.Part5.rotationPointY = this.Part4.rotationPointY + 3;
     	this.Part5.rotationPointZ = (51 * MathHelper.sin(this.Part5.rotateAngleY)) + this.Part4.rotationPointZ;    	
     	this.Part5.rotateAngleY = (worm.part5Cur * -0.0174F);  
-		
+		*/
     	
     }
     
     
-    
-    
-    
-    
-    
+ 
     
     
     
@@ -501,6 +519,16 @@ public class ModelMoldormAlpha extends ModelBase {
     	Child.rotationPointY = Parent.rotationPointY;
     	Child.rotationPointZ = (ParentLength * (MathHelper.sin(-Parent.rotateAngleY))) + (ParentLength * (MathHelper.cos(-Parent.rotateAngleY))) + Parent.rotationPointZ;
     	Child.rotationPointX = (ParentLength * (MathHelper.cos(-Parent.rotateAngleY))) - (ParentLength * (MathHelper.sin(-Parent.rotateAngleY))) + Parent.rotationPointX;
+
+    }
+    
+    public void FakePseudoChild (ModelRenderer Parent, float ParentLength, FakeModelRenderer Child){
+    	float yOff = (float)Math.toRadians(45);
+    	
+    	Child.rotationPointY = Parent.rotationPointY;
+    	Child.rotationPointZ = (ParentLength * (MathHelper.sin(-Parent.rotateAngleY + yOff))) + (ParentLength * (MathHelper.cos(-Parent.rotateAngleY + yOff))) + Parent.rotationPointZ;
+    	Child.rotationPointX = (ParentLength * (MathHelper.cos(-Parent.rotateAngleY + yOff))) - (ParentLength * (MathHelper.sin(-Parent.rotateAngleY + yOff))) + Parent.rotationPointX;
+    	Child.rotateAngleY = Parent.rotateAngleY;
 
     }
 }
