@@ -108,34 +108,34 @@ public class EntityGolem extends EntityMob
 		
 		
 		
-		WAIST.set(0, 0, 0, 0, -25, 0);
-		RARM.set(-40, 0, 0, 0, -40, -21);
-		LARM.set(40, 0, 0, 0, -40, 21);
-		LRShoulder2.set(-30, 0, -15, -4.22F, -42, 18);
-		LFShoulder2.set(-30, 0, 15, 4.21F, -42, 18);
-		RFShoulder2.set(30, 0, 15, 4.2F, -42, -18);
-		RRShoulder2.set(30, 0, -15, -4.2F, -42, -18);
-		RFShoulder1.set(15, 0, 15, 5.5F, -47, -5.5F);
-		RRShoulder1.set(15, 0, -15, -5.52F, -47, -5.5F);
-		LRShoulder1.set(-15, 0, -15, -5.5F, -47, 5.5F);
-		LFShoulder1.set(-15, 0, 15, 5.52F, -47F, 5.5F);
-		RChest.set(0, 0, 0, 0, -38, -8);
-		LChest.set(0, 0, 0, 0, -38, 8);
-		HEAD.set(0, 0, 0, 0, -54, 0);
-		RArm1.set(25, 0, 0, 0.02F, 12, 0.01F);
-		RArm2.set(10, 0, 0, 0.02F, 12, 0.01F);
-		LArm1.set(-25, 0, 0, 0.02F, 12, 0.01F);
-		LArm2.set(-10, 0, 0, 0.02F, 12, 0.01F);
-		LFHip.set(15, 0, 15, 5.5F, -9, -5.5F);
-		LLEG.set(20, 0, 0, 0, -11, 7);
-		RLEG.set(-20, 0, 0, 0, -11, -7);
-		RRHip.set(-15, 0, -15, -5.5F, -9, 5.5F);
-		LRHip.set(15, 0, -15, -5.52F, -9, -5.5F);
-		RFHip.set(-15, 0, 15, 5.52F, -9, 5.5F);
-		LLeg1.set(-20, 0, 0, 0.02F, 13.3F, 0.5F);
-		LLeg2.set(0, 0, 0, 0.01F, 16, 0.01F);
-		RLeg1.set(20, 0, 0, 0.02F, 13.3F, -0.5F);
-		RLeg2.set(0, 0, 0, 0.01F, 16, 0.01F);
+		WAIST.setModelVars(0, 0, 0, 0, -25, 0);
+		RARM.setModelVars(-40, 0, 0, 0, -40, -21);
+		LARM.setModelVars(40, 0, 0, 0, -40, 21);
+		LRShoulder2.setModelVars(-30, 0, -15, -4.22F, -42, 18);
+		LFShoulder2.setModelVars(-30, 0, 15, 4.21F, -42, 18);
+		RFShoulder2.setModelVars(30, 0, 15, 4.2F, -42, -18);
+		RRShoulder2.setModelVars(30, 0, -15, -4.2F, -42, -18);
+		RFShoulder1.setModelVars(15, 0, 15, 5.5F, -47, -5.5F);
+		RRShoulder1.setModelVars(15, 0, -15, -5.52F, -47, -5.5F);
+		LRShoulder1.setModelVars(-15, 0, -15, -5.5F, -47, 5.5F);
+		LFShoulder1.setModelVars(-15, 0, 15, 5.52F, -47F, 5.5F);
+		RChest.setModelVars(0, 0, 0, 0, -38, -8);
+		LChest.setModelVars(0, 0, 0, 0, -38, 8);
+		HEAD.setModelVars(0, 0, 0, 0, -54, 0);
+		RArm1.setModelVars(25, 0, 0, 0.02F, 12, 0.01F);
+		RArm2.setModelVars(10, 0, 0, 0.02F, 12, 0.01F);
+		LArm1.setModelVars(-25, 0, 0, 0.02F, 12, 0.01F);
+		LArm2.setModelVars(-10, 0, 0, 0.02F, 12, 0.01F);
+		LFHip.setModelVars(15, 0, 15, 5.5F, -9, -5.5F);
+		LLEG.setModelVars(20, 0, 0, 0, -11, 7);
+		RLEG.setModelVars(-20, 0, 0, 0, -11, -7);
+		RRHip.setModelVars(-15, 0, -15, -5.5F, -9, 5.5F);
+		LRHip.setModelVars(15, 0, -15, -5.52F, -9, -5.5F);
+		RFHip.setModelVars(-15, 0, 15, 5.52F, -9, 5.5F);
+		LLeg1.setModelVars(-20, 0, 0, 0.02F, 13.3F, 0.5F);
+		LLeg2.setModelVars(0, 0, 0, 0.01F, 16, 0.01F);
+		RLeg1.setModelVars(20, 0, 0, 0.02F, 13.3F, -0.5F);
+		RLeg2.setModelVars(0, 0, 0, 0.01F, 16, 0.01F);
 	}
 
 	//stuns the mob

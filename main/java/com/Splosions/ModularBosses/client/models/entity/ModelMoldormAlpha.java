@@ -409,28 +409,40 @@ public class ModelMoldormAlpha extends ModelBase {
     }
 
     @Override
-    public void render(Entity entity, float yaw, float f1, float f2, float f3, float f4, float f5) { 
+    public void render(Entity entity, float yaw, float partialTick, float f2, float f3, float f4, float f5) { 
     	EntityMoldormAlpha worm = (EntityMoldormAlpha) entity;
     	this.Part1.rotateAngleY = (float)Math.toRadians(yaw);
+    	this.Part2.rotateAngleY = (float)Math.toRadians(worm.moldormPart2.rotationYaw);
+    	this.Part3.rotateAngleY = (float)Math.toRadians(worm.moldormPart3.rotationYaw);
+    	this.Part4.rotateAngleY = (float)Math.toRadians(worm.moldormPart4.rotationYaw);
+    	this.Part5.rotateAngleY = (float)Math.toRadians(worm.moldormPart5.rotationYaw);
     	
-    	FakePseudoChild (this.Part1, 45.0F, worm.part2);
-    	FakePseudoChild (this.Part2, 40.0F, worm.part3);
-    	FakePseudoChild (this.Part3, 35.0F, worm.part4);
-    	FakePseudoChild (this.Part4, 30.0F, worm.part5);
+    	this.Part2.rotationPointX = (float) (worm.moldormPart2.posX - worm.moldormPart1.posX) * 25;
+    	this.Part2.rotationPointZ = (float) (worm.moldormPart2.posZ - worm.moldormPart1.posZ) * -25;
     	
-    	
-    	ModelUtils.movePiecePos(this.Part2, worm.part2, 25F);
-    	ModelUtils.movePieceAng(this.Part2, worm.part2, 25F);
+    	this.Part3.rotationPointX = (float) (worm.moldormPart3.posX - worm.moldormPart1.posX) * 25;
+    	this.Part3.rotationPointZ = (float) (worm.moldormPart3.posZ - worm.moldormPart1.posZ) * -25;
 
-    	ModelUtils.movePiecePos(this.Part3, worm.part3, 12F);
-    	ModelUtils.movePieceAng(this.Part3, worm.part3, 25F);
+    	this.Part4.rotationPointX = (float) (worm.moldormPart4.posX - worm.moldormPart1.posX) * 22;
+    	this.Part4.rotationPointZ = (float) (worm.moldormPart4.posZ - worm.moldormPart1.posZ) * -22;
 
-    	ModelUtils.movePiecePos(this.Part4, worm.part4, 8F);
-    	ModelUtils.movePieceAng(this.Part4, worm.part4, 25F);
+    	//actual{XYZ} = prev{XYZ} + ({XYZ} - prev{XYZ}) * partialTicks.
     	
-    	ModelUtils.movePiecePos(this.Part5, worm.part5, 3F);
-    	ModelUtils.movePieceAng(this.Part5, worm.part5, 25F);
+    	float p1actualX =  (float) ((worm.moldormPart1.lastTickPosX + (worm.moldormPart1.posX - worm.moldormPart1.lastTickPosX) * partialTick));
+    	float p1actualZ =  (float) ((worm.moldormPart1.lastTickPosZ + (worm.moldormPart1.posZ - worm.moldormPart1.lastTickPosZ) * partialTick));
     	
+    	float p5actualX =  (float) ((worm.moldormPart5.lastTickPosX + (worm.moldormPart5.posX - worm.moldormPart5.lastTickPosX) * partialTick));
+    	float p5actualZ =  (float) ((worm.moldormPart5.lastTickPosZ + (worm.moldormPart5.posZ - worm.moldormPart5.lastTickPosZ) * partialTick));
+    	
+    	this.Part5.rotationPointX = (float) (p5actualX - worm.posX);
+    	this.Part5.rotationPointZ = (float) (p5actualZ - worm.posZ);
+    	
+    	this.Part5.rotationPointX *= 22;
+    	this.Part5.rotationPointZ *= -22;
+    	
+    	//this.Part5.rotationPointX = (float) (worm.moldormPart5.posX - worm.moldormPart1.posX) * 22;
+    	//this.Part5.rotationPointZ = (float) (worm.moldormPart5.posZ - worm.moldormPart1.posZ) * -22;
+    	setLivingAnimations((EntityLivingBase) entity,0,0,partialTick);
     	this.Part1.render(f5);
     	this.Part2.render(f5);
         this.Part3.render(f5);
@@ -461,7 +473,7 @@ public class ModelMoldormAlpha extends ModelBase {
      * and third as in the setRotationAngles method.
      */
     private void setLivingAnimations(EntityMoldormAlpha worm, float par2, float par3, float PartialTick)  {
-    	
+
     	/**
     	 * Eyes spin around when damaged
     	 */

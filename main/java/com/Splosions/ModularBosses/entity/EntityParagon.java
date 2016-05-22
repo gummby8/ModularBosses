@@ -57,7 +57,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityParagon extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob {
-	public boolean debugHitboxes = false;
+	public boolean debugHitboxes = true;
 
 	private static final int DEATH_WATCHER = 16;
 	private static final int ANI_ID_WATCHER = 17;
@@ -140,29 +140,6 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		this.paragonPartFurnace.width = this.paragonPartFurnace.height = 1.3F;
 		this.paragonPartRKnee.width = this.paragonPartRKnee.height = 0.9F;
 		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 0.9F;
-
-		// AI STUFF
-		// this.getNavigator().setBreakDoors(true);
-		// this.tasks.addTask(0, new EntityAISwimming(this));
-		// this.tasks.addTask(1, new EntityAIBreakDoor(this));
-		// this.tasks.addTask(2, new EntityAIAttackOnCollide(this,
-		// EntityVillager.class, 0.25D, false)); // How
-		// fast
-		// mob
-		// moves
-		// towards
-		// the
-		// player
-		// this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); // Wander
-		// speed
-		// this.tasks.addTask(7, new EntityAIWatchClosest(this,
-		// EntityPlayer.class, 8.0F));
-		// this.tasks.addTask(7, new EntityAILookIdle(this));
-		// this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		// this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this,
-		// EntityVillager.class, true));
-		// this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this,
-		// EntityVillager.class, true));
 
 	}
 
@@ -639,8 +616,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	}
 
 	/**
-	 * Return the Entity parts making up this Entity (currently only for
-	 * dragons)
+	 * Return the Entity parts making up this Entity 
 	 */
 	@Override
 	public Entity[] getParts() {
@@ -658,7 +634,6 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 
 		moveHitBoxes(this.paragonPartRKnee, 0D, -1.2D, 1.7D);
 		moveHitBoxes(this.paragonPartLKnee, 0D, 1.2D, 1.7D);
-
 	}
 
 	/*

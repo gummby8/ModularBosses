@@ -27,36 +27,36 @@ public class RenderParagon extends RenderLiving {
 		super(renderManager, model, shadowSize);
 	}
 
-	public void doRender(EntityLiving entity, double x, double y, double z, float p_76986_8_, float partialTicks) {
-		this.doRender((EntityParagon) entity, x, y, z, p_76986_8_, partialTicks);
+	public void doRender(EntityLiving entity, double x, double y, double z, float yaw, float partialTicks) {
+		this.doRender((EntityParagon) entity, x, y, z, yaw, partialTicks);
 
 	}
 
-	public void doRender(EntityParagon entity, double x, double y, double z, float p_76986_8_, float partialTicks) {
-		super.doRender((EntityLiving) entity, x, y, z, p_76986_8_, partialTicks);
+	public void doRender(EntityParagon entity, double x, double y, double z, float yaw, float partialTicks) {
+		super.doRender((EntityLiving) entity, x, y, z, yaw, partialTicks);
 
 		if (entity.debugHitboxes) {
-			renderDebugBoundingBox(entity.paragonPartFurnace, x, y, z, p_76986_8_, partialTicks, entity.paragonPartFurnace.posX - entity.posX, entity.paragonPartFurnace.posY - entity.posY, entity.paragonPartFurnace.posZ - entity.posZ);
-			renderDebugBoundingBox(entity.paragonPartRKnee, x, y, z, p_76986_8_, partialTicks, entity.paragonPartRKnee.posX - entity.posX, entity.paragonPartRKnee.posY - entity.posY, entity.paragonPartRKnee.posZ - entity.posZ);
-			renderDebugBoundingBox(entity.paragonPartLKnee, x, y, z, p_76986_8_, partialTicks, entity.paragonPartLKnee.posX - entity.posX, entity.paragonPartLKnee.posY - entity.posY, entity.paragonPartLKnee.posZ - entity.posZ);
+			renderDebugBoundingBox(entity.paragonPartFurnace, x, y, z, yaw, partialTicks, entity.paragonPartFurnace.posX - entity.posX, entity.paragonPartFurnace.posY - entity.posY, entity.paragonPartFurnace.posZ - entity.posZ);
+			renderDebugBoundingBox(entity.paragonPartRKnee, x, y, z, yaw, partialTicks, entity.paragonPartRKnee.posX - entity.posX, entity.paragonPartRKnee.posY - entity.posY, entity.paragonPartRKnee.posZ - entity.posZ);
+			renderDebugBoundingBox(entity.paragonPartLKnee, x, y, z, yaw, partialTicks, entity.paragonPartLKnee.posX - entity.posX, entity.paragonPartLKnee.posY - entity.posY, entity.paragonPartLKnee.posZ - entity.posZ);
 		}
 
 	}
 
-	private void renderDebugBoundingBox(EntityDragonPart p_85094_1_, double p_85094_2_, double p_85094_4_, double p_85094_6_, float p_85094_8_, float p_85094_9_, double xOff, double yOff, double zOff) {
+	private void renderDebugBoundingBox(EntityDragonPart part, double x, double y, double z, float yaw, float partialTicks, double xOff, double yOff, double zOff) {
 
 		GlStateManager.depthMask(false);
 		GlStateManager.disableTexture2D();
 		GlStateManager.disableLighting();
 		GlStateManager.disableCull();
 		GlStateManager.disableBlend();
-		float f2 = p_85094_1_.width / 2.0F;
-		AxisAlignedBB axisalignedbb = p_85094_1_.getEntityBoundingBox();
-		AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(axisalignedbb.minX - p_85094_1_.posX + p_85094_2_ + xOff, axisalignedbb.minY - p_85094_1_.posY + p_85094_4_ + yOff, axisalignedbb.minZ - p_85094_1_.posZ + p_85094_6_ + zOff, axisalignedbb.maxX - p_85094_1_.posX + p_85094_2_ + xOff, axisalignedbb.maxY - p_85094_1_.posY + p_85094_4_ + yOff, axisalignedbb.maxZ - p_85094_1_.posZ + p_85094_6_ + zOff);
+		float f2 = part.width / 2.0F;
+		AxisAlignedBB axisalignedbb = part.getEntityBoundingBox();
+		AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(axisalignedbb.minX - part.posX + x + xOff, axisalignedbb.minY - part.posY + y + yOff, axisalignedbb.minZ - part.posZ + z + zOff, axisalignedbb.maxX - part.posX + x + xOff, axisalignedbb.maxY - part.posY + y + yOff, axisalignedbb.maxZ - part.posZ + z + zOff);
 		RenderGlobal.drawOutlinedBoundingBox(axisalignedbb1, 16777215);
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		Vec3 vec3 = p_85094_1_.getLook(p_85094_9_);
+		Vec3 vec3 = part.getLook(partialTicks);
 		worldrenderer.startDrawing(3);
 		worldrenderer.setColorOpaque_I(255);
 		tessellator.draw();

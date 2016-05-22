@@ -183,27 +183,29 @@ public class EntityScythe extends EntityMobThrowable {
 	}
 
 	public void rotate() {
-		if (this.thrown == 1) {
-			double x = this.posX - this.Shooter.posX;
-			double z = this.posZ - this.Shooter.posZ;
-			double p = x / z;
-			float angle = (float) Math.toDegrees(Math.atan(p));
+		if (this.Shooter != null) {
+			if (this.thrown == 1) {
+				double x = this.posX - this.Shooter.posX;
+				double z = this.posZ - this.Shooter.posZ;
+				double p = x / z;
+				float angle = (float) Math.toDegrees(Math.atan(p));
 
-			if (x <= 0 && z <= 0) {
-				this.rotationYaw = -angle;
-				// System.out.println("-x -z = " + this.rotationYaw);
-			} else if (x >= 0 && z >= 0) {
-				this.rotationYaw = -(angle - 180);
-				// System.out.println("+x +z = " + this.rotationYaw);
-			} else if (x >= 0 && z <= 0) {
-				this.rotationYaw = -angle;
-				// System.out.println("+x -z = " + this.rotationYaw);
-			} else if (x <= 0 && z >= 0) {
-				this.rotationYaw = -(angle + 180);
-				// System.out.println("-x +z = " + this.rotationYaw);
+				if (x <= 0 && z <= 0) {
+					this.rotationYaw = -angle;
+					// System.out.println("-x -z = " + this.rotationYaw);
+				} else if (x >= 0 && z >= 0) {
+					this.rotationYaw = -(angle - 180);
+					// System.out.println("+x +z = " + this.rotationYaw);
+				} else if (x >= 0 && z <= 0) {
+					this.rotationYaw = -angle;
+					// System.out.println("+x -z = " + this.rotationYaw);
+				} else if (x <= 0 && z >= 0) {
+					this.rotationYaw = -(angle + 180);
+					// System.out.println("-x +z = " + this.rotationYaw);
+				}
+			} else {
+				this.rotationYaw = this.Shooter.rotationYaw;
 			}
-		} else {
-			this.rotationYaw = this.Shooter.rotationYaw;
 		}
 	}
 
@@ -248,27 +250,31 @@ public class EntityScythe extends EntityMobThrowable {
 	 * Attacks all entities inside this list, dealing 5 hearts of damage.
 	 */
 	private void attackEntitiesInList(List list) {
-		for (int i = 0; i < list.size(); ++i) {
-			Entity entity = (Entity) list.get(i);
-			if (this.Shooter instanceof EntityPlayer) {
-				if (entity instanceof IEntityMultiPart) {
-					Entity[] entArray = entity.getParts();
-					for (int k = 0; k < entArray.length; ++k) {
-						EntityDragonPart part = (EntityDragonPart) entArray[k];
-						if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())) {
-							System.out.println(part.partName);
-							part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+		try {
+			for (int i = 0; i < list.size(); ++i) {
+				Entity entity = (Entity) list.get(i);
+				if (this.Shooter instanceof EntityPlayer) {
+					if (entity instanceof IEntityMultiPart) {
+						Entity[] entArray = entity.getParts();
+						for (int k = 0; k < entArray.length; ++k) {
+							EntityDragonPart part = (EntityDragonPart) entArray[k];
+							if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())) {
+								System.out.println(part.partName);
+								part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+							}
 						}
+					} else if (entity != this.Shooter && entity != this) {
+						entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+						// System.out.println(entity);
 					}
-				} else if (entity != this.Shooter && entity != this) {
-					entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
-					// System.out.println(entity);
-				}
-			} else {
-				if (this.Shooter instanceof EntityTatters && entity instanceof EntityPlayer) {
-					entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+				} else {
+					if (this.Shooter instanceof EntityTatters && entity instanceof EntityPlayer) {
+						entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
+					}
 				}
 			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -312,14 +318,17 @@ public class EntityScythe extends EntityMobThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
-		if (!(mop.entityHit instanceof Entity) && !(this.worldObj.getBlockState(mop.getBlockPos()) instanceof BlockAir)) {
-			this.motionX = 0;
-			this.motionY = 0;
-			this.motionZ = 0;
-			rotate();
-			moveForward(0.1F);
+		try {
+			if (!(mop.entityHit instanceof Entity) && !(this.worldObj.getBlockState(mop.getBlockPos()) instanceof BlockAir)) {
+				this.motionX = 0;
+				this.motionY = 0;
+				this.motionZ = 0;
+				rotate();
+				moveForward(0.1F);
 
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
-
 }
