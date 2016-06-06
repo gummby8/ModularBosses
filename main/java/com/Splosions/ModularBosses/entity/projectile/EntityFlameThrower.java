@@ -9,6 +9,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -47,18 +48,20 @@ public class EntityFlameThrower extends EntityMobThrowable implements IEntityAdd
 	}
 
 
-	public EntityFlameThrower(World world, EntityLivingBase shooter, float wobble, float FrontToBack, float YOffset, float SideToSide) {
+	public EntityFlameThrower(World world, EntityLivingBase shooter, float wobble, float FrontToBack, float YOffset, float SideToSide, int dmg) {
 		super(world, shooter, wobble, FrontToBack, YOffset, SideToSide);
 		this.motionX = 0;
 		this.motionY = 0;
 		this.motionZ = 0;
+		this.Dmg = dmg;
+		this.setScale(1);
 	}
 	
-	public EntityFlameThrower(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale) {
+	public EntityFlameThrower(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int dmg) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
-		setScale(scale);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
+		this.Dmg = dmg;
 	}
 
 
@@ -114,10 +117,6 @@ public class EntityFlameThrower extends EntityMobThrowable implements IEntityAdd
 		
 
 
-		//damage drops off the farhter the wave travels
-		this.Dmg = 20 - (this.ticksExisted / 10);
-
-
 		//wave will last for 5 seconds
 		if (this.ticksExisted > 30){
 			setDead();
@@ -161,7 +160,7 @@ public class EntityFlameThrower extends EntityMobThrowable implements IEntityAdd
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
-		if (mop.entityHit instanceof EntityLiving){
+		if (mop.entityHit instanceof EntityPlayer){
 			mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 			mop.entityHit.setFire(5);
 		}

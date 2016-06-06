@@ -11,6 +11,9 @@ import net.minecraft.world.World;
 public class EntityChorpSlimeBlob extends EntityMobThrowable
 {
 
+	private int strength;
+	private int duration;
+
 	public EntityChorpSlimeBlob(World world) {
 		super(world);
 	}
@@ -23,18 +26,19 @@ public class EntityChorpSlimeBlob extends EntityMobThrowable
 		super(world, x, y, z);
 	}
 
-	public EntityChorpSlimeBlob(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2) {
+	public EntityChorpSlimeBlob(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2, int dmg, int duration, int strength) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
+		this.setDamage(dmg);
+		this.strength = strength;
+		this.duration = duration;
 	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		
 		if (mop.entityHit != null) {
-			Potion potioneffect = (Potion.moveSlowdown);
-			//System.out.println(mop.entityHit.getEntityName());
 			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
-			((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, 120,4));
+			((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, duration, strength));
 			
 		}
 

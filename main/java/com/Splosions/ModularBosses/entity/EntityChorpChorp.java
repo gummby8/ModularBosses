@@ -31,6 +31,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -38,7 +39,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class EntityChorpChorp extends EntityMob
 {
 
-
+	public static int chorpchorpMaxHealth;
+	public static int chorpchorpTouchDmg;
+	public static int chorpchorpSlimeDmg;
+	public static int chorpchorpSlimeSlow;
+	public static int chorpchorpSlimeSlowDuration;
+	
     /** The Entity this EntityCreature is set to attack. */
     public Entity entityToAttack;
     
@@ -107,7 +113,7 @@ public class EntityChorpChorp extends EntityMob
 	{
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(chorpchorpMaxHealth);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
@@ -115,9 +121,16 @@ public class EntityChorpChorp extends EntityMob
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(chorpchorpTouchDmg);
 	}
 
+	public static void postInitConfig(Configuration config) {
+		chorpchorpMaxHealth = config.get("Chorp Chorp", "[Max Health] Set the Hp of Chorp Chorp Spawns [1+]", 10).getInt();
+		chorpchorpTouchDmg = config.get("Chorp Chorp", "[Attack Damage] Set the Touch Damage of Chorp Chorp Spawns [1+]", 20).getInt();
+		chorpchorpSlimeDmg = config.get("Chorp Chorp", "[Attack Damage] Set Slime Damage of Chorp Chorp Spawns [1+]", 10).getInt();
+		chorpchorpSlimeSlow = config.get("Chorp Chorp", "[Attribute] Set Slime Slow Debuff Strength of Chorp Chorp Spawns [1+]", 60).getInt();
+		chorpchorpSlimeSlowDuration = config.get("Chorp Chorp", "[Attribute] Set Slime Slow Debuff Durration of Chorp Chorp Spawns [1+]", 2).getInt();
+	}
 
 	protected void entityInit()
 	{
@@ -265,7 +278,7 @@ public class EntityChorpChorp extends EntityMob
 				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
 				Entity projectile;
 				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0,0,0).setDamage(f * difficulty);
+				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0,0,0,chorpchorpSlimeDmg, chorpchorpSlimeSlowDuration, chorpchorpSlimeSlow);
 				if (!this.worldObj.isRemote){
 					worldObj.spawnEntityInWorld(projectile);
 				}

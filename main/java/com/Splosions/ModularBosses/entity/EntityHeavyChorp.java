@@ -32,10 +32,17 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
 
 public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 {
+	
+	public static int heavychorpMaxHealth;
+	public static int heavychorpTouchDmg;
+	public static int heavychorpSlimeDmg;
+	public static int heavychorpSlimeSlow;
+	public static int heavychorpSlimeSlowDuration;
 	
     /** The Entity this EntityCreature is set to attack. */
     public Entity entityToAttack;
@@ -105,7 +112,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	{
 	  super.applyEntityAttributes();
 	  // Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-	  this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+	  this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(heavychorpMaxHealth);
 	  // Follow Range - default 32.0D - min 0.0D - max 2048.0D
 	  this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
 	  // Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
@@ -113,9 +120,16 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	  // Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
 	  this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 	  // Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-	  this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+	  this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(heavychorpTouchDmg);
 	}
 	
+	public static void postInitConfig(Configuration config) {
+		heavychorpMaxHealth = config.get("Heavy Chorp", "[Max Health] Set the Hp of Heavy Chorp Spawns [1+]", 20).getInt();
+		heavychorpTouchDmg = config.get("Heavy Chorp", "[Attack Damage] Set the Touch Damage of Heavy Chorp Spawns [1+]", 20).getInt();
+		heavychorpSlimeDmg = config.get("Heavy Chorp", "[Attack Damage] Set Slime Damage of Heavy Chorp Spawns [1+]", 10).getInt();
+		heavychorpSlimeSlow = config.get("Heavy Chorp", "[Attribute] Set Slime Slow Debuff Strength of Heavy Chorp Spawns [1+]", 4).getInt();
+		heavychorpSlimeSlowDuration = config.get("Heavy Chorp", "[Attribute] Set Slime Slow Debuff Durration of Heavy Chorp Spawns [1+]", 120).getInt();
+	}
 	
     protected void entityInit()
     {
@@ -267,7 +281,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 				if (this.attackCounter >= 40) {
 					float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
 					Entity projectile;
-					projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14),0,0,0,0,0).setDamage(f);
+					projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14),0,0,0,0,0, heavychorpSlimeDmg, heavychorpSlimeSlowDuration, heavychorpSlimeSlow);
 					if (!this.worldObj.isRemote){
 						worldObj.spawnEntityInWorld(projectile);
 					}

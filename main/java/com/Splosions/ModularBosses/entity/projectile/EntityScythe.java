@@ -65,13 +65,14 @@ public class EntityScythe extends EntityMobThrowable {
 		super(world, shooter, wobble, FrontToBack, YOffset, SideToSide);
 	}
 
-	public EntityScythe(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2, int spin) {
+	public EntityScythe(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2, int spin, int dmg) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
 		setSpin(spin);
 		this.spin = getSpin();
 		this.setPositionAndRotation(this.Shooter.posX, this.Shooter.posY + YOffset, this.Shooter.posZ, this.Shooter.rotationYaw, 0);
+		this.Dmg = dmg;
 	}
 
 	@Override
@@ -250,32 +251,30 @@ public class EntityScythe extends EntityMobThrowable {
 	 * Attacks all entities inside this list, dealing 5 hearts of damage.
 	 */
 	private void attackEntitiesInList(List list) {
-		try {
-			for (int i = 0; i < list.size(); ++i) {
-				Entity entity = (Entity) list.get(i);
-				if (this.Shooter instanceof EntityPlayer) {
-					if (entity instanceof IEntityMultiPart) {
-						Entity[] entArray = entity.getParts();
-						for (int k = 0; k < entArray.length; ++k) {
-							EntityDragonPart part = (EntityDragonPart) entArray[k];
-							if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())) {
-								System.out.println(part.partName);
-								part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
-							}
+
+		for (int i = 0; i < list.size(); ++i) {
+			Entity entity = (Entity) list.get(i);
+			if (this.Shooter instanceof EntityPlayer) {
+				if (entity instanceof IEntityMultiPart) {
+					Entity[] entArray = entity.getParts();
+					for (int k = 0; k < entArray.length; ++k) {
+						EntityDragonPart part = (EntityDragonPart) entArray[k];
+						if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())) {
+							System.out.println(part.partName);
+							part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 						}
-					} else if (entity != this.Shooter && entity != this) {
-						entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
-						// System.out.println(entity);
 					}
-				} else {
-					if (this.Shooter instanceof EntityTatters && entity instanceof EntityPlayer) {
-						entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), 5);
-					}
+				} else if (entity != this.Shooter && entity != this) {
+					entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
+					// System.out.println(entity);
+				}
+			} else {
+				if (this.Shooter instanceof EntityTatters && entity instanceof EntityPlayer) {
+					entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 				}
 			}
-		} catch (Throwable e) {
-			e.printStackTrace();
 		}
+
 	}
 
 	/**

@@ -57,13 +57,13 @@ public class RenderMoldormAlpha extends Render {
 		model.render(ent, yaw, partialTicks, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GL11.glPopMatrix();
 
-		if (ent.debugHitboxes) {
-			renderDebugBoundingBox(ent.moldormPart1, x, y, z, yaw, partialTicks, ent.moldormPart1.posX - ent.posX, ent.moldormPart1.posY - ent.posY, ent.moldormPart1.posZ - ent.posZ);
-			renderDebugBoundingBox(ent.moldormPart2, x, y, z, yaw, partialTicks, ent.moldormPart2.posX - ent.posX, ent.moldormPart2.posY - ent.posY, ent.moldormPart2.posZ - ent.posZ);
-			renderDebugBoundingBox(ent.moldormPart3, x, y, z, yaw, partialTicks, ent.moldormPart3.posX - ent.posX, ent.moldormPart3.posY - ent.posY, ent.moldormPart3.posZ - ent.posZ);
-			renderDebugBoundingBox(ent.moldormPart4, x, y, z, yaw, partialTicks, ent.moldormPart4.posX - ent.posX, ent.moldormPart4.posY - ent.posY, ent.moldormPart4.posZ - ent.posZ);
-			renderDebugBoundingBox(ent.moldormPart5, x, y, z, yaw, partialTicks, ent.moldormPart5.posX - ent.posX, ent.moldormPart5.posY - ent.posY, ent.moldormPart5.posZ - ent.posZ);
-		}
+		//if (ent.debugHitboxes) {
+			//renderDebugBoundingBox(ent.moldormPart1, x, y, z, yaw, partialTicks, ent.moldormPart1.posX - ent.posX, ent.moldormPart1.posY - ent.posY, ent.moldormPart1.posZ - ent.posZ);
+			//renderDebugBoundingBox(ent.moldormPart2, x, y, z, yaw, partialTicks, ent.moldormPart2.posX - ent.posX, ent.moldormPart2.posY - ent.posY, ent.moldormPart2.posZ - ent.posZ);
+			//renderDebugBoundingBox(ent.moldormPart3, x, y, z, yaw, partialTicks, ent.moldormPart3.posX - ent.posX, ent.moldormPart3.posY - ent.posY, ent.moldormPart3.posZ - ent.posZ);
+			//renderDebugBoundingBox(ent.moldormPart4, x, y, z, yaw, partialTicks, ent.moldormPart4.posX - ent.posX, ent.moldormPart4.posY - ent.posY, ent.moldormPart4.posZ - ent.posZ);
+			//renderDebugBoundingBox(ent.moldormPart5, x, y, z, yaw, partialTicks, ent.moldormPart5.posX - ent.posX, ent.moldormPart5.posY - ent.posY, ent.moldormPart5.posZ - ent.posZ);
+		//}
 	}
     
     

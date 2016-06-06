@@ -7,6 +7,7 @@ import java.util.Random;
 
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
+import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.util.ModelUtils;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
@@ -57,7 +58,7 @@ public class EntityMoldormAlpha extends EntityMob implements IBossDisplayData, I
 	public EntityDragonPart moldormPart4;
 	public EntityDragonPart moldormPart5;
 
-	public boolean debugHitboxes = true;
+	public boolean debugHitboxes = false;
 	
 	Random rand = new Random();
 

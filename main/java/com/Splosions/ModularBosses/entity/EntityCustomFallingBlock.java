@@ -45,13 +45,14 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     public NBTTagCompound tileEntityData;
     private static final String __OBFID = "CL_00001668";
     public BlockPos bPos;
+	public int damage;
 
     public EntityCustomFallingBlock(World worldIn)
     {
         super(worldIn);
     }
 
-    public EntityCustomFallingBlock(World worldIn, Entity shooter, double x, double y, double z, double mY, float yaw, BlockPos pos)
+    public EntityCustomFallingBlock(World worldIn, Entity shooter, double x, double y, double z, double mY, float yaw, BlockPos pos, int dmg)
     {
         super(worldIn);
         this.bPos = pos;
@@ -66,7 +67,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
         this.prevPosY = y;
         this.prevPosZ = z;
         this.noClip = true;
-        
+        this.damage = dmg;
         
     } 
 
@@ -103,11 +104,11 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     /**
      * Pushes all entities inside the list away from the entity.
      */
-    private void collideWithEntities(List p_70970_1_)
+    private void collideWithEntities(List list)
     {
         double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
         double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
-        Iterator iterator = p_70970_1_.iterator();
+        Iterator iterator = list.iterator();
 
         while (iterator.hasNext())
         {
@@ -121,7 +122,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
                 
                 if (entity.hurtResistantTime == 0 && entity instanceof EntityCustomFallingBlock == false && entity instanceof EntityParagon == false){
                 entity.addVelocity(d2 / d4 * 0.2D, 1.2D, d3 / d4 * 0.2D);
-                entity.attackEntityFrom(DamageSource.fall, 10);
+                entity.attackEntityFrom(DamageSource.fall, damage);
                 entity.hurtResistantTime = 10;
                 }
             

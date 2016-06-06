@@ -37,11 +37,16 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityTatters extends EntityMob {
 
+	public static int tattersMaxHealth;
+	public static int tattersScytheDmg;
+	public static int tattersTeleportChance;
+	
 	public float SHOULDERS;
 
 	public float[] StripF1 = new float[40];
@@ -160,7 +165,7 @@ public class EntityTatters extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(tattersMaxHealth);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
@@ -171,6 +176,13 @@ public class EntityTatters extends EntityMob {
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
 	}
 
+	public static void postInitConfig(Configuration config) {
+		/** Tatters Max HP */
+		tattersMaxHealth = config.get("Tatters", "[Max Health] Set the Hp of Tatters Spawns [1+]", 20).getInt();
+		tattersScytheDmg = config.get("Tatters", "[Attack Dmg] Thrown Scythe Attack Damage [1+]", 20).getInt();
+		tattersTeleportChance = MathHelper.clamp_int(config.get("Tatters", "[Attribute] Chance to Teleport on Damage [1/Chance] [1-100]", 2).getInt(), 1, 100);
+	}
+	
 	protected void entityInit() {
 		super.entityInit();
 		this.dataWatcher.addObject(TELEPORT, 0);
@@ -228,7 +240,7 @@ public class EntityTatters extends EntityMob {
 		if (this.target != null) {
 			for (int i = 0; i < this.scytheCountMax; i++) {
 				if (this.scythes[i] == null) {
-					this.scythes[i] = new EntityScythe(this.worldObj, this, this, 0, 0, 0, 1, 0, 2, 2, 10);
+					this.scythes[i] = new EntityScythe(this.worldObj, this, this, 0, 0, 0, 1, 0, 2, 2, 10, tattersScytheDmg);
 					if (!this.worldObj.isRemote) {
 						this.scythes[i].setThrown(0);
 						this.worldObj.spawnEntityInWorld(this.scythes[i]);
@@ -266,7 +278,7 @@ public class EntityTatters extends EntityMob {
 	 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (rand.nextInt(2) == 0 && !this.worldObj.isRemote) {
+		if (rand.nextInt(tattersTeleportChance) == 0 && !this.worldObj.isRemote) {
 			this.teleport();
 			return false;
 		}

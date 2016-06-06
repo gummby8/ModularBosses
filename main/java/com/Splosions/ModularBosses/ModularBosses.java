@@ -43,6 +43,7 @@ public class ModularBosses {
 		ModularBossesItems.registerItems();
 		ModularBossesEntities.init();
 		PacketDispatcher.preInit();
+		Config.preInit(event);
 	}
 	
 	@EventHandler
@@ -55,7 +56,7 @@ public class ModularBosses {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		
+		Config.postInit();
 	}
 	
 	@Mod.EventHandler

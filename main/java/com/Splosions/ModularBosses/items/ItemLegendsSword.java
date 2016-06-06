@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
@@ -21,8 +22,11 @@ import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.util.Schematic;
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.client.Minecraft;
@@ -31,12 +35,17 @@ import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.shader.ShaderGroup;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
@@ -62,6 +71,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
         return itemStackIn;
 	}
 	
+	
     /**
      * How long it takes to use or consume an item
      */
@@ -78,6 +88,16 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
         return EnumAction.BLOCK;
     }
 
+	/**
+	 * Override to add custom weapon damage field rather than vanilla ItemSword's field
+	 */
+	@Override
+	public Multimap getItemAttributeModifiers() {
+		Multimap multimap = HashMultimap.create();
+		multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Weapon modifier", Config.legendsSwordDmg, 0));
+		return multimap;
+	}
+    
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Collection<ModelResourceLocation> getDefaultResources() {

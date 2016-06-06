@@ -53,12 +53,30 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityParagon extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob {
 	public boolean debugHitboxes = true;
-
+	
+	/*================== PARAGON CONFIG SETTINGS  =====================*/
+	public static double paragonMaxHealth;
+	/** Paragon Kick Damage */
+	public static int paragonKickDmg;
+	/** Paragon Jump Damage */
+	public static int paragonJumpDmg;
+	/** Paragon Flame Thrower Damage */
+	public static int paragonFlameDmg;
+	/** Paragon Stomp Damage */
+	public static int paragonStompDmg;
+	/** Paragon Backhand Damage */
+	public static int paragonBackhandDmg;
+	/** Paragon Double Fist Slam Damage */
+	public static int paragonDoubleFistDmg;
+	/*================== PARAGON CONFIG SETTINGS  =====================*/
+	
+	
 	private static final int DEATH_WATCHER = 16;
 	private static final int ANI_ID_WATCHER = 17;
 	private static final int ANI_FRAME_WATCHER = 18;
@@ -168,7 +186,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(paragonMaxHealth);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
@@ -179,6 +197,16 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(0.01D);
 	}
 
+	public static void postInitConfig(Configuration config) {
+		paragonMaxHealth = config.get("Paragon", "[Max Health] Set the Hp of Paragon Spawns [1+]", 20).getInt();
+		paragonKickDmg = config.get("Paragon", "[Attack Dmg] Kick Attack Damage [1+]", 20).getInt();
+		paragonJumpDmg = config.get("Paragon", "[Attack Dmg] Jump Attack Damage [1+]", 20).getInt();
+		paragonFlameDmg = config.get("Paragon", "[Attack Dmg] Flame THrower Attack Damage [1+]", 20).getInt();
+		paragonStompDmg = config.get("Paragon", "[Attack Dmg] Stomp Attack Damage [1+]", 20).getInt();
+		paragonBackhandDmg = config.get("Paragon", "[Attack Dmg] Backhand Attack Damage [1+]", 20).getInt();
+		paragonDoubleFistDmg = config.get("Paragon", "[Attack Dmg] Double Fist Slam Attack Damage [1+]", 20).getInt();
+	}
+	
 	protected void entityInit() {
 		super.entityInit();
 		this.dataWatcher.addObject(DEATH_WATCHER, 0);
@@ -260,7 +288,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		
 		if (this.target != null && this.AniID == FLAMETHROWER && this.flameAttackCounter > 0) {
 			for (int i = 0; i < 5; ++i) {
-				this.projectile = new EntityFlameThrower(worldObj, this, (EntityLivingBase) this.target, (rand.nextFloat() * 0.2F) + 0.4F, 2F, 2.2F, -2.3F, 1.9F, 0, 0, 0);
+				this.projectile = new EntityFlameThrower(worldObj, this, (EntityLivingBase) this.target, (rand.nextFloat() * 0.2F) + 0.4F, 2F, 2.2F, -2.3F, 1.9F, 0, 0, paragonFlameDmg);
 				if (!worldObj.isRemote) {
 					worldObj.spawnEntityInWorld(this.projectile);
 				}
@@ -337,7 +365,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.AniFrame = 0;
 			this.AniID = SQUISH;
 		} else if (this.AniID == KICK && this.AniFrame == 10) {
-			this.kickEntitiesInListIfInfront(TargetUtils.getList(this, 4, 4), 30, 4, 2, 5);
+			this.kickEntitiesInListIfInfront(TargetUtils.getList(this, 4, 4), 30, 4, 2, paragonKickDmg);
 			this.AniFrame++;
 		} else if (this.AniID == KICK && this.AniFrame > 24) {
 			this.AniFrame = 0;
@@ -345,7 +373,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.sprintAttack = false;
 			setLastAttackCounter();
 		} else if (this.AniID == SLAP && this.AniFrame == 10) {
-			this.kickEntitiesInListIfInfront(TargetUtils.getList(this, 4, 4), 30, 4D, 1D, 5);
+			this.kickEntitiesInListIfInfront(TargetUtils.getList(this, 4, 4), 30, 4D, 1D, paragonBackhandDmg);
 			this.AniFrame++;
 		} else if (this.AniID == SLAP && this.AniFrame > 24) {
 			this.AniFrame = 0;
@@ -358,7 +386,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 				this.X = ((AniFrame - 14) * Math.cos(Math.toRadians(i * 9))) + this.posX;
 				this.Z = ((AniFrame - 14) * Math.sin(Math.toRadians(i * 9))) + this.posZ;
 				pos = new BlockPos(this.X, this.posY - 1, this.Z);
-				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos);
+				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos, paragonStompDmg);
 				if (!this.worldObj.isRemote) {
 					this.worldObj.spawnEntityInWorld(falling);
 				}
@@ -392,13 +420,13 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 				this.rotationYaw = f + 180;
 			}
 			for (int i = 0; i < 5; ++i) {
-				this.projectile = new EntityFlameThrower(this.worldObj, this, 4, (rand.nextFloat() * 0.5F) - 1.5F, rand.nextFloat() + 4, rand.nextFloat() * 0.2F);
+				this.projectile = new EntityFlameThrower(this.worldObj, this, 4, (rand.nextFloat() * 0.5F) - 1.5F, rand.nextFloat() + 4, rand.nextFloat() * 0.2F, paragonFlameDmg);
 				if (!worldObj.isRemote) {
 					worldObj.spawnEntityInWorld(this.projectile);
 				}
 			}
 			for (int i = 0; i < 5; ++i) {
-				this.projectile = new EntityFlameThrower(this.worldObj, this, 4, (rand.nextFloat() * 0.5F) + 1F, rand.nextFloat() + 4, rand.nextFloat() * 0.2F);
+				this.projectile = new EntityFlameThrower(this.worldObj, this, 4, (rand.nextFloat() * 0.5F) + 1F, rand.nextFloat() + 4, rand.nextFloat() * 0.2F, paragonFlameDmg);
 				worldObj.spawnEntityInWorld(this.projectile);
 
 			}
@@ -410,7 +438,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 				this.X = ((AniFrame - 54) * Math.cos(Math.toRadians(i * 9))) + this.posX;
 				this.Z = ((AniFrame - 54) * Math.sin(Math.toRadians(i * 9))) + this.posZ;
 				pos = new BlockPos(this.X, this.posY - 1, this.Z);
-				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos);
+				falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, i * 9, pos, paragonJumpDmg);
 				if (!this.worldObj.isRemote) {
 					this.worldObj.spawnEntityInWorld(falling);
 				}
@@ -439,19 +467,19 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.Z2 = (1 * Math.sin(Math.toRadians(this.rotationYaw))) + Z;
 
 			this.pos = new BlockPos(this.X, this.posY - 1, this.Z);
-			this.falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, this.rotationYaw, this.pos);
+			this.falling = new EntityCustomFallingBlock(this.worldObj, this, this.X, this.posY - 1, this.Z, 0.4F, this.rotationYaw, this.pos, paragonDoubleFistDmg);
 			if (!this.worldObj.isRemote) {
 				this.worldObj.spawnEntityInWorld(this.falling);
 			}
 
 			this.pos = new BlockPos(this.X1, this.posY - 1, this.Z1);
-			this.falling = new EntityCustomFallingBlock(this.worldObj, this, this.X1, this.posY - 1, this.Z1, 0.4F, this.rotationYaw, this.pos);
+			this.falling = new EntityCustomFallingBlock(this.worldObj, this, this.X1, this.posY - 1, this.Z1, 0.4F, this.rotationYaw, this.pos, paragonDoubleFistDmg);
 			if (!this.worldObj.isRemote) {
 				this.worldObj.spawnEntityInWorld(this.falling);
 			}
 
 			this.pos = new BlockPos(this.X2, this.posY - 1, this.Z2);
-			this.falling = new EntityCustomFallingBlock(this.worldObj, this, this.X2, this.posY - 1, this.Z2, 0.4F, this.rotationYaw, this.pos);
+			this.falling = new EntityCustomFallingBlock(this.worldObj, this, this.X2, this.posY - 1, this.Z2, 0.4F, this.rotationYaw, this.pos, paragonDoubleFistDmg);
 			if (!this.worldObj.isRemote) {
 				this.worldObj.spawnEntityInWorld(falling);
 			}
@@ -550,12 +578,16 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	private void kickEntitiesInListIfInfront(List par1List, float fov, double force, double height, float Damage) {
 		for (int i = 0; i < par1List.size(); ++i) {
 			Entity entity = (Entity) par1List.get(i);
-			if (TargetUtils.isTargetInFrontOf(this, entity, fov)) {
+			if (TargetUtils.isTargetInFrontOf(this, entity, fov) && entity instanceof EntityPlayer) {
 				double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
 				double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
 				double d2 = entity.posX - d0;
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
+				entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
+				if (this.AniID != SLAP) {
+					entity.hurtResistantTime = 0;
+				}
 				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
 				System.out.println(entity);
 			}
