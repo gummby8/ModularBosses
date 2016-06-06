@@ -24,7 +24,7 @@ import com.Splosions.ModularBosses.proxy.CommonProxy;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class ModularBosses {
-	
+	//derp
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 	
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
