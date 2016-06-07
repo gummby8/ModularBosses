@@ -21,10 +21,11 @@ import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
+import com.Splosions.ModularBosses.world.Dimensions;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class ModularBosses {
-	//derp
+
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 	
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
@@ -57,6 +58,7 @@ public class ModularBosses {
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Config.postInit();
+		Dimensions.createDimensionSandWorm();
 	}
 	
 	@Mod.EventHandler
