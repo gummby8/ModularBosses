@@ -11,7 +11,7 @@ public class Dimensions {
 
 	public static void registerDimensionSndWorm(){
 		// dimension provider
-					DimensionManager.registerProviderType(dimensionProviderID, WorldProviderTwilightForest.class, false);
+					DimensionManager.registerProviderType(dimensionProviderID, WorldProviderSandWorm.class, false);
 	}
 	
 	
