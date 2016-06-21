@@ -1,13 +1,13 @@
-package upcraftlp.shadowcreatures.world.biomes;
+package com.Splosions.ModularBosses.dimensions.biomes;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.biome.BiomeGenBase;
-import upcraftlp.shadowcreatures.init.ShadowConfig;
+
 
 public class BiomeIdrisPlains extends BiomeGenBase{
 
-	private static int id = ShadowConfig.idrisPlainsId;
+	private static int id = 80;
 	private static String name = "Idris Plains";
 	private static int biomeColor = 0x14bd14;
 	private int skyColor = 0x0000ff;

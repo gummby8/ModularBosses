@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.BlockPos;
@@ -7,7 +7,7 @@ import net.minecraft.world.WorldProvider;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
-import upcraftlp.shadowcreatures.init.GhostDimension;
+
 
 public class WorldProviderGhost extends WorldProvider {
 

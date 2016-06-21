@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import java.util.Random;
 

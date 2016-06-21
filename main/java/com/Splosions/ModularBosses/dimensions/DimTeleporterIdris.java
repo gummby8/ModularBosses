@@ -1,11 +1,11 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.Teleporter;
 import net.minecraft.world.WorldServer;
-import upcraftlp.shadowcreatures.init.ShadowDimension;
+
 
 public class DimTeleporterIdris extends Teleporter {
 

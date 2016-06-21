@@ -1,8 +1,13 @@
 package com.Splosions.ModularBosses.proxy;
 
+import com.Splosions.ModularBosses.dimensions.GhostDimension;
+import com.Splosions.ModularBosses.dimensions.ShadowBiomes;
+import com.Splosions.ModularBosses.dimensions.ShadowDimension;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.IThreadListener;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
@@ -10,7 +15,13 @@ public class CommonProxy {
 	public void registerRenders() {}
 	
 	
-	
+	public void init(FMLInitializationEvent event)
+	{
+	ShadowBiomes.create();
+	ShadowBiomes.register();
+	ShadowDimension.init();
+	GhostDimension.init();
+	}
 	
 	/**
 	 * Returns a side-appropriate EntityPlayer for use during message handling

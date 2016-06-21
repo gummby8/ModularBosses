@@ -1,15 +1,17 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import net.minecraftforge.common.DimensionManager;
-import upcraftlp.shadowcreatures.world.WorldProviderGhost;
+
 
 public class GhostDimension {
 
-	private static int id = ShadowConfig.ghostId;
+	//private static int id = ShadowConfig.ghostId;
+	private static int id = 32;
 	public static String name = "Ghost Dimension";
 
 	public static void init() {
-		id = ShadowConfig.ghostId;
+		//id = ShadowConfig.ghostId;
+		id = 32;
 		DimensionManager.registerProviderType(id, WorldProviderGhost.class, true);
 		DimensionManager.registerDimension(id, id);
 		

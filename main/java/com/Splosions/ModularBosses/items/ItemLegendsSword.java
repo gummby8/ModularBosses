@@ -14,6 +14,7 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
+import com.Splosions.ModularBosses.dimensions.DimTeleporterIdris;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
@@ -41,14 +42,17 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -67,7 +71,23 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-        playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
+		Entity entityIn = (Entity)playerIn;
+		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote
+				&& worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
+			worldIn.theProfiler.startSection("portal");
+			int dim = 0;
+			if (worldIn.provider.getDimensionId() == 31) {
+				dim = 0;
+			} else {
+				dim = 31;
+			}
+				
+			EntityPlayerMP player = (EntityPlayerMP) entityIn;
+			DimTeleporterIdris teleporter = new DimTeleporterIdris(player.getServerForPlayer());
+			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
+			worldIn.theProfiler.endSection();
+
+		}
         return itemStackIn;
 	}
 	

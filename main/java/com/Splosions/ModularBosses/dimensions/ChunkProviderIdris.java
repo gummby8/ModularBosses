@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +74,7 @@ public class ChunkProviderIdris implements IChunkProvider {
 	}
 
 	@Override
-	public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType creatureType, BlockPos pos) {
+	public List func_177458_a(EnumCreatureType p_177458_1_, BlockPos p_177458_2_) {
 		return new ArrayList<SpawnListEntry>();
 	}
 
@@ -90,4 +90,6 @@ public class ChunkProviderIdris implements IChunkProvider {
 
 	@Override
 	public void saveExtraData() {}
+
+
 }

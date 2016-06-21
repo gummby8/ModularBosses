@@ -1,11 +1,10 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManagerHell;
-import upcraftlp.shadowcreatures.init.ShadowBiomes;
-import upcraftlp.shadowcreatures.init.ShadowDimension;
+
 
 public class WorldProviderIdris extends WorldProvider {
 

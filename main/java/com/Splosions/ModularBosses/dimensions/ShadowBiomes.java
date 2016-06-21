@@ -1,10 +1,12 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
+
+import com.Splosions.ModularBosses.dimensions.biomes.BiomeIdrisPlains;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
-import upcraftlp.shadowcreatures.world.biomes.BiomeIdrisPlains;
+
 
 public class ShadowBiomes {
 
@@ -21,7 +23,6 @@ public class ShadowBiomes {
 		//registerBiome(idris_plains, BiomeType.COOL, 5);
 	}
 	
-	@SuppressWarnings("unused")
 	private static void registerBiome(BiomeGenBase biome, BiomeType type, int weight)
 	{
 		BiomeManager.addBiome(type, new BiomeEntry(biome, weight));

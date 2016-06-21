@@ -1,16 +1,19 @@
-package com.Splosions.ModularBosses.Tworld;
+package com.Splosions.ModularBosses.dimensions;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockAir;
+import net.minecraft.block.BlockSand;
 import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeCache.Block;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import upcraftlp.shadowcreatures.init.ShadowBlocks;
+
 
 public class WorldGen implements IWorldGenerator {
 	
@@ -20,8 +23,8 @@ public class WorldGen implements IWorldGenerator {
 	
 	public WorldGen()
 	{
-		this.gen_crystalore_end = new WorldGenMinable(ShadowBlocks.crystalore_end.getDefaultState(), 16, BlockHelper.forBlock(Blocks.end_stone));
-		this.gen_crystalore_default = new WorldGenSingle(ShadowBlocks.crystalore.getDefaultState());
+		this.gen_crystalore_end = new WorldGenMinable(BlockAir.getStateById(0), 16, BlockHelper.forBlock(Blocks.end_stone));
+		this.gen_crystalore_default = new WorldGenSingle(BlockAir.getStateById(0));
 	}
 	
 	@Override
