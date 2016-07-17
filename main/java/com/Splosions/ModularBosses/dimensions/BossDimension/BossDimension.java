@@ -8,7 +8,7 @@ public class BossDimension extends BiomeGenBase
 	public BossDimension(int id)
 	{
 		super(id, true);
-		setBiomeName("FlashversePlains");
+		setBiomeName("BossBiome");
 		this.setHeight(height_LowPlains);
 		this.setTemperatureRainfall(0.5F, 0.3F);
 		this.enableRain = false;

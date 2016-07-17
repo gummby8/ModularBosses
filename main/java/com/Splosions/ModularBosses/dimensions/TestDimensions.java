@@ -9,11 +9,11 @@ import net.minecraftforge.common.DimensionManager;
 
 public class TestDimensions
 {
-	public static int flashverseDimensionID = -3;
+	public static int BossDimensionID = -3;
 	
 	public static void init()
 	{		
-		DimensionManager.registerProviderType(flashverseDimensionID, BossWorldProvider.class, false);
-		DimensionManager.registerDimension(flashverseDimensionID, flashverseDimensionID);
+		DimensionManager.registerProviderType(BossDimensionID, BossWorldProvider.class, false);
+		DimensionManager.registerDimension(BossDimensionID, BossDimensionID);
 	}
 }

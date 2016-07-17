@@ -18,23 +18,23 @@ public class BossWorldProvider extends WorldProvider
 	@Override
 	protected void registerWorldChunkManager()
 	{
-		this.worldChunkMgr = new WorldChunkManagerHell(TestBiomesRegistry.FlashversePlains, 0.0f);
+		this.worldChunkMgr = new WorldChunkManagerHell(TestBiomesRegistry.BossBiome, 0.0f);
 		this.setAllowedSpawnTypes(false, false);
-		this.dimensionId = TestDimensions.flashverseDimensionID;
-		this.setDimension(TestDimensions.flashverseDimensionID);
+		this.dimensionId = TestDimensions.BossDimensionID;
+		this.setDimension(TestDimensions.BossDimensionID);
 		this.hasNoSky = false;
 	}
 	
 	@Override
 	public String getDimensionName()
 	{
-		return "Flashverse";
+		return "BossDimension";
 	}
 
 	@Override
 	public String getInternalNameSuffix()
 	{
-		return "_flashverse";
+		return "_BossDimension";
 	}
 	
 	@Override

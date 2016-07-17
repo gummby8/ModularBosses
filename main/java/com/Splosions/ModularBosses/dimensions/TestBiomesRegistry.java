@@ -11,11 +11,11 @@ import net.minecraftforge.common.BiomeManager;
 
 public class TestBiomesRegistry
 {
-	public static BiomeGenBase FlashversePlains;
-	public static int idFlashversePlains = 140;
+	public static BiomeGenBase BossBiome;
+	public static int idBossBiome = 140;
 	
 	public static void init()
 	{
-		FlashversePlains = new BossDimension(idFlashversePlains);
+		BossBiome = new BossDimension(idBossBiome);
 	}
 }
