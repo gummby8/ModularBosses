@@ -10,10 +10,12 @@ import java.util.Set;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.google.common.primitives.UnsignedBytes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -30,34 +32,21 @@ import net.minecraftforge.fml.common.registry.GameData;
 
 public class Schematic {
    
-   private short width; 
-   private short height;
-   private short length;
-   private int size;
-   private BlockObject[] blockObjects;
+   private static short width; 
+   private static short height;
+   private static short length;
+   private static int size;
+   private static int counter;
+   private static int i;
+   private static int j;
+   private static int k;
+   private static BlockObject[] blockObjects;
    
    private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
    
-   public Schematic(String fileName, World world, double x, double y, double z) {
-	   /**
-	   File theDir = new File("./NNNNNNERPDERP");
-		// if the directory does not exist, create it
-		if (!theDir.exists()) {
-		    System.out.println("creating directory: ");
-		    boolean result = false;
-		    try{
-		        theDir.mkdir();
-		        result = true;
-		    } 
-		    catch(SecurityException se){
-		        //handle it
-		    }        
-		    if(result) {    
-		        System.out.println("DIR created");  
-		    }
-		}
-	   */
+   public static void build(String fileName, World world, Entity entity, double x, double y, double z) {
+
 	   
 	   if (!world.isRemote){
       try {
@@ -93,9 +82,56 @@ public class Schematic {
              }
          }
 
+         EntityCartographer ent = (EntityCartographer) entity;
+         
+         
+         for(int q = 0; q < ent.schemTickInterval; q++) {
+
+  	 
+
+             if (i >= height){
+            	 counter = 0;
+            	 i = 0;
+            	 j = 0;
+            	 k = 0;
+            	 ent.mapRoom++;
+            	 ent.setPositionAndUpdate(ent.posX + ent.roomWidth, ent.posY, ent.posZ);
+             } else 
+             if (j >= length){
+            	 i++;	
+            	 j = 0;
+             }else
+             if (k >= width){
+            	 j++;
+            	 k = 0;
+             }else {                   
+
+             
+
+             int blockId = UnsignedBytes.toInt(blockIDs[counter]);
+             //Checks the id reference Map                 
+             if ((id = oldToNew.get((short) blockId)) != null) {
+                 blockId = id;
+             }
+
+             //BlockPos pos = new BlockPos(k, i, j);
+             IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
+
+             
+              System.out.println("K = " + k + "I = " + i + "J = " + j);
+          	  //blockObjects[counter] = new BlockObject(pos, state);
+          	  world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
+          	  counter++; 
+        	 
+        	 k++; 
+             }
+         }
+         
          
 
-         int counter = 0;
+        //if you want instant schematics 
+/**
+        counter = 0;
          for(int i = 0; i < height; i++) {
             for(int j = 0; j < length; j++) {
                for(int k = 0; k < width; k++) {
@@ -107,26 +143,7 @@ public class Schematic {
 
                   //BlockPos pos = new BlockPos(k, i, j);
                   IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
- 
-                  
-                  /**
-                  String message = null;
-                  NBTTagList tagList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
-                  for(int i = 0; i < tagList.tagCount(); i++) {
-         		  NBTTagCompound tag = tagList.getCompoundTagAt(i);
-         		  String gotMessage = tag.getString("message");
-         		  int Xx = tag.getInteger("x");
-         		  int Yy = tag.getInteger("y");
-         		  int Zz = tag.getInteger("z");
-         		  
-         		  if (Xx == X && Yy == Y && Zz == Z){
-         			  message = gotMessage;
-         			  
-         		  }
-         		  
-         		  
-         		 }
-                  */
+
                   
                   
                	  //blockObjects[counter] = new BlockObject(pos, state);
@@ -135,6 +152,8 @@ public class Schematic {
                }
             }
          }
+   */
+         
          
          NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
 

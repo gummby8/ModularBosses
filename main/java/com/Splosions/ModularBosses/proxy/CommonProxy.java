@@ -1,8 +1,6 @@
 package com.Splosions.ModularBosses.proxy;
 
-import com.Splosions.ModularBosses.dimensions.GhostDimension;
-import com.Splosions.ModularBosses.dimensions.ShadowBiomes;
-import com.Splosions.ModularBosses.dimensions.ShadowDimension;
+import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,10 +15,7 @@ public class CommonProxy {
 	
 	public void init(FMLInitializationEvent event)
 	{
-	ShadowBiomes.create();
-	ShadowBiomes.register();
-	ShadowDimension.init();
-	GhostDimension.init();
+		TestBiomesRegistry.init();
 	}
 	
 	/**

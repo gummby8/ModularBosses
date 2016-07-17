@@ -14,14 +14,16 @@ import net.minecraft.world.World;
 
 public class EntityCartographer extends Entity
 {
+
 	static ArrayList<String[]> dataArr;
 	int mapLine = 0;
-	int mapRoom = 0;
+	public int mapRoom = 0;
 	
-	int roomWidth = 5;
+	public int roomWidth = 5;
 	int roomLength = 5;
 	
-	int time = 5;
+	public int schemTick = 0;
+	public int schemTickInterval = 10;
 	
     public EntityCartographer(World worldIn)
     {
@@ -44,7 +46,7 @@ public class EntityCartographer extends Entity
      * Called to update the entity's position/logic.
      */
     public void onUpdate() {
-    
+    	schemTickInterval = 100;
     	//setDead();
     	
     	if (this.ticksExisted == 1){
@@ -58,7 +60,7 @@ public class EntityCartographer extends Entity
     	
     	
     	
-    	//Places a room every 0.5 seconds
+    	//Places a room every 0.5 seconds this.ticksExisted % 2 == (2 - 1) && 
     	if (this.ticksExisted % 2 == (2 - 1) && !this.worldObj.isRemote && this.mapLine <= 31) {
 
     		//System.out.println(dataArr.get(this.mapLine)[this.mapRoom]);
@@ -90,9 +92,9 @@ public class EntityCartographer extends Entity
     		System.out.println(roomPath);
     		
     		
-    		new Schematic(roomPath, this.worldObj, this.posX, this.posY, this.posZ);
-    		this.setPositionAndUpdate(this.posX + this.roomWidth, this.posY, this.posZ);
-    		mapRoom++;
+    		Schematic.build(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
+    		
+    		
     		if (mapRoom > 31){
     			mapRoom = 0;
     			this.setPositionAndUpdate(this.posX - (this.roomWidth * 32), this.posY, this.posZ + this.roomLength);
