@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.dimensions.flashverse;
+package com.Splosions.ModularBosses.dimensions.BossDimension;
 
 import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
-public class FlashverseWorldProvider extends WorldProvider
+public class BossWorldProvider extends WorldProvider
 {
 	@Override
 	protected void registerWorldChunkManager()

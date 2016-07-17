@@ -2,7 +2,7 @@ package com.Splosions.ModularBosses.dimensions;
 
 
 
-import com.Splosions.ModularBosses.dimensions.flashverse.BiomeFlashverse;
+import com.Splosions.ModularBosses.dimensions.BossDimension.BossDimension;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -16,6 +16,6 @@ public class TestBiomesRegistry
 	
 	public static void init()
 	{
-		FlashversePlains = new BiomeFlashverse(idFlashversePlains);
+		FlashversePlains = new BossDimension(idFlashversePlains);
 	}
 }

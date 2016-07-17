@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.dimensions.flashverse;
+package com.Splosions.ModularBosses.dimensions.BossDimension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,11 @@ import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.MapGenBase;
 
-public class FlashverseChunkProvider implements IChunkProvider
+public class BossChunkProvider implements IChunkProvider
 {
     private World worldObj;
 
-    public FlashverseChunkProvider(World world, long dimID, boolean mapFeaturesEnabled)
+    public BossChunkProvider(World world, long dimID, boolean mapFeaturesEnabled)
     {
     	this.worldObj = world;
     }

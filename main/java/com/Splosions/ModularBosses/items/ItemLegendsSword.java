@@ -14,7 +14,7 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
-import com.Splosions.ModularBosses.dimensions.flashverse.FlashverseTeleporter;
+import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
@@ -85,7 +85,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			}
 				
 			EntityPlayerMP player = (EntityPlayerMP) entityIn;
-			FlashverseTeleporter teleporter = new FlashverseTeleporter(player.getServerForPlayer());
+			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
 			worldIn.theProfiler.endSection();
 

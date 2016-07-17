@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.dimensions.flashverse;
+package com.Splosions.ModularBosses.dimensions.BossDimension;
 
 import java.util.List;
 import java.util.Random;
@@ -18,9 +18,9 @@ import net.minecraft.world.WorldServer;
 import com.google.common.collect.Lists;
 
 
-public class FlashverseTeleporter extends Teleporter
+public class BossTeleporter extends Teleporter
 {
-	public FlashverseTeleporter(WorldServer world)
+	public BossTeleporter(WorldServer world)
 	{
 		super(world);
 	}
