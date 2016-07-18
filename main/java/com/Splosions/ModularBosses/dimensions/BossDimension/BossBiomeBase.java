@@ -1,10 +1,15 @@
 package com.Splosions.ModularBosses.dimensions.BossDimension;
 
-import net.minecraft.init.Blocks;
-import net.minecraft.world.biome.BiomeGenBase;
+import java.util.Random;
 
-public class BossDimension extends BiomeGenBase {
-	public BossDimension(int id) {
+import net.minecraft.init.Blocks;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.chunk.ChunkPrimer;
+
+public class BossBiomeBase extends BiomeGenBase {
+	
+	public BossBiomeBase(int id) {
 		super(id, true);
 		setBiomeName("BossBiome");
 		this.setHeight(height_LowPlains);
@@ -21,4 +26,10 @@ public class BossDimension extends BiomeGenBase {
 		this.topBlock = Blocks.air.getDefaultState();
 		this.fillerBlock = Blocks.air.getDefaultState();
 	}
+	
+	@Override
+    public void genTerrainBlocks(World worldIn, Random p_180622_2_, ChunkPrimer p_180622_3_, int p_180622_4_, int p_180622_5_, double p_180622_6_)
+    {
+
+    }
 }

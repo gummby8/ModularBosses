@@ -2,7 +2,7 @@ package com.Splosions.ModularBosses.dimensions;
 
 
 
-import com.Splosions.ModularBosses.dimensions.BossDimension.BossDimension;
+import com.Splosions.ModularBosses.dimensions.BossDimension.BossBiomeBase;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -16,6 +16,6 @@ public class TestBiomesRegistry
 	
 	public static void init()
 	{
-		BossBiome = new BossDimension(idBossBiome);
+		BossBiome = new BossBiomeBase(idBossBiome);
 	}
 }
