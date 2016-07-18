@@ -5,6 +5,8 @@ import com.Splosions.ModularBosses.dimensions.TestDimensions;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldType;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.DimensionManager;
@@ -15,6 +17,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BossWorldProvider extends WorldProvider
 {
+
+	
 	@Override
 	protected void registerWorldChunkManager()
 	{
@@ -24,6 +28,21 @@ public class BossWorldProvider extends WorldProvider
 		this.setDimension(TestDimensions.BossDimensionID);
 		this.hasNoSky = false;
 	}
+	
+	@Override
+    public WorldChunkManager getWorldChunkManager()
+    {
+        return this.worldChunkMgr;
+    }
+	
+    /**
+     * Returns a new chunk provider which generates chunks for this world
+     */
+	@Override
+    public IChunkProvider createChunkGenerator()
+    {
+        return new BossChunkProvider(worldObj, worldObj.getSeed(), true);
+    }
 	
 	@Override
 	public String getDimensionName()
@@ -63,4 +82,6 @@ public class BossWorldProvider extends WorldProvider
 	{
 		return "Returning to your universe";
 	}
+	
+	
 }
