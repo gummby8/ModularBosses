@@ -30,6 +30,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonSyntaxException;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -43,11 +44,13 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -88,6 +91,9 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
 			worldIn.theProfiler.endSection();
+			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(dim);
+			ws.setBlockState(new BlockPos(playerIn.posX, playerIn.posY - 2, playerIn.posZ), Blocks.stone.getDefaultState());			
+			
 
 		}
 

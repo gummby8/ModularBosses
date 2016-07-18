@@ -96,6 +96,7 @@ public class Schematic {
             	 k = 0;
             	 ent.mapRoom++;
             	 ent.setPositionAndUpdate(ent.posX + ent.roomWidth, ent.posY, ent.posZ);
+            	 break;
              } else 
              if (j >= length){
             	 i++;	
