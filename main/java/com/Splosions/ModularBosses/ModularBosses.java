@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
 import com.Splosions.ModularBosses.client.MBEvents;
+import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
 import com.Splosions.ModularBosses.handler.GuiHandler;
@@ -40,18 +41,19 @@ public class ModularBosses {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		TestBiomesRegistry.registerBiomes();
 		ModularBossesBlocks.preInit();
 		ModularBossesItems.init();
 		ModularBossesItems.registerItems();
 		ModularBossesEntities.init();
 		PacketDispatcher.preInit();
-		TestDimensions.init();
 		Config.preInit(event);
 	}
 	
 	@EventHandler
 	public void Init(FMLInitializationEvent event)
 	{
+		TestDimensions.init();
 		proxy.registerRenders();
 		proxy.init(event);
 	}
