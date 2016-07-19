@@ -3,7 +3,7 @@ package com.Splosions.ModularBosses;
 import java.util.Collections;
 import java.util.List;
 
-import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
+import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
 import net.minecraft.creativetab.CreativeTabs;
@@ -38,7 +38,7 @@ public class MBCreativeTabs
 		@Override
 		@SideOnly(Side.CLIENT)
 		public Item getTabIconItem() {
-			return Item.getItemFromBlock(ModularBossesBlocks.controlBlock);
+			return Item.getItemFromBlock(ModBlocks.controlBlock);
 		}
 	};
 

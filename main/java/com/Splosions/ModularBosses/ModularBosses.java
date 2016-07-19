@@ -13,7 +13,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
-import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
+import com.Splosions.ModularBosses.blocks.ModBlocks;
+import com.Splosions.ModularBosses.blocks.ModFluids;
 import com.Splosions.ModularBosses.client.MBEvents;
 import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
@@ -42,7 +43,8 @@ public class ModularBosses {
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		TestBiomesRegistry.registerBiomes();
-		ModularBossesBlocks.preInit();
+		ModFluids.registerFluids();
+		ModBlocks.preInit();
 		ModularBossesItems.init();
 		ModularBossesItems.registerItems();
 		ModularBossesEntities.init();

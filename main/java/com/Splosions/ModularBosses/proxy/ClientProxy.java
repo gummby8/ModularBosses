@@ -6,9 +6,10 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.ICustomStateMapper;
 import com.Splosions.ModularBosses.blocks.ISpecialRenderer;
-import com.Splosions.ModularBosses.blocks.ModularBossesBlocks;
+import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.client.ISwapModel;
+import com.Splosions.ModularBosses.client.models.ModModelManager;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPortalBlock;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
 import com.Splosions.ModularBosses.items.IModItem;
@@ -34,7 +35,10 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper.UnableToFindMethodException;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
 
+@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy{
 	
 	private final Minecraft mc = Minecraft.getMinecraft();
@@ -107,7 +111,7 @@ public class ClientProxy extends CommonProxy{
 	
 	
 	try {
-		for (Field f: ModularBossesBlocks.class.getFields()) {
+		for (Field f: ModBlocks.class.getFields()) {
 			if (Block.class.isAssignableFrom(f.getType())) {
 				Block block = (Block) f.get(null);
 				if (block != null) {
@@ -152,6 +156,12 @@ public class ClientProxy extends CommonProxy{
 	}
 
 	
+	@Override
+	public void preInit() {
+		super.preInit();
 
+		ModModelManager.INSTANCE.registerAllModels();
+
+	}
 	
 }

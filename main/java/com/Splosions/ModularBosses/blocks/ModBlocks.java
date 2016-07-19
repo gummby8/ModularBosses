@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 
-public class ModularBossesBlocks
+public class ModBlocks
 {
 	public static Block
 	invisibleBlock,
@@ -61,7 +61,7 @@ public class ModularBossesBlocks
 		
 		// register block items for creative tab comparator sorting:
 		try {
-			for (Field f: ModularBossesBlocks.class.getFields()) {
+			for (Field f: ModBlocks.class.getFields()) {
 				if (Block.class.isAssignableFrom(f.getType())) {
 					Block block = (Block) f.get(null);
 					if (block != null) {
