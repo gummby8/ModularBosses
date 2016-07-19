@@ -119,7 +119,7 @@ public class Schematic {
              IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
 
              
-              System.out.println("K = " + k + "I = " + i + "J = " + j);
+              //System.out.println("K = " + k + "I = " + i + "J = " + j);
           	  //blockObjects[counter] = new BlockObject(pos, state);
           	  world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
           	  counter++; 

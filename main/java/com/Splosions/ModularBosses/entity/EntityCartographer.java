@@ -23,7 +23,7 @@ public class EntityCartographer extends Entity
 	int roomLength = 5;
 	
 	public int schemTick = 0;
-	public int schemTickInterval = 10;
+	public int schemTickInterval = 1;
 	
     public EntityCartographer(World worldIn)
     {
@@ -46,7 +46,7 @@ public class EntityCartographer extends Entity
      * Called to update the entity's position/logic.
      */
     public void onUpdate() {
-    	schemTickInterval = 100;
+    	schemTickInterval = 90;
     	//setDead();
     	
     	if (this.ticksExisted == 1){
@@ -89,7 +89,7 @@ public class EntityCartographer extends Entity
         	}
     		
     		roomPath = "./schematics/Dungeon Schematics/" + roomPath + ".schematic";
-    		System.out.println(roomPath);
+    		//System.out.println(roomPath);
     		
     		
     		Schematic.build(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);

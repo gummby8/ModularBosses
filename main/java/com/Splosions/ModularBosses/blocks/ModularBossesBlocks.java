@@ -22,7 +22,10 @@ public class ModularBossesBlocks
 	controlBlock,
 	portalBlock,
 	portalLanding,
-	phaseFire;
+	phaseFire,
+	
+	wormGutsBlock
+	;
 	
 	/**
 	 * Call during FMLPreInitializationEvent to initialize and register all blocks
@@ -48,8 +51,13 @@ public class ModularBossesBlocks
 		phaseFire = new BlockPhaseFire(Material.barrier).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
 		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
 		
+		wormGutsBlock = new BlockWormGuts(Material.barrier).setUnlocalizedName("worm_guts");
+		GameRegistry.registerBlock(wormGutsBlock, ItemModBlock.class, wormGutsBlock.getUnlocalizedName().substring(5));
+		
 		invisibleBlock = new BlockInvisible(Material.barrier).setUnlocalizedName("invisible_block");
 		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));
+		
+
 		
 		// register block items for creative tab comparator sorting:
 		try {
