@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import com.Splosions.ModularBosses.util.Schematic;
+import com.Splosions.ModularBosses.util.schematic.Schematic;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;

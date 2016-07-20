@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.util;
+package com.Splosions.ModularBosses.util.schematic;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

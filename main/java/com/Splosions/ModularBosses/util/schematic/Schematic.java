@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.util;
+package com.Splosions.ModularBosses.util.schematic;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -11,6 +11,8 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
+import com.Splosions.ModularBosses.util.BlockObject;
+import com.Splosions.ModularBosses.util.NBTHelper;
 import com.google.common.primitives.UnsignedBytes;
 
 import net.minecraft.block.Block;

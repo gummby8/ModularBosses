@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.util;
+package com.Splosions.ModularBosses.util.schematic;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import net.minecraft.block.Block;
