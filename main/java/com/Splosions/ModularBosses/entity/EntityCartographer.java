@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.Splosions.ModularBosses.util.schematic.Room;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
 
 import net.minecraft.entity.Entity;
@@ -17,6 +18,7 @@ public class EntityCartographer extends Entity
 
 	public static final int DUNGEON = 0;
 	public static final int WORM = 1;
+	public Room[][] roomArray;
 	
 	private int cartType;
 	
@@ -63,7 +65,12 @@ public class EntityCartographer extends Entity
     }
     
     public void wormGen(){
-    	
+    	if (roomArray == null){
+    		System.out.println("Creating new room array");
+    		roomArray = new Room[6][2]; //3 Across 7 tall
+    	}
+    	System.out.println("Type = " + roomArray[0][0].type);
+    	System.out.println("North = " + roomArray[0][0].north);
     }
     
     
