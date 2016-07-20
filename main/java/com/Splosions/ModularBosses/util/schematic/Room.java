@@ -1,12 +1,12 @@
 package com.Splosions.ModularBosses.util.schematic;
 
 public class Room {
-	public boolean north;
-	public boolean west;
-	public boolean south;
-	public boolean east;
+	public boolean north = false;
+	public boolean west = false;
+	public boolean south = false;
+	public boolean east = false;
 	
-	public int type;
+	public int type = 0;
 
 	public static final int BLANK = 0;
 	public static final int NORMAL = 1;

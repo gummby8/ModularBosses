@@ -67,10 +67,17 @@ public class EntityCartographer extends Entity
     public void wormGen(){
     	if (roomArray == null){
     		System.out.println("Creating new room array");
-    		roomArray = new Room[6][2]; //3 Across 7 tall
+    		roomArray = new Room[7][3]; //3 Across 7 tall
+    		for (int i = 0; i < roomArray.length; i++){
+    			for (int j = 0; j < roomArray[i].length; j++){
+    				System.out.println("New room at = " + i + " " + j);
+    				roomArray[i][j] = new Room();
+    				
+    			}
+    		}
     	}
-    	System.out.println("Type = " + roomArray[0][0].type);
-    	System.out.println("North = " + roomArray[0][0].north);
+    	System.out.println("Type = " + roomArray[6][2].type);
+    	setDead();
     }
     
     
