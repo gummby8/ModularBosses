@@ -15,28 +15,33 @@ import net.minecraft.world.World;
 public class EntityCartographer extends Entity
 {
 
+	public static final int DUNGEON = 0;
+	public static final int WORM = 1;
+	
+	private int cartType;
+	
 	static ArrayList<String[]> dataArr;
 	int mapLine = 0;
 	public int mapRoom = 0;
 	
 	public int roomWidth = 5;
-	int roomLength = 5;
 	
+	int roomLength = 5;
 	public int schemTick = 0;
-	public int schemTickInterval = 1;
+	public int schemTickInterval = 20;
 	
     public EntityCartographer(World worldIn)
     {
         super(worldIn);
     }
 
-    public EntityCartographer(World worldIn, Entity shooter, double x, double y, double z)
+    public EntityCartographer(World worldIn, Entity shooter, int type, double x, double y, double z)
     {
         super(worldIn);
         this.setSize(1F, 1F);
         this.setPosition(x, y, z);
         this.noClip = true;
-        
+        this.cartType = type;
         
         
     } 
@@ -46,9 +51,23 @@ public class EntityCartographer extends Entity
      * Called to update the entity's position/logic.
      */
     public void onUpdate() {
-    	schemTickInterval = 90;
-    	//setDead();
+    	    if (this.cartType == DUNGEON){
+    	    	dungeonGen();
+    	    } else
+    	    if (this.cartType == WORM){
+    	    	wormGen();
+    	    }
+    	    	
     	
+    	
+    }
+    
+    public void wormGen(){
+    	
+    }
+    
+    
+    public void dungeonGen(){
     	if (this.ticksExisted == 1){
         	try {
     			readData("./schematics/derp.csv");
@@ -111,11 +130,8 @@ public class EntityCartographer extends Entity
     	
     
     	//	new Schematic("./schematics/2.schematic", this.worldObj, this.posX, this.posY, this.posZ);
-    	
-    	
-    	
+
     }
-    
     
     
     

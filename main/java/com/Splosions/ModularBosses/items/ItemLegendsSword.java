@@ -95,7 +95,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			ws.setBlockState(new BlockPos(playerIn.posX, playerIn.posY - 2, playerIn.posZ), Blocks.stone.getDefaultState());			
 			
 			
-			Entity entity = new EntityCartographer(ws, playerIn, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
+			Entity entity = new EntityCartographer(ws, playerIn, EntityCartographer.WORM, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
 			ws.spawnEntityInWorld(entity);			
 		}
 

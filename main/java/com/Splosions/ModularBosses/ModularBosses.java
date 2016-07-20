@@ -50,6 +50,7 @@ public class ModularBosses {
 		ModularBossesEntities.init();
 		PacketDispatcher.preInit();
 		Config.preInit(event);
+		proxy.preInit();
 	}
 	
 	@EventHandler
