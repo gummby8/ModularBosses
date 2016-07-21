@@ -66,22 +66,44 @@ public class EntityCartographer extends Entity
     
     public void wormGen(){
     	if (roomArray == null){
-    		System.out.println("Creating new room array");
     		roomArray = new Room[7][3]; //3 Across 7 tall
     		for (int i = 0; i < roomArray.length; i++){
     			for (int j = 0; j < roomArray[i].length; j++){
-    				System.out.println("New room at = " + i + " " + j);
     				roomArray[i][j] = new Room();
-    				
     			}
     		}
     	}
-    	System.out.println("Type = " + roomArray[6][2].type);
+    	
+    	roomArray[0][0].east = true;
+    	roomArray[6][2].west = true;
+    	
+    	for (int i = 0; i < roomArray.length; i++){
+			for (int j = 0; j < roomArray[i].length; j++){
+
+
+				
+				// doo stuff here
+				
+				
+				String roomPath = "./schematics/Worm/blank.schematic";
+	    		Schematic.quickBuild(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
+				this.posX += 6;
+			}
+			this.posZ += 6;
+			this.posX -= 18;
+		}
+    	
+    	
     	setDead();
     }
     
     
+    
+    
+    
     public void dungeonGen(){
+    	
+    	schemTickInterval = 100;
     	if (this.ticksExisted == 1){
         	try {
     			readData("./schematics/derp.csv");
@@ -94,7 +116,7 @@ public class EntityCartographer extends Entity
     	
     	
     	//Places a room every 0.5 seconds this.ticksExisted % 2 == (2 - 1) && 
-    	if (this.ticksExisted % 2 == (2 - 1) && !this.worldObj.isRemote && this.mapLine <= 31) {
+    	if (!this.worldObj.isRemote && this.mapLine <= 31) {
 
     		//System.out.println(dataArr.get(this.mapLine)[this.mapRoom]);
 
@@ -144,7 +166,7 @@ public class EntityCartographer extends Entity
     	
     
     	//	new Schematic("./schematics/2.schematic", this.worldObj, this.posX, this.posY, this.posZ);
-
+    	
     }
     
     

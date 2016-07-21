@@ -186,4 +186,98 @@ public class Schematic {
 	   
    }
    
+   
+   
+public static void quickBuild(String fileName, World world, Entity entity, double x, double y, double z) {
+
+	   
+	   if (!world.isRemote){
+      try {
+    	  File file = new File(fileName);
+          NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
+    	  
+         //InputStream is = Schematic.class.getResourceAsStream("/assets/mb/schematics/2.schematic"); 
+         //NBTTagCompound nbtdata = CompressedStreamTools.readCompressed(is);
+      
+         //is.close();
+         
+         width = nbtdata.getShort("Width");
+         height = nbtdata.getShort("Height");
+         length = nbtdata.getShort("Length");
+         ItemStack icon = SchematicUtil.getIconFromNBT(nbtdata);
+         
+         size = width * height * length;
+         blockObjects = new BlockObject[size];
+         
+         byte[] blockIDs = nbtdata.getByteArray("Blocks");
+         byte[] metadata = nbtdata.getByteArray("Data");
+
+
+         
+         //testing schematica schematics
+         Short id = null;
+         final Map<Short, Short> oldToNew = new HashMap<Short, Short>();
+         if (nbtdata.hasKey("SchematicaMapping")) {
+             final NBTTagCompound mapping = nbtdata.getCompoundTag("SchematicaMapping");
+             final Set<String> names = mapping.getKeySet();
+             for (final String name : names) {
+                 oldToNew.put(mapping.getShort(name), (short) BLOCK_REGISTRY.getId(name));
+             }
+         }
+
+         EntityCartographer ent = (EntityCartographer) entity;
+         
+         
+       
+        counter = 0;
+         for(int i = 0; i < height; i++) {
+            for(int j = 0; j < length; j++) {
+               for(int k = 0; k < width; k++) {
+                  int blockId = UnsignedBytes.toInt(blockIDs[counter]);
+                  //Checks the id reference Map                 
+                  if ((id = oldToNew.get((short) blockId)) != null) {
+                      blockId = id;
+                  }
+
+                  //BlockPos pos = new BlockPos(k, i, j);
+                  IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
+
+                  
+                  
+               	  //blockObjects[counter] = new BlockObject(pos, state);
+               	  world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
+               	  counter++; 
+               }
+            }
+         }
+         
+         
+         NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
+
+         for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
+             try {
+                 TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+                 if (tileEntity != null) {
+                	 NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
+                	 int Xx = tag.getInteger("x");
+            		 int Yy = tag.getInteger("y");
+            		 int Zz = tag.getInteger("z");
+                	 BlockPos bPos = new BlockPos(x + Xx, y + Yy, z + Zz);
+                	 world.removeTileEntity(bPos);
+                     world.setTileEntity(bPos, tileEntity);
+                     System.out.println(tileEntity);
+                 }
+             } catch (Exception e) {
+                 ModularBosses.logger.warn("TileEntity failed to load properly!", e);
+             }
+         }
+         
+         
+      } catch(Exception e) {
+         e.printStackTrace();
+      }
+   }
+	   
+   }
+   
 }

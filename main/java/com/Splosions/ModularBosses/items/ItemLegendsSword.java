@@ -75,9 +75,9 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		
+		System.out.println("Remember to fix the if in legends sword");
 		Entity entityIn = (Entity)playerIn;
-		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote
+		if (entityIn.ridingEntity != null && entityIn.riddenByEntity == null && !worldIn.isRemote
 				&& worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
 			worldIn.theProfiler.startSection("portal");
 			int dim = 0;
@@ -94,15 +94,15 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			ws.setBlockState(new BlockPos(playerIn.posX, playerIn.posY - 2, playerIn.posZ), Blocks.stone.getDefaultState());			
 			
 			
-			Entity entity = new EntityCartographer(ws, playerIn, EntityCartographer.DUNGEON, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
+			Entity entity = new EntityCartographer(ws, playerIn, EntityCartographer.WORM, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
 			ws.spawnEntityInWorld(entity);
 			
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
 			worldIn.theProfiler.endSection();
 		}
 
-		
-
+		Entity entity = new EntityCartographer(worldIn, playerIn, EntityCartographer.WORM, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
+		worldIn.spawnEntityInWorld(entity);
 		
         return itemStackIn;
 	}
