@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import com.Splosions.ModularBosses.util.schematic.Room;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class EntityCartographer extends Entity
@@ -19,6 +21,21 @@ public class EntityCartographer extends Entity
 	public static final int DUNGEON = 0;
 	public static final int WORM = 1;
 	public Room[][] roomArray;
+	
+	
+	public static final int OPEN = 0;
+	public static final int DOOR = 1;
+	public static final int WALL = 2;
+		
+	public static final int BLANK = 0;
+	public static final int NORMAL = 1;
+	public static final int PUZZLE = 2;
+	public static final int LOOT = 3;
+	public static final int BOSS = 4;
+	public static final int ENTRANCE = 5;
+	
+	
+	
 	
 	private int cartType;
 	
@@ -67,23 +84,64 @@ public class EntityCartographer extends Entity
     public void wormGen(){
     	if (roomArray == null){
     		roomArray = new Room[7][3]; //3 Across 7 tall
-    		for (int i = 0; i < roomArray.length; i++){
-    			for (int j = 0; j < roomArray[i].length; j++){
-    				roomArray[i][j] = new Room();
+    		for (int y = 0; y < roomArray.length; y++){
+    			for (int x = 0; x < roomArray[y].length; x++){
+    				roomArray[y][x] = new Room();
     			}
     		}
     	}
     	
-    	roomArray[0][0].east = true;
-    	roomArray[6][2].west = true;
+    	roomArray[0][0].east = DOOR;
+    	roomArray[0][0].west = roomArray[0][0].north = roomArray[0][0].south = WALL;
     	
-    	for (int i = 0; i < roomArray.length; i++){
-			for (int j = 0; j < roomArray[i].length; j++){
-
-
+    	roomArray[6][2].west = DOOR;
+    	roomArray[6][2].east = roomArray[6][2].south = roomArray[6][2].north = WALL;
+    	
+    	for (int y = 0; y < roomArray.length; y++){
+			for (int x = 0; x < roomArray[y].length; x++){
 				
-				// doo stuff here
+				//North
+				try {
+			    	if (roomArray[y + 1][x].south == DOOR){
+			    		roomArray[y][x].north = DOOR;
+			    	}
+				} catch (Throwable e) {
+					roomArray[y][x].north = WALL;
+				}
 				
+				//East
+				try {
+			    	if (roomArray[y][x + 1].west == DOOR){
+			    		roomArray[y][x].east = DOOR;
+			    	}
+				} catch (Throwable e) {
+					roomArray[y][x].east = WALL;
+				}
+
+				//South
+				try {
+			    	if (roomArray[y - 1][x].north == DOOR){
+			    		roomArray[y][x].south = DOOR;
+			    	}
+				} catch (Throwable e) {
+					roomArray[y][x].south = WALL;
+				}
+				
+				//West
+				try {
+			    	if (roomArray[y][x - 1].east == DOOR){
+			    		roomArray[y][x].west = DOOR;
+			    	}
+				} catch (Throwable e) {
+					roomArray[y][x].west = WALL;
+				}
+				
+				
+				if (roomArray[y][x].north == DOOR || roomArray[y][x].east == DOOR || roomArray[y][x].south == DOOR || roomArray[y][x].west == DOOR){
+					if (roomArray[y][x].north == OPEN && roomArray[y][x].east == OPEN){
+						
+					}
+				}
 				
 				String roomPath = "./schematics/Worm/blank.schematic";
 	    		Schematic.quickBuild(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
@@ -96,6 +154,16 @@ public class EntityCartographer extends Entity
     	
     	setDead();
     }
+    
+    public void checkForWalls(Room room){
+
+    }
+    
+    
+    
+    
+    
+    
     
     
     

@@ -1,22 +1,19 @@
 package com.Splosions.ModularBosses.util.schematic;
 
 public class Room {
-	public boolean north = false;
-	public boolean west = false;
-	public boolean south = false;
-	public boolean east = false;
+	public int north;
+	public int west;
+	public int south;
+	public int east;
 	
 	public int type = 0;
+	
 
-	public static final int BLANK = 0;
-	public static final int NORMAL = 1;
-	public static final int PUZZLE = 2;
-	public static final int LOOT = 3;
-	public static final int BOSS = 4;
+	
 	
 	public Room(){} 
 	
-	public Room(int type, boolean north, boolean west, boolean south, boolean east) {
+	public Room(int type, int north, int west, int south, int east) {
 		
 		this.type = type;
 		
