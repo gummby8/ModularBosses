@@ -101,9 +101,10 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			worldIn.theProfiler.endSection();
 		}
 
+		if (!worldIn.isRemote){
 		Entity entity = new EntityCartographer(worldIn, playerIn, EntityCartographer.WORM, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
 		worldIn.spawnEntityInWorld(entity);
-		
+		}
         return itemStackIn;
 	}
 	

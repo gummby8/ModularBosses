@@ -8,7 +8,7 @@ public class Room {
 	
 	public int type = 0;
 	
-
+	public String[] roomCode = {"-","-","-","-"}; 
 	
 	
 	public Room(){} 
