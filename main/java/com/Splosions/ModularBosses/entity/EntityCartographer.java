@@ -86,11 +86,14 @@ public class EntityCartographer extends Entity {
 		roomArray[0][0].type = ENTRANCE;
 		roomArray[0][0].east = DOOR;
 		roomArray[0][0].west = roomArray[0][0].north = roomArray[0][0].south = WALL;
+		roomArray[0][0].roomCode[0] = roomArray[0][0].roomCode[2] = roomArray[0][0].roomCode[3] = "W"
 
 		roomArray[0][0].type = BOSS;
 		roomArray[6][2].west = DOOR;
 		roomArray[6][2].east = roomArray[6][2].south = roomArray[6][2].north = WALL;
-
+		roomArray[6][2].roomCode[0] = roomArray[0][0].roomCode[1] = roomArray[0][0].roomCode[2] = "W"
+		
+		roomGen = false;
 		while (!roomGen) {
 			System.out.println("Making Doors");
 			roomGen = true;
@@ -102,10 +105,11 @@ public class EntityCartographer extends Entity {
 				try {
 					if (roomArray[y + 1][x].south == DOOR) {
 						roomArray[y][x].north = DOOR;
-						
+						roomArray[y][x].roomCode[0] = "D";
 					}
 				} catch (Throwable e) {
 					roomArray[y][x].north = WALL;
+					roomArray[y][x].roomCode[0] = "W";
 					System.out.println("Room (" + y + " - " + x + ") = North Wall");
 				}
 
@@ -113,9 +117,11 @@ public class EntityCartographer extends Entity {
 				try {
 					if (roomArray[y][x + 1].west == DOOR) {
 						roomArray[y][x].east = DOOR;
+						roomArray[y][x].roomCode[1] = "D";
 					}
 				} catch (Throwable e) {
 					roomArray[y][x].east = WALL;
+					roomArray[y][x].roomCode[1] = "W";
 					System.out.println("Room (" + y + " - " + x + ") = East Wall");
 				}
 
@@ -123,9 +129,11 @@ public class EntityCartographer extends Entity {
 				try {
 					if (roomArray[y - 1][x].north == DOOR) {
 						roomArray[y][x].south = DOOR;
+						roomArray[y][x].roomCode[2] = "D";
 					}
 				} catch (Throwable e) {
 					roomArray[y][x].south = WALL;
+					roomArray[y][x].roomCode[2] = "W";
 					System.out.println("Room (" + y + " - " + x + ") = South Wall");
 				}
 
@@ -133,9 +141,11 @@ public class EntityCartographer extends Entity {
 				try {
 					if (roomArray[y][x - 1].east == DOOR) {
 						roomArray[y][x].west = DOOR;
+						roomArray[y][x].roomCode[3] = "D";
 					}
 				} catch (Throwable e) {
 					roomArray[y][x].west = WALL;
+					roomArray[y][x].roomCode[3] = "W";
 					System.out.println("Room (" + y + " - " + x + ") = West Wall");
 				}
 			}
@@ -145,44 +155,42 @@ public class EntityCartographer extends Entity {
 			for (int y = 0; y < roomArray.length; y++) {
 				for (int x = 0; x < roomArray[y].length; x++) {
 
-					this.doorCount = 0;
+					
 					if (roomArray[y][x].north == DOOR || roomArray[y][x].east == DOOR || roomArray[y][x].south == DOOR || roomArray[y][x].west == DOOR) {
 						if (roomArray[y][x].north == OPEN || roomArray[y][x].east == OPEN || roomArray[y][x].south == OPEN || roomArray[y][x].west == OPEN) {
 							roomGen = false;
+							this.doorCount = 0;
 							while (this.doorCount < 2) {
-
+								this.doorCount = 0;
 								if (roomArray[y][x].north == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
 									roomArray[y][x].north = DOOR;
-									roomArray[y][x].roomCode[0] = "D";
-									this.doorCount++;
 									System.out.println("Made a door at north " + y + " - " + x);
 								}
 
 								if (roomArray[y][x].east == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
 									roomArray[y][x].east = DOOR;
-									roomArray[y][x].roomCode[1] = "D";
-									this.doorCount++;
 									System.out.println("Made a door at east " + y + " - " + x);
 								}
 
 								if (roomArray[y][x].south == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
 									roomArray[y][x].south = DOOR;
-									roomArray[y][x].roomCode[2] = "D";
-									this.doorCount++;
 									System.out.println("Made a door at south " + y + " - " + x);
 								}
 
 								if (roomArray[y][x].west == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
 									roomArray[y][x].west = DOOR;
-									roomArray[y][x].roomCode[3] = "D";
-									this.doorCount++;
 									System.out.println("Made a door at west " + y + " - " + x);
 								}
 								
-								//need to count doors here
-
+								if (roomArray[y][x].north == DOOR){this.doorCount++;roomArray[y][x].roomCode[0] = "D";}
+								if (roomArray[y][x].east == DOOR){this.doorCount++;roomArray[y][x].roomCode[1] = "D";}
+								if (roomArray[y][x].south == DOOR){this.doorCount++;roomArray[y][x].roomCode[2] = "D";}
+								if (roomArray[y][x].west == DOOR){this.doorCount++;roomArray[y][x].roomCode[3] = "D";}
+								
+								System.out.println("Doorcount = " + this.doorCount);
 							}
-							System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].north + " " + roomArray[y][x].east + " " + roomArray[y][x].south + " " + roomArray[y][x].east); 
+							System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
+							System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].north + " " + roomArray[y][x].east + " " + roomArray[y][x].south + " " + roomArray[y][x].west); 
 									
 							if (roomArray[y][x].north == OPEN) {
 								roomArray[y][x].north = WALL;
@@ -207,7 +215,7 @@ public class EntityCartographer extends Entity {
 							
 						}
 					}
-					//System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
+					System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
 				}
 			}
 		}
