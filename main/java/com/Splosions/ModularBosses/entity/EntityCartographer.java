@@ -74,29 +74,25 @@ public class EntityCartographer extends Entity {
 	}
 
 	public void wormGen() {
-		if (roomArray == null) {
-			roomArray = new Room[7][3]; // 3 Across 7 tall
-			for (int y = 0; y < roomArray.length; y++) {
-				for (int x = 0; x < roomArray[y].length; x++) {
-					roomArray[y][x] = new Room();
-				}
-			}
-		}
+		if (roomArray == null) { newRoomArray();}
 
+		roomGen = false;
+		while (!roomGen) {
+		System.out.println("Making Doors");
+		roomGen = true;
+		
 		roomArray[0][0].type = ENTRANCE;
 		roomArray[0][0].east = DOOR;
 		roomArray[0][0].west = roomArray[0][0].north = roomArray[0][0].south = WALL;
-		roomArray[0][0].roomCode[0] = roomArray[0][0].roomCode[2] = roomArray[0][0].roomCode[3] = "W"
-
+		roomArray[0][0].roomCode[0] = roomArray[0][0].roomCode[2] = roomArray[0][0].roomCode[3] = "W";
+		
 		roomArray[0][0].type = BOSS;
 		roomArray[6][2].west = DOOR;
 		roomArray[6][2].east = roomArray[6][2].south = roomArray[6][2].north = WALL;
-		roomArray[6][2].roomCode[0] = roomArray[0][0].roomCode[1] = roomArray[0][0].roomCode[2] = "W"
+		roomArray[6][2].roomCode[0] = roomArray[0][0].roomCode[1] = roomArray[0][0].roomCode[2] = "W";
 		
-		roomGen = false;
-		while (!roomGen) {
-			System.out.println("Making Doors");
-			roomGen = true;
+
+
 		
 		for (int y = 0; y < roomArray.length; y++) {
 			for (int x = 0; x < roomArray[y].length; x++) {
@@ -110,7 +106,7 @@ public class EntityCartographer extends Entity {
 				} catch (Throwable e) {
 					roomArray[y][x].north = WALL;
 					roomArray[y][x].roomCode[0] = "W";
-					System.out.println("Room (" + y + " - " + x + ") = North Wall");
+					//System.out.println("Room (" + y + " - " + x + ") = North Wall");
 				}
 
 				// East
@@ -122,7 +118,7 @@ public class EntityCartographer extends Entity {
 				} catch (Throwable e) {
 					roomArray[y][x].east = WALL;
 					roomArray[y][x].roomCode[1] = "W";
-					System.out.println("Room (" + y + " - " + x + ") = East Wall");
+					//System.out.println("Room (" + y + " - " + x + ") = East Wall");
 				}
 
 				// South
@@ -134,7 +130,7 @@ public class EntityCartographer extends Entity {
 				} catch (Throwable e) {
 					roomArray[y][x].south = WALL;
 					roomArray[y][x].roomCode[2] = "W";
-					System.out.println("Room (" + y + " - " + x + ") = South Wall");
+					//System.out.println("Room (" + y + " - " + x + ") = South Wall");
 				}
 
 				// West
@@ -146,7 +142,7 @@ public class EntityCartographer extends Entity {
 				} catch (Throwable e) {
 					roomArray[y][x].west = WALL;
 					roomArray[y][x].roomCode[3] = "W";
-					System.out.println("Room (" + y + " - " + x + ") = West Wall");
+					//System.out.println("Room (" + y + " - " + x + ") = West Wall");
 				}
 			}
 		}
@@ -162,24 +158,24 @@ public class EntityCartographer extends Entity {
 							this.doorCount = 0;
 							while (this.doorCount < 2) {
 								this.doorCount = 0;
-								if (roomArray[y][x].north == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
+								if (roomArray[y][x].north == OPEN && TargetUtils.getRanNum(1, 100) <= 11) {
 									roomArray[y][x].north = DOOR;
-									System.out.println("Made a door at north " + y + " - " + x);
+									//System.out.println("Made a door at north " + y + " - " + x);
 								}
 
-								if (roomArray[y][x].east == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
+								if (roomArray[y][x].east == OPEN && TargetUtils.getRanNum(1, 100) <= 11) {
 									roomArray[y][x].east = DOOR;
-									System.out.println("Made a door at east " + y + " - " + x);
+									//System.out.println("Made a door at east " + y + " - " + x);
 								}
 
-								if (roomArray[y][x].south == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
+								if (roomArray[y][x].south == OPEN && TargetUtils.getRanNum(1, 100) <= 11) {
 									roomArray[y][x].south = DOOR;
-									System.out.println("Made a door at south " + y + " - " + x);
+									//System.out.println("Made a door at south " + y + " - " + x);
 								}
 
-								if (roomArray[y][x].west == OPEN && TargetUtils.getRanNum(1, 100) <= 25) {
+								if (roomArray[y][x].west == OPEN && TargetUtils.getRanNum(1, 100) <= 11) {
 									roomArray[y][x].west = DOOR;
-									System.out.println("Made a door at west " + y + " - " + x);
+									//System.out.println("Made a door at west " + y + " - " + x);
 								}
 								
 								if (roomArray[y][x].north == DOOR){this.doorCount++;roomArray[y][x].roomCode[0] = "D";}
@@ -187,48 +183,129 @@ public class EntityCartographer extends Entity {
 								if (roomArray[y][x].south == DOOR){this.doorCount++;roomArray[y][x].roomCode[2] = "D";}
 								if (roomArray[y][x].west == DOOR){this.doorCount++;roomArray[y][x].roomCode[3] = "D";}
 								
-								System.out.println("Doorcount = " + this.doorCount);
+								//System.out.println("Doorcount = " + this.doorCount);
 							}
-							System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
-							System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].north + " " + roomArray[y][x].east + " " + roomArray[y][x].south + " " + roomArray[y][x].west); 
+							//System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
+							//System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].north + " " + roomArray[y][x].east + " " + roomArray[y][x].south + " " + roomArray[y][x].west); 
 									
 							if (roomArray[y][x].north == OPEN) {
 								roomArray[y][x].north = WALL;
 								roomArray[y][x].roomCode[0] = "W";
-								System.out.println("Made a wall at north " + y + " - " + x);
+								//System.out.println("Made a wall at north " + y + " - " + x);
 							}
 							if (roomArray[y][x].east == OPEN) {
 								roomArray[y][x].east = WALL;
 								roomArray[y][x].roomCode[1] = "W";
-								System.out.println("Made a wall at east " + y + " - " + x);
+								//System.out.println("Made a wall at east " + y + " - " + x);
 							}
 							if (roomArray[y][x].south == OPEN) {
 								roomArray[y][x].south = WALL;
 								roomArray[y][x].roomCode[2] = "W";
-								System.out.println("Made a wall at south " + y + " - " + x);
+								//System.out.println("Made a wall at south " + y + " - " + x);
 							}
 							if (roomArray[y][x].west == OPEN) {
 								roomArray[y][x].west = WALL;
 								roomArray[y][x].roomCode[3] = "W";
-								System.out.println("Made a wall at west " + y + " - " + x);
+								//System.out.println("Made a wall at west " + y + " - " + x);
 							}
 							
 						}
 					}
-					System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
+					//System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
 				}
 			}
+			roomArray[0][0].roomCode[0] = "W";
+			roomArray[0][0].roomCode[1] = "D";
+			roomArray[0][0].roomCode[2] = "W";
+			roomArray[0][0].roomCode[3] = "W";
+			
+			roomArray[1][0].roomCode[2] = "W";
+			roomArray[5][2].roomCode[0] = "W";
+			
+			roomArray[6][2].roomCode[0] = "W";
+			roomArray[6][2].roomCode[1] = "W";
+			roomArray[6][2].roomCode[2] = "W";
+			roomArray[6][2].roomCode[3] = "D";
+			
+			//Path Check 
+			if (roomGen){
+			if (roomArray[0][0].roomCode[0] == "W" && roomArray[0][1].roomCode[0] == "W" && roomArray[0][2].roomCode[0] == "W"){
+				roomGen = false;
+				newRoomArray(); 
+				System.out.println("Level 0 Failed North");}
+			else
+			if (roomArray[1][0].roomCode[0] == "W" && roomArray[1][1].roomCode[0] == "W" && roomArray[1][2].roomCode[0] == "W"){
+				roomGen = false;
+				newRoomArray(); 
+				System.out.println("Level 1 Failed North");}
+			else
+			if (roomArray[2][0].roomCode[0] == "W" && roomArray[2][1].roomCode[0] == "W" && roomArray[2][2].roomCode[0] == "W"){
+				roomGen = false;
+				newRoomArray(); 
+				System.out.println("Level 2 Failed North");}
+			else
+			if (roomArray[3][0].roomCode[0] == "W" && roomArray[3][1].roomCode[0] == "W" && roomArray[3][2].roomCode[0] == "W"){
+				roomGen = false;
+				newRoomArray(); 
+				System.out.println("Level 3 Failed North");}
+			else
+			if (roomArray[4][0].roomCode[0] == "W" && roomArray[4][1].roomCode[0] == "W" && roomArray[4][2].roomCode[0] == "W"){
+				roomGen = false;
+				newRoomArray(); 
+				System.out.println("Level 4 Failed North");}
+			else
+			if (roomArray[5][0].roomCode[0] == "W" && roomArray[5][1].roomCode[0] == "W" && roomArray[5][2].roomCode[0] == "W"){
+				roomGen = false;
+				newRoomArray(); 
+				System.out.println("Level 5 Failed North");}
+			}
+
+		}
+		
+
+		
+		
+		
+		
+		  
+		
+		for (int y = 0; y < roomArray.length; y++) {
+			for (int x = 0; x < roomArray[y].length; x++) {
+				String roomPath = null;
+				//System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
+				roomPath = roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3];
+				roomPath = "./schematics/Worm/" + roomPath + "/1.schematic";
+				Schematic.quickBuild(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
+				this.posX += 5;				
+			}
+			this.posZ -= 5;
+			this.posX -= 15;
 		}
 
-		// String roomPath = "./schematics/Worm/blank.schematic";
-		// Schematic.quickBuild(roomPath, this.worldObj, this, this.posX,
-		// this.posY, this.posZ);
-		// this.posX += 6;
 
-		// this.posZ += 6;
-		// this.posX -= 18;
+
+
 
 		setDead();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	public void newRoomArray() {
+		roomArray = null;
+		roomArray = new Room[7][3]; // 3 Across 7 tall
+		for (int y = 0; y < roomArray.length; y++) {
+			for (int x = 0; x < roomArray[y].length; x++) {
+				roomArray[y][x] = new Room();
+			}
+		}
+		
 	}
 
 	public void dungeonGen() {
