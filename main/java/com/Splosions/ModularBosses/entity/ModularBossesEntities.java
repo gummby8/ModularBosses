@@ -5,6 +5,7 @@ import java.util.logging.Level;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
+import com.Splosions.ModularBosses.client.models.entity.ModelEyeballOctopus;
 import com.Splosions.ModularBosses.client.models.entity.ModelGolem;
 import com.Splosions.ModularBosses.client.models.entity.ModelHeavyChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldormAlpha;
@@ -15,6 +16,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock;
+import com.Splosions.ModularBosses.client.render.entity.RenderEyeballOctopus;
 import com.Splosions.ModularBosses.client.render.entity.RenderGolem;
 import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderMoldormAlpha;
@@ -95,6 +97,9 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
+		EntityRegistry.registerModEntity(EntityEyeballOctopus.class, "EyeballOctopus", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityEyeballOctopus.class, "EyeballOctopus", 0x990000, 0x999900);
+		
 		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
 		
@@ -132,6 +137,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkull.class, new RenderSkull(manager, new ModelSkull(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpChorp.class, new RenderChorpChorp(manager, new ModelChorpChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeavyChorp.class, new RenderHeavyChorp(manager, new ModelHeavyChorp(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEyeballOctopus.class, new RenderEyeballOctopus(manager, new ModelEyeballOctopus(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityGolem.class, new RenderGolem(manager, new ModelGolem(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityParagon.class, new RenderParagon(manager, new ModelParagon(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));

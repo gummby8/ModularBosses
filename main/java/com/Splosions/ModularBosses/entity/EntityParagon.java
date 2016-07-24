@@ -207,6 +207,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		paragonDoubleFistDmg = config.get("Paragon", "[Attack Dmg] Double Fist Slam Attack Damage [1+]", 20).getInt();
 	}
 	
+	@Override
 	protected void entityInit() {
 		super.entityInit();
 		this.dataWatcher.addObject(DEATH_WATCHER, 0);

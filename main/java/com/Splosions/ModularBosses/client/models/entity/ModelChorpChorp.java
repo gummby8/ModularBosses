@@ -1204,12 +1204,7 @@ public class ModelChorpChorp extends ModelBase
 	  //this.LeftTopArm2.rotateAngleY = MathHelper.cos(par3 / 4) + 0.3F;
 	  this.LeftTopArm3.rotateAngleY = ((MathHelper.cos((ticks + 10) / 4) / 4) + 1) * -1;
 	  
-	  }
-	  
-  
-
-	  
-	  
+	  } else 	  
 	  //slumps body in death animation
 	  if(DeathCheck > 1){
 
