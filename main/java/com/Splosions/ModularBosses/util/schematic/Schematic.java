@@ -98,6 +98,7 @@ public class Schematic {
             	 k = 0;
             	 ent.mapRoom++;
             	 ent.setPositionAndUpdate(ent.posX + ent.roomWidth, ent.posY, ent.posZ);
+            	 ent.forceChunk();
             	 break;
              } else 
              if (j >= length){
@@ -107,6 +108,7 @@ public class Schematic {
              if (k >= width){
             	 j++;
             	 k = 0;
+            	 System.out.println("Building New Room");
              }else {                   
 
              

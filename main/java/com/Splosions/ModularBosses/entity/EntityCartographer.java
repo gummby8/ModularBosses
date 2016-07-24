@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.util.schematic.Room;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
@@ -14,10 +15,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 
 public class EntityCartographer extends Entity {
 
+	public Ticket ticket;
+	public boolean triedToAssignTicket;
+	
 	public static final int DUNGEON = 0;
 	public static final int WORM = 1;
 	public Room[][] roomArray;
@@ -60,18 +68,46 @@ public class EntityCartographer extends Entity {
 		this.cartType = type;
 
 	}
+	
+
+	public void forceChunkLoading(Ticket ticket) {
+		if (this.ticket == null)
+			this.ticket = ticket;
+		ChunkCoordIntPair chunk = new ChunkCoordIntPair((int)this.posX/16, (int)this.posZ/16);
+		ForgeChunkManager.forceChunk(ticket,chunk);
+	}
+	
+	
 
 	/**
 	 * Called to update the entity's position/logic.
 	 */
 	public void onUpdate() {
+		forceChunk();
+	
 		if (this.cartType == DUNGEON) {
 			dungeonGen();
 		} else if (this.cartType == WORM) {
 			wormGen();
 		}
-
 	}
+	
+public void forceChunk(){
+	if(!worldObj.isRemote){
+		triedToAssignTicket = true;
+		System.out.println("huehuehue");
+		if(ticket==null)
+			ticket = ForgeChunkManager.requestTicket(ModularBosses.instance,worldObj,Type.NORMAL);
+		if(ticket==null)
+			System.out.println("Ticket could not be reserved for Cartographer @ ("+this.posX+","+this.posY+","+this.posZ+")");
+		else {
+			ticket.getModData().setInteger("entityID",this.getEntityId());
+			ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)this.posX/16, (int)this.posZ/16));
+
+		}
+	}
+}
+	
 
 	public void wormGen() {
 		if (roomArray == null) { newRoomArray();}
@@ -276,16 +312,25 @@ public class EntityCartographer extends Entity {
 				roomPath = roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3];
 				roomPath = "./schematics/Worm/" + roomPath + "/1.schematic";
 				Schematic.quickBuild(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
+				
+				//ticket.getModData().setInteger("entityID",this.getEntityId());
+				//ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)(this.posX + 5)/16, (int)(this.posZ)/16));
+				
 				this.posX += 5;				
 			}
+			//ticket.getModData().setInteger("entityID",this.getEntityId());
+			//ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)(this.posX - 15)/16, (int)(this.posZ - 5)/16));
+			
 			this.posZ -= 5;
 			this.posX -= 15;
+			this.forceChunk();
 		}
 
 
 
 
-
+		
+		ForgeChunkManager.releaseTicket(ticket);
 		setDead();
 	}
 
@@ -346,16 +391,18 @@ public class EntityCartographer extends Entity {
 
 			roomPath = "./schematics/Dungeon Schematics/" + roomPath + ".schematic";
 			// System.out.println(roomPath);
-
+			
 			Schematic.build(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
 
 			if (mapRoom > 31) {
 				mapRoom = 0;
 				this.setPositionAndUpdate(this.posX - (this.roomWidth * 32), this.posY, this.posZ + this.roomLength);
+				this.forceChunk();
 				mapLine++;
 			}
 
 			if (this.mapLine > 31) {
+				ForgeChunkManager.releaseTicket(ticket);
 				setDead();
 
 			}

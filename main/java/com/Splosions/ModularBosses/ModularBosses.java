@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -24,6 +25,8 @@ import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
+import com.Splosions.ModularBosses.util.CartographerChunkloadCallback;
+
 
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
@@ -65,6 +68,7 @@ public class ModularBosses {
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		Config.postInit();
+		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new CartographerChunkloadCallback());
 		
 	}
 	
