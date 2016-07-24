@@ -7,6 +7,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
@@ -24,7 +25,9 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
 public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob {
 
@@ -34,6 +37,9 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 	public EntityLivingBase target;
 	public int attackCounter;
 
+	public static int eyeballOctopusMaxHealth;
+	public static int eyeballOctopusDmg;
+	
 	private static final int DEATH_WATCHER = 16;
 	private static final int TARGET_ID_WATCHER = 17;
 	private static final int ATTACK_WATCHER = 18;
@@ -66,6 +72,22 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 			this.tasks.addTask(4, this.aiArrowAttack);
 		}
 	}
+	
+	@Override
+	protected void applyEntityAttributes()
+	{
+		super.applyEntityAttributes();
+		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
+		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(0D);
+		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(20);
+	}
 
 	@Override
 	protected void entityInit() {
@@ -75,6 +97,12 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 		this.dataWatcher.addObject(ATTACK_WATCHER, 0);
 	}
 
+	
+	public static void postInitConfig(Configuration config) {
+		eyeballOctopusMaxHealth = config.get("Eyeball Octopus", "[Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
+		eyeballOctopusDmg = config.get("Eyeball Octopus", "[Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+	}
+	
 	/**
 	 * Attack the specified entity using a ranged attack.
 	 */
@@ -84,23 +112,10 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 		this.target = entity;
 		this.dataWatcher.updateObject(TARGET_ID_WATCHER, this.target.getEntityId());
 		this.dataWatcher.updateObject(ATTACK_WATCHER, this.attackCounter);
-		System.out.println("FIRINGGGGGGGGGG");
-		EntityArrow entityarrow = new EntityArrow(this.worldObj, this, entity, 1.6F, (float) (14 - this.worldObj.getDifficulty().getDifficultyId() * 4));
-		int i = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, this.getHeldItem());
-		int j = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, this.getHeldItem());
-		entityarrow.setDamage((double) (p_82196_2_ * 2.0F) + this.rand.nextGaussian() * 0.25D + (double) ((float) this.worldObj.getDifficulty().getDifficultyId() * 0.11F));
 
-		if (i > 0) {
-			entityarrow.setDamage(entityarrow.getDamage() + (double) i * 0.5D + 0.5D);
-		}
 
-		if (j > 0) {
-			entityarrow.setKnockbackStrength(j);
-		}
-
-		// this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat()
-		// * 0.4F + 0.8F));
-		// this.worldObj.spawnEntityInWorld(entityarrow);
+		this.playSound("mob.enderdragon.hit", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+		this.target.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
 	}
 
 	@Override

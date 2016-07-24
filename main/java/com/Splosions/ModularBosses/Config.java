@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses;
 import java.io.File;
 
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
+import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 import com.Splosions.ModularBosses.entity.EntityHeavyChorp;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.EntityTatters;
@@ -77,7 +78,7 @@ public class Config {
 		EntityTatters.postInitConfig(config);
 		EntityChorpChorp.postInitConfig(config); 
 		EntityHeavyChorp.postInitConfig(config); 
-		
+		EntityEyeballOctopus.postInitConfig(config);
 		
 
 		

@@ -174,7 +174,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		
 
 		if (foundList.size() < spawnCount && inputPower == 1){
-			System.out.println("DERP");
+
 			if (Instant.now().getEpochSecond() >= targetTime && inputPower == 1 && !this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
 				findMobs();
 				spawnList = new ArrayList<String>(foundList);
