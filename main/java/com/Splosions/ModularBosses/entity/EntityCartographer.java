@@ -94,8 +94,7 @@ public class EntityCartographer extends Entity {
 	
 public void forceChunk(){
 	if(!worldObj.isRemote){
-		triedToAssignTicket = true;
-		System.out.println("huehuehue");
+		System.out.println("Loading Chunk");
 		if(ticket==null)
 			ticket = ForgeChunkManager.requestTicket(ModularBosses.instance,worldObj,Type.NORMAL);
 		if(ticket==null)
