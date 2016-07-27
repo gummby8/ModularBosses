@@ -98,7 +98,7 @@ public class ModularBossesEntities
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
 		EntityRegistry.registerModEntity(EntityEyeballOctopus.class, "EyeballOctopus", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityEyeballOctopus.class, "EyeballOctopus", 0x990000, 0x999900);
+		CustomEntityList.addMapping(EntityEyeballOctopus.class, "EyeballOctopus", 0xff66cc, 0x00ccff);
 		
 		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );

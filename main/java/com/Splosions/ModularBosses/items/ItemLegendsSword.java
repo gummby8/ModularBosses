@@ -77,7 +77,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
 		Entity entityIn = (Entity)playerIn;
-		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
+		if (entityIn.ridingEntity != null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
 			worldIn.theProfiler.startSection("portal");
 			int dim = 0;
 			if (worldIn.provider.getDimensionId() == -3) {
@@ -106,7 +106,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			worldIn.theProfiler.endSection();
 		}
 
-
+		
         return itemStackIn;
 	}
 	
