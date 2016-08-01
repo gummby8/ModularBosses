@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderTatters extends RenderLiving {
 	
+	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/Tatters.png");
 	
     public RenderTatters(RenderManager renderManager, ModelBase model, float shadowSize) {
 		super(renderManager, model, shadowSize);
@@ -30,7 +31,7 @@ public class RenderTatters extends RenderLiving {
 		
 		}
 		
-		return new ResourceLocation("mb:textures/mobs/Tatters.png");
+		return rec;
 	}
 	
 }
