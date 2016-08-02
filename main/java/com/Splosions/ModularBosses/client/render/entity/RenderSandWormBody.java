@@ -24,11 +24,11 @@ import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 
 
 @SideOnly(Side.CLIENT)
-public class RenderSandWorm extends RenderLiving
+public class RenderSandWormBody extends RenderLiving
 {
-	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/SandWorm.png");
+	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/SandWormSegment.png");
 
-    public RenderSandWorm(RenderManager renderManager, ModelBase model, float shadowSize) {
+    public RenderSandWormBody(RenderManager renderManager, ModelBase model, float shadowSize) {
 		super(renderManager, model, shadowSize);
 		
  
@@ -60,6 +60,7 @@ public class RenderSandWorm extends RenderLiving
 		float scale = 5F;
 		GL11.glScalef(scale, scale, scale);
 		GL11.glTranslatef(0.0F, -10F, 0.0F);
+		GL11.glRotated(90, 0, 1, 0);
 		GL11.glPopMatrix();
 	}
 

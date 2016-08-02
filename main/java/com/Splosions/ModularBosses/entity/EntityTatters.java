@@ -288,11 +288,6 @@ public class EntityTatters extends EntityMob {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote){
-			System.out.println(this.getHealth());	
-		}
-		
-		
 		if (this.dataWatcher.getWatchableObjectInt(TELEPORT) == 1) {
 			for (int i = 0; i < 300; ++i) {
 				float x = (this.rand.nextFloat() - 0.5F) * 2F;

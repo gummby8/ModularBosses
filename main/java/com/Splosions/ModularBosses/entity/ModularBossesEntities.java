@@ -10,7 +10,9 @@ import com.Splosions.ModularBosses.client.models.entity.ModelGolem;
 import com.Splosions.ModularBosses.client.models.entity.ModelHeavyChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldormAlpha;
 import com.Splosions.ModularBosses.client.models.entity.ModelParagon;
+import com.Splosions.ModularBosses.client.models.entity.ModelSandWormBody;
 import com.Splosions.ModularBosses.client.models.entity.ModelSandWormHead;
+import com.Splosions.ModularBosses.client.models.entity.ModelSandWormTail;
 import com.Splosions.ModularBosses.client.models.entity.ModelShadeHowler;
 import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
@@ -24,6 +26,8 @@ import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderMoldormAlpha;
 import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
 import com.Splosions.ModularBosses.client.render.entity.RenderSandWorm;
+import com.Splosions.ModularBosses.client.render.entity.RenderSandWormBody;
+import com.Splosions.ModularBosses.client.render.entity.RenderSandWormTail;
 import com.Splosions.ModularBosses.client.render.entity.RenderShadeHowler;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
@@ -123,8 +127,8 @@ public class ModularBossesEntities
 		CustomEntityList.addMapping(EntityTattersHead.class, "TattersHead", 0x000000, 0x000000);
 		
 		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormBodySegment.class, "SandWormBody", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormTailSegment.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormBody.class, "SandWormBody", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xff6699);
 		
 		EntityRegistry.registerModEntity(EntityShadeHowler.class, "ShadeHowler", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
@@ -156,6 +160,9 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWorm.class, new RenderSandWorm(manager, new ModelSandWormHead(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormBody.class, new RenderSandWormBody(manager, new ModelSandWormBody(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormTail.class, new RenderSandWormTail(manager, new ModelSandWormTail(), 1));
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));

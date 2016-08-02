@@ -10,22 +10,31 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
-public class EntitySandWormBodySegment  extends EntityMob
+public class EntitySandWormBody  extends EntityMob
 {
-    /** The explosion radius of spawned fireballs. */
-    private int explosionStrength = 1;
-    private static final String __OBFID = "CL_00001689";
     
     public boolean TargetLocked;
 
-    public EntitySandWormBodySegment(World worldIn)
+    public EntitySandWormBody(World worldIn)
     {
         super(worldIn);
         this.setSize(4.0F, 4.0F);
         this.isImmuneToFire = true;
         this.experienceValue = 5;
-        this.targetTasks.addTask(1, new EntityAIFindEntityNearestPlayer(this));
         this.ignoreFrustumCheck = true;
+        this.enablePersistence();
+    }
+    
+
+    public EntitySandWormBody(World worldIn, double posX, double posY, double posZ, float yaw, float pitch)
+    {
+        super(worldIn);
+        this.setSize(4.0F, 4.0F);
+        this.setLocationAndAngles(posX, posY, posZ, yaw, pitch);
+        this.isImmuneToFire = true;
+        this.experienceValue = 5;
+        this.ignoreFrustumCheck = true;
+        this.enablePersistence();
     }
 
 
@@ -37,7 +46,7 @@ public class EntitySandWormBodySegment  extends EntityMob
     {
         super.onUpdate();
         this.ignoreFrustumCheck = true;
-        
+        //System.out.println(this.getHealth());
         
         
         

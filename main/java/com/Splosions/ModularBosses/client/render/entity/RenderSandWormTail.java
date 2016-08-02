@@ -24,11 +24,11 @@ import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 
 
 @SideOnly(Side.CLIENT)
-public class RenderSandWorm extends RenderLiving
+public class RenderSandWormTail extends RenderLiving
 {
-	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/SandWorm.png");
+	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/SandWormSegment.png");
 
-    public RenderSandWorm(RenderManager renderManager, ModelBase model, float shadowSize) {
+    public RenderSandWormTail(RenderManager renderManager, ModelBase model, float shadowSize) {
 		super(renderManager, model, shadowSize);
 		
  
