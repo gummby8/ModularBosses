@@ -79,6 +79,7 @@ public class EntityChorpChorp extends EntityMob
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
+		this.enablePersistence();
 	}
 
 	//stuns the mob

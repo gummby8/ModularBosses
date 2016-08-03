@@ -97,10 +97,10 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 				worldIn.spawnEntityInWorld(entity);
 				}
 			
-			/**
+			
 			Entity entity = new EntityCartographer(ws, playerIn, EntityCartographer.WORM, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
 			ws.spawnEntityInWorld(entity);
-			*/
+			
 			
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
 			worldIn.theProfiler.endSection();
