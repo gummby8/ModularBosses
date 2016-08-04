@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -46,22 +47,22 @@ public class EntitySandWormTail  extends EntityMob
 	/**
      * Called to update the entity's position/logic.
      */
+    @Override
     public void onUpdate()
     {
         super.onUpdate();
         this.ignoreFrustumCheck = true;
-        
-        
-        
-        
-        
-        
-        
     }
 
 
 
-
+	/**
+	 * Called when the entity is attacked.
+	 */
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		return false;
+	}
 
 
 

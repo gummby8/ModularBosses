@@ -40,7 +40,8 @@ public class RenderSandWormTail extends RenderLiving
 		float scale = 1F;
 		GL11.glScalef(scale, scale, scale);
 		GL11.glTranslatef(0.0F, -10F, 0.0F);
-		GL11.glRotated(90, 0, 1, 0);
+		GL11.glRotatef(90, 0, 1, 0);
+		GL11.glRotatef(entity.rotationPitch, 1, 0, 0);
 		return rec;
 	}
 
