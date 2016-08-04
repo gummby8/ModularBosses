@@ -33,34 +33,13 @@ public class RenderSandWorm extends RenderLiving
 		
  
     }
-    
-    @Override
-    public boolean shouldRenderLiving(EntityLiving p_177104_1_, ICamera p_177104_2_, double p_177104_3_, double p_177104_5_, double p_177104_7_)
-    {
-    	return true;
-    }
-	
-    @Override
-    public boolean shouldRender(Entity entity, ICamera camera, double camX, double camY, double camZ){
-    	return true;
-    }
-
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-
-		return rec;
-	}
-
-	@Override
-	public void doRender(EntityLiving entity, double x, double y, double z, float p_76986_8_, float partialTicks) {
-		super.doRender(entity, x, y, z, p_76986_8_, partialTicks);
-
-		GL11.glPushMatrix();
-		float scale = 5F;
+		float scale = 1F;
 		GL11.glScalef(scale, scale, scale);
 		GL11.glTranslatef(0.0F, -10F, 0.0F);
-		GL11.glPopMatrix();
+		return rec;
 	}
 
 }
