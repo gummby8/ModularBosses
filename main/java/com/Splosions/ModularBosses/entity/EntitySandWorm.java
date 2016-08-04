@@ -18,7 +18,7 @@ public class EntitySandWorm  extends EntityMob
 {
     
     
-	public Entity[] bodySegments = new Entity[10];
+	public Entity[] bodySegments;
     
 
     public EntitySandWorm(World worldIn)
@@ -40,10 +40,12 @@ public class EntitySandWorm  extends EntityMob
         super.onUpdate();
         this.ignoreFrustumCheck = true;
         
-        if (this.ticksExisted == 1 && !this.worldObj.isRemote){
+        if (bodySegments == null && !this.worldObj.isRemote){
+        	bodySegments = new Entity[10];
 			for (int x = 0; x < bodySegments.length; x++) {
+				System.out.println("Segemtns = " + bodySegments.length + "X = " + x);
 				float offset = (x == 0)? 10 : (x * 10);
-				bodySegments[x] = (x == bodySegments.length)? new EntitySandWormTail(worldObj, this.posX, this.posY, this.posZ - offset, this.rotationYaw, this.rotationPitch) : new EntitySandWormBody(worldObj, this.posX, this.posY, this.posZ - offset, this.rotationYaw, this.rotationPitch);
+				bodySegments[x] = (x == (bodySegments.length + 1))? new EntitySandWormTail(worldObj, this.posX, this.posY, this.posZ - offset, this.rotationYaw, this.rotationPitch) : new EntitySandWormBody(worldObj, this.posX, this.posY, this.posZ - offset, this.rotationYaw, this.rotationPitch);
 				this.worldObj.spawnEntityInWorld(bodySegments[x]);
 			}
         }
