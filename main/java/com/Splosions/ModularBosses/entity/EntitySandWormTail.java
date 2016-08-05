@@ -2,8 +2,10 @@ package com.Splosions.ModularBosses.entity;
 
 import java.util.Random;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
-public class EntitySandWormTail  extends EntityMob
+public class EntitySandWormTail  extends Entity
 {
     /** The explosion radius of spawned fireballs. */
     private int explosionStrength = 1;
@@ -24,10 +26,7 @@ public class EntitySandWormTail  extends EntityMob
         super(worldIn);
         this.setSize(4.0F, 4.0F);
         this.isImmuneToFire = true;
-        this.experienceValue = 5;
-        this.targetTasks.addTask(1, new EntityAIFindEntityNearestPlayer(this));
         this.ignoreFrustumCheck = true;
-        this.enablePersistence();
     }
 
 
@@ -37,9 +36,8 @@ public class EntitySandWormTail  extends EntityMob
         this.setSize(4.0F, 4.0F);
         this.setLocationAndAngles(posX, posY, posZ, yaw, pitch);
         this.isImmuneToFire = true;
-        this.experienceValue = 5;
         this.ignoreFrustumCheck = true;
-        this.enablePersistence();
+        this.noClip = true;
 	}
 
 
@@ -56,12 +54,26 @@ public class EntitySandWormTail  extends EntityMob
 
 
 
-	/**
-	 * Called when the entity is attacked.
-	 */
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		return false;
+	protected void entityInit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound tagCompund) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	protected void writeEntityToNBT(NBTTagCompound tagCompound) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

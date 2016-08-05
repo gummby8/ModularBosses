@@ -21,8 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntitySandWorm  extends Entity
 {
-    
-    
+
+	
 	public Entity[] bodySegments;
     
 
@@ -32,35 +32,39 @@ public class EntitySandWorm  extends Entity
         this.setSize(4.0F, 4.0F);
         this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
+        this.noClip = true;
     }
+    
+    
 
 
+
+    
     /**
      * Called to update the entity's position/logic.
      */
     @Override
-    public void onUpdate()
-    {
+    public void onUpdate(){
         super.onUpdate();
-     
+        
         this.ignoreFrustumCheck = true;
         if (bodySegments == null && !this.worldObj.isRemote){
         	bodySegments = new Entity[10];
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x] = (x + 1 == bodySegments.length)? new EntitySandWormTail(worldObj, this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch) : new EntitySandWormBody(worldObj, this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
 				this.worldObj.spawnEntityInWorld(bodySegments[x]);
+				System.out.println(x);
 			}
         }
-        System.out.println("Pitch = " + this.rotationPitch);
         
+        //this.rotationYaw = 0;
+        //this.rotationPitch = 0;  
 
         
         if (!this.worldObj.isRemote){
         	
-        float spacing = 15;
-        this.rotationYaw++;
-        this.rotationPitch++;
-        
+        float spacing = 8;
+       
            	PseudoChild(this,spacing,bodySegments[0]);
         	PseudoChild(bodySegments[0],spacing,bodySegments[1]);
         	PseudoChild(bodySegments[1],spacing,bodySegments[2]);
@@ -71,47 +75,47 @@ public class EntitySandWorm  extends Entity
         	PseudoChild(bodySegments[6],spacing,bodySegments[7]);
         	PseudoChild(bodySegments[7],spacing,bodySegments[8]);
         	PseudoChild(bodySegments[8],spacing,bodySegments[9]);
+        	//dead();
         }
-
-        
-        
-        
-        
         
     }
 
 
+    
+    public void dead(){
+    	for (int x = 0; x < bodySegments.length; x++) {
+    		bodySegments[x].setDead();
+    	}
+    	setDead();
+    }
 
-	public void PseudoChild(Entity Parent, float ParentLength, Entity Child) {
-		float parentYaw = (float) Math.toRadians(Parent.rotationYaw);
-		float parentPitch = (float) Math.toRadians(Parent.rotationPitch);
+    
+    
+    
+
+	public void PseudoChild(Entity parent, float length, Entity child) {
 		
-		double x = ((ParentLength * MathHelper.cos(parentPitch) * MathHelper.cos(parentYaw)) + Parent.posX);
-		double y = ((ParentLength * MathHelper.sin(parentPitch)) + Parent.posY);
-		double z = (ParentLength * MathHelper.cos(parentPitch) * MathHelper.sin(parentYaw)) + Parent.posZ;
-
-		Child.rotationYaw = Child.rotationYaw + ((Parent.rotationYaw - Child.rotationYaw) * 0.25F);
-		Child.rotationPitch = Child.rotationPitch + ((Parent.rotationPitch - Child.rotationPitch) * 0.25F);
-
-		Child.setPositionAndUpdate(x, y, z);
+		child.prevPosX = child.posX;
+		child.prevPosY = child.posY;
+		child.prevPosZ = child.posZ;
 		
+		child.prevRotationPitch = child.rotationPitch;
+		child.prevRotationYaw = child.rotationYaw;
+		
+		float parentYaw = (parent.rotationYaw + 90) * 0.0174533F;
+		float parentPitch = (parent.rotationPitch) * 0.0174533F;
+		
+		double x = ((length * MathHelper.cos(parentPitch) * MathHelper.cos(parentYaw)) + parent.posX);
+		double y = ((length * MathHelper.sin(parentPitch)) + parent.posY);
+		double z = (length * MathHelper.cos(parentPitch) * MathHelper.sin(parentYaw)) + parent.posZ;
 
+		float yaw = child.rotationYaw + ((parent.rotationYaw - child.rotationYaw) * 0.1F);
+		float pitch = child.rotationPitch + ((parent.rotationPitch - child.rotationPitch) * 0.1F);
+
+		child.setLocationAndAngles(x, y, z, yaw, pitch);
 	}
 
-	/**
-	 * Called when the entity is attacked.
-	 */
-	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		return false;
-	}
 
-
-	@Override
-	protected void entityInit() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	@Override
@@ -123,6 +127,17 @@ public class EntitySandWorm  extends Entity
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound tagCompound) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+
+	@Override
+	protected void entityInit() {
 		// TODO Auto-generated method stub
 		
 	}

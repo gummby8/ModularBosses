@@ -139,6 +139,9 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 				entityliving.renderYawOffset = entityliving.rotationYaw;
 				world.spawnEntityInWorld(entity);
 				entityliving.playLivingSound();
+			} else {
+				entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+				world.spawnEntityInWorld(entity);
 			}
 		}
 		return entity;

@@ -1,14 +1,10 @@
 package com.Splosions.ModularBosses.client.render.entity;
 
 
+
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelSpider;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,13 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelSandWormHead;
-import com.Splosions.ModularBosses.client.models.projectiles.ModelCartographer;
-import com.Splosions.ModularBosses.entity.EntityCartographer;
-import com.Splosions.ModularBosses.entity.EntityChorpChorp;
-import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 import com.Splosions.ModularBosses.entity.EntitySandWorm;
+
 
 
 
@@ -52,8 +44,9 @@ public class RenderSandWorm extends Render
 		bindTexture(getEntityTexture(worm));
 		GL11.glTranslated(x, y, z);
 		GL11.glScalef(scale, scale, scale);
-		GL11.glRotatef(entity.rotationYaw, 1, 0, 0);
-		GL11.glRotatef(entity.rotationPitch, 1, 0, 0);
+		GL11.glRotatef(-entity.rotationYaw, 0, 1, 0);
+		GL11.glRotatef(-entity.rotationPitch, 1, 0, 0);
+		GL11.glRotatef(180, 0, 0, 1);
 		
 		model.render(worm, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GL11.glPopMatrix();
