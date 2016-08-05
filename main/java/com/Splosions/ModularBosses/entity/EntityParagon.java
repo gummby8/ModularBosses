@@ -272,7 +272,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
 		
-		
+
 
 		if(this.retaliation){
 			if (this.target.getDistanceToEntity(this) < 3) {

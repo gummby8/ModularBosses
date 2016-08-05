@@ -15,11 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntitySandWormTail  extends Entity
 {
-    /** The explosion radius of spawned fireballs. */
-    private int explosionStrength = 1;
-    private static final String __OBFID = "CL_00001689";
-    
-    public boolean TargetLocked;
+
 
     public EntitySandWormTail(World worldIn)
     {
@@ -48,13 +44,13 @@ public class EntitySandWormTail  extends Entity
     @Override
     public void onUpdate()
     {
-        super.onUpdate();
+        //super.onUpdate();
         this.ignoreFrustumCheck = true;
+        this.noClip = true;
         
         if (this.worldObj.isRemote){
-        	
-        }
-        
+        	System.out.println(this.rotationPitch);
+    	}
     }
 
 

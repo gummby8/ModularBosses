@@ -46,11 +46,9 @@ public class EntitySandWormBody  extends Entity
     @Override
     public void onUpdate()
     {
-        super.onUpdate();
+        //super.onUpdate();
         this.ignoreFrustumCheck = true;
-        if (!this.worldObj.isRemote){
-        	System.out.println("Tail = " + this.rotationPitch);	
-        }
+        this.noClip = true;
         
         
 
