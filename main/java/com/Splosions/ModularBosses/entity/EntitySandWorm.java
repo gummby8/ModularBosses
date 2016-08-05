@@ -43,7 +43,7 @@ public class EntitySandWorm  extends Entity implements IEntityAdditionalSpawnDat
 				entIDs[x] = bodySegments[x].getEntityId();
 			}
 		}
-        
+        this.noClip = true;
     }
     
     
@@ -58,6 +58,9 @@ public class EntitySandWorm  extends Entity implements IEntityAdditionalSpawnDat
     public void onUpdate(){
         super.onUpdate();
         
+        this.motionX = 0;
+        this.motionY = 0;
+        this.motionZ = 0;
         
 		if (this.ticksExisted == 1 && !this.worldObj.isRemote) {
 			// bodySegments = new Entity[10];
@@ -77,7 +80,7 @@ public class EntitySandWorm  extends Entity implements IEntityAdditionalSpawnDat
         //this.rotationYaw++;
         this.rotationPitch++;
         
-        if (this.ticksExisted > 60){
+        if (this.ticksExisted > 80){
         	if (this.worldObj.isRemote && bodySegments == null){
         		bodySegments = new Entity[10];
         		for (int x = 0; x < bodySegments.length; x++) {
@@ -86,7 +89,7 @@ public class EntitySandWorm  extends Entity implements IEntityAdditionalSpawnDat
         	}
 
             
-            float spacing = 8;
+            float spacing = 7;
        
            	PseudoChild(this,spacing,bodySegments[0]);
         	PseudoChild(bodySegments[0],spacing,bodySegments[1]);

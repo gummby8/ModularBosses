@@ -48,9 +48,7 @@ public class EntitySandWormTail  extends Entity
         this.ignoreFrustumCheck = true;
         this.noClip = true;
         
-        if (this.worldObj.isRemote){
-        	System.out.println(this.rotationPitch);
-    	}
+
     }
 
 

@@ -22,7 +22,6 @@ public class EntitySandWormBody  extends Entity
     {
         super(worldIn);
         this.setSize(4.0F, 4.0F);
-        this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
         
     }
@@ -33,7 +32,6 @@ public class EntitySandWormBody  extends Entity
         super(worldIn);
         this.setSize(4.0F, 4.0F);
         this.setLocationAndAngles(posX, posY, posZ, yaw, pitch);
-        this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
         this.noClip = true;
     }
@@ -46,7 +44,7 @@ public class EntitySandWormBody  extends Entity
     @Override
     public void onUpdate()
     {
-        //super.onUpdate();
+        super.onUpdate();
         this.ignoreFrustumCheck = true;
         this.noClip = true;
         
@@ -75,18 +73,5 @@ public class EntitySandWormBody  extends Entity
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-
-
-
-
-
-    
-
-
-    
-
 
 }
