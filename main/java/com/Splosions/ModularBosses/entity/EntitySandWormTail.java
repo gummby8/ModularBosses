@@ -50,6 +50,11 @@ public class EntitySandWormTail  extends Entity
     {
         super.onUpdate();
         this.ignoreFrustumCheck = true;
+        
+        if (this.worldObj.isRemote){
+        	
+        }
+        
     }
 
 

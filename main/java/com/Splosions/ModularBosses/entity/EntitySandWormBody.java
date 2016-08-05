@@ -24,7 +24,7 @@ public class EntitySandWormBody  extends Entity
         this.setSize(4.0F, 4.0F);
         this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
-        this.noClip = true;
+        
     }
     
 
@@ -35,6 +35,7 @@ public class EntitySandWormBody  extends Entity
         this.setLocationAndAngles(posX, posY, posZ, yaw, pitch);
         this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
+        this.noClip = true;
     }
 
 
@@ -47,6 +48,13 @@ public class EntitySandWormBody  extends Entity
     {
         super.onUpdate();
         this.ignoreFrustumCheck = true;
+        if (!this.worldObj.isRemote){
+        	System.out.println("Tail = " + this.rotationPitch);	
+        }
+        
+        
+
+        
     }
 
 

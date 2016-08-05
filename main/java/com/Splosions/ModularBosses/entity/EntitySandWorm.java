@@ -60,8 +60,10 @@ public class EntitySandWorm  extends Entity
         //this.rotationYaw = 0;
         //this.rotationPitch = 0;  
 
+        //this.rotationYaw++;
+        this.rotationPitch++;
         
-        if (!this.worldObj.isRemote){
+        if (!this.worldObj.isRemote && this.ticksExisted > 10){
         	
         float spacing = 8;
        
@@ -74,7 +76,9 @@ public class EntitySandWorm  extends Entity
         	PseudoChild(bodySegments[5],spacing,bodySegments[6]);
         	PseudoChild(bodySegments[6],spacing,bodySegments[7]);
         	PseudoChild(bodySegments[7],spacing,bodySegments[8]);
+        	System.out.println("Head Before = " + bodySegments[9].rotationPitch);
         	PseudoChild(bodySegments[8],spacing,bodySegments[9]);
+        	System.out.println("Head After = " + bodySegments[9].rotationPitch);
         	//dead();
         }
         
