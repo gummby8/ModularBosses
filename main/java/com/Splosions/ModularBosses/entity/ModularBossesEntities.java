@@ -126,9 +126,9 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityTattersHead.class, "TattersHead", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityTattersHead.class, "TattersHead", 0x000000, 0x000000);
 		
-		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormBody.class, "SandWormBody", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 300, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormBody.class, "SandWormBody", ++modEntityIndex, ModularBosses.instance, 300, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 300, 3, true);
 		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xff6699);
 		
 		EntityRegistry.registerModEntity(EntityShadeHowler.class, "ShadeHowler", ++modEntityIndex, ModularBosses.instance, 80, 3, true);

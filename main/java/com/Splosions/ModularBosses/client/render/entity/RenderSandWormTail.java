@@ -50,7 +50,7 @@ public class RenderSandWormTail extends Render
 	public void renderEntityModel(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntitySandWormTail worm = (EntitySandWormTail) entity;
 		GL11.glPushMatrix();
-		float scale = 1;
+		float scale = 3;
 		bindTexture(getEntityTexture(worm));
 		GL11.glTranslated(x, y, z);
 		GL11.glScalef(scale, scale, scale);

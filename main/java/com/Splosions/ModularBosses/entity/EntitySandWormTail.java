@@ -15,25 +15,28 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntitySandWormTail  extends Entity
 {
-
+    public int segmentNum;
+    public Entity parent;
 
     public EntitySandWormTail(World worldIn)
     {
         super(worldIn);
-        this.setSize(4.0F, 4.0F);
+        this.setSize(18.0F, 18.0F);
         this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
     }
 
 
 
-    public EntitySandWormTail(World worldIn, double posX, double posY, double posZ, float yaw, float pitch) {
+    public EntitySandWormTail(World worldIn, double posX, double posY, double posZ, float yaw, float pitch, int segmentNum, Entity parent) {
         super(worldIn);
-        this.setSize(4.0F, 4.0F);
+        this.setSize(18.0F, 18.0F);
         this.setLocationAndAngles(posX, posY, posZ, yaw, pitch);
         this.isImmuneToFire = true;
         this.ignoreFrustumCheck = true;
         this.noClip = true;
+        this.segmentNum = segmentNum;
+        this.parent = parent;
 	}
 
 
@@ -46,12 +49,19 @@ public class EntitySandWormTail  extends Entity
     {
         //super.onUpdate();
         this.ignoreFrustumCheck = true;
-        this.noClip = true;
-        
+
+        if (!this.worldObj.isRemote){
+        	if (this.parent == null){
+        		setDead();
+        	} else if (this.parent.isDead) {
+        		setDead();
+        	}
+        }
 
     }
 
 
+    
 
 	@Override
 	protected void entityInit() {
