@@ -26,6 +26,12 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 	private static final int RANDOM_X_WATCHER = 16;
 	private static final int RANDOM_Y_WATCHER = 17;
 	private static final int RANDOM_Z_WATCHER = 18;
+	
+	private static final int YAW_WATCHER = 17;
+	private static final int PITCH_WATCHER = 18;
+	
+	public float yaw;
+	public float pitch;
 
 	public Entity[] bodySegments;
 	public int entIDs[] = new int[10];
@@ -47,7 +53,6 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 				entIDs[x] = bodySegments[x].getEntityId();
 			}
 		}
-		this.noClip = true;
 	}
 
 	@Override
@@ -72,19 +77,21 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 		}
 
 		if (this.ticksExisted % 200 == (200 - 1) && !this.worldObj.isRemote) {
-			this.ranPosX = 0;//TargetUtils.getRanNum(-2000, 2000);
-			this.ranPosY = 0;//TargetUtils.getRanNum(0, 256);
-			this.ranPosZ = 0;//TargetUtils.getRanNum(-2000, 2000);
+			this.ranPosX = TargetUtils.getRanNum(-2000, 2000);
+			this.ranPosY = 200;
+			this.ranPosZ = TargetUtils.getRanNum(-2000, 2000);
 			this.dataWatcher.updateObject(RANDOM_X_WATCHER, this.ranPosX);
 			this.dataWatcher.updateObject(RANDOM_Y_WATCHER, this.ranPosY);
 			this.dataWatcher.updateObject(RANDOM_Z_WATCHER, this.ranPosZ);
 		}
 
 		faceLocation(this.ranPosX, this.ranPosY, this.ranPosZ, 1, 1);
+		moveForward(0.1F);
+        this.posX += this.motionX;
+        this.posY += this.motionY;
+        this.posZ += this.motionZ;
 
-		this.motionX = 0;
-		this.motionY = 0;
-		this.motionZ = 0;
+		System.out.println(this.motionX);
 
 		if (this.ticksExisted == 1 && !this.worldObj.isRemote) {
 			for (int x = 0; x < bodySegments.length; x++) {
@@ -104,7 +111,7 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 					}
 				}
 
-				float spacing = 21;
+				float spacing = 7;
 				PseudoChild(this, spacing, bodySegments[0]);
 				PseudoChild(bodySegments[0], spacing, bodySegments[1]);
 				PseudoChild(bodySegments[1], spacing, bodySegments[2]);
@@ -129,6 +136,14 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 
 		}
 
+	}
+
+	public void moveForward(float speed) {
+
+		float f2 = MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F);
+		float f3 = MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F);
+		this.motionX = (double) (-1 * speed * -f2);
+		this.motionZ = (double) (speed * -f3);
 	}
 
 	/**
