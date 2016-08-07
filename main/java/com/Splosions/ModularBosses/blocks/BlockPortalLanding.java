@@ -37,11 +37,8 @@ public class BlockPortalLanding extends Block implements IVanillaRotation
 			roomData = new PortalLandingWorldData("lobbyPortals");
 			worldIn.getPerWorldStorage().setData("lobbyPortals", roomData);
 		}		
-		System.out.println("Player = " + "[" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + "]");
-		NBTTagCompound compound = new NBTTagCompound();
     	roomData.addPortalLanding(0, pos.getX(), pos.getY(), pos.getZ());
     	roomData.markDirty();
-    	System.out.println(roomData.portalLandingList.size());
 		
 		
         return this.getStateFromMeta(meta);

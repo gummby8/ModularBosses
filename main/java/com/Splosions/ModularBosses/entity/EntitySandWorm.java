@@ -168,7 +168,9 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 	}
 	
 	
-    
+    public void createDungeon(){
+    	
+    }
     
 	/**
 	 * Called to update the entity's position/logic.
