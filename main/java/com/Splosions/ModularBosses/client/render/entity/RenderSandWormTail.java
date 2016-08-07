@@ -23,7 +23,6 @@ import com.Splosions.ModularBosses.client.models.entity.ModelSandWormBody;
 import com.Splosions.ModularBosses.client.models.entity.ModelSandWormTail;
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
-import com.Splosions.ModularBosses.entity.EntitySandWormBody;
 import com.Splosions.ModularBosses.entity.EntitySandWormTail;
 
 
@@ -44,22 +43,19 @@ public class RenderSandWormTail extends Render
 
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTick) {
-		renderEntityModel(entity, x, y, z, yaw, partialTick);
-	}
-
-	public void renderEntityModel(Entity entity, double x, double y, double z, float yaw, float partialTick) {
 		EntitySandWormTail worm = (EntitySandWormTail) entity;
 		GL11.glPushMatrix();
-		float scale = 1;
+		float scale = 3;
 		bindTexture(getEntityTexture(worm));
-		GL11.glTranslated(x, y, z);
+		GL11.glTranslated(x, y - 5, z);
 		GL11.glScalef(scale, scale, scale);
-		GL11.glRotatef(-entity.rotationYaw + 90, 0, 1, 0);
-		GL11.glRotatef(-entity.rotationPitch, 0, 0, 1);
-		
+		GL11.glRotatef(-worm.yaw + 90, 0, 1, 0);
+		GL11.glRotatef(-worm.pitch, 0, 0, 1);
 		model.render(worm, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GL11.glPopMatrix();
 	}
+
+
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return rec;

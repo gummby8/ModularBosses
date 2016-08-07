@@ -26,7 +26,6 @@ import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderMoldormAlpha;
 import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
 import com.Splosions.ModularBosses.client.render.entity.RenderSandWorm;
-import com.Splosions.ModularBosses.client.render.entity.RenderSandWormBody;
 import com.Splosions.ModularBosses.client.render.entity.RenderSandWormTail;
 import com.Splosions.ModularBosses.client.render.entity.RenderShadeHowler;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
@@ -126,9 +125,8 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityTattersHead.class, "TattersHead", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityTattersHead.class, "TattersHead", 0x000000, 0x000000);
 		
-		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 300, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormBody.class, "SandWormBody", ++modEntityIndex, ModularBosses.instance, 300, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 300, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
 		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xff6699);
 		
 		EntityRegistry.registerModEntity(EntityShadeHowler.class, "ShadeHowler", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
@@ -159,8 +157,8 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
+
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWorm.class, new RenderSandWorm(manager));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormBody.class, new RenderSandWormBody(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormTail.class, new RenderSandWormTail(manager));
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 1));

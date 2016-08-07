@@ -140,7 +140,8 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 				world.spawnEntityInWorld(entity);
 				entityliving.playLivingSound();
 			} else {
-				entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+				//entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+				entity.setPosition(x, y, z);
 				world.spawnEntityInWorld(entity);
 			}
 		}
