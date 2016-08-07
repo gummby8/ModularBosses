@@ -60,7 +60,7 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 		setScale(scale);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
-		this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
+		//this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
 		this.Dmg = 40;
 	}
 

@@ -54,7 +54,7 @@ public class MBCreativeTabs
 		@Override
 		@SideOnly(Side.CLIENT)
 		public Item getTabIconItem() {
-			return ModularBossesItems.eggSpawner;
+			return ModularBossesItems.spawn_egg;
 		}
 	};
 }

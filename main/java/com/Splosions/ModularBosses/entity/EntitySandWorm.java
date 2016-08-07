@@ -69,7 +69,7 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 
 	public EntitySandWorm(World worldIn) {
 		super(worldIn);
-		this.setSize(5F, 5F);
+		this.setSize(8F, 8F);
 		this.spawnPosX = 0;
 		this.spawnPosZ = 0;
 		this.spawnPosY = 0;
@@ -189,7 +189,7 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 	public void onUpdate() {
 
 		if (!this.worldObj.isRemote){
-		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(10, 10, 10));
+		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(15, 15, 15));
 		teleEntitiesInList(teleList);
 		}
 		

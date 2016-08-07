@@ -87,7 +87,7 @@ public class ModularBossesItems {
 	
 	//================ SPAWN EGGS TAB ================//
 	public static Item
-	eggSpawner;
+	spawn_egg;
 	
 	
 	//================ NO TAB ================//
@@ -103,7 +103,7 @@ public class ModularBossesItems {
 		 
 		 slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
 		 
-		 eggSpawner = new ItemCustomEgg().setUnlocalizedName("spawn_egg");
+		 spawn_egg = new ItemCustomEgg().setUnlocalizedName("spawn_egg");
 	}
 
 	
@@ -143,9 +143,7 @@ public class ModularBossesItems {
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerRenders(){
-		//registerRender(Legends_Sword);
 		registerRender(slimeblob);
-		
 	}
 	
 	

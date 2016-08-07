@@ -67,7 +67,7 @@ public class EntitySandWormTail  extends Entity implements IEntityAdditionalSpaw
 
 			entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
 
-			System.out.println(entity);
+			//System.out.println(entity);
 		}
 
 	}

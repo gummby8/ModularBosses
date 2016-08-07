@@ -6,6 +6,8 @@ import java.util.List;
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.entity.CustomEntityList;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.entity.projectile.EntityCustomEgg;
 import com.Splosions.ModularBosses.items.dispenser.BehaviorDispenseCustomMobEgg;
 
 import net.minecraft.block.BlockFence;
@@ -94,6 +96,7 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 		}
 	}
 
+
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!world.isRemote) {
@@ -119,6 +122,9 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 				}
 			}
 		}
+		
+			Entity projectile = new EntityCustomEgg(world, player, player, 1.0F, 0,0,0,0,0,0,stack.getItemDamage());
+			world.spawnEntityInWorld(projectile);
 		return stack;
 	}
 
