@@ -7,6 +7,7 @@ import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.util.schematic.Room;
+import com.Splosions.ModularBosses.world.PortalLandingWorldData;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.state.IBlockState;
@@ -167,10 +168,19 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 
 	}
 	
-	
+	/**
     public void createDungeon(){
-    	
+		PortalLandingWorldData roomData = (PortalLandingWorldData) worldIn.getPerWorldStorage().loadData(PortalLandingWorldData.class, "lobbyPortals");
+		if (roomData == null){
+			System.out.println("No LobbyPortals Tag found, creating one");
+			roomData = new PortalLandingWorldData("lobbyPortals");
+			worldIn.getPerWorldStorage().setData("lobbyPortals", roomData);
+		}		
+    	roomData.addPortalLanding(0, pos.getX(), pos.getY(), pos.getZ());
+    	roomData.markDirty();
+		
     }
+    */
     
 	/**
 	 * Called to update the entity's position/logic.
