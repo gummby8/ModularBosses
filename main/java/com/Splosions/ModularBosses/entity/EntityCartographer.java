@@ -64,6 +64,7 @@ public class EntityCartographer extends Entity {
 		super(worldIn);
 		this.setSize(1F, 1F);
 		this.setPosition(x, y, z);
+		if (!worldObj.isRemote) {forceChunk();}
 		this.noClip = true;
 		this.cartType = type;
 
@@ -83,28 +84,31 @@ public class EntityCartographer extends Entity {
 	 * Called to update the entity's position/logic.
 	 */
 	public void onUpdate() {
-		forceChunk();
-	
-		if (this.cartType == DUNGEON) {
-			dungeonGen();
-		} else if (this.cartType == WORM) {
-			wormGen();
+		if (!worldObj.isRemote) {
+			forceChunk();
+
+			if (this.cartType == DUNGEON) {
+				dungeonGen();
+			} else if (this.cartType == WORM) {
+				wormGen();
+			}
 		}
 	}
 	
 public void forceChunk(){
-	if(!worldObj.isRemote){
+	
 		System.out.println("Loading Chunk");
 		if(ticket==null)
 			ticket = ForgeChunkManager.requestTicket(ModularBosses.instance,worldObj,Type.NORMAL);
+		System.out.println("ticket null, requesting ticket");
 		if(ticket==null)
 			System.out.println("Ticket could not be reserved for Cartographer @ ("+this.posX+","+this.posY+","+this.posZ+")");
 		else {
 			ticket.getModData().setInteger("entityID",this.getEntityId());
 			ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)this.posX/16, (int)this.posZ/16));
-
+			System.out.println("ticket requested, chunk loaded");
 		}
-	}
+	
 }
 	
 
@@ -311,14 +315,11 @@ public void forceChunk(){
 				roomPath = roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3];
 				roomPath = "./schematics/Worm/" + roomPath + "/1.schematic";
 				Schematic.quickBuild(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
-				
-				//ticket.getModData().setInteger("entityID",this.getEntityId());
-				//ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)(this.posX + 5)/16, (int)(this.posZ)/16));
+
 				
 				this.posX += 5;				
 			}
-			//ticket.getModData().setInteger("entityID",this.getEntityId());
-			//ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)(this.posX - 15)/16, (int)(this.posZ - 5)/16));
+			
 			
 			this.posZ -= 5;
 			this.posX -= 15;

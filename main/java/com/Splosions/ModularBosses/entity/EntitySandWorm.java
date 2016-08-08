@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.Splosions.ModularBosses.Config;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
@@ -29,17 +30,22 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.ForgeChunkManager.Ticket;
+import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntitySandWorm extends Entity {
+public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnData {
 
 	private static final int RANDOM_X_WATCHER = 16;
 	private static final int RANDOM_Y_WATCHER = 17;
@@ -78,11 +84,11 @@ public class EntitySandWorm extends Entity {
 		this.isImmuneToFire = true;
 		this.ignoreFrustumCheck = true;
 		this.noClip = true;
+		this.pitch = -90; 
 		if (this.worldObj.isRemote) {
 			bodySegments = new EntitySandWormTail[10];
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x] = new EntitySandWormTail(worldIn, this.posX, this.posY, this.posZ, this.yaw, this.pitch, x, this);
-				//entIDs[x] = bodySegments[x].getEntityId();
 			}
 		}
 	}
@@ -151,25 +157,18 @@ public class EntitySandWorm extends Entity {
 	 */
 	private void teleEntitiesInList(List par1List) {
 		for (int i = 0; i < par1List.size(); ++i) {
-
-			int dim = Config.bossDimension;
-			
+		
 			EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
+			player.setPosition(spawnPosX, spawnPosY, spawnPosZ);	
+
 			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-
-			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(dim);
-			ws.setBlockState(new BlockPos(player.posX, player.posY - 2, player.posZ), Blocks.stone.getDefaultState());			
-			
-			Entity entity = new EntityCartographer(ws, player, EntityCartographer.WORM, player.posX, player.posY - 2, player.posZ);
-			ws.spawnEntityInWorld(entity);
-			
-
-			
-			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
-			player.setPositionAndUpdate(spawnPosX, spawnPosY, spawnPosZ);
-			
+		
+			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
+			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
 			this.worldObj.theProfiler.endSection();
-			System.out.println(entity);
+		
+
+			System.out.println(par1List.get(i));
 		}
 
 	}
@@ -181,44 +180,37 @@ public class EntitySandWorm extends Entity {
 	@Override
 	public void onUpdate() {
 
+		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+		
+		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
+
+			spawnPosX = (int) this.posX;
+			spawnPosY = (int) this.posY; 
+			spawnPosZ = (int) this.posZ;
+			
+			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
+			
+			Ticket ticket;
+			
+			ticket = ForgeChunkManager.requestTicket(ModularBosses.instance,ws,Type.NORMAL);
+			ChunkCoordIntPair chunk = new ChunkCoordIntPair((int)spawnPosX/16, (int)spawnPosZ/16);
+			ForgeChunkManager.forceChunk(ticket,chunk);
+			
+			Entity entity = new EntityCartographer(ws, this, EntityCartographer.WORM, spawnPosX, spawnPosY - 4, spawnPosZ);
+			ws.spawnEntityInWorld(entity);
+
+			nextPosition();
+
+
+			
+		}
+		
 		if (!this.worldObj.isRemote){
 		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(15, 15, 15));
 		teleEntitiesInList(teleList);
 		}
 		
-		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
-			
-			spawnPosX = (int) this.posX;
-			spawnPosY = (int) this.posY; 
-			spawnPosZ = (int) this.posZ;
-			
-
-			
-			
-			nextPosition();
-
-			int dim = Config.bossDimension;
-			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(dim);
-			Entity entity = new EntityCartographer(ws, this, EntityCartographer.WORM, spawnPosX, spawnPosY - 2, spawnPosZ);
-			ws.spawnEntityInWorld(entity);
-			
-			
-			/**
-			int dim = Config.bossDimension;
-			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(dim);
-			PortalLandingWorldData roomData = (PortalLandingWorldData) ws.getPerWorldStorage().loadData(PortalLandingWorldData.class, "wormLanding");
-			if (roomData == null){
-				roomData = new PortalLandingWorldData("wormLanding");
-				ws.getPerWorldStorage().setData("wormLanding", roomData);
-			}		
-	    	roomData.addPortalLanding(0, spawnPosX, spawnPosY, spawnPosZ);
-	    	roomData.markDirty();
-			 */
-			
-			
-		}
 		
-
 		double faceX = this.dataWatcher.getWatchableObjectInt(RANDOM_X_WATCHER);
 		double faceY = this.dataWatcher.getWatchableObjectInt(RANDOM_Y_WATCHER);
 		double faceZ = this.dataWatcher.getWatchableObjectInt(RANDOM_Z_WATCHER);
@@ -226,9 +218,9 @@ public class EntitySandWorm extends Entity {
 	
 		faceLocation(faceX, faceY, faceZ, 2, 1);
 		moveForward(0.5F);
-        this.posX += this.motionX;
-        this.posY += this.motionY;
-        this.posZ += this.motionZ;
+        //this.posX += this.motionX;
+        //this.posY += this.motionY;
+        //this.posZ += this.motionZ;
 
         
 		if (!this.worldObj.isRemote && this.getDistance(faceX, faceY, faceZ) < 20) {
@@ -371,7 +363,7 @@ public class EntitySandWorm extends Entity {
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
+		//super.readFromNBT(compound);
 		spawnPosX = compound.getInteger("spawnPosX");
 		spawnPosY = compound.getInteger("spawnPosY");
 		spawnPosZ = compound.getInteger("spawnPosZ");
@@ -382,11 +374,23 @@ public class EntitySandWorm extends Entity {
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
+		//super.writeToNBT(compound);
 		compound.setInteger("spawnPosX", spawnPosX);
 		compound.setInteger("spawnPosY", spawnPosY);
 		compound.setInteger("spawnPosZ", spawnPosZ);
 		
+	}
+
+
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		buffer.writeFloat(this.pitch);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		this.pitch = additionalData.readFloat();
 	}
 
 }

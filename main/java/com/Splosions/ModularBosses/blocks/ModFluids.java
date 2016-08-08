@@ -33,17 +33,17 @@ public class ModFluids {
 	public static Set<IFluidBlock> modFluidBlocks = new HashSet<>();
 
 	public static void registerFluids() {
-		fluidStatic = createFluid("static", "mb:blocks/fluid_static", false, 10, 10000, 10000, false,
+		fluidStatic = createFluid("static", "mb:blocks/fluid_static", false, 10, 1000, 1000, false,
 				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
 
 		fluidStaticGas = createFluid("staticgas", "mb:blocks/fluid_staticGas", false, 10, -800, 1500, true,
 				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
 
-		fluidNormal = createFluid("normal", "mb:blocks/fluid_normal", true, 10, 10000, 10000, false,
+		fluidNormal = createFluid("normal", "mb:blocks/fluid_normal", true, 10, 1000, 1000, false,
 				fluid -> new FluidBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
 
-		fluidNormalGas = createFluid("normalgas", "mb:blocks/fluid_normalGas", true, 10, -1600, 100, true,
-				fluid -> new BlockFluidClassic(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		fluidNormalGas = createFluid("normalgas", "mb:blocks/fluid_normalGas", true, 10, -10000, 1000, true,
+				fluid -> new GasWormGas(fluid, new MaterialLiquid(MapColor.adobeColor)));
 	}
 
 	public static void registerFluidContainers() {
