@@ -49,6 +49,7 @@ public class PortalLandingWorldData extends WorldSavedData {
 		public void addPortalLanding(int floor, double posX, double posY, double posZ) {
 			String s = floor + "," + posX + "," + posY + "," + posZ;
 			portalLandingList.add(s);
+			System.out.println(portalLandingList.size());
 		}
 
 
@@ -57,6 +58,7 @@ public class PortalLandingWorldData extends WorldSavedData {
 		public void deletePortalLanding(int floor, double posX, double posY, double posZ){
 			String s = floor + "," + posX + "," + posY + "," + posZ;
 			portalLandingList.remove(s);
+			System.out.println(portalLandingList.size());
 		}
 		
 		

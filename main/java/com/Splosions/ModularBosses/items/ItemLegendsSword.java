@@ -11,6 +11,8 @@ import java.util.List;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.blocks.BlockPortalLanding;
+import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
@@ -75,9 +77,9 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		//System.out.println("Remember to fix the if in legends sword");
+		System.out.println("Remember to fix the if in legends sword");
 		Entity entityIn = (Entity)playerIn;
-		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
+		if (entityIn.ridingEntity != null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
 			worldIn.theProfiler.startSection("portal");
 			int dim = 0;
 			if (worldIn.provider.getDimensionId() == -3) {
@@ -93,12 +95,19 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			ws.setBlockState(new BlockPos(playerIn.posX, playerIn.posY - 2, playerIn.posZ), Blocks.stone.getDefaultState());			
 			
 			Entity entity = new EntityCartographer(ws, playerIn, EntityCartographer.WORM, playerIn.posX, playerIn.posY - 2, playerIn.posZ);
-	//		ws.spawnEntityInWorld(entity);
+			ws.spawnEntityInWorld(entity);
 				
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
 			worldIn.theProfiler.endSection();
 		}
 
+		if(!worldIn.isRemote){
+			
+			BlockPos bPos = new BlockPos(playerIn.posX, playerIn.posY - 2, playerIn.posZ);
+			worldIn.setBlockState(bPos, ModBlocks.portalLanding.getDefaultState());
+			BlockPortalLanding.makePortalLanding(worldIn, bPos);
+			
+		}
 		
         return itemStackIn;
 	}

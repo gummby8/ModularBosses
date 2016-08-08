@@ -41,8 +41,7 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerListBox
-{
+public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerListBox {
 
 	public int ticksExisted;
 	public float red = 0;
@@ -50,91 +49,77 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 	public float blue = 0;
 
 	public String message;
-	// gummby8 skin "minecraft:skins/2cce44e913e9726c4bb39458f1401f31ab7bf44a6921c86df9411227c8d1";
+	// gummby8 skin
+	// "minecraft:skins/2cce44e913e9726c4bb39458f1401f31ab7bf44a6921c86df9411227c8d1";
 	public ArrayList<String> playerSkins = new ArrayList<String>();
 	public ArrayList<String> playerNames = new ArrayList<String>();
 
-	
-	
 	Random rand = new Random();
-	
-	
+
 	@Override
 	public void update() {
-		
-		if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isRemote){
+
+		if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isRemote) {
 			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), (this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
-			List<AbstractClientPlayer> players = this.worldObj.getEntitiesWithinAABB(AbstractClientPlayer.class, axisalignedbb.expand(3, 2, 3)); 
-			for (AbstractClientPlayer player : players){
+			List<AbstractClientPlayer> players = this.worldObj.getEntitiesWithinAABB(AbstractClientPlayer.class, axisalignedbb.expand(3, 2, 3));
+			for (AbstractClientPlayer player : players) {
 				message = player.getLocationSkin().toString();
 				PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(this));
 
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		if (this.ticksExisted % 200 == (200 - 1) && !this.worldObj.isRemote){
 
+		if (this.ticksExisted % 200 == (200 - 1) && !this.worldObj.isRemote) {
 
 			PortalLandingWorldData roomData = (PortalLandingWorldData) this.worldObj.getPerWorldStorage().loadData(PortalLandingWorldData.class, "lobbyPortals");
-			if (roomData == null){
+			if (roomData == null) {
 				System.out.println("No LobbyPortals Tag found, creating one");
 				roomData = new PortalLandingWorldData("lobbyPortals");
 				this.worldObj.getPerWorldStorage().setData("lobbyPortals", roomData);
 			}
 
-			
-			int num = (roomData.portalLandingList.size() > 1) ? getRandomNumberInRange(0,roomData.portalLandingList.size() - 1) : 0;
-			String locRaw = roomData.portalLandingList.get(num);
-			String[] locArray = locRaw.split(",", -1);
+			try {
+				int num = (roomData.portalLandingList.size() > 1) ? getRandomNumberInRange(0, roomData.portalLandingList.size() - 1) : 0;
+				String locRaw = roomData.portalLandingList.get(num);
+				String[] locArray = locRaw.split(",", -1);
 
+				double pX = Double.parseDouble(locArray[1]);
+				double pY = Double.parseDouble(locArray[2]);
+				double pZ = Double.parseDouble(locArray[3]);
 
-			double pX = Double.parseDouble(locArray[1]);
-			double pY = Double.parseDouble(locArray[2]);
-			double pZ = Double.parseDouble(locArray[3]);
+				// TEs dont have a bounding box, have to make an AABB by hand
+				AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), (this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
+				List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb.expand(3, 2, 3));
+				for (EntityPlayer player : players) {
+					if (playerNames.contains(player.getDisplayNameString())) {
 
+						EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.worldObj, player, player.posX, player.posY + 1, player.posZ, player.rotationYaw, playerSkins.get(playerNames.indexOf(player.getDisplayNameString())));
+						this.worldObj.spawnEntityInWorld(teleBiped);
+						player.setPositionAndUpdate(pX + 0.5, pY + 1, pZ + 0.5);
 
-
-
-
-			//TEs dont have a bounding box, have to make an AABB by hand
-			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), (this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
-			List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb.expand(3, 2, 3)); 
-			for (EntityPlayer player : players){
-				if (playerNames.contains(player.getDisplayNameString())){
-
-					EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.worldObj, player, player.posX, player.posY + 1, player.posZ, player.rotationYaw, playerSkins.get(playerNames.indexOf(player.getDisplayNameString())));
-					this.worldObj.spawnEntityInWorld(teleBiped);
-					player.setPositionAndUpdate(pX + 0.5, pY + 1, pZ + 0.5);
-				
+					}
 				}
+
+			} catch (Throwable e) {
+				System.out.println("Tried to teleport but no portal landings exist");
 			}
-			
-			
 
-
-			red = getRandomNumberInRange(50,255);
-			green = getRandomNumberInRange(50,255);
-			blue = getRandomNumberInRange(50,255);
+			red = getRandomNumberInRange(50, 255);
+			green = getRandomNumberInRange(50, 255);
+			blue = getRandomNumberInRange(50, 255);
 
 			worldObj.markBlockForUpdate(this.pos);
 		}
 
 		ticksExisted++;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
-    public net.minecraft.util.AxisAlignedBB getRenderBoundingBox()
-    {
+	public net.minecraft.util.AxisAlignedBB getRenderBoundingBox() {
 		AxisAlignedBB bb = new AxisAlignedBB(getPos(), getPos().add(3, 1, 3));
 		return bb;
-    }
+	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -142,11 +127,9 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 		red = compound.getFloat("red");
 		green = compound.getFloat("green");
 		blue = compound.getFloat("blue");
-		
- 
+
 	}
-	
-	
+
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
@@ -155,25 +138,20 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 		compound.setFloat("blue", blue);
 	}
 
-	
 	public String getMessage() {
 		return message;
 	}
 
-
 	public void setMessage(String resourceString, String name) {
-		if(!playerNames.contains(name)){
+		if (!playerNames.contains(name)) {
 			playerNames.add(name);
 			playerSkins.add(resourceString);
 		}
-		
+
 	}
-	
-	
 
 	@Override
-	public Packet getDescriptionPacket()
-	{
+	public Packet getDescriptionPacket() {
 		NBTTagCompound syncData = new NBTTagCompound();
 		syncData.setFloat("red", red);
 		syncData.setFloat("green", green);
@@ -182,14 +160,11 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 		return new S35PacketUpdateTileEntity(this.pos, 1, syncData);
 	}
 
-
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
-		readFromNBT(packet.getNbtCompound());	
-		
+		readFromNBT(packet.getNbtCompound());
+
 	}
-
-
 
 	private static int getRandomNumberInRange(int min, int max) {
 		if (min >= max) {
@@ -198,9 +173,5 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
-
-
-
-
 
 }

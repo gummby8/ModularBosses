@@ -13,9 +13,11 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class Config {
 	public static Configuration config;
+	/*================== DIMENSION SETTINGS SETTINGS  =====================*/
+	public static int bossDimension;
 	
 	/*================== BOSS & MONSTER SETTINGS  =====================*/
-
+	
 	
 	/*================== SHADE HOWLER SETTINGS  =====================*/
 	public static double shadehowlerMaxHealth;
@@ -54,6 +56,8 @@ public class Config {
 	public static void preInit(FMLPreInitializationEvent event) {
 		config = new Configuration(new File(event.getModConfigurationDirectory().getAbsolutePath() + Reference.CONFIG_PATH));
 		config.load();
+		
+		bossDimension = config.get("Boss Dimension ID", "[Config] The Custom Dimension ID [1+]", -3).getInt();
 		
 		config.addCustomCategoryComment("Weapon & Item Settings", "This Category Contains Settings For All Of The Various Weapons And Items From Modular Bosses");
 		

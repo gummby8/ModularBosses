@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.entity;
 import java.util.List;
 import java.util.Random;
 
+import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
@@ -22,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -32,11 +34,12 @@ import net.minecraft.util.ReportedException;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData {
+public class EntitySandWorm extends Entity {
 
 	private static final int RANDOM_X_WATCHER = 16;
 	private static final int RANDOM_Y_WATCHER = 17;
@@ -49,7 +52,6 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 	public float pitch;
 
 	public EntitySandWormTail[] bodySegments;
-	//public int entIDs[] = new int[10];
 	
 	public double preRenX;
 	public double preRenY;
@@ -150,7 +152,7 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 	private void teleEntitiesInList(List par1List) {
 		for (int i = 0; i < par1List.size(); ++i) {
 
-			int dim = -3;
+			int dim = Config.bossDimension;
 			
 			EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
 			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
@@ -161,26 +163,17 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 			Entity entity = new EntityCartographer(ws, player, EntityCartographer.WORM, player.posX, player.posY - 2, player.posZ);
 			ws.spawnEntityInWorld(entity);
 			
+
+			
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
+			player.setPositionAndUpdate(spawnPosX, spawnPosY, spawnPosZ);
+			
 			this.worldObj.theProfiler.endSection();
 			System.out.println(entity);
 		}
 
 	}
 	
-	/**
-    public void createDungeon(){
-		PortalLandingWorldData roomData = (PortalLandingWorldData) worldIn.getPerWorldStorage().loadData(PortalLandingWorldData.class, "lobbyPortals");
-		if (roomData == null){
-			System.out.println("No LobbyPortals Tag found, creating one");
-			roomData = new PortalLandingWorldData("lobbyPortals");
-			worldIn.getPerWorldStorage().setData("lobbyPortals", roomData);
-		}		
-    	roomData.addPortalLanding(0, pos.getX(), pos.getY(), pos.getZ());
-    	roomData.markDirty();
-		
-    }
-    */
     
 	/**
 	 * Called to update the entity's position/logic.
@@ -198,7 +191,31 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 			spawnPosX = (int) this.posX;
 			spawnPosY = (int) this.posY; 
 			spawnPosZ = (int) this.posZ;
+			
+
+			
+			
 			nextPosition();
+
+			int dim = Config.bossDimension;
+			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(dim);
+			Entity entity = new EntityCartographer(ws, this, EntityCartographer.WORM, spawnPosX, spawnPosY - 2, spawnPosZ);
+			ws.spawnEntityInWorld(entity);
+			
+			
+			/**
+			int dim = Config.bossDimension;
+			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(dim);
+			PortalLandingWorldData roomData = (PortalLandingWorldData) ws.getPerWorldStorage().loadData(PortalLandingWorldData.class, "wormLanding");
+			if (roomData == null){
+				roomData = new PortalLandingWorldData("wormLanding");
+				ws.getPerWorldStorage().setData("wormLanding", roomData);
+			}		
+	    	roomData.addPortalLanding(0, spawnPosX, spawnPosY, spawnPosZ);
+	    	roomData.markDirty();
+			 */
+			
+			
 		}
 		
 
@@ -349,32 +366,27 @@ public class EntitySandWorm extends Entity implements IEntityAdditionalSpawnData
 		}
 	}
 
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound tagCompund) {
-		// TODO Auto-generated method stub
 
+
+
+	@Override
+	protected void readEntityFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		spawnPosX = compound.getInteger("spawnPosX");
+		spawnPosY = compound.getInteger("spawnPosY");
+		spawnPosZ = compound.getInteger("spawnPosZ");
+		
 	}
 
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound tagCompound) {
-		// TODO Auto-generated method stub
 
-	}
 
 	@Override
-	public void writeSpawnData(ByteBuf buffer) {
-		//for (int x = 0; x < entIDs.length; x++) {
-		//	buffer.writeInt(entIDs[x]);
-		//}
-
-	}
-
-	@Override
-	public void readSpawnData(ByteBuf additionalData) {
-		//for (int x = 0; x < entIDs.length; x++) {
-		//	entIDs[x] = additionalData.readInt();
-		//}
-
+	protected void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("spawnPosX", spawnPosX);
+		compound.setInteger("spawnPosY", spawnPosY);
+		compound.setInteger("spawnPosZ", spawnPosZ);
+		
 	}
 
 }

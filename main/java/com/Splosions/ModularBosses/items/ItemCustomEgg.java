@@ -71,6 +71,7 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		/**
 		if (world.isRemote) {
 			return true;
 		} else {
@@ -94,11 +95,14 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 			}
 			return true;
 		}
+		*/
+		return true;
 	}
 
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		/**
 		if (!world.isRemote) {
 			MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, true);
 			if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
@@ -122,7 +126,7 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 				}
 			}
 		}
-		
+		*/
 			Entity projectile = new EntityCustomEgg(world, player, player, 1.0F, 0,0,0,0,0,0,stack.getItemDamage());
 			world.spawnEntityInWorld(projectile);
 		return stack;
