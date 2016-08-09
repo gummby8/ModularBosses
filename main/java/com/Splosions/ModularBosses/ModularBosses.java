@@ -27,24 +27,19 @@ import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
 import com.Splosions.ModularBosses.util.CartographerChunkloadCallback;
 
-
-
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class ModularBosses {
 
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
-	
+
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
-	
-	
-	
+
 	@Instance(Reference.MOD_ID)
 	public static ModularBosses instance;
-	
+
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
+	public void preInit(FMLPreInitializationEvent event) {
 		TestBiomesRegistry.registerBiomes();
 		ModFluids.registerFluids();
 		ModBlocks.preInit();
@@ -55,26 +50,23 @@ public class ModularBosses {
 		Config.preInit(event);
 		proxy.preInit();
 	}
-	
+
 	@EventHandler
-	public void Init(FMLInitializationEvent event)
-	{
+	public void Init(FMLInitializationEvent event) {
 		TestDimensions.init();
 		proxy.registerRenders();
 		proxy.init(event);
 	}
-	
+
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event)
-	{
+	public void postInit(FMLPostInitializationEvent event) {
 		Config.postInit();
 		ForgeChunkManager.setForcedChunkLoadingCallback(instance, new CartographerChunkloadCallback());
-		
 	}
-	
+
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
-	NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-	MinecraftForge.EVENT_BUS.register(new MBEvents());
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+		MinecraftForge.EVENT_BUS.register(new MBEvents());
 	}
 }

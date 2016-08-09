@@ -190,12 +190,6 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			
 			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
 			
-			Ticket ticket;
-			
-			ticket = ForgeChunkManager.requestTicket(ModularBosses.instance,ws,Type.NORMAL);
-			ChunkCoordIntPair chunk = new ChunkCoordIntPair((int)spawnPosX/16, (int)spawnPosZ/16);
-			ForgeChunkManager.forceChunk(ticket,chunk);
-			
 			Entity entity = new EntityCartographer(ws, this, EntityCartographer.WORM, spawnPosX, spawnPosY - 4, spawnPosZ);
 			ws.spawnEntityInWorld(entity);
 

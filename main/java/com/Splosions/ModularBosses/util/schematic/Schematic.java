@@ -38,10 +38,10 @@ public class Schematic {
    private static short height;
    private static short length;
    private static int size;
-   private static int counter;
-   private static int i;
-   private static int j;
-   private static int k;
+   private static int counter = 0;
+   private static int i = 0;
+   private static int j = 0;
+   private static int k = 0;
    private static BlockObject[] blockObjects;
    
    private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
@@ -88,7 +88,7 @@ public class Schematic {
          
          
          for(int q = 0; q < ent.schemTickInterval; q++) {
-
+        	 //System.out.println("K = " + k + "I = " + i + "J = " + j + " counter = " + counter);
   	 
 
              if (i >= height){
@@ -123,7 +123,7 @@ public class Schematic {
              IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
 
              
-              //System.out.println("K = " + k + "I = " + i + "J = " + j);
+              
           	  //blockObjects[counter] = new BlockObject(pos, state);
           	  world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
           	  counter++; 
@@ -134,31 +134,7 @@ public class Schematic {
          
          
 
-        //if you want instant schematics 
-/**
-        counter = 0;
-         for(int i = 0; i < height; i++) {
-            for(int j = 0; j < length; j++) {
-               for(int k = 0; k < width; k++) {
-                  int blockId = UnsignedBytes.toInt(blockIDs[counter]);
-                  //Checks the id reference Map                 
-                  if ((id = oldToNew.get((short) blockId)) != null) {
-                      blockId = id;
-                  }
-
-                  //BlockPos pos = new BlockPos(k, i, j);
-                  IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
-
-                  
-                  
-               	  //blockObjects[counter] = new BlockObject(pos, state);
-               	  world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
-               	  counter++; 
-               }
-            }
-         }
-   */
-         
+ 
          
          NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
 
@@ -274,7 +250,7 @@ public static void quickBuild(String fileName, World world, Entity entity, doubl
              }
          }
          
-         
+         counter = 0;
       } catch(Exception e) {
          e.printStackTrace();
       }

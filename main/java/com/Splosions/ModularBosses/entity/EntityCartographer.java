@@ -100,13 +100,11 @@ public void forceChunk(){
 		System.out.println("Loading Chunk");
 		if(ticket==null)
 			ticket = ForgeChunkManager.requestTicket(ModularBosses.instance,worldObj,Type.NORMAL);
-		System.out.println("ticket null, requesting ticket");
 		if(ticket==null)
 			System.out.println("Ticket could not be reserved for Cartographer @ ("+this.posX+","+this.posY+","+this.posZ+")");
 		else {
 			ticket.getModData().setInteger("entityID",this.getEntityId());
 			ForgeChunkManager.forceChunk(ticket,new ChunkCoordIntPair((int)this.posX/16, (int)this.posZ/16));
-			System.out.println("ticket requested, chunk loaded");
 		}
 	
 }
@@ -355,7 +353,7 @@ public void forceChunk(){
 
 	public void dungeonGen() {
 
-		schemTickInterval = 100;
+		schemTickInterval = 50;
 		if (this.ticksExisted == 1) {
 			try {
 				readData("./schematics/derp.csv");
