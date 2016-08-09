@@ -8,7 +8,7 @@ import net.minecraft.util.IThreadListener;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public abstract class CommonProxy {
+public class CommonProxy {
 	public void preInit() {}
 	public void registerRenders() {}
 	
