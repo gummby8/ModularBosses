@@ -143,7 +143,6 @@ public class ClientProxy extends CommonProxy{
 	 * Adds the model swap information to the map
 	 */
 	private void addModelToSwap(ISwapModel swap) {
-		System.out.println("client 4");
 		for (ModelResourceLocation resource : swap.getDefaultResources()) {
 			if (smartModels.containsKey(resource)) {
 				if (smartModels.get(resource) != swap.getNewModel()) {
