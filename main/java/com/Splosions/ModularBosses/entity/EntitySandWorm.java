@@ -190,8 +190,21 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			
 			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
 			
-			Entity entity = new EntityCartographer(ws, this, EntityCartographer.WORM, spawnPosX, spawnPosY - 4, spawnPosZ);
-			ws.spawnEntityInWorld(entity);
+			
+			Chunk chunk = ws.getChunkFromChunkCoords(spawnPosX / 16, spawnPosZ / 16);
+			int width = 64;
+			int length = 64;
+			int height = 64;
+			
+			for (int i = 0; i < height; i++) {
+				for (int j = 0; j < length; j++) {
+					for (int k = 0; k < width; k++) {
+						
+						ws.setBlockState(new BlockPos(spawnPosX + j, i, spawnPosZ + k), Blocks.stone.getDefaultState());
+						//chunk.setBlockState(new BlockPos(k, i, j), Blocks.obsidian.getDefaultState());
+					}
+				}
+			}
 
 			nextPosition();
 
@@ -212,9 +225,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	
 		faceLocation(faceX, faceY, faceZ, 2, 1);
 		moveForward(0.5F);
-        //this.posX += this.motionX;
-        //this.posY += this.motionY;
-        //this.posZ += this.motionZ;
+        this.posX += this.motionX;
+        this.posY += this.motionY;
+        this.posZ += this.motionZ;
 
         
 		if (!this.worldObj.isRemote && this.getDistance(faceX, faceY, faceZ) < 20) {
