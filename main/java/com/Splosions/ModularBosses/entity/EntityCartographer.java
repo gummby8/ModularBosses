@@ -312,7 +312,7 @@ public void forceChunk(){
 				//System.out.println("Room (" + y + " - " + x + ") = " + roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3]);
 				roomPath = roomArray[y][x].roomCode[0] + roomArray[y][x].roomCode[1] + roomArray[y][x].roomCode[2] + roomArray[y][x].roomCode[3];
 				roomPath = "./schematics/Worm/" + roomPath + "/1.schematic";
-				Schematic.quickBuild(roomPath, this.worldObj, this, this.posX, this.posY, this.posZ);
+				Schematic.quickBuild(roomPath, this.worldObj, this.posX, this.posY, this.posZ);
 
 				
 				this.posX += 5;				

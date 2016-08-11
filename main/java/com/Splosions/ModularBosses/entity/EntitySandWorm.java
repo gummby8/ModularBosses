@@ -9,6 +9,7 @@ import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.util.schematic.Room;
+import com.Splosions.ModularBosses.util.schematic.Schematic;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
 
 import io.netty.buffer.ByteBuf;
@@ -189,8 +190,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			spawnPosZ = (int) this.posZ;
 			
 			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
+			String roomPath = "./schematics/te.schematic";
+			Schematic.quickBuild(roomPath, ws, spawnPosX, spawnPosY, spawnPosZ);
 			
-			
+			/**
 			Chunk chunk = ws.getChunkFromChunkCoords(spawnPosX / 16, spawnPosZ / 16);
 			int width = 64;
 			int length = 64;
@@ -205,11 +208,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 					}
 				}
 			}
-
-			nextPosition();
-
-
+			 */
 			
+			
+			nextPosition();
 		}
 		
 		if (!this.worldObj.isRemote){

@@ -1,0 +1,141 @@
+package com.Splosions.ModularBosses.entity;
+
+import com.google.common.base.Predicate;
+
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIArrowAttack;
+import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIFleeSun;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAIRestrictSun;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.passive.EntityWolf;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
+
+public class EntityTick extends EntityMob{
+
+
+
+
+	
+	private static final int GROW_WATCHER = 16;
+	public double startMaxHp;
+	public int growth;
+
+
+	public EntityTick(World worldIn) {
+		super(worldIn);
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
+		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
+		this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(4, new EntityAIWander(this, 0.2D));
+		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(6, new EntityAILookIdle(this));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
+
+	}
+	
+	@Override
+	protected void applyEntityAttributes()
+	{
+		super.applyEntityAttributes();
+		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		this.startMaxHp = this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
+		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
+		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(0D);
+		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(20);
+	}
+
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataWatcher.addObject(GROW_WATCHER, 0);
+	}
+
+	
+	public static void postInitConfig(Configuration config) {
+		//eyeballOctopusMaxHealth = config.get("Eyeball Octopus", "[Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
+		//eyeballOctopusDmg = config.get("Eyeball Octopus", "[Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+	}
+	
+
+
+	@Override
+	public void onUpdate() {
+		super.onUpdate();
+		this.growth = this.dataWatcher.getWatchableObjectInt(GROW_WATCHER);
+		
+		if(!this.worldObj.isRemote){
+			System.out.println(this.getHealth());
+		}
+	}
+	
+	public void grow(){
+        this.growth++;
+        if (this.growth < 6){
+        this.dataWatcher.updateObject(GROW_WATCHER, this.growth);
+        double maxHP = this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + (this.startMaxHp * 0.2D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHP);
+        this.heal((float) this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue());
+        }
+        this.growth = (this.growth > 5)? 5 : growth;
+	}
+
+	
+	
+	@Override
+    public boolean attackEntityAsMob(Entity entity)
+    {
+        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+        int i = 0;
+
+        if (entity instanceof EntityLivingBase)
+        {
+            f += EnchantmentHelper.func_152377_a(this.getHeldItem(), ((EntityLivingBase)entity).getCreatureAttribute());
+            i += EnchantmentHelper.getKnockbackModifier(this);
+        }
+
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
+
+        if (flag)
+        {
+            if (i > 0)
+            {
+            	entity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
+                this.motionX *= 0.6D;
+                this.motionZ *= 0.6D;
+            }
+            grow();
+
+        }
+
+        return flag;
+    }
+	
+}

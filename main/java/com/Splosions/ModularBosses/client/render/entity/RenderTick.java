@@ -10,11 +10,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderSkull extends RenderLiving {
+public class RenderTick extends RenderLiving {
 	
-	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/Skull.png");
+	ResourceLocation rec = new ResourceLocation("mb:textures/mobs/tick.png");
 	
-    public RenderSkull(RenderManager renderManager, ModelBase model, float shadowSize) {
+    public RenderTick(RenderManager renderManager, ModelBase model, float shadowSize) {
 		super(renderManager, model, shadowSize);
     }
 	

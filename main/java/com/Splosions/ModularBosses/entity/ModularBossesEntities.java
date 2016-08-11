@@ -17,6 +17,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelShadeHowler;
 import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
 import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
+import com.Splosions.ModularBosses.client.models.entity.ModelTick;
 import com.Splosions.ModularBosses.client.render.entity.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock;
@@ -32,6 +33,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
+import com.Splosions.ModularBosses.client.render.entity.RenderTick;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBoulder;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderEnergyArrow;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
@@ -105,9 +107,6 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
-		EntityRegistry.registerModEntity(EntityEyeballOctopus.class, "EyeballOctopus", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityEyeballOctopus.class, "EyeballOctopus", 0xff66cc, 0x00ccff);
-		
 		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
 		
@@ -118,7 +117,7 @@ public class ModularBossesEntities
 		CustomEntityList.addMapping(EntityHeavyChorp.class, "HeavyChorp", 0x8C713F, 0xFFFFFF);
 		
 		EntityRegistry.registerModEntity(EntityParagon.class, "Paragon", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityParagon.class, "Paragon", 0x5C2918, 0xE30000);
+		CustomEntityList.addMapping(EntityParagon.class, "Paragon", 0x5C2918, 0xFF9100);
 		
 		EntityRegistry.registerModEntity(EntityTatters.class, "Tatters", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityTatters.class, "Tatters", 0x666565, 0x000000);
@@ -128,7 +127,13 @@ public class ModularBossesEntities
 		
 		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
 		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
-		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xff6699);
+		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xFFFFFF);
+		
+		EntityRegistry.registerModEntity(EntityEyeballOctopus.class, "EyeballOctopus", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityEyeballOctopus.class, "EyeballOctopus", 0xff66cc, 0x00ccff);
+		
+		EntityRegistry.registerModEntity(EntityTick.class, "Tick", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityTick.class, "Tick", 0x6B3201, 0xFF6200);
 		
 		EntityRegistry.registerModEntity(EntityShadeHowler.class, "ShadeHowler", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityShadeHowler.class, "ShadeHowler", 0x000000, 0x00ccff);
@@ -158,10 +163,9 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
-
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWorm.class, new RenderSandWorm(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormTail.class, new RenderSandWormTail(manager));
-		
+		RenderingRegistry.registerEntityRenderingHandler(EntityTick.class, new RenderTick(manager, new ModelTick(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
