@@ -1450,7 +1450,6 @@ public class ModelTick extends ModelBase {
     	setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     	
         EntityTick ent = (EntityTick) entity;
-    	
         this.BASE.render(f5);
                 
         GlStateManager.pushMatrix();

@@ -22,6 +22,7 @@ import net.minecraft.entity.ai.EntityAIRestrictSun;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
@@ -29,24 +30,28 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class EntityTick extends EntityMob{
+public class EntityTick extends EntityMob {
 
-
-
-
-	
 	private static final int GROW_WATCHER = 16;
 	public double startMaxHp;
 	public int growth;
-
+	private int deathTicks;
+	private boolean fullgrown;
 
 	public EntityTick(World worldIn) {
 		super(worldIn);
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false)); //How fast mob moves towards the player
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false)); // How
+																									// fast
+																									// mob
+																									// moves
+																									// towards
+																									// the
+																									// player
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(4, new EntityAIWander(this, 0.25D));
@@ -57,10 +62,9 @@ public class EntityTick extends EntityMob{
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
 
 	}
-	
+
 	@Override
-	protected void applyEntityAttributes()
-	{
+	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
@@ -81,74 +85,111 @@ public class EntityTick extends EntityMob{
 		this.dataWatcher.addObject(GROW_WATCHER, 0);
 	}
 
-	
 	public static void postInitConfig(Configuration config) {
-		//eyeballOctopusMaxHealth = config.get("Eyeball Octopus", "[Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
-		//eyeballOctopusDmg = config.get("Eyeball Octopus", "[Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+		// eyeballOctopusMaxHealth = config.get("Eyeball Octopus", "[Max Health]
+		// Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
+		// eyeballOctopusDmg = config.get("Eyeball Octopus", "[Attack Damage]
+		// Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
 	}
-	
-
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		this.growth = this.dataWatcher.getWatchableObjectInt(GROW_WATCHER);
-		
-		if(!this.worldObj.isRemote){
-			System.out.println(this.getHealth());
+
+		if (!this.worldObj.isRemote) {
+			if (this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.fluidNormal.getBlock()) {
+				this.grow();
+			}
+		}
+
+	}
+
+	// stuns the mob
+	public boolean isMovementBlocked() {
+		if (this.deathTicks > 0) {
+			return true;
+		} else {
+			return false;
 		}
 	}
-	
-	
+
 	@Override
-	public void onDeathUpdate(){
-		if (!this.worldObj.isRemote && this.growth == 5){
-			
+	public void onDeathUpdate() {
+
+		if (this.growth == 5 && !this.worldObj.isRemote && !this.fullgrown) {
+			this.worldObj.setBlockState(this.getPosition(), ModFluids.fluidNormal.getBlock().getDefaultState());
+			this.fullgrown = true;
 		}
-		
-	}
-	
-	
-	public void grow(){
-        this.growth++;
-        if (this.growth < 6){
-        this.dataWatcher.updateObject(GROW_WATCHER, this.growth);
-        double maxHP = this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + (this.startMaxHp * 0.2D);
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHP);
-        this.heal((float) this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue());
-        }
-        this.growth = (this.growth > 5)? 5 : growth;
+		++this.deathTicks;
+
+		if (this.deathTicks % 5 == (5 - 1)) {
+			this.growth--;
+			if (this.growth < -1) {
+				this.growth = -1;
+			}
+			this.dataWatcher.updateObject(GROW_WATCHER, this.growth);
+		}
+
+		if (this.deathTicks > 30) {
+			int i;
+
+			if (!this.worldObj.isRemote && (this.recentlyHit > 0 || this.isPlayer()) && this.func_146066_aG() && this.worldObj.getGameRules().getGameRuleBooleanValue("doMobLoot")) {
+				i = this.getExperiencePoints(this.attackingPlayer);
+				i = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(this, this.attackingPlayer, i);
+				while (i > 0) {
+					int j = EntityXPOrb.getXPSplit(i);
+					i -= j;
+					this.worldObj.spawnEntityInWorld(new EntityXPOrb(this.worldObj, this.posX, this.posY, this.posZ, j));
+				}
+			}
+
+			this.setDead();
+
+			for (i = 0; i < 20; ++i) {
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0, d1, new int[0]);
+			}
+		}
+
 	}
 
-	
-	
+	public void grow() {
+		this.growth++;
+		if (this.growth < 6) {
+			this.dataWatcher.updateObject(GROW_WATCHER, this.growth);
+			double maxHP = this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + (this.startMaxHp * 0.2D);
+			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHP);
+			this.heal((float) this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue());
+		}
+		this.growth = (this.growth > 5) ? 5 : growth;
+	}
+
 	@Override
-    public boolean attackEntityAsMob(Entity entity)
-    {
-        float f = (float)this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
-        int i = 0;
+	public boolean attackEntityAsMob(Entity entity) {
+		float f = (float) this.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+		int i = 0;
 
-        if (entity instanceof EntityLivingBase)
-        {
-            f += EnchantmentHelper.func_152377_a(this.getHeldItem(), ((EntityLivingBase)entity).getCreatureAttribute());
-            i += EnchantmentHelper.getKnockbackModifier(this);
-        }
+		if (entity instanceof EntityLivingBase) {
+			f += EnchantmentHelper.func_152377_a(this.getHeldItem(), ((EntityLivingBase) entity).getCreatureAttribute());
+			i += EnchantmentHelper.getKnockbackModifier(this);
+		}
 
-        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
+		boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), f);
 
-        if (flag)
-        {
-            if (i > 0)
-            {
-            	entity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)i * 0.5F));
-                this.motionX *= 0.6D;
-                this.motionZ *= 0.6D;
-            }
-            grow();
+		if (flag) {
+			if (i > 0) {
+				entity.addVelocity((double) (-MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F) * (float) i * 0.5F));
+				this.motionX *= 0.6D;
+				this.motionZ *= 0.6D;
+			}
+			grow();
 
-        }
+		}
 
-        return flag;
-    }
-	
+		return flag;
+	}
+
 }

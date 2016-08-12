@@ -34,10 +34,13 @@ import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
 import com.Splosions.ModularBosses.client.render.entity.RenderTick;
+import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBait;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBoulder;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderEnergyArrow;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderScythe;
+import com.Splosions.ModularBosses.client.render.items.RenderItemBait;
+import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomEgg;
@@ -85,13 +88,14 @@ public class ModularBossesEntities
 
 	private static void registerEntities() {
 		int modEntityIndex = 0;
-		//Effect Entities
+		//Entities
 		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.instance, 64, 3, true);
 		EntityRegistry.registerModEntity(EntityEnergyArrow.class, "Energy Arrow", ++modEntityIndex, ModularBosses.instance, 300, 1, true);
 		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityBait.class, "Bait", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlueWave.class, "Blue Wave", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntitySpiritShard.class, "Spirit Shard", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlackHole.class, "Black Hole", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
@@ -170,12 +174,14 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
 		
+		
 		//projectiles
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomEgg.class, new RenderSnowball(manager, ModularBossesItems.spawn_egg, itemRender));
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpSlimeBlob.class, new RenderSnowball(manager, ModularBossesItems.slimeblob, itemRender));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBoulder.class, new RenderBoulder(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlameThrower.class, new RenderFlameThrower(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEnergyArrow.class, new RenderEnergyArrow(manager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBait.class, new RenderBait(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityScythe.class, new RenderScythe(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCustomFallingBlock.class, new RenderCustomFallingBlock(manager));
 
