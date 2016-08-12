@@ -1493,41 +1493,65 @@ public class ModelTick extends ModelBase {
     
     @Override
     public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity par7Entity) {
-    	float RotateZ = (MathHelper.cos(par1 * 0.6662F) * 1.4F * par2) / 2;
-		float RotateX = (MathHelper.sin(par1 * 0.6662F) * 1.4F * par2) / 2;
-		if (RotateX > 0) {
-			RotateX = 0;
-		}
+    	float RotateZ = (MathHelper.cos(par1 * 0.6662F) * 1.4F * -par2);
+		float RotateX = (MathHelper.sin(par1 * 0.6662F) * 1.4F * par2) ;
+		if (RotateZ > 0){RotateZ = 0;} 
 
-		this.LLEG1.rotateAngleY = RotateX;
-		this.lleg11.rotateAngleZ = RotateZ;
+		this.LLEG1.rotateAngleY = RotateX + 1.0472F;
+		this.lleg11.rotateAngleZ = RotateZ + 0.349066F;
 		
-		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 1) * 1.4F * par2) / 2;
-		RotateX = (MathHelper.sin((par1 * 0.6662F) + 1) * 1.4F * par2) / 2;
-		if (RotateX > 0) {
-			RotateX = 0;
-		}
+		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 5) * 1.4F * par2) / -2;
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 5) * 1.4F * par2);
+		if (RotateZ > 0){RotateZ = 0;}
 		
-		this.LLEG2.rotateAngleY = RotateX;
-		this.lleg21.rotateAngleZ = RotateZ;
+		this.LLEG2.rotateAngleY = RotateX + 0.261799F;
+		this.lleg21.rotateAngleZ = RotateZ + 0.349066F;
 
-		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 2) * 1.4F * par2) / 2;
-		RotateX = (MathHelper.sin((par1 * 0.6662F) + 2) * 1.4F * par2) / 2;
-		if (RotateX > 0) {
-			RotateX = 0;
-		}
+		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 10) * 1.4F * par2) / -2;
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 10) * 1.4F * par2);
+		if (RotateZ > 0){RotateZ = 0;}
 		
-		this.LLEG3.rotateAngleY = RotateX;
-		this.lleg31.rotateAngleZ = RotateZ;
+		this.LLEG3.rotateAngleY = RotateX - 0.261799F;
+		this.lleg31.rotateAngleZ = RotateZ + 0.349066F;
 
-		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 3) * 1.4F * par2) / 2;
-		RotateX = (MathHelper.sin((par1 * 0.6662F) + 3) * 1.4F * par2) / 2;
-		if (RotateX > 0) {
-			RotateX = 0;
-		}
+		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 15) * 1.4F * par2) / -2;
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 15) * 1.4F * par2);
+		if (RotateZ > 0){RotateZ = 0;} 
 		
-		this.LLEG4.rotateAngleY = RotateX;
-		this.lleg41.rotateAngleZ = RotateZ;	
+		this.LLEG4.rotateAngleY = RotateX - 1.0472F;
+		this.lleg41.rotateAngleZ = RotateZ + 0.349066F;	
+		
+		
 
+    	RotateZ = (MathHelper.cos((par1 * 0.6662F) + 20) * 1.4F * par2);
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 20) * 1.4F * par2) ;
+		if (RotateZ > 0){RotateZ = 0;} 
+		
+		this.RLEG1.rotateAngleY = RotateX + 2.0944F;
+		this.rleg11.rotateAngleZ = RotateZ + 0.349066F;
+		
+		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 25) * 1.4F * par2);
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 25) * 1.4F * par2);
+		if (RotateZ > 0){RotateZ = 0;}
+		
+		this.RLEG2.rotateAngleY = RotateX + 2.87979F;
+		this.rleg21.rotateAngleZ = RotateZ + 0.349066F;
+
+		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 30) * 1.4F * par2) / 2;
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 30) * 1.4F * par2);
+		if (RotateZ > 0){RotateZ = 0;}
+		
+		this.RLEG3.rotateAngleY = RotateX + 3.40339F;
+		this.rleg31.rotateAngleZ = RotateZ + 0.349066F;
+
+		RotateZ = (MathHelper.cos((par1 * 0.6662F) + 35) * 1.4F * par2) / 2;
+		RotateX = (MathHelper.sin((par1 * 0.6662F) + 35) * 1.4F * par2);
+		if (RotateZ > 0){RotateZ = 0;} 
+		
+		this.RLEG4.rotateAngleY = RotateX - 2.0944F;
+		this.rleg41.rotateAngleZ = RotateZ + 0.349066F;	
+		
+		
+		
     }
 }

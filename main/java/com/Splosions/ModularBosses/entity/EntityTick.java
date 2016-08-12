@@ -1,5 +1,8 @@
 package com.Splosions.ModularBosses.entity;
 
+import com.Splosions.ModularBosses.blocks.FluidBlood;
+import com.Splosions.ModularBosses.blocks.ModBlocks;
+import com.Splosions.ModularBosses.blocks.ModFluids;
 import com.google.common.base.Predicate;
 
 import net.minecraft.enchantment.Enchantment;
@@ -43,10 +46,10 @@ public class EntityTick extends EntityMob{
 
 	public EntityTick(World worldIn) {
 		super(worldIn);
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false)); //How fast mob moves towards the player
+		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
 		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(4, new EntityAIWander(this, 0.2D));
+		this.tasks.addTask(4, new EntityAIWander(this, 0.25D));
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(6, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
@@ -95,6 +98,16 @@ public class EntityTick extends EntityMob{
 			System.out.println(this.getHealth());
 		}
 	}
+	
+	
+	@Override
+	public void onDeathUpdate(){
+		if (!this.worldObj.isRemote && this.growth == 5){
+			
+		}
+		
+	}
+	
 	
 	public void grow(){
         this.growth++;
