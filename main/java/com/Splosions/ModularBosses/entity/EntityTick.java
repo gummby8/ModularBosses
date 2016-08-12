@@ -158,7 +158,7 @@ public class EntityTick extends EntityMob {
 
 	public void grow() {
 		this.growth++;
-		if (this.growth < 6) {
+		if (this.growth < 6 && this.deathTicks == 0) {
 			this.dataWatcher.updateObject(GROW_WATCHER, this.growth);
 			double maxHP = this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue() + (this.startMaxHp * 0.2D);
 			this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(maxHP);

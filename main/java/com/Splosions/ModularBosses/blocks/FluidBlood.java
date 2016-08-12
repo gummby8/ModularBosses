@@ -15,6 +15,7 @@ public class FluidBlood extends BlockFluidClassic{
 	public FluidBlood(Fluid fluid, Material material) {
 		super(fluid, material);
 		// TODO Auto-generated constructor stub
+		quantaPerBlock = 4;
 	}
 
 
@@ -29,6 +30,7 @@ public class FluidBlood extends BlockFluidClassic{
 			entityIn.attackEntityFrom(DamageSource.wither, 5);
 
 		}
+		
     }
 	
 
