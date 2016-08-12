@@ -55,11 +55,6 @@ public class Schematic {
     	  File file = new File(fileName);
           NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
     	  
-         //InputStream is = Schematic.class.getResourceAsStream("/assets/mb/schematics/2.schematic"); 
-         //NBTTagCompound nbtdata = CompressedStreamTools.readCompressed(is);
-      
-         //is.close();
-         
          width = nbtdata.getShort("Width");
          height = nbtdata.getShort("Height");
          length = nbtdata.getShort("Length");
@@ -88,7 +83,8 @@ public class Schematic {
          
          
          for(int q = 0; q < ent.schemTickInterval; q++) {
-        	 //System.out.println("K = " + k + "I = " + i + "J = " + j + " counter = " + counter);
+
+        	 
   	 
 
              if (i >= height){
