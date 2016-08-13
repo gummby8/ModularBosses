@@ -348,7 +348,6 @@ public void forceChunk(){
 				roomArray[y][x] = new Room();
 			}
 		}
-		
 	}
 
 	public void dungeonGen() {
