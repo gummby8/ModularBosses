@@ -224,7 +224,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			spawnList.add(entity.getUniqueID().toString());
 			world.spawnEntityInWorld(entity);
 			entityliving.playLivingSound();
-			System.out.println("Spawning");
+			//System.out.println("Spawning");
 
 		} else if (entity == null) {
 			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not a valid name");

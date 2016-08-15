@@ -165,6 +165,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
 		
 			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
+			
+			
+			
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
 			this.worldObj.theProfiler.endSection();
 		

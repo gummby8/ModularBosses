@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.util.schematic;
 
 import com.Splosions.ModularBosses.util.TargetUtils;
 
+import net.minecraft.util.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
 
 public class DungeonNurkach extends Dungeon {
@@ -22,8 +23,11 @@ public class DungeonNurkach extends Dungeon {
 	public static final int BOSS = 3;
 	public static final int ENTRANCE = 4;
 
-	public DungeonNurkach() {
-
+	public DungeonNurkach(BlockPos pos) {
+		originX = RoomPosX = pos.getX();
+		originY = RoomPosY = pos.getY() - 2;
+		originZ = RoomPosZ = pos.getZ();
+		wormGen();
 	}
 
 	
@@ -35,7 +39,7 @@ public class DungeonNurkach extends Dungeon {
 
 		roomGen = false;
 		while (!roomGen) {
-			System.out.println("Making Doors");
+			//System.out.println("Making Doors");
 			roomGen = true;
 
 			roomArray[0][0].type = ENTRANCE;
@@ -213,6 +217,8 @@ public class DungeonNurkach extends Dungeon {
 				}
 			}
 		}
+		
+		dungeonRooms = roomArray;
 	}
 
 	
