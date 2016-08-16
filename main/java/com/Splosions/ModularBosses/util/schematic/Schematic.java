@@ -89,21 +89,46 @@ public class Schematic {
 			j = 0;
 			k = 0;
 			for (int q = 0; q < dungeon.buildCount; q++) {
-				if (i >= height) {
-					break;
-				} else if (j >= length) {
-					i++;
-					j = 0;
-				} else if (k >= width) {
+				k++;
+				if (k >= width) {
 					j++;
 					k = 0;
 				}
-				k++;
+				if (j >= length) {
+					i++;
+					j = 0;
+				}
+				if (i >= height) {
+					break;
+				}
+				
 			}
 			
-			System.out.println(i + " " + j + " " + k);
+			//System.out.println(height + " " + length + " " + width);
+			//System.out.println(i + " " + j + " " + k);
 			
 			for (int q = 0; q < dungeon.buildsPerTick; q++) {
+				int blockId = UnsignedBytes.toInt(blockIDs[dungeon.buildCount]);
+				// Checks the id reference Map
+				if ((id = oldToNew.get((short) blockId)) != null) {
+					blockId = id;
+				}
+
+				IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
+
+				world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
+				dungeon.buildCount++;
+
+				k++;
+
+				if (k >= width) {
+					j++;
+					k = 0;
+				}
+				if (j >= length) {
+					i++;
+					j = 0;
+				}
 				if (i >= height) {
 					dungeon.buildCount = 0;
 					i = 0;
@@ -112,28 +137,7 @@ public class Schematic {
 					dungeon.roomCount++;
 					dungeon.nextRoom();
 					break;
-				} else if (j >= length) {
-					i++;
-					j = 0;
-				} else if (k >= width) {
-					j++;
-					k = 0;
-				} else {
-
-					int blockId = UnsignedBytes.toInt(blockIDs[counter]);
-					// Checks the id reference Map
-					if ((id = oldToNew.get((short) blockId)) != null) {
-						blockId = id;
-					}
-
-					//System.out.println(i + " " + j + " " + k);
-					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
-
-					world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
-					dungeon.buildCount++;
-
-					k++;
-				}
+				} 
 			}
 
 			NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);

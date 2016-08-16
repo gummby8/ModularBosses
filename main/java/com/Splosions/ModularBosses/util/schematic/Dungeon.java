@@ -15,7 +15,7 @@ public class Dungeon {
 	
     public Boolean instantBuild = false;
     
-	public int buildsPerTick = 10;
+	public int buildsPerTick = 1;
 	public int buildCount = 0;
 	public int roomCount = 0;
 	
@@ -28,9 +28,11 @@ public class Dungeon {
 	public String fileName;
 
 	public void nextRoom() {
-		System.out.println("Building New Room");
+		//System.out.println("Building New Room");
+		 dgnRoomsLength = 0;
+		 dgnRoomsWidth = 0;
 		for(int c = 0; c < roomCount; c++) {
-			 if (dgnRoomsLength >= dungeonRooms.length - 1){
+			 if (dgnRoomsLength >= dungeonRooms.length - 1 && dgnRoomsWidth >= dungeonRooms[dgnRoomsLength].length - 1){
 				 dgnRoomsLength = 0;
 				 dgnRoomsWidth = 0;
 				 finishedBuilding = true;
@@ -42,10 +44,8 @@ public class Dungeon {
              } else {
             	 dgnRoomsWidth++;
              }
-			 RoomPosX = originX + (roomWidth * dgnRoomsWidth);
-			 RoomPosZ = originZ - (roomLength * dgnRoomsLength);
-			 
 		}
-		
+		 RoomPosX = originX + (roomWidth * dgnRoomsWidth);
+		 RoomPosZ = originZ - (roomLength * dgnRoomsLength);
 	}
 }

@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class TickHandler {
 
-	
+
 	
 	@SubscribeEvent
 	public void worldTick(TickEvent.WorldTickEvent event) {
