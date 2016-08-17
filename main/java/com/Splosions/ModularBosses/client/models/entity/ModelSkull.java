@@ -178,12 +178,6 @@ public class ModelSkull extends ModelBase
     super.render(entity, f, f1, f2, f3, f4, f5);
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     
-    red = (entity.ticksExisted > 255) ? 1 - ((entity.ticksExisted - 255) * 0.004F) : 1;
-    green = (entity.ticksExisted > 255) ? 0 :  1 - (entity.ticksExisted * 0.004F);
-    blue = 0;
-    
-    GlStateManager.color(red, green, blue);
-    
     RightLip.render(f5);
     LeftLip.render(f5);
     TLTooth.render(f5);
@@ -204,10 +198,6 @@ public class ModelSkull extends ModelBase
     Shape1.render(f5);
     SkullTop.render(f5);
     EyeBrow.render(f5);
-  
-    
-    
-
    }
   
   private void setRotation(ModelRenderer model, float x, float y, float z)

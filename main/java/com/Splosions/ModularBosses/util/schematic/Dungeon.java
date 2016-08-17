@@ -15,7 +15,7 @@ public class Dungeon {
 	
     public Boolean instantBuild = false;
     
-	public int buildsPerTick = 1;
+	public int buildsPerTick = 10;
 	public int buildCount = 0;
 	public int roomCount = 0;
 	

@@ -1,5 +1,6 @@
 package com.Splosions.ModularBosses.util.schematic;
 
+import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.util.BlockPos;
@@ -24,7 +25,7 @@ public class DungeonNurkach extends Dungeon {
 	public static final int ENTRANCE = 4;
 
 	public DungeonNurkach(BlockPos pos) {
-		buildsPerTick = 1;
+		buildsPerTick = Config.buildsPerTick;
 		originX = RoomPosX = pos.getX();
 		originY = RoomPosY = pos.getY() - 2;
 		originZ = RoomPosZ = pos.getZ();

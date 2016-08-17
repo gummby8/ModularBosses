@@ -78,7 +78,7 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 	{
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(eyeballOctopusMaxHealth);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
@@ -115,7 +115,7 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 
 
 		this.playSound("mob.enderdragon.hit", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-		this.target.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+		this.target.attackEntityFrom(DamageSource.causeMobDamage(this), eyeballOctopusDmg);
 	}
 
 	@Override

@@ -42,16 +42,13 @@ public class EntityTick extends EntityMob {
 	public int growth;
 	private int deathTicks;
 	private boolean fullgrown;
+	
+	public static int tickMaxHealth;
+	public static int tickDmg;
 
 	public EntityTick(World worldIn) {
 		super(worldIn);
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false)); // How
-																									// fast
-																									// mob
-																									// moves
-																									// towards
-																									// the
-																									// player
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false)); 
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(4, new EntityAIWander(this, 0.25D));
@@ -67,7 +64,7 @@ public class EntityTick extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(tickMaxHealth);
 		this.startMaxHp = this.getEntityAttribute(SharedMonsterAttributes.maxHealth).getAttributeValue();
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
@@ -76,7 +73,7 @@ public class EntityTick extends EntityMob {
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(20);
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(tickDmg);
 	}
 
 	@Override
@@ -86,10 +83,8 @@ public class EntityTick extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		// eyeballOctopusMaxHealth = config.get("Eyeball Octopus", "[Max Health]
-		// Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
-		// eyeballOctopusDmg = config.get("Eyeball Octopus", "[Attack Damage]
-		// Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+		tickMaxHealth = config.get("Tick", "[Max Health] Set the Hp of Tick Spawns [1+]", 20).getInt();
+		tickDmg = config.get("Tick", "[Attack Damage] Set the damage of Tick Spawns [1+]", 10).getInt();
 	}
 
 	@Override

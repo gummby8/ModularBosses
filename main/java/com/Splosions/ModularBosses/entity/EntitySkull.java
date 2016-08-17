@@ -37,6 +37,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,19 +48,37 @@ public class EntitySkull  extends EntityFlying implements IMob
     private static final String __OBFID = "CL_00001689";
     
     public boolean TargetLocked;
+    
+	public static int skullMaxHealth;
+	public static int skullDmg;
 
     public EntitySkull(World worldIn)
     {
         super(worldIn);
-        this.setSize(4.0F, 4.0F);
+        this.setSize(0.5F, 0.5F);
         this.isImmuneToFire = true;
         this.experienceValue = 5;
         this.moveHelper = new EntitySkull.GhastMoveHelper();
         this.tasks.addTask(5, new EntitySkull.AIRandomFly());
         this.tasks.addTask(7, new EntitySkull.AILookAround());
         this.tasks.addTask(2, new EntitySkull.AIFireballAttack());
+        
         this.targetTasks.addTask(1, new EntityAIFindEntityNearestPlayer(this));
+        
     }
+    
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(100.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(skullMaxHealth);
+    }
+
+    
+	public static void postInitConfig(Configuration config) {
+		skullMaxHealth = config.get("Skull", "[Max Health] Set the Hp of Skull Spawns [1+]", 20).getInt();
+		skullDmg = config.get("Skull", "[Attack Damage] Set the Beam Damage of Skull Spawns [1+]", 10).getInt();
+	}
 
     @SideOnly(Side.CLIENT)
     public boolean func_110182_bF()
@@ -76,6 +95,14 @@ public class EntitySkull  extends EntityFlying implements IMob
     {
         return this.explosionStrength;
     }
+    
+    @Override
+    public void onCollideWithPlayer(EntityPlayer player) {
+    
+    	 player.attackEntityFrom(DamageSource.causeMobDamage(this), skullDmg);
+
+    	 this.TargetLocked = false;
+     }
 
     /**
      * Called to update the entity's position/logic.
@@ -136,20 +163,9 @@ public class EntitySkull  extends EntityFlying implements IMob
      */
     public boolean attackEntityFrom(DamageSource source, float amount)
     {
-        if (this.isEntityInvulnerable(source))
-        {
-            return false;
-        }
-        else if ("fireball".equals(source.getDamageType()) && source.getEntity() instanceof EntityPlayer)
-        {
-            super.attackEntityFrom(source, 1000.0F);
-            ((EntityPlayer)source.getEntity()).triggerAchievement(AchievementList.ghast);
-            return true;
-        }
-        else
-        {
+
             return super.attackEntityFrom(source, amount);
-        }
+
     }
 
     protected void entityInit()
@@ -158,12 +174,7 @@ public class EntitySkull  extends EntityFlying implements IMob
         this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
     }
 
-    protected void applyEntityAttributes()
-    {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(100.0D);
-    }
+
 
     /**
      * Returns the sound this mob makes while it's alive.
