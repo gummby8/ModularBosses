@@ -24,6 +24,7 @@ public class DungeonNurkach extends Dungeon {
 	public static final int ENTRANCE = 4;
 
 	public DungeonNurkach(BlockPos pos) {
+		buildsPerTick = 1;
 		originX = RoomPosX = pos.getX();
 		originY = RoomPosY = pos.getY() - 2;
 		originZ = RoomPosZ = pos.getZ();
