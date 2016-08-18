@@ -15,21 +15,23 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
-import com.Splosions.ModularBosses.util.MBEvents;
 import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
 import com.Splosions.ModularBosses.handler.GuiHandler;
+import com.Splosions.ModularBosses.handler.MBEventHandler;
+import com.Splosions.ModularBosses.handler.TickHandler;
+import com.Splosions.ModularBosses.handler.commands.CommandItemInfo;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
 import com.Splosions.ModularBosses.util.CartographerChunkloadCallback;
-import com.Splosions.ModularBosses.util.TickHandler;
 import com.Splosions.ModularBosses.util.schematic.Dungeon;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
@@ -45,6 +47,12 @@ public class ModularBosses {
 	@Instance(Reference.MOD_ID)
 	public static ModularBosses instance;
 
+	@EventHandler
+	public void serverLoad(FMLServerStartingEvent event)
+	{
+		event.registerServerCommand(new CommandItemInfo());
+	}
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(new TickHandler());
@@ -75,6 +83,6 @@ public class ModularBosses {
 	@Mod.EventHandler
 	public void load(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
-		MinecraftForge.EVENT_BUS.register(new MBEvents());
+		MinecraftForge.EVENT_BUS.register(new MBEventHandler());
 	}
 }

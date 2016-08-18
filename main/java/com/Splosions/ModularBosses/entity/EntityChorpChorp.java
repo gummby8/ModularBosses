@@ -26,12 +26,15 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -161,7 +164,10 @@ public class EntityChorpChorp extends EntityMob
 
 
 		if (this.deathTicks == 100 && !this.worldObj.isRemote){
-			this.dropItem(Item.getItemById(3), 1);
+			this.dropItem(GameRegistry.findItem("mb", "itemBait"), 1);
+			
+			//Get the Item = Item.itemRegistry.getObject("mb:itemBait")
+			//Get the mod id and itemname perfectly =  System.out.println(GameRegistry.findUniqueIdentifierFor(GameRegistry.findItem("mb", "itemBait")));
 			this.setDead();   	
 		}
 

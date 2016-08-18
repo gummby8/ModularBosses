@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.util;
+package com.Splosions.ModularBosses.handler;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MBEvents {
+public class MBEventHandler {
 
 	/*
 	 * used to make the player look ghostly when in limbo. 

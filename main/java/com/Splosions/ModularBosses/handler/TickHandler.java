@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.util;
+package com.Splosions.ModularBosses.handler;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
