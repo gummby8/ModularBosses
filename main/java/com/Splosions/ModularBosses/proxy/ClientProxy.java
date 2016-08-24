@@ -12,6 +12,7 @@ import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.ModModelManager;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPortalBlock;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
+import com.Splosions.ModularBosses.handler.RenderTickHandler;
 import com.Splosions.ModularBosses.items.IModItem;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.google.common.collect.Maps;
@@ -32,6 +33,7 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.ReflectionHelper.UnableToFindMethodException;
@@ -159,6 +161,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void preInit() {
 		super.preInit();
+		FMLCommonHandler.instance().bus().register(new RenderTickHandler());
 		ModModelManager.INSTANCE.registerAllModels();
 	}
 	

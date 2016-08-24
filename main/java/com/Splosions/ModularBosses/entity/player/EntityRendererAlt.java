@@ -9,8 +9,8 @@ public class EntityRendererAlt extends EntityRenderer
 	private final Minecraft mc;
 	private float offsetY = 3.0F; // just for testing, should be based on actual render size
 
-	public EntityRendererAlt(Minecraft mc, IResourceManager resourceManager) {
-		super(mc, resourceManager); //, mc.getResourceManager());
+	public EntityRendererAlt(Minecraft mc) {
+		super(mc, mc.getResourceManager()); //, mc.getResourceManager());
 		this.mc = mc;
 	}
 
@@ -22,7 +22,9 @@ public class EntityRendererAlt extends EntityRenderer
 		}
 		// this is what changes the actual camera height
 		// but also seems to affect the player model render position
+		
 		mc.thePlayer.renderOffsetY -= offsetY;
+		mc.thePlayer.renderOffsetX = 100;
 		super.updateCameraAndRender(partialTick);
 		mc.thePlayer.renderOffsetY = 1.62F;
 	}

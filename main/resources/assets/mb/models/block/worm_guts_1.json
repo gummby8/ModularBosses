@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "mb:blocks/worm_guts"
+        "all": "mb:blocks/worm_guts_1"
     }
 }

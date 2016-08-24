@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "mb:worm_guts_2" },
+        "inventory": { "model": "mb:worm_guts_2" }
+    }
+}

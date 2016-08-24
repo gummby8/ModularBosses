@@ -1,5 +1,7 @@
 package com.Splosions.ModularBosses.handler;
 
+import org.lwjgl.opengl.GL11;
+
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.player.EntityRendererAlt;
@@ -20,33 +22,14 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MBEventHandler {
 
-	private Minecraft mc;
-	private EntityRenderer renderer, prevRenderer;
-
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onRenderTick(RenderTickEvent event) {
-		if (event.phase == TickEvent.Phase.START) {
-			if (renderer == null) {
-				renderer = new EntityRendererAlt(mc, mc.getResourceManager());
-			}
-			if (mc.entityRenderer != renderer) {
-				// be sure to store the previous renderer
-				prevRenderer = mc.entityRenderer;
-				mc.entityRenderer = renderer;
-			}
-		} else if (prevRenderer != null && mc.entityRenderer != prevRenderer) {
-			// reset the renderer
-			mc.entityRenderer = prevRenderer;
-		}
-
-	}
+	
 
 	/*
 	 * used to make the player look ghostly when in limbo.
@@ -58,7 +41,10 @@ public class MBEventHandler {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(1, 1);
+			
+
 		}
+			
 
 	}
 
