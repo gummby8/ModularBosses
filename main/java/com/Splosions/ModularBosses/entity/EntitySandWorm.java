@@ -184,35 +184,13 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	@Override
 	public void onUpdate() {
 
-		this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+		//this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
 
 			spawnPosX = (int) this.posX;
 			spawnPosY = (int) this.posY; 
 			spawnPosZ = (int) this.posZ;
-			
-			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
-			String roomPath = "./schematics/te.schematic";
-			Schematic.quickBuild(roomPath, ws, spawnPosX, spawnPosY, spawnPosZ);
-			
-			/**
-			Chunk chunk = ws.getChunkFromChunkCoords(spawnPosX / 16, spawnPosZ / 16);
-			int width = 64;
-			int length = 64;
-			int height = 64;
-			
-			for (int i = 0; i < height; i++) {
-				for (int j = 0; j < length; j++) {
-					for (int k = 0; k < width; k++) {
-						
-						ws.setBlockState(new BlockPos(spawnPosX + j, i, spawnPosZ + k), Blocks.stone.getDefaultState());
-						//chunk.setBlockState(new BlockPos(k, i, j), Blocks.obsidian.getDefaultState());
-					}
-				}
-			}
-			 */
-			
 			
 			nextPosition();
 		}
@@ -286,6 +264,16 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		}
 		//setDead();
 	}
+	
+	
+	public void baitAction(double posX, double posY, double posZ){
+		this.dataWatcher.updateObject(RANDOM_X_WATCHER, (int)posX);
+		this.dataWatcher.updateObject(RANDOM_Y_WATCHER, (int)posY);
+		this.dataWatcher.updateObject(RANDOM_Z_WATCHER, (int)posZ);	
+	}
+	
+	
+	
 	
 	@Override
     protected void doBlockCollisions()

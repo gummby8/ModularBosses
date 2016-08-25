@@ -26,7 +26,7 @@ public class RenderBait extends Render
 {
 	protected ModelBase model;
 	
-	private static final ResourceLocation tex = new ResourceLocation("minecraft:textures/items/Bait.png");
+	private static final ResourceLocation tex = new ResourceLocation("mb:textures/items/Bait.png");
 
 	public RenderBait(RenderManager renderManager) {
 		super(renderManager);
@@ -44,7 +44,7 @@ public class RenderBait extends Render
 		GL11.glPushMatrix();
 		float scale = 1;
 		bindTexture(getEntityTexture(ent));
-		GL11.glTranslated(x, y, z);
+		GL11.glTranslated(x, y - 0.5F, z);
 		GL11.glScalef(scale, scale, scale);
 		model.render(ent, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GL11.glPopMatrix();

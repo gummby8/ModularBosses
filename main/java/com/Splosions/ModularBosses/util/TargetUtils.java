@@ -71,6 +71,10 @@ public class TargetUtils {
 				entity.getEntityBoundingBox().expand(width, height, width));
 	}
 
+	public static final List getSpecificList(Entity entity, Class targetClass, int width, int height) {
+		return entity.worldObj.getEntitiesWithinAABB(targetClass, entity.getEntityBoundingBox().expand(width, height, width));
+	}
+	
 	public static EntityPlayer findRandomVisablePlayer(Entity entity, int width, int height) {
 		Random rn = new Random();
 		List<EntityPlayer> players = entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
