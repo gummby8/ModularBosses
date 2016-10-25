@@ -54,7 +54,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
 
-	
+	/**
 		Entity entityIn = (Entity)playerIn;
 		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
 			worldIn.theProfiler.startSection("portal");
@@ -81,8 +81,11 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 			DungeonNurkach dungeon = new DungeonNurkach(playerIn.getPosition());
 			ModularBosses.instance.dungeonList.add(dungeon);
 		}
+	 	*/
 
-
+		
+		
+		playerIn.eyeHeight = 15;
 		
         return itemStackIn;
 	}
