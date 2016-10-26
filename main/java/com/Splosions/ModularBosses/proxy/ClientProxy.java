@@ -2,6 +2,8 @@ package com.Splosions.ModularBosses.proxy;
 
 import java.util.Map;
 
+import org.lwjgl.input.Mouse;
+
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.ICustomStateMapper;
@@ -58,7 +60,8 @@ public class ClientProxy extends CommonProxy{
 	
 	public static void sobelShader(){
 		try {
-			f_loadShader.invoke(Minecraft.getMinecraft().entityRenderer, new ResourceLocation("shaders/post/sobel.json"));
+			//f_loadShader.invoke(Minecraft.getMinecraft().entityRenderer, new ResourceLocation("shaders/post/sobel.json"));
+			Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
@@ -68,6 +71,8 @@ public class ClientProxy extends CommonProxy{
 	public static void clearShader(){
 		try{
 			ReflectionHelper.setPrivateValue(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer, false, new String[]{"field_175083_ad", "useShader"});
+			Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
+
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,6 @@
 package com.Splosions.ModularBosses.handler;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.Config;
@@ -13,6 +14,7 @@ import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
@@ -38,21 +40,41 @@ public class MBEventHandler {
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Pre event) {
 		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
-			GlStateManager.enableBlend();
-			GlStateManager.disableAlpha();
-			GlStateManager.blendFunc(1, 1);
+			EntityPlayer player =  event.entityPlayer;
+			GL11.glPushMatrix();
+			//GlStateManager.enableBlend();
+			//GlStateManager.disableAlpha();
+			//GlStateManager.blendFunc(1, 1);
+			GL11.glTranslatef(0, 0.15f, 0);
+			GL11.glRotatef(-90, 1, 0, 0);
+			GL11.glRotatef(-player.rotationYaw, 0, 0, 1);
+			GL11.glRotatef(player.rotationYaw, 0, 1, 0);
+			player.setInWeb();
+			player.motionX = player.motionY = player.motionZ = 0;
+		
+			
 			
 
+			
 		}
 			
 
 	}
+	
+
+	
+	
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Post event) {
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
+		
+		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
+			GL11.glPopMatrix();	
+		}
+		
 	}
 
 	@SubscribeEvent
