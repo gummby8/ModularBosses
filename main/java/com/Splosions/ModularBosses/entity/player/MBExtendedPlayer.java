@@ -21,6 +21,8 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	public int limboTime;
 	public int preLimbo;
 	public int limbo;
+	
+	public int knockdownTime;
 
 	public static final int LIMBO_WATCHER = 27;
 	
@@ -33,6 +35,8 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	this.preLimbo = 0;
 	this.limboTime = 0;
 	player.getDataWatcher().addObject(LIMBO_WATCHER, 0);
+	
+	this.knockdownTime = 0;
 	}
 
 	
@@ -69,10 +73,28 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 				}
 			}
 			this.preLimbo = this.limbo;
+			
+			
+			this.knockdownTime -= (this.knockdownTime > 0) ? 1 : 0;
+			if (this.knockdownTime >= 2 && this.player == Minecraft.getMinecraft().thePlayer){
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+			} else 
+			if (this.knockdownTime == 1){
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;	
+			}
+			
+			
 		} else {
 			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (this.limboTime > 0 ? 1 : 0));
+		
+		
+
 		}
 		this.limboTime -= (this.limboTime > 0) ? 1 : 0;
+		
+		
+		
+		
 	}
 	
 	

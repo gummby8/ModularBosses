@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.entity.Entity;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -38,6 +39,7 @@ import com.Splosions.ModularBosses.util.schematic.Dungeon;
 public class ModularBosses {
 
 	public ArrayList<Dungeon> dungeonList = new ArrayList<Dungeon>();
+	public Entity playerTarget;
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 
 	

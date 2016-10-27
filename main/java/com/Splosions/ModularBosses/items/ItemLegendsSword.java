@@ -15,6 +15,7 @@ import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
+import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
@@ -85,7 +86,8 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 
 		
 		
-		playerIn.eyeHeight = 15;
+		ModularBosses.instance.playerTarget = playerIn;
+		MBExtendedPlayer.get(playerIn).knockdownTime = 60;
 		
         return itemStackIn;
 	}

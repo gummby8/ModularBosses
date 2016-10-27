@@ -3,6 +3,8 @@ package com.Splosions.ModularBosses.entity;
 import java.util.List;
 import java.util.Random;
 
+import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.client.model.ModelRenderer;
@@ -91,29 +93,14 @@ public class EntityShadeHowler extends EntityMob {
 				double d2 = entity.posX - d0;
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
-				//entity.hurtResistantTime = 10;
+				entity.hurtResistantTime = 10;
 				//player.addPotionEffect(new PotionEffect(15, 200, 1));
-				//player.eyeHeight = 5;
+				
 				//entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
 				//entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
-
-
-				//make this a forced look atribute for players
-				double dx = player.posX - this.posX;
-				double dz = player.posZ - this.posZ;
-				double angle = Math.atan2(dz, dx) * 180 / Math.PI;
-				double pitch = Math.atan2(player.posY - (this.posY + (this.height / 2.0F)), Math.sqrt(dx * dx + dz * dz)) * 180 / Math.PI;
-				double distance = player.getDistanceToEntity(this);
-				float rYaw = (float)(angle - player.rotationYaw);
-				while (rYaw > 180) { rYaw -= 360; }
-				while (rYaw < -180) { rYaw += 360; }
-				rYaw += 90F;
-				float rPitch = (float) pitch - (float)(10.0F / Math.sqrt(distance)) + (float)(distance * Math.PI / 90);
-				player.setAngles(rYaw, -(rPitch - player.rotationPitch));			
-				
-				
-				
-				
+				ModularBosses.instance.playerTarget = this;
+				MBExtendedPlayer.get(player).knockdownTime = 60;
+					
 				System.out.println(entity);
 			}
 		}
