@@ -19,7 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MBClientEventHandler {
 	
-	
+	boolean needsPop;
 	private final RenderKnockedDown knockedDown = new RenderKnockedDown(Minecraft.getMinecraft().getRenderManager());
 	/*
 	 * used to make the player look ghostly when in limbo.
@@ -40,33 +40,27 @@ public class MBClientEventHandler {
 
 		
 		
-		if (ModularBosses.instance.playerTarget != null && MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime > 0 && !(event.renderer instanceof RenderKnockedDown)) {
+		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime > 0 && !(event.renderer instanceof RenderKnockedDown)) {
+			needsPop = true;
 			
-			 event.setCanceled(true);
-			 EntityPlayer player = event.entityPlayer;
-			knockedDown.doRender(player, 0D, 0D, 0D, 0.0625F, event.partialRenderTick);
-
 			
-			/** 
+			/**
+        	GL11.glPushMatrix();
+    		GL11.glTranslatef(0, 0.15f, 0);
+    		GL11.glRotatef(-90, 1, 0, 0);
+    		GL11.glRotatef(-p_180596_1_.rotationYaw, 0, 0, 1);
+    		GL11.glRotatef(p_180596_1_.rotationYaw, 0, 1, 0);
+			 */
+			
 			 
+			 
+			EntityPlayer player = event.entityPlayer;
+			EntityPlayer client = Minecraft.getMinecraft().thePlayer;
+			event.setCanceled(true);
+			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.partialRenderTick);
 			
-			GL11.glPushMatrix();
-			GL11.glTranslatef(0, 0.15f, 0);
-			GL11.glRotatef(-90, 1, 0, 0);
-			GL11.glRotatef(-player.rotationYaw, 0, 0, 1);
-			GL11.glRotatef(player.rotationYaw, 0, 1, 0);
+					
 			
-			if (player != Minecraft.getMinecraft().thePlayer){
-				Entity client = Minecraft.getMinecraft().thePlayer;
-				double x = client.posX - player.posX;
-				double y = client.posY - player.posY;
-				double z = client.posZ - player.posZ;
-				GL11.glTranslated(0,-y,0);
-			}
-			*/
-			//player.setInWeb();
-			//player.motionX = player.motionY = player.motionZ = 0;
-
 			Entity target = ModularBosses.instance.playerTarget;
 			double dx = player.posX - target.posX;
 			double dz = player.posZ - target.posZ;
@@ -92,9 +86,6 @@ public class MBClientEventHandler {
 	public void onRenderPlayer(RenderPlayerEvent.Post event) {
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
-
-
-
 	}
 
 	

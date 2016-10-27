@@ -101,7 +101,7 @@ public class EntityShadeHowler extends EntityMob {
 				ModularBosses.instance.playerTarget = this;
 				MBExtendedPlayer.get(player).knockdownTime = 60;
 					
-				System.out.println(entity);
+				//System.out.println(entity);
 			}
 		}
 	}

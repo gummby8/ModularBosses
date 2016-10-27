@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.client.render.entity;
 
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.Splosions.ModularBosses.client.models.entity.ModelKnockdown;
 import com.Splosions.ModularBosses.client.models.entity.ModelTeleportBiped;
 import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
 import com.google.common.base.Objects;
@@ -26,7 +28,8 @@ import com.google.common.base.Objects;
 @SideOnly(Side.CLIENT)
 public class RenderTeliportBiped extends Render
 {
-	protected ModelBase model;
+	public static ModelTeleportBiped model;
+	
 	float rot = 0;
 	float wScale = 1.3F;
 	float hScale = 1.3F;
@@ -36,7 +39,8 @@ public class RenderTeliportBiped extends Render
 
 	public RenderTeliportBiped(RenderManager renderManager) {
 		super(renderManager);
-		this.model = new ModelTeleportBiped();
+		this.model = new ModelTeleportBiped(1,true);
+		
 		
 		
 	}

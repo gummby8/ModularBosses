@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.client.render.entity;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.client.models.entity.ModelKnockdown;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -43,7 +44,8 @@ public class RenderKnockedDown extends RenderPlayer
     /** this field is used to indicate the 3-pixel wide arms */
     private boolean smallArms;
     
-
+    public static ModelPlayer modelKnockdown;
+	
     public RenderKnockedDown(RenderManager renderManager)
     {
         this(renderManager, false);
@@ -59,24 +61,21 @@ public class RenderKnockedDown extends RenderPlayer
         this.addLayer(new LayerDeadmau5Head(this));
         this.addLayer(new LayerCape(this));
         this.addLayer(new LayerCustomHead(this.getPlayerModel().bipedHead));
+        
+        this.mainModel = new ModelKnockdown(1,false);
     }
 
     @Override
     public void doRender(EntityLivingBase entity, double x, double y, double z, float yaw, float partialTicks)
     {
-    	GL11.glPushMatrix();
-		GL11.glTranslatef(0, 0.15f, 0);
-		GL11.glRotatef(-90, 1, 0, 0);
-		GL11.glRotatef(-entity.rotationYaw, 0, 0, 1);
-		GL11.glRotatef(entity.rotationYaw, 0, 1, 0);
+
 		
 		try {
 			func_180596_a((AbstractClientPlayer)entity, x, y, z, yaw, partialTicks);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-      		
-      	GL11.glPopMatrix();
+
         
     }
     
@@ -97,7 +96,9 @@ public class RenderKnockedDown extends RenderPlayer
             }
 
             this.func_177137_d(p_180596_1_);
+
             mDoRender((EntityLivingBase)p_180596_1_, p_180596_2_, d3, p_180596_6_, p_180596_8_, p_180596_9_);
+            
         }
         net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(p_180596_1_, this, p_180596_9_, p_180596_2_, p_180596_4_, p_180596_6_));
     }
@@ -264,7 +265,7 @@ public class RenderKnockedDown extends RenderPlayer
         }
         else
         {
-        	System.out.println(resourcelocation);
+        	
         	this.bindTexture(resourcelocation);
             return true;
         }
@@ -275,7 +276,7 @@ public class RenderKnockedDown extends RenderPlayer
     
     public void bindTexture(ResourceLocation location)
     {
-        this.renderManager.renderEngine.bindTexture(location);
+       Minecraft.getMinecraft().getRenderManager().renderEngine.bindTexture(location);
     }
     
        
