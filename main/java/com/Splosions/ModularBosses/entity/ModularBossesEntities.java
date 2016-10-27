@@ -24,6 +24,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock
 import com.Splosions.ModularBosses.client.render.entity.RenderEyeballOctopus;
 import com.Splosions.ModularBosses.client.render.entity.RenderGolem;
 import com.Splosions.ModularBosses.client.render.entity.RenderHeavyChorp;
+import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.client.render.entity.RenderMoldormAlpha;
 import com.Splosions.ModularBosses.client.render.entity.RenderParagon;
 import com.Splosions.ModularBosses.client.render.entity.RenderSandWorm;
@@ -55,6 +56,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -173,6 +175,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityCartographer.class, new RenderCartographer(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderKnockedDown(manager));
 		
 		
 		//projectiles

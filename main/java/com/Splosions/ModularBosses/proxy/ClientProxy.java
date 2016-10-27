@@ -14,6 +14,8 @@ import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.ModModelManager;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPortalBlock;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
+import com.Splosions.ModularBosses.handler.MBClientEventHandler;
+import com.Splosions.ModularBosses.handler.MBEventHandler;
 import com.Splosions.ModularBosses.handler.RenderTickHandler;
 import com.Splosions.ModularBosses.items.IModItem;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
@@ -166,6 +168,7 @@ public class ClientProxy extends CommonProxy{
 		super.preInit();
 		FMLCommonHandler.instance().bus().register(new RenderTickHandler());
 		ModModelManager.INSTANCE.registerAllModels();
+		MinecraftForge.EVENT_BUS.register(new MBClientEventHandler());
 	}
 	
 }

@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -21,6 +24,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
+import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
