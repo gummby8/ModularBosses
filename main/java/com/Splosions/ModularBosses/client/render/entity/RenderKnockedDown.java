@@ -175,11 +175,11 @@ public class RenderKnockedDown extends RenderPlayer
             if (this.renderOutlines)
             {
                 flag = this.func_177088_c(entity);
-                this.renderModel(entity, f8, f7, f5, f4, f9, 0.0625F);
+              //  this.renderModel(entity, f8, f7, f5, f4, f9, 0.0625F);
 
                 if (flag)
                 {
-                    this.func_180565_e();
+                    //this.func_180565_e();
                 }
             }
             else

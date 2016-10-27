@@ -82,8 +82,8 @@ public class ModelKnockdown extends ModelPlayer
     public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_)
     {
     	GL11.glPushMatrix();
-		GL11.glTranslatef(0, 0.15f, 0);
-		GL11.glRotatef(-90, 1, 0, 0);
+		//GL11.glTranslatef(0, 0.15f, 0);
+		//GL11.glRotatef(-90, 1, 0, 0);
 		//GL11.glRotatef(-180, 0, 0, 1);
 		//GL11.glRotatef(-p_78088_1_.rotationYaw, 0, 0, 1);
 		//GL11.glRotatef(p_78088_1_.rotationYaw, 0, 1, 0);
