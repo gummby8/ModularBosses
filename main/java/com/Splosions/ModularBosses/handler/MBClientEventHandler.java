@@ -26,40 +26,17 @@ public class MBClientEventHandler {
 	 */
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Pre event) {
+		EntityPlayer player = event.entityPlayer;
+		
 		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
-			EntityPlayer player = event.entityPlayer;
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(1, 1);
 		}
 
 
-		
-
-		
-
-		
-		
-		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime > 0 && !(event.renderer instanceof RenderKnockedDown)) {
-			needsPop = true;
-			
-			
-			/**
-        	GL11.glPushMatrix();
-    		GL11.glTranslatef(0, 0.15f, 0);
-    		GL11.glRotatef(-90, 1, 0, 0);
-    		GL11.glRotatef(-p_180596_1_.rotationYaw, 0, 0, 1);
-    		GL11.glRotatef(p_180596_1_.rotationYaw, 0, 1, 0);
-			 */
-			
-			 
-			 
-			EntityPlayer player = event.entityPlayer;
-			EntityPlayer client = Minecraft.getMinecraft().thePlayer;
-			event.setCanceled(true);
-			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.partialRenderTick);
-			
-					
+		if (ModularBosses.instance.playerTarget != null && !ModularBosses.instance.playerTarget.isDead  && event.entityPlayer == Minecraft.getMinecraft().thePlayer){
+			player.motionX = player.motionY = player.motionZ = 0;
 			
 			Entity target = ModularBosses.instance.playerTarget;
 			double dx = player.posX - target.posX;
@@ -77,6 +54,12 @@ public class MBClientEventHandler {
 			rYaw += 90F;
 			float rPitch = (float) pitch - (float) (10.0F / Math.sqrt(distance)) + (float) (distance * Math.PI / 90);
 			player.setAngles(rYaw, -(rPitch - player.rotationPitch));
+		}
+	
+		
+		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime > 0 && !(event.renderer instanceof RenderKnockedDown)) {
+			event.setCanceled(true);
+			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.partialRenderTick);
 		}
 
 	}

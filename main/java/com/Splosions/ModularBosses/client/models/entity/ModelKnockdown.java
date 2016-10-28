@@ -82,27 +82,53 @@ public class ModelKnockdown extends ModelPlayer
     public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float p_78088_6_, float p_78088_7_)
     {
     	GL11.glPushMatrix();
-		//GL11.glTranslatef(0, 0.15f, 0);
-		//GL11.glRotatef(-90, 1, 0, 0);
-		//GL11.glRotatef(-180, 0, 0, 1);
-		//GL11.glRotatef(-p_78088_1_.rotationYaw, 0, 0, 1);
-		//GL11.glRotatef(p_78088_1_.rotationYaw, 0, 1, 0);
+    	GL11.glTranslatef(0, 1.25f, 0);
+		GL11.glRotatef(-90, 1, 0, 0);
+		GL11.glScalef(0.9F, 0.9F, 0.9F);
+
         super.render(p_78088_1_, p_78088_2_, p_78088_3_, p_78088_4_, p_78088_5_, p_78088_6_, p_78088_7_);
-        
+        GlStateManager.pushMatrix();
 
+        if (this.isChild)
+        {
+            float f6 = 2.0F;
+            GlStateManager.scale(1.0F / f6, 1.0F / f6, 1.0F / f6);
+            GlStateManager.translate(0.0F, 24.0F * p_78088_7_, 0.0F);
+            this.bipedLeftLegwear.render(p_78088_7_);
+            this.bipedRightLegwear.render(p_78088_7_);
+            this.bipedLeftArmwear.render(p_78088_7_);
+            this.bipedRightArmwear.render(p_78088_7_);
+            this.bipedBodyWear.render(p_78088_7_);
+        }
+        else
+        {
+            if (p_78088_1_.isSneaking())
+            {
+                GlStateManager.translate(0.0F, 0.2F, 0.0F);
+            }
 
-        
+            this.bipedLeftLegwear.render(p_78088_7_);
+            this.bipedRightLegwear.render(p_78088_7_);
+            this.bipedLeftArmwear.render(p_78088_7_);
+            this.bipedRightArmwear.render(p_78088_7_);
+            this.bipedBodyWear.render(p_78088_7_);
+        }
+
+        GlStateManager.popMatrix();
         GlStateManager.popMatrix();
     }
 
     public void func_178727_b(float p_178727_1_)
     {
-
+        copyModelAngles(this.bipedHead, this.field_178736_x);
+        this.field_178736_x.rotationPointX = 0.0F;
+        this.field_178736_x.rotationPointY = 0.0F;
+        this.field_178736_x.render(p_178727_1_);
     }
 
     public void func_178728_c(float p_178728_1_)
     {
-  
+        this.field_178729_w.render(p_178728_1_);
     }
 
     /**
@@ -112,27 +138,58 @@ public class ModelKnockdown extends ModelPlayer
      */
     public void setRotationAngles(float p_78087_1_, float p_78087_2_, float p_78087_3_, float p_78087_4_, float p_78087_5_, float p_78087_6_, Entity p_78087_7_)
     {
-       
-        
+        super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, p_78087_4_, p_78087_5_, p_78087_6_, p_78087_7_);
+        copyModelAngles(this.bipedLeftLeg, this.bipedLeftLegwear);
+        copyModelAngles(this.bipedRightLeg, this.bipedRightLegwear);
+        copyModelAngles(this.bipedLeftArm, this.bipedLeftArmwear);
+        copyModelAngles(this.bipedRightArm, this.bipedRightArmwear);
+        copyModelAngles(this.bipedBody, this.bipedBodyWear);
+
+        if (p_78087_7_.isSneaking())
+        {
+            this.field_178729_w.rotationPointY = 2.0F;
+        }
+        else
+        {
+            this.field_178729_w.rotationPointY = 0.0F;
+        }
     }
 
     public void func_178725_a()
     {
-
+        this.bipedRightArm.render(0.0625F);
+        this.bipedRightArmwear.render(0.0625F);
     }
 
     public void func_178726_b()
     {
-
+        this.bipedLeftArm.render(0.0625F);
+        this.bipedLeftArmwear.render(0.0625F);
     }
 
     public void setInvisible(boolean invisible)
     {
-
+        super.setInvisible(invisible);
+        this.bipedLeftArmwear.showModel = invisible;
+        this.bipedRightArmwear.showModel = invisible;
+        this.bipedLeftLegwear.showModel = invisible;
+        this.bipedRightLegwear.showModel = invisible;
+        this.bipedBodyWear.showModel = invisible;
+        this.field_178729_w.showModel = invisible;
+        this.field_178736_x.showModel = invisible;
     }
 
     public void postRenderArm(float p_178718_1_)
     {
-
+        if (this.field_178735_y)
+        {
+            ++this.bipedRightArm.rotationPointX;
+            this.bipedRightArm.postRender(p_178718_1_);
+            --this.bipedRightArm.rotationPointX;
+        }
+        else
+        {
+            this.bipedRightArm.postRender(p_178718_1_);
+        }
     }
 }

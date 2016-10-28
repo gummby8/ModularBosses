@@ -196,7 +196,11 @@ public class RenderKnockedDown extends RenderPlayer
 
                 if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).isSpectator())
                 {
+                	GL11.glPushMatrix();
+            		GL11.glTranslatef(0, 1.25f, 0);
+            		GL11.glRotatef(-90, 1, 0, 0);
                     this.func_177093_a(entity, f8, f7, partialTicks, f5, f4, f9, 0.0625F);
+                    GL11.glPopMatrix();
                 }
             }
 
