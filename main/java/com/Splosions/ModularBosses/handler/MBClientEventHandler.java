@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,6 +26,18 @@ public class MBClientEventHandler {
 	/*
 	 * used to make the player look ghostly when in limbo.
 	 */
+	
+	@SubscribeEvent
+	public void onKeypress(KeyboardInputEvent.Pre event){
+			//event.setCanceled(true);
+	}
+	
+	@SubscribeEvent
+	public void onMouseInput(MouseInputEvent.Pre event){
+			//event.setCanceled(true);
+	}
+	
+	
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Pre event) {
 		EntityPlayer player = event.entityPlayer;
@@ -37,7 +51,7 @@ public class MBClientEventHandler {
 
 		if (ModularBosses.instance.playerTarget != null && !ModularBosses.instance.playerTarget.isDead  && event.entityPlayer == Minecraft.getMinecraft().thePlayer){
 			player.motionX = player.motionY = player.motionZ = 0;
-			
+
 			Entity target = ModularBosses.instance.playerTarget;
 			double dx = player.posX - target.posX;
 			double dz = player.posZ - target.posZ;
@@ -55,14 +69,16 @@ public class MBClientEventHandler {
 			float rPitch = (float) pitch - (float) (10.0F / Math.sqrt(distance)) + (float) (distance * Math.PI / 90);
 			player.setAngles(rYaw, -(rPitch - player.rotationPitch));
 		}
-	
+
 		
-		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime > 0 && !(event.renderer instanceof RenderKnockedDown)) {
+		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime != 0 && !(event.renderer instanceof RenderKnockedDown)) {
 			event.setCanceled(true);
 			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.partialRenderTick);
 		}
 
 	}
+	
+	
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

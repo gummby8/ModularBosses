@@ -32,11 +32,26 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityShadeHowler extends EntityMob {
-	/** The explosion radius of spawned fireballs. */
-	private int explosionStrength = 1;
-	private static final String __OBFID = "CL_00001689";
 
-	public boolean TargetLocked;
+	private static final int DEATH_WATCHER = 16;
+	private static final int ANI_ID_WATCHER = 17;
+	private static final int ANI_FRAME_WATCHER = 18;
+
+	public static final int STAND = 0;
+	public static final int WALK = 1;
+	public static final int SPRINT = 2;
+	public static final int HOWL = 3;
+	
+
+	boolean Moving = false;
+
+	public int aniID = 0;
+	public int prevaniID = 0;
+	public int aniFrame = 0;
+	public int aniPause = 0;
+
+
+	public boolean targetLocked;
 	public float howlEnd;
 	public float howlBegin;
 
@@ -67,6 +82,15 @@ public class EntityShadeHowler extends EntityMob {
 
 		this.ignoreFrustumCheck = true;
 	}
+	
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataWatcher.addObject(DEATH_WATCHER, 0);
+		this.dataWatcher.addObject(ANI_ID_WATCHER, 0);
+		this.dataWatcher.addObject(ANI_FRAME_WATCHER, 0);
+
+	}
 
 	/**
 	 * Called to update the entity's position/logic.
@@ -76,10 +100,28 @@ public class EntityShadeHowler extends EntityMob {
 		super.onUpdate();
 		this.ignoreFrustumCheck = true;
 
-		howl(TargetUtils.getList(this, 7, 4),45,1F,0.5F,5);
+		this.aniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
+		this.aniFrame = (this.aniID != this.prevaniID)? 0 : this.aniFrame;
 		
 		
-		placeHowl(6);
+		if (this.aniID == STAND) {
+			this.aniFrame = 0;
+		} else if (this.aniID == HOWL && this.aniFrame > 4 && this.aniFrame < 30) {
+			howl(TargetUtils.getList(this, 7, 4),45,1F,0.5F,5);
+			placeHowl(6);
+		} else if (this.aniID == HOWL && this.aniFrame > 43) {
+			this.aniFrame = 0;
+			aniID = STAND;
+		} 
+		
+		
+		aniID = HOWL;
+		
+		this.aniFrame++;
+		this.prevaniID = this.aniID;
+		if (!this.worldObj.isRemote) {
+			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
+		}
 	}
 	
 	
