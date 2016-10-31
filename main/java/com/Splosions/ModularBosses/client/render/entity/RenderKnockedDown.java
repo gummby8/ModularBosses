@@ -194,6 +194,7 @@ public class RenderKnockedDown extends RenderPlayer
 
                 GlStateManager.depthMask(true);
 
+                //ARMOR RENDER
                 if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).isSpectator())
                 {
                 	GL11.glPushMatrix();
