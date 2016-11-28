@@ -5,8 +5,10 @@ import java.util.Random;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -39,18 +41,42 @@ public class EntityShadeHowler extends EntityMob {
 
 	public static final int STAND = 0;
 	public static final int WALK = 1;
-	public static final int SPRINT = 2;
+	public static final int JUMP = 2;
 	public static final int HOWL = 3;
+	public static final int BITE = 4;
 	
 
-	boolean Moving = false;
+	private int lastAttackCounter = 0;
+	
+	Entity target;
+	double targetX;
+	double targetY;
+	double targetZ;
 
-	public int aniID = 0;
-	public int prevaniID = 0;
-	public int aniFrame = 0;
-	public int aniPause = 0;
+	double jumpX;
+	double jumpY;
+	double jumpZ;
+	boolean jumpOff = false;
+	int jumpCount;
+	boolean bite;
+	
+	double X;
+	double Z;
+
+	double X1;
+	double Z1;
+
+	double X2;
+	double Z2;
+	
+	public int aniID;
+	public int prevaniID;
+	public int aniFrame;
+	public int aniPause;
 
 
+	
+	
 	public boolean targetLocked;
 	public float howlEnd;
 	public float howlBegin;
@@ -99,30 +125,160 @@ public class EntityShadeHowler extends EntityMob {
 	public void onUpdate() {
 		super.onUpdate();
 		this.ignoreFrustumCheck = true;
+		
 
+		
 		this.aniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.aniFrame = (this.aniID != this.prevaniID)? 0 : this.aniFrame;
 		
+		if (this.ticksExisted == 1 && !this.worldObj.isRemote){
+			aniID = JUMP;	
+		}
 		
+		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote && this.target == null) {
+			this.target = TargetUtils.findRandomVisablePlayer(this, 20, 4);
+		}
+		
+		
+		try {
 		if (this.aniID == STAND) {
 			this.aniFrame = 0;
 		} else if (this.aniID == HOWL && this.aniFrame > 4 && this.aniFrame < 30) {
 			howl(TargetUtils.getList(this, 7, 4),45,1F,0.5F,5);
 			placeHowl(6);
+			this.aniFrame++;
 		} else if (this.aniID == HOWL && this.aniFrame > 43) {
 			this.aniFrame = 0;
 			aniID = STAND;
-		} 
+		} else if (this.aniID == JUMP && this.aniFrame == 5) {
+			if (this.target != null) {
+				this.targetX = target.posX;
+				this.targetZ = target.posZ;
+				this.jumpX = this.posX;
+				this.jumpZ = this.posZ;
+			} else {
+				this.targetX = this.posX;
+				this.targetZ = this.posZ;
+				this.jumpX = this.posX;
+				this.jumpZ = this.posZ;
+			}
+			this.bite = false;
+			this.motionY = 0.4D;
+			this.jumpCount++;
+			this.jumpOff = (this.jumpOff) ? false : true;
+						
+			double d0 = this.posX - this.targetX;
+			double d2 = this.posZ - this.targetZ;
+			double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+			float f = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+			this.rotationYaw = f + 180;
+			
+			this.X = (20 * Math.cos(Math.toRadians(this.rotationYaw + 90))) + this.posX;
+			this.Z = (20 * Math.sin(Math.toRadians(this.rotationYaw + 90))) + this.posZ;
+			
+			this.X1 = (10 * Math.cos(Math.toRadians(this.rotationYaw + 180))) + X;
+			this.Z1 = (10 * Math.sin(Math.toRadians(this.rotationYaw + 180))) + Z;
+
+			this.X2 = (10 * Math.cos(Math.toRadians(this.rotationYaw))) + X;
+			this.Z2 = (10 * Math.sin(Math.toRadians(this.rotationYaw))) + Z;
+			
+			this.aniFrame++;
+			} else if (this.aniID == JUMP && this.aniFrame > 5 && this.aniFrame <= 20) {
+				if (this.target != null) {
+					double d0;
+					double d2;
+					if (this.target.getDistanceToEntity(this) < 5) {
+						d0 = this.posX - this.X;
+						d2 = this.posZ - this.Z;
+					} else {
+						d0 = (this.jumpOff) ? this.posX - this.X1 : this.posX - this.X2;
+						d2 = (this.jumpOff) ? this.posZ - this.Z1 : this.posZ - this.Z2;
+					}
+
+					double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+					float f = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
+					this.rotationYaw = f + 180;
+					moveForward(0.1F);
+				}
+				
+				List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(2, 2, 2));
+
+				if (!list.isEmpty()) {
+					this.bite = true;
+					this.target = (Entity) list.get(0);
+					MBExtendedPlayer.get((EntityPlayer) this.target).knockdownTime = 20;
+					if (this.target == Minecraft.getMinecraft().thePlayer) {
+						ModularBosses.instance.playerTarget = this;
+					}
+				}
+
+				this.aniFrame++;
+			} else if (this.aniID == JUMP && this.aniFrame > 20 && this.aniFrame < 25) {
+			if (!this.isAirBorne){
+				if (this.bite){
+					this.target.rotationPitch = this.rotationPitch;
+					this.target.rotationYaw = this.rotationYaw;
+					this.target.posX = this.posX;
+					this.target.posY = this.posY;
+					this.target.posZ = this.posZ;
+					this.aniID = STAND;
+					
+				} else {
+					if (this.jumpCount < 5) {
+						this.aniID = JUMP;
+						this.aniFrame = 4;	
+					} else {
+						this.aniFrame++;
+					}	
+				}
+			}
+		} else if (this.aniID == JUMP && this.aniFrame > 25) {
+			this.aniID = STAND;
+			this.aniFrame = 0;
+		} else if (this.aniID != STAND) {
+			this.aniFrame++;
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		
+
+
 		
 		
-		aniID = HOWL;
-		
-		this.aniFrame++;
+			
 		this.prevaniID = this.aniID;
 		if (!this.worldObj.isRemote) {
 			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
 		}
 	}
+	
+	
+	/**
+	 * Set mob death animations, just be sure to setDead at the end or the model
+	 * wont go away
+	 */
+	protected void onDeathUpdate() {
+		ModularBosses.instance.playerTarget = null;	
+		setDead();
+	}
+	
+	
+	
+	public void moveForward(float speed){
+		float f2 = MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F);
+		float f3 = MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F);
+		this.motionX += (double)(-1 * speed * f2);
+		this.motionZ += (double)(speed * f3);
+	}
+	
+	private void setLastAttackCounter() {
+		this.lastAttackCounter = 80;
+		this.target = null;
+	}
+	
 	
 	
 	private void howl(List par1List, float fov, double force, double height, float Damage) {
@@ -141,7 +297,7 @@ public class EntityShadeHowler extends EntityMob {
 				//entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
 				//entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
 				ModularBosses.instance.playerTarget = this;
-				MBExtendedPlayer.get(player).knockdownTime = 60;
+				//MBExtendedPlayer.get(player).knockdownTime = 60;
 					
 				//System.out.println(entity);
 			}

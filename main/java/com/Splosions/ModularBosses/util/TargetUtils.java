@@ -30,6 +30,14 @@ public class TargetUtils {
 		return r.nextInt((max - min) + 1) + min;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public static boolean playerColided(Entity ent) {
+		List list = ent.worldObj.getEntitiesWithinAABB(EntityPlayer.class, ent.getEntityBoundingBox());
+		return list.isEmpty();
+	}
 
 	/**
 	 * Returns whether the target is in the seeker's field of view based on

@@ -1868,10 +1868,12 @@ public float[] LARMRotX;									public float[] RARMRotX;
 //public float[] aLARMz;										public float[] aRARMz;
 public float[] LFOREARMRotX;								public float[] RFOREARMRotX;
 public float[] LHANDRotX;									public float[] RHANDRotX;
+public float[] LFINGERSRotX;								public float[] RFINGERSRotX;
 
 public float[] LLEGRotX;									public float[] RLEGRotX;
 public float[] LLOWLEGRotX;									public float[] RLOWLEGRotX;
 public float[] LFOOTRotX;									public float[] RFOOTRotX;
+public float[] LTOESRotX;									public float[] RTOESRotX;
     
     /**
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
@@ -1888,13 +1890,19 @@ public float[] LFOOTRotX;									public float[] RFOOTRotX;
 				walk();
 			} else
 			if (boss.aniID == 2){
-				sprint();
+				jump();
 			} else
 			if (boss.aniID == 3){
 				howl();
+			} else
+			if (boss.aniID == 4){
+				
 			} 
     	
-    		
+    		if (boss.aniID == 2){
+    			
+    		}
+        	    		
     		
     	
 		this.Add = ((this.BODYPosY.length - 1) == boss.aniFrame) ? 0 : 1;
@@ -1939,23 +1947,27 @@ public float[] LFOOTRotX;									public float[] RFOOTRotX;
     
     
     public void stand(){
-		this.HEADRotX = new float[] {-38};
-		this.TOPJAWRotX = new float[] {0};
-		this.BOTJAWRotX = new float[] {0};
-		this.BODYPosY = new float[] {0};
-		this.BODYRotX = new float[] {0};
-		this.LARMRotX = new float[] {0};
-		this.RARMRotX = new float[] {0};
-		this.LFOREARMRotX = new float[] {0};
-		this.RFOREARMRotX = new float[] {0};
-		this.LHANDRotX = new float[] {0};
-		this.RHANDRotX = new float[] {0};
-		this.LLEGRotX = new float[] {0};
-		this.RLEGRotX = new float[] {0};
-		this.LLOWLEGRotX = new float[] {0};
-		this.RLOWLEGRotX = new float[] {0};
-		this.LFOOTRotX = new float[] {0};
-		this.RFOOTRotX = new float[] {0};
+    	this.BODYPosY = new float[] {-7F};
+    	this.BODYRotX = new float[] {18F};
+    	this.HEADRotX = new float[] {-10F};
+    	this.TOPJAWRotX = new float[] {-2.5F};
+    	this.BOTJAWRotX = new float[] {5F};
+    	this.RARMRotX = new float[] {-20F};
+    	this.LARMRotX = new float[] {-20F};
+    	this.RFOREARMRotX = new float[] {-33F};
+    	this.LFOREARMRotX = new float[] {-33F};
+    	this.RHANDRotX = new float[] {-20F};
+    	this.LHANDRotX = new float[] {-20F};
+    	this.RFINGERSRotX = new float[] {0F};
+    	this.LFINGERSRotX = new float[] {0F};
+    	this.RLEGRotX = new float[] {-30F};
+    	this.LLEGRotX = new float[] {-30F};
+    	this.RLOWLEGRotX = new float[] {0F};
+    	this.LLOWLEGRotX = new float[] {0F};
+    	this.RFOOTRotX = new float[] {-52F};
+    	this.LFOOTRotX = new float[] {-52F};
+    	this.RTOESRotX = new float[] {0F};
+    	this.LTOESRotX = new float[] {0F};
     	
     }
     
@@ -1987,6 +1999,31 @@ public float[] LFOOTRotX;									public float[] RFOOTRotX;
 		this.LFOOTRotX = new float[] {-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F};
 		this.RFOOTRotX = new float[] {-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F,-52F};
 
+    }
+    
+    
+    public void jump(){
+    	this.BODYPosY = new float[] {-7F,-6.2F,-5.4F,-4.6F,-3.8F,-3F,-3.4F,-3.8F,-4.2F,-4.6F,-5F,-5.4F,-5.8F,-6.2F,-6.6F,-7F,-6.7F,-6.4F,-6.1F,-5.8F,-5.5F,-5F,-4.5F,-4F,-3.5F,-3F,-3.4F,-3.8F,-4.2F,-4.6F,-5F,-5.4F,-5.8F,-6.2F,-6.6F,-7F,-6.7F,-6.4F,-6.1F,-5.8F,-5.5F,-5F,-4.5F,-4F,-3.5F,-3F,-3.8F,-4.6F,-5.4F,-6.2F,-7F};
+    	this.BODYRotX = new float[] {18F,20.4F,22.8F,25.2F,27.6F,30F,31.6F,33.2F,34.8F,36.4F,38F,39.8F,41.6F,43.4F,45.2F,47F,47F,47F,47F,47F,47F,43.6F,42.2F,36.8F,33.4F,30F,31.6F,33.2F,34.8F,36.4F,38F,39.8F,41.6F,43.4F,45.2F,47F,47F,47F,47F,47F,47F,43.6F,42.2F,36.8F,33.4F,30F,27.6F,25.2F,22.8F,20.4F,18F};
+    	this.HEADRotX = new float[] {-10F,-10F,-10F,-10F,-10F,-10F,-11.5F,-13F,-14.5F,-16F,-17.5F,-19F,-20.5F,-22F,-23.5F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-22F,-19F,-16F,-13F,-10F};
+    	this.TOPJAWRotX = new float[] {-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-2.5F,-5.1F,-7.7F,-10.3F,-12.9F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-15.5F,-12.9F,-10.3F,-7.7F,-5.1F,-2.5F};
+    	this.BOTJAWRotX = new float[] {5F,5F,5F,5F,5F,5F,5F,5F,5F,5F,5F,15F,25F,35F,45F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,45F,35F,25F,15F,5F};
+    	this.RARMRotX = new float[] {-20F,-17F,-14F,-11F,-8F,-5F,-1F,3F,7F,11F,15F,2F,-11F,-24F,-37F,-50F,-46F,-42F,-38F,-34F,-30F,-25F,-20F,-15F,-10F,-5F,-1F,3F,7F,11F,15F,2F,-11F,-24F,-37F,-50F,-46F,-42F,-38F,-34F,-30F,-25F,-20F,-15F,-10F,-5F,-8F,-11F,-14F,-17F,-20F};
+    	this.LARMRotX = new float[] {-20F,-17F,-14F,-11F,-8F,-5F,-8F,-11F,-14F,-17F,-20F,-26F,-32F,-38F,-44F,-50F,-43F,-36F,-29F,-22F,-15F,-13F,-11F,-9F,-7F,-5F,-8F,-11F,-14F,-17F,-20F,-26F,-32F,-38F,-44F,-50F,-43F,-36F,-29F,-22F,-15F,-13F,-11F,-9F,-7F,-5F,-8F,-11F,-14F,-17F,-20F};
+    	this.RFOREARMRotX = new float[] {-33F,-40F,-47F,-54F,-61F,-68F,-70F,-72F,-74F,-76F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-76F,-74F,-72F,-70F,-68F,-70F,-72F,-74F,-76F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-78F,-76F,-74F,-72F,-70F,-68F,-61F,-54F,-47F,-40F,-33F};
+    	this.LFOREARMRotX = new float[] {-33F,-40F,-47F,-54F,-61F,-68F,-71.4F,-74.8F,-78.2F,-81.6F,-85F,-85F,-85F,-85F,-85F,-85F,-83.6F,-82.2F,-80.8F,-79.4F,-78F,-76F,-74F,-72F,-70F,-68F,-71.4F,-74.8F,-78.2F,-81.6F,-85F,-85F,-85F,-85F,-85F,-85F,-83.6F,-82.2F,-80.8F,-79.4F,-78F,-76F,-74F,-72F,-70F,-68F,-61F,-54F,-47F,-40F,-33F};
+    	this.RHANDRotX = new float[] {-20F,-20F,-20F,-20F,-20F,-20F,-21F,-22F,-23F,-24F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-24F,-23F,-22F,-21F,-20F,-21F,-22F,-23F,-24F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-25F,-24F,-23F,-22F,-21F,-20F,-20F,-20F,-20F,-20F,-20F};
+    	this.LHANDRotX = new float[] {-20F,-20F,-20F,-20F,-20F,-20F,-14F,-8F,-2F,4F,10F,10F,10F,10F,10F,10F,10F,10F,10F,10F,10F,4F,-2F,-8F,-14F,-20F,-14F,-8F,-2F,4F,10F,10F,10F,10F,10F,10F,10F,10F,10F,10F,10F,4F,-2F,-8F,-14F,-20F,-20F,-20F,-20F,-20F,-20F};
+    	this.RFINGERSRotX = new float[] {0F,0F,0F,0F,0F,0F,-2F,-4F,-6F,-8F,-10F,0F,10F,20F,30F,40F,40F,40F,40F,40F,40F,32F,24F,16F,8F,0F,-2F,-4F,-6F,-8F,-10F,0F,10F,20F,30F,40F,40F,40F,40F,40F,40F,32F,24F,16F,8F,0F,0F,0F,0F,0F,0F};
+    	this.LFINGERSRotX = new float[] {0F,0F,0F,0F,0F,0F,8F,16F,24F,32F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,32F,24F,16F,8F,0F,8F,16F,24F,32F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,40F,32F,24F,16F,8F,0F,0F,0F,0F,0F,0F};
+    	this.RLEGRotX = new float[] {-30F,-35.4F,-40.8F,-46.2F,-51.6F,-57F,-50F,-43F,-36F,-29F,-22F,-18F,-14F,-10F,-6F,-2F,-2F,-2F,-2F,-2F,-2F,-13F,-24F,-35F,-46F,-57F,-50F,-43F,-36F,-29F,-22F,-18F,-14F,-10F,-6F,-2F,-2F,-2F,-2F,-2F,-2F,-13F,-24F,-35F,-46F,-57F,-51.6F,-46.2F,-40.8F,-35.4F,-30F};
+    	this.LLEGRotX = new float[] {-30F,-35.4F,-40.8F,-46.2F,-51.6F,-57F,-55F,-53F,-51F,-49F,-47F,-38F,-29F,-20F,-11F,-2F,-2F,-2F,-2F,-2F,-2F,-13F,-24F,-35F,-46F,-57F,-55F,-53F,-51F,-49F,-47F,-38F,-29F,-20F,-11F,-2F,-2F,-2F,-2F,-2F,-2F,-13F,-24F,-35F,-46F,-57F,-51.6F,-46.2F,-40.8F,-35.4F,-30F};
+    	this.RLOWLEGRotX = new float[] {0F,3F,6F,9F,12F,15F,9F,3F,-3F,-9F,-15F,-17F,-19F,-21F,-23F,-25F,-25F,-25F,-25F,-25F,-25F,-17F,-9F,-1F,7F,15F,9F,3F,-3F,-9F,-15F,-17F,-19F,-21F,-23F,-25F,-25F,-25F,-25F,-25F,-25F,-17F,-9F,-1F,7F,15F,12F,9F,6F,3F,0F};
+    	this.LLOWLEGRotX = new float[] {0F,3F,6F,9F,12F,15F,6F,-3F,-12F,-21F,-30F,-32.6F,-35.2F,-37.8F,-40.4F,-43F,-43F,-43F,-43F,-43F,-43F,-31.4F,-19.8F,-8.2F,3.4F,15F,6F,-3F,-12F,-21F,-30F,-32.6F,-35.2F,-37.8F,-40.4F,-43F,-43F,-43F,-43F,-43F,-43F,-31.4F,-19.8F,-8.2F,3.4F,15F,12F,9F,6F,3F,0F};
+    	this.RFOOTRotX = new float[] {-52F,-53.6F,-55.2F,-56.8F,-58.4F,-60F,-52.6F,-45.2F,-37.8F,-30.4F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-30.4F,-37.8F,-45.2F,-52.6F,-60F,-52.6F,-45.2F,-37.8F,-30.4F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-23F,-30.4F,-37.8F,-45.2F,-52.6F,-60F,-58.4F,-56.8F,-55.2F,-53.6F,-52F};
+    	this.LFOOTRotX = new float[] {-52F,-53.6F,-55.2F,-56.8F,-58.4F,-60F,-54.6F,-49.2F,-43.8F,-38.4F,-33F,-25.6F,-18.2F,-10.8F,-3.4F,4F,4F,4F,4F,4F,4F,-8.8F,-21.6F,-34.4F,-47.2F,-60F,-54.6F,-49.2F,-43.8F,-38.4F,-33F,-25.6F,-18.2F,-10.8F,-3.4F,4F,4F,4F,4F,4F,4F,-8.8F,-21.6F,-34.4F,-47.2F,-60F,-58.4F,-56.8F,-55.2F,-53.6F,-52F};
+    	this.RTOESRotX = new float[] {0F,1F,2F,3F,4F,5F,15F,25F,35F,45F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,45F,35F,25F,15F,5F,15F,25F,35F,45F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,55F,45F,35F,25F,15F,5F,4F,3F,2F,1F,0F};
+    	this.LTOESRotX = new float[] {0F,1F,2F,3F,4F,5F,6F,7F,8F,9F,10F,15.2F,20.4F,25.6F,30.8F,36F,36F,36F,36F,36F,36F,29.8F,23.6F,17.4F,11.2F,5F,6F,7F,8F,9F,10F,15.2F,20.4F,25.6F,30.8F,36F,36F,36F,36F,36F,36F,29.8F,23.6F,17.4F,11.2F,5F,4F,3F,2F,1F,0F};
     }
 
     
