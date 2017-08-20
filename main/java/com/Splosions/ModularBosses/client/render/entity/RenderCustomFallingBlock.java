@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -35,6 +36,8 @@ public class RenderCustomFallingBlock extends Render
         super(p_i46177_1_);
         this.shadowSize = 0.5F;
     }
+    
+    
 
     public void doRender(EntityCustomFallingBlock p_180557_1_, double p_180557_2_, double p_180557_4_, double p_180557_6_, float p_180557_8_, float p_180557_9_)
     {
@@ -47,7 +50,7 @@ public class RenderCustomFallingBlock extends Render
             IBlockState iblockstate = p_180557_1_.getBlock();
             Block block = iblockstate.getBlock();
             
-            if (block.getMaterial() != Material.air){
+            if (block.getMaterial() != Material.air && !(block instanceof BlockStaticLiquid)){
             	
             BlockPos blockpos = new BlockPos(p_180557_1_);
             World world = p_180557_1_.getWorldObj(); 

@@ -7,6 +7,7 @@ import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -339,6 +340,11 @@ public class EntityGolem extends EntityMob
 		
 		
 	}
+
+    public IBlockState getBlock()
+    {
+        return this.worldObj.getBlockState(this.getPosition());
+    }
 
 
 }

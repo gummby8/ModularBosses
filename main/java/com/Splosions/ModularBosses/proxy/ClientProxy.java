@@ -62,7 +62,7 @@ public class ClientProxy extends CommonProxy{
 	
 	public static void sobelShader(){
 		try {
-			//f_loadShader.invoke(Minecraft.getMinecraft().entityRenderer, new ResourceLocation("shaders/post/sobel.json"));
+			f_loadShader.invoke(Minecraft.getMinecraft().entityRenderer, new ResourceLocation("shaders/post/sobel.json"));
 			
 		} catch (Throwable e) {
 			e.printStackTrace();

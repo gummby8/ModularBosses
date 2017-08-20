@@ -11,6 +11,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAnvil;
 import net.minecraft.block.BlockFalling;
+import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -35,7 +36,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityCustomFallingBlock extends Entity implements IEntityAdditionalSpawnData
 {
-    private IBlockState fallTile;
+    public IBlockState fallTile;
     public int fallTime;
     public boolean shouldDropItem = true;
     private boolean field_145808_f;
@@ -197,6 +198,10 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
 				
 		this.bPos = new BlockPos(x,y,z);
 		this.fallTile = this.getWorldObj().getBlockState(this.bPos);
+		
+        if (this.fallTile.getBlock() instanceof BlockStaticLiquid){ //kills the block if it is a liquid, liquid blocks don't show textures. 
+        	this.setDead();
+        }
 		
 		this.motionY = additionalData.readDouble();
 		this.noClip = true;
