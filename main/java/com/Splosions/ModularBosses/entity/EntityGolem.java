@@ -8,7 +8,10 @@ import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -33,6 +36,7 @@ import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -85,9 +89,15 @@ public class EntityGolem extends EntityMob
 	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	public float DeadRot;
 	public int attack;
-
+	public ResourceLocation textureLoc;
+	
 	public EntityGolem(World par1World) {
 		super(par1World);
+		
+
+        
+		
+			
 		//sets hitbox size
 		this.setSize(2F, 6.5F);
 		this.experienceValue = 10;
@@ -291,6 +301,22 @@ public class EntityGolem extends EntityMob
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		
+		
+		if (this.textureLoc == null){
+		IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
+		System.out.println(iblockstate);
+		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+        IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, this.getPosition());
+        String string = ibakedmodel.getTexture().getIconName() + ".png";
+        System.out.println("String = " + string);
+        System.out.println(this.getPosition().down());
+        String[] parts = string.split(":");
+       	textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);	
+        }
+		
+		
+		
 		this.attack++;
 		float distance = 0.0F;
 

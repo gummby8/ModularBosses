@@ -22,6 +22,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
+import com.Splosions.ModularBosses.entity.EntityGolem;
 
 
 
@@ -37,27 +38,12 @@ public class RenderGolem extends RenderLiving
 	
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-
-		IBlockState iblockstate = entity.worldObj.getBlockState(entity.getPosition().down());
-		
-		
-		
-		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-        IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, entity.worldObj, entity.getPosition());
-        
-        System.out.println(iblockstate.getBlock().getBlockHardness(entity.worldObj, entity.getPosition().down()));
-        
-        String string = ibakedmodel.getTexture().getIconName() + ".png";
-        String[] parts = string.split(":");
-        String part1 = parts[0];
-        String part2 = parts[1];
-        
-		// TODO Auto-generated method stub
-		return new ResourceLocation(parts[0] + ":textures/" + parts[1]);
-		//"minecraft:textures/blocks/dirt.png"
-        //return new ResourceLocation("mb:textures/blocks/worm_guts_2.png");
+		return getGolemTexture((EntityGolem) entity);
 	}
 
+	protected ResourceLocation getGolemTexture(EntityGolem entity) {
+		return entity.textureLoc;
+	}
 
 
 }

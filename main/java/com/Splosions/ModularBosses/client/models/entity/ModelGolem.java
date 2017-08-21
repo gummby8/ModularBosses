@@ -349,7 +349,7 @@ public class ModelGolem extends ModelBase {
 			ModelUtils.movePieceOverTime(RLEG, entity.RLEG, 100);
 			ModelUtils.movePieceOverTime(RLeg1, entity.RLeg1, 100);
 			ModelUtils.movePieceOverTime(RLeg2, entity.RLeg2, 100);
-			System.out.println(RLeg1.rotationPointY);
+
 
 		} else {
 		
