@@ -1,5 +1,6 @@
-package com.Splosions.ModularBosses.entity;
+package com.Splosions.ModularBosses.entity.projectile;
 
+import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.google.common.collect.Lists;
 
 import io.netty.buffer.ByteBuf;

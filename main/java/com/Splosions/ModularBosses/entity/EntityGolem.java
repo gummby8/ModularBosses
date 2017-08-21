@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.entity;
 
 
 
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
@@ -39,6 +40,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -89,15 +91,21 @@ public class EntityGolem extends EntityMob
 	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	public float DeadRot;
 	public int attack;
+	public float hardness;
 	public ResourceLocation textureLoc;
+	
+	
+	/*================== PARAGON CONFIG SETTINGS  =====================*/
+	public static double golemMaxHealthMulti;
+	/** Golem Damage Multiplier */
+	public static int golemDmgMulti;
+	/** Paragon Jump Damage */
+
+	
+	
 	
 	public EntityGolem(World par1World) {
 		super(par1World);
-		
-
-        
-		
-			
 		//sets hitbox size
 		this.setSize(2F, 6.5F);
 		this.experienceValue = 10;
@@ -200,7 +208,10 @@ public class EntityGolem extends EntityMob
 	}
 
 
-
+	public static void postInitConfig(Configuration config) {
+		golemMaxHealthMulti = config.get("Golem", "[Max Health] Golem Spawn Block Hardness multiplied by... [1+]", 20).getInt();
+		golemDmgMulti = config.get("Golem", "[Attack Dmg] Golem Spawn Block Hardness multiplied by... [1+]", 1).getInt();
+	}
 
 
 
@@ -302,20 +313,23 @@ public class EntityGolem extends EntityMob
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		
-		
+		try{
 		if (this.textureLoc == null){
 		IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
-		System.out.println(iblockstate);
+		this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, this.getPosition().down());
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, this.getPosition());
         String string = ibakedmodel.getTexture().getIconName() + ".png";
-        System.out.println("String = " + string);
-        System.out.println(this.getPosition().down());
         String[] parts = string.split(":");
-       	textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);	
+        textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
+        System.out.println(textureLoc);
+       	this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.golemMaxHealthMulti * this.hardness);       	
+       	this.heal((float) (this.golemMaxHealthMulti * this.hardness));
         }
-		
-		
+		} catch (Exception e) {
+			ModularBosses.logger.warn("Golem Spawned without texture at pos - " + this.getPosition() );
+			this.setDead();
+		}
 		
 		this.attack++;
 		float distance = 0.0F;
@@ -349,10 +363,10 @@ public class EntityGolem extends EntityMob
 				this.attack = -10;
 			}
 			if (this.attackCounter == 45) {
-				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+				float dmg = this.hardness * golemDmgMulti;
 				Entity projectile;
 				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,0,0).setDamage(f * difficulty);
+				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,0,0).setDamage(dmg * difficulty);
 				if (!this.worldObj.isRemote){
 				worldObj.spawnEntityInWorld(projectile);
 				}
@@ -366,11 +380,4 @@ public class EntityGolem extends EntityMob
 		
 		
 	}
-
-    public IBlockState getBlock()
-    {
-        return this.worldObj.getBlockState(this.getPosition());
-    }
-
-
 }

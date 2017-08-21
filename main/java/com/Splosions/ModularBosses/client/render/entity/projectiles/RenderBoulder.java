@@ -14,6 +14,7 @@ import org.lwjgl.opengl.GL12;
 
 import com.Splosions.ModularBosses.client.models.projectiles.ModelBoulder;
 import com.Splosions.ModularBosses.client.models.projectiles.ModelFlameThrower;
+import com.Splosions.ModularBosses.entity.EntityGolem;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 
@@ -24,7 +25,7 @@ public class RenderBoulder extends Render
 {
 	protected ModelBase model;
 	
-	private static final ResourceLocation textureglow = new ResourceLocation("minecraft:textures/blocks/dirt.png");
+
 
 	public RenderBoulder(RenderManager renderManager) {
 		super(renderManager);
@@ -50,6 +51,11 @@ public class RenderBoulder extends Render
 
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
-		return textureglow;
+		return getBoulderTexture((EntityBoulder) entity);
+	}
+
+	protected ResourceLocation getBoulderTexture(EntityBoulder entity) {
+		System.out.println(entity.textureLoc);
+		return entity.textureLoc;
 	}
 }

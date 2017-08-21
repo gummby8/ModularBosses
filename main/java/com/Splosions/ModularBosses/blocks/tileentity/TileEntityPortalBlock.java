@@ -7,8 +7,8 @@ import java.util.Random;
 import java.util.Set;
 
 import com.Splosions.ModularBosses.blocks.BlockPortalBlock;
-import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
+import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;

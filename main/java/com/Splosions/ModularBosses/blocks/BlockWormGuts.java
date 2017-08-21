@@ -9,7 +9,7 @@ public class BlockWormGuts extends Block {
 
 	public BlockWormGuts(Material material) {
 			super(material);
-			setHardness(1000.0F);
+			setHardness(10.0F);
 			setHarvestLevel("pickaxe", 100);
 			setStepSound(soundTypeStone);
 			setCreativeTab(MBCreativeTabs.tabBlocks);

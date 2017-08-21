@@ -2,7 +2,7 @@ package com.Splosions.ModularBosses.client.render.entity;
 
 import org.lwjgl.opengl.GL11;
 
-import com.Splosions.ModularBosses.entity.EntityCustomFallingBlock;
+import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStaticLiquid;

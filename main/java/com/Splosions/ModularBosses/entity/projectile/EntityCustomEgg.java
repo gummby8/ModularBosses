@@ -38,7 +38,6 @@ public class EntityCustomEgg extends EntityMobThrowable
 
 	public EntityCustomEgg(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide, float Size1, float Size2, int dmg) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
-		System.out.println("SPAWN EGG!");
 		this.dmg = dmg;
 		
 	}

@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
+import com.Splosions.ModularBosses.entity.EntityGolem;
 import com.Splosions.ModularBosses.entity.EntityHeavyChorp;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.EntitySkull;
@@ -86,7 +87,8 @@ public class Config {
 		EntityParagon.postInitConfig(config); 
 		EntityTatters.postInitConfig(config);
 		EntityChorpChorp.postInitConfig(config); 
-		EntityHeavyChorp.postInitConfig(config); 
+		EntityHeavyChorp.postInitConfig(config);
+		EntityGolem.postInitConfig(config); 
 		EntityEyeballOctopus.postInitConfig(config);
 		EntityTick.postInitConfig(config);
 		EntitySkull.postInitConfig(config);
