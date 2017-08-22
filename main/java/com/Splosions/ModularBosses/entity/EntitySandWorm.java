@@ -188,7 +188,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		}
 		
 		if (!this.worldObj.isRemote){
-		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(20, 20, 20));
+		AxisAlignedBB bb = new AxisAlignedBB(this.getPosition().down(),this.getPosition()).expand(15, 15, 15);
+		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
+		//System.out.println(teleList);
 		teleEntitiesInList(teleList);
 		}
 		
