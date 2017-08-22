@@ -34,6 +34,8 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
@@ -41,6 +43,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -375,9 +378,22 @@ public class EntityGolem extends EntityMob
 				this.attackCounter = -40;
 			}
 		}
-
 		this.attackCounter++;
-		
-		
 	}
+	
+	
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.textureLoc = new ResourceLocation(compound.getString("textureLoc"));
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+
+		compound.setString("textureLoc", this.textureLoc.toString());
+
+	}
+	
 }
