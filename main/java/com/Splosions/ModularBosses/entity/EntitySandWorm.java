@@ -224,7 +224,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x].setPosition(this.posX, this.posY, this.posZ);
 				this.worldObj.spawnEntityInWorld(bodySegments[x]);
-				System.out.println("Spawning ID " + bodySegments[x].getEntityId() + " on client");
+				//System.out.println("Spawning ID " + bodySegments[x].getEntityId() + " on client");
 				//entIDs[x] = bodySegments[x].getEntityId();
 			}
 		}

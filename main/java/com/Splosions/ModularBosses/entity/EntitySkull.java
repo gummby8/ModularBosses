@@ -51,6 +51,7 @@ public class EntitySkull  extends EntityFlying implements IMob
     
 	public static int skullMaxHealth;
 	public static int skullDmg;
+	public static int skullFollowDistance;
 
     public EntitySkull(World worldIn)
     {
@@ -70,7 +71,8 @@ public class EntitySkull  extends EntityFlying implements IMob
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(100.0D);
+        System.out.println("BETA!");
+        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(skullFollowDistance);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(skullMaxHealth);
     }
 
@@ -78,6 +80,8 @@ public class EntitySkull  extends EntityFlying implements IMob
 	public static void postInitConfig(Configuration config) {
 		skullMaxHealth = config.get("Skull", "[Max Health] Set the Hp of Skull Spawns [1+]", 20).getInt();
 		skullDmg = config.get("Skull", "[Attack Damage] Set the Beam Damage of Skull Spawns [1+]", 10).getInt();
+		skullFollowDistance = config.get("Skull", "[Config] Set the distance a Skull can follow a player [1+]", 20).getInt();
+		
 	}
 
     @SideOnly(Side.CLIENT)
@@ -98,9 +102,7 @@ public class EntitySkull  extends EntityFlying implements IMob
     
     @Override
     public void onCollideWithPlayer(EntityPlayer player) {
-    
     	 player.attackEntityFrom(DamageSource.causeMobDamage(this), skullDmg);
-
     	 this.TargetLocked = false;
      }
 
@@ -316,13 +318,13 @@ public class EntitySkull  extends EntityFlying implements IMob
         	
             EntityLivingBase entitylivingbase = this.mob.getAttackTarget();
             //distance mob can see a player
-            double distance = 64.0D;
+            
 
-            if (entitylivingbase.getDistanceSqToEntity(this.mob) < distance * distance && this.mob.canEntityBeSeen(entitylivingbase))
+            if (entitylivingbase.getDistanceSqToEntity(this.mob) < skullFollowDistance * skullFollowDistance && this.mob.canEntityBeSeen(entitylivingbase))
             {
                 World world = this.mob.worldObj;
              
-                	System.out.println("TARGET " + entitylivingbase.getName());
+                	
                 	
         			double d0 = mob.posX - entitylivingbase.posX;
         			double d2 = mob.posZ - entitylivingbase.posZ;
