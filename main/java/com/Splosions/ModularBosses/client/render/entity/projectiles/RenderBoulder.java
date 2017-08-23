@@ -55,7 +55,6 @@ public class RenderBoulder extends Render
 	}
 
 	protected ResourceLocation getBoulderTexture(EntityBoulder entity) {
-		System.out.println(entity.textureLoc);
 		return entity.textureLoc;
 	}
 }

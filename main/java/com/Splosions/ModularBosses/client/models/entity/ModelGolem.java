@@ -332,7 +332,7 @@ public class ModelGolem extends ModelBase {
 			ModelUtils.movePieceOverTime(RRShoulder2, entity.RRShoulder2, 100);
 						
 			ModelUtils.movePieceOverTime(RChest, entity.RChest, 100);
-			ModelUtils.movePieceOverTime(LChest, entity.LChest, 100);
+			ModelUtils.movePieceOverTime(LChest, entity.LChest, 100); 
 			
 			ModelUtils.movePieceOverTime(HEAD, entity.HEAD, 100);
 			
@@ -352,6 +352,37 @@ public class ModelGolem extends ModelBase {
 
 
 		} else {
+			
+			ModelUtils.setPiece(WAIST, 0, 0, 0, 0, -25, 0);
+			ModelUtils.setPiece(RARM, -40, 0, 0, 0, -40, -21);
+			ModelUtils.setPiece(LARM, 40, 0, 0, 0, -40, 21);
+			ModelUtils.setPiece(LRShoulder2, -30, 0, -15, -4.22F, -42, 18);
+			ModelUtils.setPiece(LFShoulder2, -30, 0, 15, 4.21F, -42, 18);
+			ModelUtils.setPiece(RFShoulder2, 30, 0, 15, 4.2F, -42, -18);
+			ModelUtils.setPiece(RRShoulder2, 30, 0, -15, -4.2F, -42, -18);
+			ModelUtils.setPiece(RFShoulder1, 15, 0, 15, 5.5F, -47, -5.5F);
+			ModelUtils.setPiece(RRShoulder1, 15, 0, -15, -5.52F, -47, -5.5F);
+			ModelUtils.setPiece(LRShoulder1, -15, 0, -15, -5.5F, -47, 5.5F);
+			ModelUtils.setPiece(LFShoulder1, -15, 0, 15, 5.52F, -47F, 5.5F);
+			ModelUtils.setPiece(RChest, 0, 0, 0, 0, -38, -8);
+			ModelUtils.setPiece(LChest, 0, 0, 0, 0, -38, 8);
+			ModelUtils.setPiece(HEAD, 0, 0, 0, 0, -54, 0);
+			ModelUtils.setPiece(RArm1, 25, 0, 0, 0.02F, 12, 0.01F);
+			ModelUtils.setPiece(RArm2, 10, 0, 0, 0.02F, 12, 0.01F);
+			ModelUtils.setPiece(LArm1, -25, 0, 0, 0.02F, 12, 0.01F);
+			ModelUtils.setPiece(LArm2, -10, 0, 0, 0.02F, 12, 0.01F);
+			ModelUtils.setPiece(LFHip, 15, 0, 15, 5.5F, -9, -5.5F);
+			ModelUtils.setPiece(LLEG, 20, 0, 0, 0, -11, 7);
+			ModelUtils.setPiece(RLEG, -20, 0, 0, 0, -11, -7);
+			ModelUtils.setPiece(RRHip, -15, 0, -15, -5.5F, -9, 5.5F);
+			ModelUtils.setPiece(LRHip, 15, 0, -15, -5.52F, -9, -5.5F);
+			ModelUtils.setPiece(RFHip, -15, 0, 15, 5.52F, -9, 5.5F);
+			ModelUtils.setPiece(LLeg1, -20, 0, 0, 0.02F, 13.3F, 0.5F);
+			ModelUtils.setPiece(LLeg2, 0, 0, 0, 0.01F, 16, 0.01F);
+			ModelUtils.setPiece(RLeg1, 20, 0, 0, 0.02F, 13.3F, -0.5F);
+			ModelUtils.setPiece(RLeg2, 0, 0, 0, 0.01F, 16, 0.01F);
+			
+			
 		
 			float RAngle = MathHelper.cos(moveCounter / 2) * (speed / 2);
 			float idle = MathHelper.cos((entity.ticksExisted + PartialTick) / 20) - 2.7F;

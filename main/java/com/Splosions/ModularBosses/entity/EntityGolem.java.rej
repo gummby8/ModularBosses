@@ -1,0 +1,24 @@
+diff a/main/java/com/Splosions/ModularBosses/entity/EntityGolem.java b/main/java/com/Splosions/ModularBosses/entity/EntityGolem.java	(rejected hunks)
+@@ -301,6 +301,22 @@
+ 
+ 	public void onLivingUpdate() {
+ 		super.onLivingUpdate();
++		
++		
++		if (this.textureLoc == null){
++		IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
++		System.out.println(iblockstate);
++		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
++        IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, this.getPosition());
++        String string = ibakedmodel.getTexture().getIconName() + ".png";
++        System.out.println("String = " + string);
++        System.out.println(this.getPosition().down());
++        String[] parts = string.split(":");
++       	textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);	
++        }
++		
++		
++		
+ 		this.attack++;
+ 		float distance = 0.0F;
+ 

@@ -6,6 +6,18 @@ import net.minecraft.client.model.ModelRenderer;
 
 public class ModelUtils {
 
+
+	public static void setPiece(ModelRenderer targetPart, float ax, float ay, float az, float px, float py, float pz) {
+		targetPart.rotateAngleX = (float) Math.toRadians(ax);
+		targetPart.rotateAngleY = (float) Math.toRadians(ay);
+		targetPart.rotateAngleZ = (float) Math.toRadians(az);
+		
+		targetPart.rotationPointX = px;
+		targetPart.rotationPointY = py;
+		targetPart.rotationPointZ = pz;
+	}
+	
+	
 	public static void teleportPiece(ModelRenderer targetPart, FakeModelRenderer destinationPart){
 		targetPart.rotateAngleX = destinationPart.rotateAngleX;
 		targetPart.rotateAngleY = destinationPart.rotateAngleY;
