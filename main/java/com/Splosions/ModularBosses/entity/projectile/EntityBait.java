@@ -55,7 +55,7 @@ public class EntityBait extends EntityThrowable {
 			}
 
 		
-			if (this.ticksExisted >= 100) {
+			if (this.ticksExisted >= 1000) {
 				setDead();
 			}
 

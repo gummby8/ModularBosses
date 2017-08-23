@@ -18,7 +18,6 @@ public class TickHandler {
 	@SubscribeEvent
 	public void worldTick(TickEvent.WorldTickEvent event) {
 		if(!ModularBosses.instance.dungeonList.isEmpty() && event.phase == TickEvent.Phase.START && event.world.provider.getDimensionId() == 0) {
-			//System.out.println("derp");
 			int dungeonCount = ModularBosses.instance.dungeonList.size();
 			for (int x = 0; x < dungeonCount; x++) {
 				Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);

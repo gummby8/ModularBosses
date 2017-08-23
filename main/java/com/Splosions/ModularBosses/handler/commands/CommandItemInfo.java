@@ -23,7 +23,8 @@ public class CommandItemInfo implements ICommand{
     { 
         aliases = new ArrayList(); 
         aliases.add("MBItemInfo"); 
-        aliases.add("WhatIsThis"); 
+        aliases.add("mbitem");
+        aliases.add("whatisthis");
     } 
 	
 	@Override

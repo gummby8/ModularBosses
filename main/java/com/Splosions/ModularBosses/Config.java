@@ -19,7 +19,7 @@ public class Config {
 	/*================== DIMENSION & DUNGEON SETTINGS  =====================*/
 	public static int bossDimension;
 	public static int buildsPerTick;
-	
+	public static boolean debugHitboxes;
 	/*================== BOSS & MONSTER SETTINGS  =====================*/
 	
 	
@@ -63,8 +63,7 @@ public class Config {
 		
 		bossDimension = config.get("000 Dimension Config", "[Config] The Custom Dimension ID [1+]", -3).getInt();
 		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 1).getInt();
-		
-		
+		debugHitboxes = config.get("000 Dimension Config", "[Config] Show Multi-part monster hitboxes", false).getBoolean(false);
 		config.addCustomCategoryComment("101 Weapon & Item Settings", "This Category Contains Settings For All Of The Various Weapons And Items From Modular Bosses");
 		
 		legendsSwordDmg = config.get("101 Weapon & Item Settings", "[Weapon Dmg] Legend's Sword Melee Damage [1+]", 20).getInt();

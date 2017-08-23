@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
@@ -59,7 +60,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityParagon extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob {
-	public boolean debugHitboxes = true;
 	
 	/*================== PARAGON CONFIG SETTINGS  =====================*/
 	public static double paragonMaxHealth;

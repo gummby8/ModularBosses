@@ -8,6 +8,7 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
+import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 import com.Splosions.ModularBosses.util.schematic.Room;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
@@ -154,25 +155,17 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
     
     
 	/**
-	 * Attacks all entities inside this list, dealing 5 hearts of damage.
+	 * Teleports Players to the Boss dimension
 	 */
 	private void teleEntitiesInList(List par1List) {
 		for (int i = 0; i < par1List.size(); ++i) {
 		
 			EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
-			player.setPosition(spawnPosX, spawnPosY, spawnPosZ);	
-
+			player.setPosition(spawnPosX, spawnPosY, spawnPosZ);
 			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-		
 			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
-			
-			
-			
 			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
 			this.worldObj.theProfiler.endSection();
-		
-
-			System.out.println(par1List.get(i));
 		}
 
 	}
@@ -184,19 +177,20 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	@Override
 	public void onUpdate() {
 
-		//this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
 
 			spawnPosX = (int) this.posX;
 			spawnPosY = (int) this.posY; 
 			spawnPosZ = (int) this.posZ;
-			
 			nextPosition();
+			createDungeon();
 		}
 		
 		if (!this.worldObj.isRemote){
-		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(15, 15, 15));
+		AxisAlignedBB bb = new AxisAlignedBB(this.getPosition().down(),this.getPosition()).expand(15, 15, 15);
+		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
+		//System.out.println(teleList);
 		teleEntitiesInList(teleList);
 		}
 		
@@ -230,7 +224,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x].setPosition(this.posX, this.posY, this.posZ);
 				this.worldObj.spawnEntityInWorld(bodySegments[x]);
-				System.out.println("Spawning ID " + bodySegments[x].getEntityId() + " on client");
+				//System.out.println("Spawning ID " + bodySegments[x].getEntityId() + " on client");
 				//entIDs[x] = bodySegments[x].getEntityId();
 			}
 		}
@@ -266,6 +260,38 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	}
 	
 	
+	private void createDungeon() {
+		/**
+		Entity entityIn = (Entity)playerIn;
+		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
+			worldIn.theProfiler.startSection("portal");
+			int dim = 0;
+			if (worldIn.provider.getDimensionId() == -3) {
+				dim = 0;
+			} else {
+				dim = -3;
+
+			}
+				
+			EntityPlayerMP player = (EntityPlayerMP) entityIn;
+			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
+
+		
+			//MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
+			worldIn.theProfiler.endSection();
+			
+
+		}
+		 */
+		
+		if (!this.worldObj.isRemote){
+			DungeonNurkach dungeon = new DungeonNurkach(this.getPosition());
+			ModularBosses.instance.dungeonList.add(dungeon);
+		}
+	}
+
+
+
 	public void baitAction(double posX, double posY, double posZ){
 		this.dataWatcher.updateObject(RANDOM_X_WATCHER, (int)posX);
 		this.dataWatcher.updateObject(RANDOM_Y_WATCHER, (int)posY);

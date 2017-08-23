@@ -30,6 +30,6 @@ public class BossBiomeBase extends BiomeGenBase {
 	@Override
     public void genTerrainBlocks(World worldIn, Random p_180622_2_, ChunkPrimer p_180622_3_, int p_180622_4_, int p_180622_5_, double p_180622_6_)
     {
-System.out.println("DDDDDDDDDDDDDDDDDDDDDDERP");
+
     }
 }
