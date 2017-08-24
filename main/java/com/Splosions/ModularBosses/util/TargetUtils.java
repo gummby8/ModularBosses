@@ -32,7 +32,7 @@ public class TargetUtils {
 	
 	
 	public static void betaMsg(Entity entity){
-		if (!entity.worldObj.isRemote && entity.ticksExisted == 1){
+		if (entity.worldObj.isRemote && entity.ticksExisted == 1){
 		tellPlayer("This monster is still a work in progress");
 		}
 	}
