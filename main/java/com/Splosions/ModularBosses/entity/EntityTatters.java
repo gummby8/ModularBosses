@@ -287,6 +287,7 @@ public class EntityTatters extends EntityMob {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		TargetUtils.betaMsg(this);
 
 		if (this.dataWatcher.getWatchableObjectInt(TELEPORT) == 1) {
 			for (int i = 0; i < 300; ++i) {

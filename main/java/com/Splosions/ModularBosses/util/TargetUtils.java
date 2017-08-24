@@ -3,18 +3,39 @@ package com.Splosions.ModularBosses.util;
 import java.util.List;
 import java.util.Random;
 
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import scala.collection.generic.Sizing;
 
 public class TargetUtils {
 
 
+	public static void tellPlayer(String msg){
+		try{
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));	
+		} catch (Exception e){
+			ModularBosses.logger.debug("Tried to send a chat to player before there was a player");
+		}
+		
+	}
+	
+	
+	public static void betaMsg(Entity entity){
+		if (!entity.worldObj.isRemote && entity.ticksExisted == 1){
+		tellPlayer("This monster is still a work in progress");
+		}
+	}
 	
 	/**
 	 * Returns a random number between the two numbers specified

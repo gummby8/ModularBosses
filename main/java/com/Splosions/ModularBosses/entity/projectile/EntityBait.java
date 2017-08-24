@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.entity.CustomEntityList;
 import com.Splosions.ModularBosses.entity.EntitySandWorm;
+import com.Splosions.ModularBosses.entity.EntityTatters;
 import com.Splosions.ModularBosses.items.ItemCustomEgg;
+import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.entity.Entity;
@@ -25,7 +27,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityBait extends EntityThrowable {
 
-	
 	public List<EntitySandWorm> wormList;
 
 	public EntityBait(World world) {
@@ -54,11 +55,18 @@ public class EntityBait extends EntityThrowable {
 				}
 			}
 
-		
-			if (this.ticksExisted >= 1000) {
-				setDead();
+			if (this.ticksExisted > 20) {
+				pickup(this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(1, 1, 1)));
 			}
 
+		}
+	}
+
+	public void pickup(List list) {
+		for (int i = 0; i < list.size(); ++i) {
+			EntityPlayer player = (EntityPlayer) list.get(i);
+			TargetUtils.addItemToInventory(player, new ItemStack(ModularBossesItems.itemBait));
+			this.setDead();
 		}
 	}
 

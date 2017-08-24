@@ -68,5 +68,12 @@ public class ItemBait extends BaseModItem implements ISwapModel {
 	public Class<? extends IBakedModel> getNewModel() {
 		return RenderItemBait.class;
 	}
+	
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)	{
+	list.add("Smelly bait to lure out Sand Worms");
+	}
+	
 
 }

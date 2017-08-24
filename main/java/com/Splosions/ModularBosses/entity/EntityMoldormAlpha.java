@@ -199,6 +199,8 @@ public class EntityMoldormAlpha extends EntityMob implements IBossDisplayData, I
     
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		TargetUtils.betaMsg(this);
+		
 		this.ignoreFrustumCheck = true;
 		
 		if (this.ticksExisted % this.ranTicks== (20 - 1) && !this.worldObj.isRemote){

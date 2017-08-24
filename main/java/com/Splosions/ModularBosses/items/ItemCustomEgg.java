@@ -127,6 +127,9 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 			}
 		}
 		*/
+		if (!player.capabilities.isCreativeMode) {
+			--stack.stackSize;
+		}
 			Entity projectile = new EntityCustomEgg(world, player, player, 1.0F, 0,0,0,0,0,0,stack.getItemDamage());
 			world.spawnEntityInWorld(projectile);
 		return stack;

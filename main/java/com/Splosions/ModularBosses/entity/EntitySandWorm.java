@@ -6,6 +6,7 @@ import java.util.Random;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
+import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
@@ -155,17 +156,22 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
     
     
 	/**
-	 * Teleports Players to the Boss dimension
+	 * Teleports Players to the Boss dimension. Eats bait
 	 */
 	private void teleEntitiesInList(List par1List) {
 		for (int i = 0; i < par1List.size(); ++i) {
-		
-			EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
-			player.setPosition(spawnPosX, spawnPosY, spawnPosZ);
-			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-			WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
-			MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
-			this.worldObj.theProfiler.endSection();
+			Entity entity = (Entity) par1List.get(i);
+			if (entity instanceof EntityPlayer){
+				EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
+				player.setPosition(spawnPosX, spawnPosY, spawnPosZ);
+				BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
+				WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
+				MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
+				this.worldObj.theProfiler.endSection();	
+			} else if (entity instanceof EntityBait){
+				entity.setDead();
+			}
+			
 		}
 
 	}
@@ -176,7 +182,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 */
 	@Override
 	public void onUpdate() {
-
+		TargetUtils.betaMsg(this);
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
 
@@ -189,9 +195,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		
 		if (!this.worldObj.isRemote){
 		AxisAlignedBB bb = new AxisAlignedBB(this.getPosition().down(),this.getPosition()).expand(15, 15, 15);
-		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb);
-		//System.out.println(teleList);
+		List teleList = this.worldObj.getEntitiesWithinAABB(Entity.class, bb);
 		teleEntitiesInList(teleList);
+
 		}
 		
 		
@@ -214,7 +220,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 				this.dataWatcher.updateObject(RANDOM_Y_WATCHER, 5);
 				this.dataWatcher.updateObject(RANDOM_Z_WATCHER, this.ranPosZ);	
 			} else {
-				System.out.println("Next Position");
+				System.out.println("Surface!");
 				nextPosition();
 			}
 		}

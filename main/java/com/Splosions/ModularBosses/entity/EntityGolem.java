@@ -7,6 +7,7 @@ import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -346,6 +347,7 @@ public class EntityGolem extends EntityMob
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		TargetUtils.betaMsg(this);
 		
 		try{
 		if (this.textureLoc == null){

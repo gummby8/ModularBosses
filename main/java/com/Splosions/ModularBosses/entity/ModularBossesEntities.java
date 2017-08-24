@@ -129,9 +129,6 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityTatters.class, "Tatters", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityTatters.class, "Tatters", 0x666565, 0x000000);
 		
-		EntityRegistry.registerModEntity(EntityTattersHead.class, "TattersHead", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
-		CustomEntityList.addMapping(EntityTattersHead.class, "TattersHead", 0x000000, 0x000000);
-		
 		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
 		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
 		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xFFFFFF);
@@ -169,7 +166,6 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityParagon.class, new RenderParagon(manager, new ModelParagon(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
-		RenderingRegistry.registerEntityRenderingHandler(EntityTattersHead.class, new RenderTattersHead(manager, new ModelTattersHead(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWorm.class, new RenderSandWorm(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormTail.class, new RenderSandWormTail(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTick.class, new RenderTick(manager, new ModelTick(), 1));
