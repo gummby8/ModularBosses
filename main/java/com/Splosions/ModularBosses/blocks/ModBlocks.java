@@ -23,6 +23,7 @@ public class ModBlocks
 	portalBlock,
 	portalLanding,
 	phaseFire,
+	force_field_blue,
 	
 	wormGutsBlock1,
 	wormGutsBlock2
@@ -57,6 +58,9 @@ public class ModBlocks
 		
 		wormGutsBlock2 = new BlockWormGuts(Material.barrier).setUnlocalizedName("worm_guts_2");
 		GameRegistry.registerBlock(wormGutsBlock2, ItemModBlock.class, wormGutsBlock2.getUnlocalizedName().substring(5));
+		
+		force_field_blue = new BlockForceFieldBlue(Material.barrier).setLightLevel(1).setUnlocalizedName("force_field_blue");
+		GameRegistry.registerBlock(force_field_blue, ItemModBlock.class, force_field_blue.getUnlocalizedName().substring(5));
 		
 		invisibleBlock = new BlockInvisible(Material.barrier).setUnlocalizedName("invisible_block");
 		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));

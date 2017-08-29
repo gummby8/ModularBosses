@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/orientable",
+    "textures": {
+        "front": "mb:blocks/force_field_blue"
+    }
+}
