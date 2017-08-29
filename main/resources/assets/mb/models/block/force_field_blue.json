@@ -1,6 +1,11 @@
 {
     "parent": "minecraft:block/orientable",
     "textures": {
-        "front": "mb:blocks/force_field_blue"
+        "front": "mb:blocks/force_field_blue",
+        "top": "mb:blocks/empty",
+        "south": "mb:blocks/force_field_blue",
+        "west": "mb:blocks/empty",
+        "east": "mb:blocks/empty",
+        "bottom": "mb:blocks/empty"
     }
 }

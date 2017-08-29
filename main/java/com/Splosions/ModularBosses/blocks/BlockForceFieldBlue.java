@@ -36,6 +36,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.RegistryNamespacedDefaultedByKey;
 import net.minecraft.util.StringUtils;
@@ -64,39 +65,25 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		
 	}
 
+
+
+	@SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer()
+    {
+        return EnumWorldBlockLayer.CUTOUT;
+    }
+	
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
-		return true;
-	}
-
-	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileEntityControlBlock();
-	}
-
-
-
-
-
-
-
-
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing face, float hitX, float hitY, float hitZ) {
-
-		return true;
+	public boolean isOpaqueCube() {
+		return false;
 	}
 	
-	
-
-
-		
-
-
 	@Override
-	public void onBlockClicked(World world, BlockPos pos, EntityPlayer player) {
-		return;
-	}
+    public boolean isFullCube()
+    {
+        return false;
+    }	
+
 
 	@Override
 	public Rotation getRotationPattern() {
@@ -149,11 +136,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
 	}
 
-	@Override
-	public boolean canProvidePower()
-	{
-	 return true;
-	}
+
     
 
 	

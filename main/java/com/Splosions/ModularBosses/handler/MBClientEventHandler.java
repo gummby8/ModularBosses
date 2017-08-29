@@ -3,15 +3,21 @@ package com.Splosions.ModularBosses.handler;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.blocks.BlockForceFieldBlue;
+import com.Splosions.ModularBosses.blocks.BlockInvisible;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -26,6 +32,15 @@ public class MBClientEventHandler {
 	/*
 	 * used to make the player look ghostly when in limbo.
 	 */
+	
+	//Block Draw Box is not shown on force fields or invisible blocks
+	@SubscribeEvent
+	public void onDrawBlockHighlight(DrawBlockHighlightEvent event){
+		Block block = event.player.worldObj.getBlockState(event.target.getBlockPos()).getBlock();
+		if (block instanceof BlockForceFieldBlue || block instanceof BlockInvisible){
+			event.setCanceled(true);
+		}
+	}
 	
 	@SubscribeEvent
 	public void onKeypress(KeyboardInputEvent.Pre event){
