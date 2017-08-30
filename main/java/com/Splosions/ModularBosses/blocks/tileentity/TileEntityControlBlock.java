@@ -68,7 +68,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	}
 
 	/**
-	 * Returns this Tile Entitie's message, or a default message if none was
+	 * Returns this Tile Entity's message, or a default message if none was
 	 * set. Note that the message is NOT updated on the client side.
 	 */
 	public String getMessage() {

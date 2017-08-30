@@ -30,7 +30,6 @@ public class BlockInvisible extends Block implements ICustomStateMapper
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
 		setCreativeTab(MBCreativeTabs.tabBlocks);
-		
 	}
 
 	@Override

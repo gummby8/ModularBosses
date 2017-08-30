@@ -48,7 +48,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class BlockForceFieldBlue extends Block implements IVanillaRotation
+public class BlockForceFieldGen extends Block implements IVanillaRotation
 {
 	
 
@@ -56,18 +56,17 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 	
 	
 	
-	public BlockForceFieldBlue(Material material) {
+	public BlockForceFieldGen(Material material) {
 		super(material);
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
-		//setCreativeTab(MBCreativeTabs.tabBlocks);
-		
+		setCreativeTab(MBCreativeTabs.tabBlocks);
 	}
 
 
 
-	
+
 
 	@Override
 	public Rotation getRotationPattern() {
@@ -113,26 +112,9 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 	
 	
 	
-
-	
-	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
-		
-		//worldIn.scheduleUpdate(pos, this, this.tickRate(worldIn));
-	}
-
-
-    
-
 	
 
 
-    
-    
-    /**
-     * Called when a neighboring block changes. Places other force field blocks. 
-     */
-    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock){
-    	
-    }
+
 	
 }

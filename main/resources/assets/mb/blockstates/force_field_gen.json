@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down": { "model": "mb:force_field_gen", "x": 270 },
+        "facing=up": { "model": "mb:force_field_gen", "x": 90 },
+        "facing=north": { "model": "mb:force_field_gen", "y": 180 },
+        "facing=south": { "model": "mb:force_field_gen" },
+        "facing=west": { "model": "mb:force_field_gen", "y": 90 },
+        "facing=east": { "model": "mb:force_field_gen", "y": 270 }
+    }
+}
