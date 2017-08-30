@@ -363,7 +363,7 @@ public class EntityGolem extends EntityMob
        	this.heal((float) (this.golemMaxHealthMulti * this.hardness));
         }
 		} catch (Exception e) {
-			ModularBosses.logger.warn("Golem Spawned without texture at pos - " + this.getPosition() );
+			ModularBosses.logger.warn("A Golem Tried To Spaw Without A Texture At Position - " + this.getPosition() );
 			this.setDead();
 		}
 		

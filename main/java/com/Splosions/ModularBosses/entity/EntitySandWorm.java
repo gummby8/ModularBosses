@@ -123,7 +123,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			this.ranMidPosX = this.spawnPosX + (ranX / 2);
 			this.ranMidPosZ = this.spawnPosZ + (ranZ / 2);
 		}
-		System.out.println("That took " + count + " tries");
+
 
 		
 		this.dataWatcher.updateObject(RANDOM_X_WATCHER, this.ranMidPosX);
@@ -215,12 +215,12 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
         
 		if (!this.worldObj.isRemote && this.getDistance(faceX, faceY, faceZ) < 20) {
 			if (faceY == 90){
-				System.out.println("DIVE DIVE DIVE");
+				//System.out.println("DIVE DIVE DIVE");
 				this.dataWatcher.updateObject(RANDOM_X_WATCHER, this.ranPosX);
 				this.dataWatcher.updateObject(RANDOM_Y_WATCHER, 5);
 				this.dataWatcher.updateObject(RANDOM_Z_WATCHER, this.ranPosZ);	
 			} else {
-				System.out.println("Surface!");
+				//System.out.println("Surface!");
 				nextPosition();
 			}
 		}

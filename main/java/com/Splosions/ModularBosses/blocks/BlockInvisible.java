@@ -39,7 +39,6 @@ public class BlockInvisible extends Block implements ICustomStateMapper
 		return new StateMapperBase() {
 			@Override
 			protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-				System.out.println("INVISIBLE BLOCK");
 				return new ModelResourceLocation("mb:invisible_block");
 			}
 		};

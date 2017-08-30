@@ -71,7 +71,6 @@ public class EntitySkull  extends EntityFlying implements IMob
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        System.out.println("BETA!");
         this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(skullFollowDistance);
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(skullMaxHealth);
     }

@@ -2,6 +2,7 @@
 package com.Splosions.ModularBosses.blocks;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockRotationData.Rotation;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
 
@@ -30,7 +31,7 @@ public class BlockPortalLanding extends Block implements IVanillaRotation {
 		if (!worldIn.isRemote) {
 			PortalLandingWorldData roomData = (PortalLandingWorldData) worldIn.getPerWorldStorage().loadData(PortalLandingWorldData.class, "lobbyPortals");
 			if (roomData == null) {
-				System.out.println("No LobbyPortals Tag found, creating one");
+				ModularBosses.logger.info("No LobbyPortals Tag found in world, creating one");
 				roomData = new PortalLandingWorldData("lobbyPortals");
 				worldIn.getPerWorldStorage().setData("lobbyPortals", roomData);
 			}
@@ -45,7 +46,7 @@ public class BlockPortalLanding extends Block implements IVanillaRotation {
 		if (!worldIn.isRemote) {
 			PortalLandingWorldData roomData = (PortalLandingWorldData) worldIn.getPerWorldStorage().loadData(PortalLandingWorldData.class, "lobbyPortals");
 			if (roomData == null) {
-				System.out.println("No LobbyPortals Tag found, creating one");
+				ModularBosses.logger.info("No LobbyPortals Tag found in world, creating one");
 				roomData = new PortalLandingWorldData("lobbyPortals");
 				worldIn.getPerWorldStorage().setData("lobbyPortals", roomData);
 			}

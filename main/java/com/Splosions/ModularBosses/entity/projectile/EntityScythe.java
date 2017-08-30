@@ -260,7 +260,6 @@ public class EntityScythe extends EntityMobThrowable {
 					for (int k = 0; k < entArray.length; ++k) {
 						EntityDragonPart part = (EntityDragonPart) entArray[k];
 						if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())) {
-							System.out.println(part.partName);
 							part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 						}
 					}

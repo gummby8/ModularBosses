@@ -411,7 +411,6 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 				this.jumpZ = this.posZ;
 			}
 			this.motionY = 1.5;
-			System.out.println("JUMP!");
 			this.AniFrame++;
 		} else if (this.AniID == JUMP && this.AniFrame > 13 && this.AniFrame <= 20) {
 			if (this.target != null) {

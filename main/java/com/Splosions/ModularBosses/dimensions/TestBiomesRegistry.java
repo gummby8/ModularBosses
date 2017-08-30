@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.dimensions;
 
 
 
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossBiomeBase;
 
 import net.minecraft.world.biome.BiomeGenBase;
@@ -24,7 +25,6 @@ public class TestBiomesRegistry
 	
 	public static void registerBiomes() {
 		BossBiome = reigsterBiome(new BossBiomeBase(idBossBiome), BiomeManager.BiomeType.ICY, 10000, WET);
-		System.out.println("REGESTERING BIOME");
 	}
 
 	private static <T extends BiomeGenBase> T reigsterBiome(T biome, BiomeManager.BiomeType biomeType, int weight, BiomeDictionary.Type... types) {
