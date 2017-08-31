@@ -84,11 +84,12 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
 		if (entity.rotationPitch < -45.0F) {
-			face = EnumFacing.UP;
+			//face = EnumFacing.UP;
 		} else if (entity.rotationPitch > 45.0F) {
-			face = EnumFacing.DOWN;
+			//face = EnumFacing.DOWN;
 		}
 		world.setBlockState(pos, state.withProperty(FACING, face), 3);
+		System.out.println(world.getBlockState(pos).getValue(FACING));
 	}
 
 	@Override

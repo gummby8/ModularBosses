@@ -18,8 +18,11 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.BlockWorkbench;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -53,7 +56,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 	
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	
+
 	
 	
 	public BlockForceFieldBlue(Material material) {
@@ -61,13 +64,21 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
-		//setCreativeTab(MBCreativeTabs.tabBlocks);
+		setCreativeTab(MBCreativeTabs.tabBlocks);
 		
 	}
 
-
-
 	
+	@Override
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
+		worldIn.scheduleUpdate(pos, this, 200);		
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		worldIn.scheduleUpdate(pos, this, 200);	
+		System.out.println(this.blockState.getProperties().toString());
+	}
 
 	@Override
 	public Rotation getRotationPattern() {
@@ -90,6 +101,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 			face = EnumFacing.DOWN;
 		}
 		world.setBlockState(pos, state.withProperty(FACING, face), 3);
+		
 	}
 
 	@Override
@@ -134,5 +146,24 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock){
     	
     }
+       
+    
+    
+	@SideOnly(Side.CLIENT)
+    public EnumWorldBlockLayer getBlockLayer()
+    {
+        return EnumWorldBlockLayer.CUTOUT;
+    }
+	
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+	
+	@Override
+    public boolean isFullCube()
+    {
+        return false;
+    }	
 	
 }
