@@ -122,11 +122,13 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
+		/**		
 		if (entity.rotationPitch < -45.0F) {
 			face = EnumFacing.UP;
 		} else if (entity.rotationPitch > 45.0F) {
 			face = EnumFacing.DOWN;
 		}
+		*/
 		world.setBlockState(pos, state.withProperty(FACING, face), 3);
 	}
 
@@ -171,7 +173,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 	
 	
 
-	
+	@Override
     public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)
     {
     	TileEntityControlBlock te = (TileEntityControlBlock) worldIn.getTileEntity(pos);
@@ -199,6 +201,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
         //System.out.println(block.isProvidingWeakPower(worldIn, pos, iblockstate, side));
+        System.out.println(this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0);
         return this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0;
     }
     

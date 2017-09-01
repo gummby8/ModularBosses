@@ -52,8 +52,8 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation
 {
 	
 
-	public static final PropertyDirection FACING = PropertyDirection.create("facing");
-	
+    public static final PropertyDirection FACING = PropertyDirection.create("facing");
+    public static final PropertyBool POWERED = PropertyBool.create("powered");
 	
 	
 	public BlockForceFieldGen(Material material) {
@@ -61,6 +61,7 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, Boolean.valueOf(false)));
 		setCreativeTab(MBCreativeTabs.tabBlocks);
 	}
 
@@ -112,9 +113,54 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation
 	
 	
 	
+	@Override
+	public boolean canProvidePower()
+	{
+	 return true;
+	}
+    
+    protected boolean canPowerSide(Block blockIn)
+    {
+        return true;
+    }
 	
 	
 
+	@Override
+    public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)
+    {
+
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        EnumFacing enumfacingY = enumfacing.getOpposite();
+        
+        //System.out.println(worldIn.getStrongPower(pos.offset(enumfacing), enumfacing) );
+        
+        if (enumfacing == side && ((Boolean)state.getValue(POWERED)).booleanValue()) {
+    		return 15;
+    	} else {
+      		return 0;
+    	}
+    }
+	
+	@Override
+    public int isProvidingStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)
+    {
+        return this.isProvidingWeakPower(worldIn, pos, state, side);
+    }
+	
+
+	
+    /**
+     * Called when a neighboring block changes.
+     */
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
+    {
+        EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+        EnumFacing enumfacingY = enumfacing.getOpposite();
+        
+        System.out.println(worldIn.getStrongPower(pos.offset(enumfacing), enumfacing) );
+
+    }
 
 
 	
