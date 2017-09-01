@@ -151,7 +151,6 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	 */
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 		if (neighborBlock.canProvidePower()) {
-
 			worldIn.scheduleUpdate(pos, this, 1);
 		}
 	}
