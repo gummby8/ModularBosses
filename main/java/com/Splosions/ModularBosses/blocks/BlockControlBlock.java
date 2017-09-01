@@ -191,8 +191,8 @@ public class BlockControlBlock extends Block implements IVanillaRotation
         EnumFacing enumfacing1 = enumfacing.rotateY();
         te.triggerPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1) != 0 ? 1 : 0;
         te.inputPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing) != 0 ? 1 : 0;
-        //System.out.println("Trigger = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1));
-        //System.out.println("Input = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing));
+        System.out.println("Trigger = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1));
+        System.out.println("Input = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing));
     }
     
     protected int getPowerOnSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
@@ -201,7 +201,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
         //System.out.println(block.isProvidingWeakPower(worldIn, pos, iblockstate, side));
-        System.out.println(this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0);
+        //System.out.println(this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0);
         return this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0;
     }
     

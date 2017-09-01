@@ -1,16 +1,12 @@
 {
     "variants": {
-        "facing=up,powered=false":    { "model": "mb:force_field_gen" },
-        "facing=down,powered=false":  { "model": "mb:force_field_gen", "x": 180 },
-        "facing=east,powered=false":  { "model": "mb:force_field_gen", "x": 90, "y": 90 },
-        "facing=west,powered=false":  { "model": "mb:force_field_gen", "x": 90, "y": 270 },
-        "facing=south,powered=false": { "model": "mb:force_field_gen", "x": 90, "y": 180 },
-        "facing=north,powered=false": { "model": "mb:force_field_gen", "x": 90 },
-        "facing=up,powered=true":     { "model": "mb:force_field_gen" },
-        "facing=down,powered=true":   { "model": "mb:force_field_gen", "x": 180 },
-        "facing=east,powered=true":   { "model": "mb:force_field_gen", "x": 90, "y": 90 },
-        "facing=west,powered=true":   { "model": "mb:force_field_gen", "x": 90, "y": 270 },
-        "facing=south,powered=true":  { "model": "mb:force_field_gen", "x": 90, "y": 180 },
-        "facing=north,powered=true":  { "model": "mb:force_field_gen", "x": 90 }
+        "facing=east,powered=false":  { "model": "mb:force_field_gen", "y": 90 },
+        "facing=west,powered=false":  { "model": "mb:force_field_gen", "y": 270 },
+        "facing=south,powered=false": { "model": "mb:force_field_gen", "y": 180 },
+        "facing=north,powered=false": { "model": "mb:force_field_gen"},
+        "facing=east,powered=true":   { "model": "mb:force_field_gen", "y": 90 },
+        "facing=west,powered=true":   { "model": "mb:force_field_gen", "y": 270 },
+        "facing=south,powered=true":  { "model": "mb:force_field_gen", "y": 180 },
+        "facing=north,powered=true":  { "model": "mb:force_field_gen"}
     }
 }

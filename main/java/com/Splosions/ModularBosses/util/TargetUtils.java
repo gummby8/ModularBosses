@@ -7,14 +7,21 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import scala.collection.generic.Sizing;
 
@@ -137,4 +144,37 @@ public class TargetUtils {
 	}
 	
 
+	
+    /**
+     * Searches AABB for an instance of the block target
+     */
+    public static boolean isBlockPresent(World worldIn, AxisAlignedBB aabb, Block blockTarget)
+    {
+        int i = MathHelper.floor_double(aabb.minX);
+        int j = MathHelper.floor_double(aabb.minY);
+        int k = MathHelper.floor_double(aabb.minZ);
+        int l = MathHelper.floor_double(aabb.maxX);
+        int i1 = MathHelper.floor_double(aabb.maxY);
+        int j1 = MathHelper.floor_double(aabb.maxZ);
+        boolean flag = false;
+        
+
+        for (int k1 = i; k1 <= l; ++k1)
+        {
+            for (int l1 = j; l1 <= i1; ++l1)
+            {
+                for (int i2 = k; i2 <= j1; ++i2)
+                {
+ 
+                    if (worldIn.getBlockState(new BlockPos(k1, l1, i2)).getBlock() == blockTarget)
+                    {
+                    	System.out.println("FOUND IT");
+                    	return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+	
 }

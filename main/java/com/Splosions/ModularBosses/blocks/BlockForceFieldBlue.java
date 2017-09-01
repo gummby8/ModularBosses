@@ -12,6 +12,7 @@ import com.Splosions.ModularBosses.entity.CustomEntityList;
 import com.Splosions.ModularBosses.handler.GuiHandler;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.client.OpenControlBlockEditorPacket;
+import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -37,6 +38,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -56,7 +58,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 	
 
     public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-    public static final PropertyInteger DAMAGE = PropertyInteger.create("damage", 0, 2);
+    public static final PropertyInteger STATE = PropertyInteger.create("state", 0, 2);
 
     public static final int STANDBY = 2;
     public static final int ON = 1;
@@ -69,7 +71,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
-        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(DAMAGE, Integer.valueOf(0)));
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(STATE, Integer.valueOf(ON)));
 		setCreativeTab(MBCreativeTabs.tabBlocks);
 		
 	}
@@ -86,57 +88,77 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		//worldIn.scheduleUpdate(pos, this, 1);	
 		//worldIn.setBlockState(pos, state.withProperty(FACING, ((EnumFacing)state.getValue(FACING))).cycleProperty(FACING), 3);
 		//worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.EAST), 3);
-		//System.out.println("Dmg = " + ((int)state.getValue(DAMAGE)));
-		if ((int)state.getValue(DAMAGE) == 1){
+		//System.out.println("Dmg = " + ((int)state.getValue(STATE)));
+		if ((int)state.getValue(STATE) == ON){
 			if ((EnumFacing)state.getValue(FACING) == EnumFacing.NORTH || (EnumFacing)state.getValue(FACING) == EnumFacing.SOUTH){
+				AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.west(5).down(5), pos.east(5).up(5));
+				System.out.println(TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen));
+				if (!TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen)){
+					worldIn.setBlockToAir(pos);
+					return;
+				}
+				
 				if (worldIn.getBlockState(pos.east()).getBlock() == Blocks.air){
-					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(ON)), 3);
+					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
 				} 
 				if (worldIn.getBlockState(pos.west()).getBlock() == Blocks.air){
-					worldIn.setBlockState(pos.west(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(ON)), 3);
+					worldIn.setBlockState(pos.west(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
+				}
+				if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.air){
+					worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
+				} 
+				if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.air){
+					worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
 			} else { // must be facing EAST or WEST
+				AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.north(5).down(5), pos.south(5).up(5));
+				System.out.println(TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen));
+				if (!TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen)){
+					worldIn.setBlockToAir(pos);
+					return;
+				}
 				if (worldIn.getBlockState(pos.north()).getBlock() == Blocks.air){
-					worldIn.setBlockState(pos.north(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(ON)), 3);
+					worldIn.setBlockState(pos.north(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
 				} 
 				if (worldIn.getBlockState(pos.south()).getBlock() == Blocks.air){
-					worldIn.setBlockState(pos.south(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(ON)), 3);
-				}				
+					worldIn.setBlockState(pos.south(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
+				}
+				if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.air){
+					worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
+				} 
+				if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.air){
+					worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
+				}
 			}
-			if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.air){
-				worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(ON)), 3);
-			} 
-			if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.air){
-				worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(ON)), 3);
-			}
-			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(STANDBY)), 3);
+
+			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(STANDBY)), 3);
 		} else 
-		if((int)state.getValue(DAMAGE) == 0){
+		if((int)state.getValue(STATE) == OFF){
 			if ((EnumFacing)state.getValue(FACING) == EnumFacing.NORTH || (EnumFacing)state.getValue(FACING) == EnumFacing.SOUTH){
 				if (worldIn.getBlockState(pos.east()).getBlock() == ModBlocks.force_field_blue){
-					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.east(), this, 1);	
 				} 
 				if (worldIn.getBlockState(pos.west()).getBlock() == ModBlocks.force_field_blue){
-					worldIn.setBlockState(pos.west(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+					worldIn.setBlockState(pos.west(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.west(), this, 1);
 				}
 			} else { // must be facing EAST or WEST
 				if (worldIn.getBlockState(pos.north()).getBlock() == ModBlocks.force_field_blue){
-					worldIn.setBlockState(pos.north(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+					worldIn.setBlockState(pos.north(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.north(), this, 1);
 				} 
 				if (worldIn.getBlockState(pos.south()).getBlock() == ModBlocks.force_field_blue){
-					worldIn.setBlockState(pos.south(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+					worldIn.setBlockState(pos.south(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.south(), this, 1);
 				}				
 			}
 			if (worldIn.getBlockState(pos.up()).getBlock() == ModBlocks.force_field_blue){
-				worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+				worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);
 				worldIn.scheduleUpdate(pos.up(), this, 1);
 			} 
 			if (worldIn.getBlockState(pos.down()).getBlock() == ModBlocks.force_field_blue){
-				worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+				worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);
 				worldIn.scheduleUpdate(pos.down(), this, 1);
 			}
 			worldIn.setBlockToAir(pos);
@@ -154,13 +176,13 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
     public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
         EnumFacing enumfacing1 = placer.getHorizontalFacing().rotateY();
 
-        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, enumfacing1).withProperty(DAMAGE, Integer.valueOf(meta >> 2));
+        return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, enumfacing1).withProperty(STATE, Integer.valueOf(meta >> 2));
     }
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
-		world.setBlockState(pos, state.withProperty(FACING, face).withProperty(DAMAGE, Integer.valueOf(OFF)), 3);
+		world.setBlockState(pos, state.withProperty(FACING, face), 3);
 
 	}
 
@@ -169,7 +191,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3)).withProperty(DAMAGE, Integer.valueOf((meta & 15) >> 2));
+        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3)).withProperty(STATE, Integer.valueOf((meta & 15) >> 2));
     }
 
 
@@ -180,14 +202,14 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
     {
         byte b0 = 0;
         int i = b0 | ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
-        i |= ((Integer)state.getValue(DAMAGE)).intValue() << 2;
+        i |= ((Integer)state.getValue(STATE)).intValue() << 2;
         //System.out.println("Meta = " + i);
         return i;
     }
 
     protected BlockState createBlockState()
     {
-        return new BlockState(this, new IProperty[] {FACING, DAMAGE});
+        return new BlockState(this, new IProperty[] {FACING, STATE});
     }
 	
 	

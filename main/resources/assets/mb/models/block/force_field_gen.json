@@ -2,9 +2,9 @@
     "parent": "minecraft:block/orientable",
     "textures": {
         "top": "mb:blocks/control_block/blank",
-        "south": "mb:blocks/control_block/input",
+        "south": "mb:blocks/control_block/output",
         "west": "mb:blocks/control_block/blank",
-        "front": "mb:blocks/control_block/output",
+        "front": "mb:blocks/control_block/input",
         "east": "mb:blocks/control_block/blank",
         "bottom": "mb:blocks/control_block/blank"
     }

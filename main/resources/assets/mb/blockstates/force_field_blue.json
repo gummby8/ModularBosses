@@ -1,16 +1,16 @@
 {
     "variants": {
-        "damage=0,facing=south": { "model": "mb:force_field_blue" },
-        "damage=0,facing=west": { "model": "mb:force_field_blue", "y": 90 },
-        "damage=0,facing=north": { "model": "mb:force_field_blue", "y": 180 },
-        "damage=0,facing=east": { "model": "mb:force_field_blue", "y": 270 },
-        "damage=1,facing=south": { "model": "mb:force_field_blue" },
-        "damage=1,facing=west": { "model": "mb:force_field_blue", "y": 90 },
-        "damage=1,facing=north": { "model": "mb:force_field_blue", "y": 180 },
-        "damage=1,facing=east": { "model": "mb:force_field_blue", "y": 270 },
-        "damage=2,facing=south": { "model": "mb:force_field_blue" },
-        "damage=2,facing=west": { "model": "mb:force_field_blue", "y": 90 },
-        "damage=2,facing=north": { "model": "mb:force_field_blue", "y": 180 },
-        "damage=2,facing=east": { "model": "mb:force_field_blue", "y": 270 }
+        "facing=south,state=0": { "model": "mb:force_field_blue" },
+        "facing=west,state=0": { "model": "mb:force_field_blue", "y": 90 },
+        "facing=north,state=0": { "model": "mb:force_field_blue", "y": 180 },
+        "facing=east,state=0": { "model": "mb:force_field_blue", "y": 270 },
+        "facing=south,state=1": { "model": "mb:force_field_blue" },
+        "facing=west,state=1": { "model": "mb:force_field_blue", "y": 90 },
+        "facing=north,state=1": { "model": "mb:force_field_blue", "y": 180 },
+        "facing=east,state=1": { "model": "mb:force_field_blue", "y": 270 },
+        "facing=south,state=2": { "model": "mb:force_field_blue" },
+        "facing=west,state=2": { "model": "mb:force_field_blue", "y": 90 },
+        "facing=north,state=2": { "model": "mb:force_field_blue", "y": 180 },
+        "facing=east,state=2": { "model": "mb:force_field_blue", "y": 270 }
     }
 }
