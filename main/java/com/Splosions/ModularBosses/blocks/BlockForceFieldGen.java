@@ -144,35 +144,29 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	@Override
 	public int isProvidingStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		return 0;
-	}
+	} 
 
 	/**
 	 * Called when a neighboring block changes.
 	 */
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+		if (neighborBlock.canProvidePower()) {
+
 			worldIn.scheduleUpdate(pos, this, 1);
+		}
 	}
-	
-	 
+
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		//System.out.println(state.getValue(POWERED));
+		// System.out.println(state.getValue(POWERED));
 		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
-		EnumFacing enumfacingY = enumfacing.getOpposite();
 
-
-
-		if (worldIn.getStrongPower(pos.offset(enumfacing), enumfacing) > 0) {
+		if (worldIn.getStrongPower(pos.offset(enumfacing)) > 0) {
 			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, true), 3);
-		} else {
-			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, false), 3);
-		}
-
-		if (((Boolean) state.getValue(POWERED)).booleanValue()) {
-			// System.out.println("Building");
 			worldIn.setBlockState(pos.up(2), ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 1), 3);
-		} else {
-			// System.out.println("Teardown");
+		} else 
+		if (worldIn.getStrongPower(pos.offset(enumfacing)) == 0) {
+			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, false), 3);
 			worldIn.setBlockToAir(pos.up(2));
 			worldIn.setBlockState(pos.up(2), ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 0), 3);
 		}

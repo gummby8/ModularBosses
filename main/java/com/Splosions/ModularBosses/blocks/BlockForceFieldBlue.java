@@ -91,8 +91,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		//System.out.println("Dmg = " + ((int)state.getValue(STATE)));
 		if ((int)state.getValue(STATE) == ON){
 			if ((EnumFacing)state.getValue(FACING) == EnumFacing.NORTH || (EnumFacing)state.getValue(FACING) == EnumFacing.SOUTH){
-				AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.west(5).down(5), pos.east(5).up(5));
-				System.out.println(TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen));
+				AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.west(10).down(10), pos.east(10).up(10));
 				if (!TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen)){
 					worldIn.setBlockToAir(pos);
 					return;
@@ -111,8 +110,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 					worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
 			} else { // must be facing EAST or WEST
-				AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.north(5).down(5), pos.south(5).up(5));
-				System.out.println(TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen));
+				AxisAlignedBB axisalignedbb = new AxisAlignedBB(pos.north(10).down(10), pos.south(10).up(10));
 				if (!TargetUtils.isBlockPresent(worldIn, axisalignedbb, ModBlocks.force_field_gen)){
 					worldIn.setBlockToAir(pos);
 					return;

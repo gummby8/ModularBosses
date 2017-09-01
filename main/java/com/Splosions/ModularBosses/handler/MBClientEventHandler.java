@@ -36,10 +36,15 @@ public class MBClientEventHandler {
 	//Block Draw Box is not shown on force fields or invisible blocks
 	@SubscribeEvent
 	public void onDrawBlockHighlight(DrawBlockHighlightEvent event){
-		Block block = event.player.worldObj.getBlockState(event.target.getBlockPos()).getBlock();
-		if (block instanceof BlockForceFieldBlue || block instanceof BlockInvisible){
-			event.setCanceled(true);
+		try{
+			Block block = event.player.worldObj.getBlockState(event.target.getBlockPos()).getBlock();
+			if (block instanceof BlockForceFieldBlue || block instanceof BlockInvisible){
+				event.setCanceled(true);
+			}
+		}catch(Exception e){
+			ModularBosses.logger.warn(e);
 		}
+		
 	}
 	
 	@SubscribeEvent

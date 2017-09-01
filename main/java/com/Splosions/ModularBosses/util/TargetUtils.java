@@ -168,7 +168,6 @@ public class TargetUtils {
  
                     if (worldIn.getBlockState(new BlockPos(k1, l1, i2)).getBlock() == blockTarget)
                     {
-                    	System.out.println("FOUND IT");
                     	return true;
                     }
                 }
