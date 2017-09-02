@@ -1,16 +1,22 @@
 {
     "forge_marker": 1,
     "variants": {
-        "normal": {
+        "fluid_worm_blood": {
             "model": "forge:fluid",
             "custom": {
-                "fluid": "normal"
+                "fluid": "fluid_worm_blood"
             }
         },
-        "normalgas": {
+        "fluid_worm_saliva": {
             "model": "forge:fluid",
             "custom": {
-                "fluid": "normalgas"
+                "fluid": "fluid_worm_saliva"
+            }
+        },
+        "gas_worm_gas": {
+            "model": "forge:fluid",
+            "custom": {
+                "fluid": "gas_worm_gas"
             }
         },
         "static": {

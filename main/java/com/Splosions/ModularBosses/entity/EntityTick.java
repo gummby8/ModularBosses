@@ -1,6 +1,6 @@
 package com.Splosions.ModularBosses.entity;
 
-import com.Splosions.ModularBosses.blocks.FluidBlood;
+import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
 import com.google.common.base.Predicate;
@@ -93,7 +93,7 @@ public class EntityTick extends EntityMob {
 		this.growth = this.dataWatcher.getWatchableObjectInt(GROW_WATCHER);
 
 		if (!this.worldObj.isRemote) {
-			if (this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.fluidNormal.getBlock()) {
+			if (this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.fluidWormBlood.getBlock()) {
 				this.grow();
 			}
 		}
@@ -113,7 +113,7 @@ public class EntityTick extends EntityMob {
 	public void onDeathUpdate() {
 
 		if (this.growth == 5 && !this.worldObj.isRemote && !this.fullgrown) {
-			this.worldObj.setBlockState(this.getPosition(), ModFluids.fluidNormal.getBlock().getDefaultState());
+			this.worldObj.setBlockState(this.getPosition(), ModFluids.fluidWormBlood.getBlock().getDefaultState());
 			this.fullgrown = true;
 		}
 		++this.deathTicks;

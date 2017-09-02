@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.Fluid;
 public class GasWormGas extends BlockFluidClassic{
 
 	public GasWormGas(Fluid fluid, Material material) {
-		super(fluid, material);
+		super(fluid, Material.water);
 		// TODO Auto-generated constructor stub
 	}
 

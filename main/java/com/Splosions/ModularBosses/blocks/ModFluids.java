@@ -19,8 +19,9 @@ import com.Splosions.ModularBosses.MBCreativeTabs;
 public class ModFluids {
 	public static Fluid fluidStatic;
 	public static Fluid fluidStaticGas;
-	public static Fluid fluidNormal;
-	public static Fluid fluidNormalGas;
+	public static Fluid fluidWormBlood;
+	public static Fluid fluidWormSaliva;
+	public static Fluid gasWormGas;
 
 	/**
 	 * The fluids registered by this mod. Includes fluids that were already registered by another mod.
@@ -39,10 +40,13 @@ public class ModFluids {
 		fluidStaticGas = createFluid("staticgas", "mb:blocks/fluid_staticGas", false, 10, -800, 1500, true,
 				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
 
-		fluidNormal = createFluid("normal", "mb:blocks/fluid_normal", true, 10, 1000, 1000, false,
-				fluid -> new FluidBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		fluidWormSaliva = createFluid("fluid_worm_saliva", "mb:blocks/fluid_worm_saliva", true, 10, 1, 1, false,
+				fluid -> new FluidWormSaliva(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		
+		fluidWormBlood = createFluid("fluid_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1, false,
+				fluid -> new FluidWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
 
-		fluidNormalGas = createFluid("normalgas", "mb:blocks/fluid_normalGas", true, 10, -10000, 1000, true,
+		gasWormGas = createFluid("gas_worm_gas", "mb:blocks/gas_worm_gas", true, 10, -10000, -100, true,
 				fluid -> new GasWormGas(fluid, new MaterialLiquid(MapColor.adobeColor)));
 	}
 

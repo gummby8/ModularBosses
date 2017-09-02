@@ -72,7 +72,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(STATE, Integer.valueOf(ON)));
-		setCreativeTab(MBCreativeTabs.tabBlocks);
+		//setCreativeTab(MBCreativeTabs.tabBlocks);
 		
 	}
 

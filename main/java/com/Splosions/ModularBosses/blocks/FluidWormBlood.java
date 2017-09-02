@@ -10,14 +10,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 
-public class FluidBlood extends BlockFluidClassic{
+public class FluidWormBlood extends BlockFluidClassic{
 
-	public FluidBlood(Fluid fluid, Material material) {
-		super(fluid, material);
-		// TODO Auto-generated constructor stub
+	public FluidWormBlood(Fluid fluid, Material material) {
+		super(fluid, Material.water);
+		// limits fluid spread to 4 blocks
 		quantaPerBlock = 4;
 	}
-
+ 
 
     /**
      * Called When an Entity Collided with the Block
