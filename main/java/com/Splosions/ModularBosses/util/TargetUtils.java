@@ -6,6 +6,7 @@ import java.util.Random;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
+import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -27,25 +28,24 @@ import scala.collection.generic.Sizing;
 
 public class TargetUtils {
 
-
-	public static void tellPlayer(String msg){
-		try{
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));	
-		} catch (Exception e){
+	public static void tellPlayer(String msg) {
+		try {
+			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
+		} catch (Exception e) {
 			ModularBosses.logger.debug("Tried to send a chat to player before there was a player");
 		}
-		
+
 	}
-	
-	
-	public static void betaMsg(Entity entity){
-		if (entity.worldObj.isRemote && entity.ticksExisted == 1){
-		tellPlayer("This monster is still a work in progress");
+
+	public static void betaMsg(Entity entity) {
+		if (entity.worldObj.isRemote && entity.ticksExisted == 1) {
+			tellPlayer("This monster is still a work in progress");
 		}
 	}
-	
+
 	/**
 	 * Returns a random number between the two numbers specified
+	 * 
 	 * @param min
 	 * @param max
 	 * @return
@@ -57,7 +57,7 @@ public class TargetUtils {
 		Random r = new Random();
 		return r.nextInt((max - min) + 1) + min;
 	}
-	
+
 	/**
 	 * 
 	 * @return
@@ -78,8 +78,7 @@ public class TargetUtils {
 		// thanks again to Battlegear2 for the following code snippet
 		double dx = target.posX - seeker.posX;
 		double dz;
-		for (dz = target.posZ - seeker.posZ; dx * dx + dz * dz < 1.0E-4D; dz = (Math.random() - Math.random())
-				* 0.01D) {
+		for (dz = target.posZ - seeker.posZ; dx * dx + dz * dz < 1.0E-4D; dz = (Math.random() - Math.random()) * 0.01D) {
 			dx = (Math.random() - Math.random()) * 0.01D;
 		}
 		while (seeker.rotationYaw > 360) {
@@ -103,21 +102,18 @@ public class TargetUtils {
 	 * Gets an List of entities within an AABB
 	 */
 	public static final List getList(Entity entity, int width, int height) {
-		return entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity,
-				entity.getEntityBoundingBox().expand(width, height, width));
+		return entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.getEntityBoundingBox().expand(width, height, width));
 	}
 
 	public static final List getSpecificList(Entity entity, Class targetClass, int width, int height) {
 		return entity.worldObj.getEntitiesWithinAABB(targetClass, entity.getEntityBoundingBox().expand(width, height, width));
 	}
-	
+
 	public static EntityPlayer findRandomVisablePlayer(Entity entity, int width, int height) {
 		Random rn = new Random();
-		List<EntityPlayer> players = entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
-				entity.getEntityBoundingBox().expand(width, height, width));
+		List<EntityPlayer> players = entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, entity.getEntityBoundingBox().expand(width, height, width));
 		if (players.size() > 0) {
-			return (((EntityLivingBase) entity).canEntityBeSeen(players.get(rn.nextInt(players.size())))
-					? players.get(rn.nextInt(players.size())) : null);
+			return (((EntityLivingBase) entity).canEntityBeSeen(players.get(rn.nextInt(players.size()))) ? players.get(rn.nextInt(players.size())) : null);
 		} else {
 			return null;
 		}
@@ -133,47 +129,28 @@ public class TargetUtils {
 		return entityplayer != null && ((EntityLivingBase) entity).canEntityBeSeen(entityplayer) ? entityplayer : null;
 	}
 
-	
 	/**
-	 * Adds the stack to the player's inventory or, failing that, drops it as an EntityItem
+	 * Adds the stack to the player's inventory or, failing that, drops it as an
+	 * EntityItem
 	 */
 	public static void addItemToInventory(EntityPlayer player, ItemStack stack) {
 		if (!player.inventory.addItemStackToInventory(stack)) {
 			player.dropPlayerItemWithRandomChoice(stack, false);
 		}
 	}
-	
 
-	
-    /**
-     * Searches AABB for an instance of the block target
-     */
-    public static boolean isBlockPresent(World worldIn, AxisAlignedBB aabb, Block blockTarget)
-    {
-        int i = MathHelper.floor_double(aabb.minX);
-        int j = MathHelper.floor_double(aabb.minY);
-        int k = MathHelper.floor_double(aabb.minZ);
-        int l = MathHelper.floor_double(aabb.maxX);
-        int i1 = MathHelper.floor_double(aabb.maxY);
-        int j1 = MathHelper.floor_double(aabb.maxZ);
-        boolean flag = false;
-        
 
-        for (int k1 = i; k1 <= l; ++k1)
-        {
-            for (int l1 = j; l1 <= i1; ++l1)
-            {
-                for (int i2 = k; i2 <= j1; ++i2)
-                {
- 
-                    if (worldIn.getBlockState(new BlockPos(k1, l1, i2)).getBlock() == blockTarget)
-                    {
-                    	return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-	
+	/**
+	 * Searches for an instance of the block target between two block pos
+	 */
+	public static boolean isBlockPresentPos(World worldIn, Block blockTarget, BlockPos pos1, BlockPos pos2) {
+				List<BlockPos> blocks = Lists.newArrayList(BlockPos.getAllInBox(pos1, pos2));
+			for (BlockPos pos : blocks) {
+				if(worldIn.getBlockState(pos).getBlock() == blockTarget){
+					return true;
+				}
+			}
+		return false; 
+	}
+
 }
