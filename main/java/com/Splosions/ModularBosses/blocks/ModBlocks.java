@@ -6,6 +6,7 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.items.ItemModBlock;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
@@ -22,6 +23,7 @@ public class ModBlocks
 	controlBlock,
 	portalBlock,
 	portalLanding,
+	portalReturn,
 	phaseFire,
 	force_field_gen,
 	force_field_blue,
@@ -47,6 +49,10 @@ public class ModBlocks
 		portalBlock = new BlockPortalBlock(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_block");
 		GameRegistry.registerBlock(portalBlock, ItemModBlock.class, portalBlock.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityPortalBlock.class, Reference.MOD_ID + ":tileEntityPortalBlock");
+		
+		portalReturn = new BlockReturnPortal(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_return_block");
+		GameRegistry.registerBlock(portalReturn, ItemModBlock.class, portalReturn.getUnlocalizedName().substring(5));
+		GameRegistry.registerTileEntity(TileEntityReturnPortalBlock.class, Reference.MOD_ID + ":tileEntityReturnPortalBlock");
 		
 		portalLanding = new BlockPortalLanding(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_landing");
 		GameRegistry.registerBlock(portalLanding, ItemModBlock.class, portalLanding.getUnlocalizedName().substring(5));

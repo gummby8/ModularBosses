@@ -72,21 +72,16 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase entity) {
 		EnumFacing enumfacing = entity.getHorizontalFacing();
 		return super.onBlockPlaced(world, pos, face, hitX, hitY, hitZ, meta, entity).withProperty(FACING, enumfacing).withProperty(POWERED, false);
-		// return getStateFromMeta(meta).withProperty(FACING,
-		// enumfacing).withProperty(POWERED, false);
 	}
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
-		world.setBlockState(pos, state.withProperty(FACING, face).withProperty(POWERED, false));
-		// System.out.println(world.getBlockState(pos).getValue(FACING));
+		world.setBlockState(pos, state.withProperty(FACING, face.getOpposite()).withProperty(POWERED, false));
 	}
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing;
-
 		boolean powered = false;
 		int facing = meta;
 
@@ -94,25 +89,17 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 			facing -= 4;
 			powered = true;
 		}
-
-		// return this.getDefaultState().withProperty(FACING,
-		// EnumFacing.getHorizontal(meta & 3)).withProperty(POWERED, powered);
 		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3)).withProperty(POWERED, powered);
-
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
 		EnumFacing rot = (EnumFacing) state.getValue(FACING);
-
 		int i;
-
 		i = rot.getHorizontalIndex();
-
 		if (((Boolean) state.getValue(POWERED)).booleanValue()) {
 			i += 4;
 		}
-
 		return i;
 	}
 
@@ -144,7 +131,7 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	@Override
 	public int isProvidingStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		return 0;
-	} 
+	}
 
 	/**
 	 * Called when a neighboring block changes.
@@ -157,14 +144,12 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		// System.out.println(state.getValue(POWERED));
 		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
 
 		if (worldIn.getStrongPower(pos.offset(enumfacing)) > 0) {
 			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, true), 3);
 			worldIn.setBlockState(pos.up(2), ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 1), 3);
-		} else 
-		if (worldIn.getStrongPower(pos.offset(enumfacing)) == 0) {
+		} else if (worldIn.getStrongPower(pos.offset(enumfacing)) == 0) {
 			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, false), 3);
 			worldIn.setBlockToAir(pos.up(2));
 			worldIn.setBlockState(pos.up(2), ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 0), 3);

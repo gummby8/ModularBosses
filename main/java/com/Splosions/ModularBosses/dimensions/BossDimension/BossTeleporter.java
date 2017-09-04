@@ -28,7 +28,7 @@ public class BossTeleporter extends Teleporter {
 
 	@Override
 	public void placeInPortal(Entity entityIn, float rotationYaw) {
-		//this.makePortal(entityIn);
+		this.makePortal(entityIn);
 
 		int i = MathHelper.floor_double(entityIn.posX);
 		int j = MathHelper.floor_double(entityIn.posY) - 1;

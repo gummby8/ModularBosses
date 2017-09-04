@@ -39,7 +39,6 @@ public class RenderEyeballOctopus extends RenderLiving {
 	public void doRender(EntityLiving entity, double x, double y, double z, float p_76986_8_, float partialTicks) {
 		super.doRender(entity, x, y, z, p_76986_8_, partialTicks);
 		EntityEyeballOctopus octo = (EntityEyeballOctopus) entity;
-
 		if (octo.target != null && octo.attackCounter > 0) {
 			this.drawRechargeRay(octo, x, y, z, partialTicks);
 		}
