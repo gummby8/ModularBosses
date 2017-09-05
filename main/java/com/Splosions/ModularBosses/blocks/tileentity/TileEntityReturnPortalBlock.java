@@ -3,9 +3,11 @@ package com.Splosions.ModularBosses.blocks.tileentity;
 import java.util.List;
 
 import com.Splosions.ModularBosses.Config;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.util.TargetUtils;
+import com.Splosions.ModularBosses.util.schematic.Dungeon;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.IEntityMultiPart;
@@ -30,6 +32,7 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	public int ticksExisted;
 	public int countDown;
 
+	public String dungeonID;
 	public int returnDimension;
 	public int returnX;
 	public int returnY;
@@ -51,7 +54,6 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	@Override
 	public void update() {
 		if (!this.worldObj.isRemote) {
-		
 			ticksExisted++;
 			if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isBlockPowered(pos)) {
 				AxisAlignedBB bb = new AxisAlignedBB(this.getPos().down().south().east(), this.getPos().up());
@@ -66,10 +68,26 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 				} else {
 					countDown = 6;
 				}
+				//if the block is powered that means the boss has died, the dungeon is complete
+				//remove the dungeon from the dungeon list so the worm entity can die
+				if(!ModularBosses.instance.dungeonList.isEmpty()) {
+					int dungeonCount = ModularBosses.instance.dungeonList.size();
+					for (int x = 0; x < dungeonCount; x++) {
+						Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
+						if(dungeon.finishedBuilding && dungeon.dungeonID == dungeonID){
+							ModularBosses.instance.dungeonList.remove(x);
+							break;
+						}
+					}
+				}
+				
 
 			}
 
 		}
+		
+		
+		
 	}
 
 	/**
@@ -91,12 +109,12 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		}
 	}
 
-	public void setReturnLocation(int x, int y, int z, int dimension) {
+	public void setReturnLocation(int x, int y, int z, int dimension, String id) {
 		returnX = x;
 		returnY = y + 2;
 		returnZ = z;
 		returnDimension = dimension;
-
+		dungeonID = id;
 	}
 
 	@Override
@@ -106,6 +124,7 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		returnY = compound.getInteger("returnY");
 		returnZ = compound.getInteger("returnZ");
 		returnDimension = compound.getInteger("dimension");
+		dungeonID = compound.getString("dungeonID")
 	}
 
 	@Override
@@ -115,6 +134,7 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		compound.setInteger("returnY", returnY);
 		compound.setInteger("returnZ", returnZ);
 		compound.setInteger("dimension", returnDimension);
+		compound.setString("dungeonID", dungeonID);
 	}
 
 	@Override

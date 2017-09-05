@@ -9,6 +9,7 @@ import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
+import com.Splosions.ModularBosses.util.schematic.Dungeon;
 import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 import com.Splosions.ModularBosses.util.schematic.Room;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
@@ -45,6 +46,7 @@ import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -185,7 +187,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	public void onUpdate() {
 		TargetUtils.betaMsg(this);
 		
-		System.out.println(this.getUniqueID().toString());
+		//dungeon was cleared, kill the worm...add death animation
+		if (dungeonCompleted()){
+			this.setDead();
+		}
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
 			
@@ -272,8 +277,25 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		}
 		//setDead();
 	}
+	/**
+	 *checks if there is a dungeon with and ID that matches the worms UUID. 
+	 */
+	public boolean dungeonCompleted(){
+		if(!ModularBosses.instance.dungeonList.isEmpty()) {
+			int dungeonCount = ModularBosses.instance.dungeonList.size();
+			for (int x = 0; x < dungeonCount; x++) {
+				Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
+				if(dungeon.finishedBuilding && dungeon.dungeonID == this.getUniqueID().toString()){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	
-	
+	/*
+	 * creates a new dungeon assigns the return location and dungeon ID
+	 */
 	private void createDungeon() {
 		if (!this.worldObj.isRemote){
 			DungeonNurkach dungeon = new DungeonNurkach(this.getUniqueID().toString() ,this.getPosition(), this.dimension);

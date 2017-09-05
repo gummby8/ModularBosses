@@ -55,17 +55,7 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
 
-		
-		
-		
-		
-		
-		/**
-		if (!worldIn.isRemote){
-			DungeonNurkach dungeon = new DungeonNurkach(playerIn.getPosition(), 0);
-			ModularBosses.instance.dungeonList.add(dungeon);
-		}
-		 */
+
 
 
         return itemStackIn;

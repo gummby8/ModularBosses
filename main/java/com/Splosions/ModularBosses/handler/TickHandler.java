@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.handler;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.util.schematic.Dungeon;
+import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
 
 import net.minecraft.server.MinecraftServer;
@@ -23,9 +24,12 @@ public class TickHandler {
 				Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
 				if(!dungeon.finishedBuilding){
 					Schematic.staggeredBuild(MinecraftServer.getServer().worldServerForDimension(Config.bossDimension), dungeon);
+					break;//only 1 dungeon can be building at a time
 				} else {
-					ModularBosses.instance.dungeonList.remove(x);
-					break;
+					if (!(dungeon instanceof DungeonNurkach)){ //worm dungeons are removed by the worm return portal upon activation
+						ModularBosses.instance.dungeonList.remove(x);
+						break;
+					}
 				}
 			}
 		}

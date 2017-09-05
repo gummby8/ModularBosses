@@ -158,7 +158,7 @@ public class Schematic {
 							// to the dungeon specs
 							if (tileEntity instanceof TileEntityReturnPortalBlock) {
 								TileEntityReturnPortalBlock te = (TileEntityReturnPortalBlock) tileEntity;
-								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ, dungeon.returnDimension);
+								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ, dungeon.returnDimension, dungeon.dungeonID);
 								te.writeToNBT(tag);
 								tileEntity = te;
 							}
