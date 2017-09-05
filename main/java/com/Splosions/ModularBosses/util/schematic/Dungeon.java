@@ -5,6 +5,8 @@ public class Dungeon {
 	public int originY = 0;
 	public int originZ = 0;
 	
+	public int returnDimension;
+	
 	public int RoomPosX = 0;
 	public int RoomPosY = 0;
 	public int RoomPosZ = 0;

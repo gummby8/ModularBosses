@@ -14,6 +14,8 @@ public class DungeonNurkach extends Dungeon {
 
 	public int doorCount;
 
+	 
+
 	public static final int OPEN = 0;
 	public static final int DOOR = 1;
 	public static final int WALL = 2;
@@ -24,11 +26,17 @@ public class DungeonNurkach extends Dungeon {
 	public static final int BOSS = 3;
 	public static final int ENTRANCE = 4;
 
-	public DungeonNurkach(BlockPos pos) {
+	public DungeonNurkach(BlockPos pos, int dimension) {
+		
+	    roomWidth = Config.WormRoomSizeX;
+	    roomHeight = Config.WormRoomSizeY;
+	    roomLength = Config.WormRoomSizeZ;
+		
 		buildsPerTick = Config.buildsPerTick;
 		originX = RoomPosX = pos.getX();
 		originY = RoomPosY = pos.getY() - 2;
 		originZ = RoomPosZ = pos.getZ();
+		returnDimension = dimension;
 		wormGen();
 	}
 

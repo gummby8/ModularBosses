@@ -81,7 +81,10 @@ public class RenderTileEntityReturnPortalBlock extends TileEntitySpecialRenderer
 
         tessellator.draw();
         
-        miniSun(0.1F, 0, 0, 0);
+        if (tileEntity.getWorld().isBlockPowered(tileEntity.getPos())){
+        	miniSun(0.1F, 0, 0, 0);	
+        }
+        
         
         GL11.glPopMatrix();
     }

@@ -11,6 +11,7 @@ import java.util.Set;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.util.BlockObject;
 import com.Splosions.ModularBosses.util.NBTHelper;
@@ -84,7 +85,6 @@ public class Schematic {
 				}
 			}
 
-			
 			i = 0;
 			j = 0;
 			k = 0;
@@ -101,12 +101,12 @@ public class Schematic {
 				if (i >= height) {
 					break;
 				}
-				
+
 			}
-			
-			//System.out.println(height + " " + length + " " + width);
-			//System.out.println(i + " " + j + " " + k);
-			
+
+			// System.out.println(height + " " + length + " " + width);
+			// System.out.println(i + " " + j + " " + k);
+
 			for (int q = 0; q < dungeon.buildsPerTick; q++) {
 				int blockId = UnsignedBytes.toInt(blockIDs[dungeon.buildCount]);
 				// Checks the id reference Map
@@ -137,26 +137,39 @@ public class Schematic {
 					dungeon.roomCount++;
 					dungeon.nextRoom();
 					break;
-				} 
+				}
 			}
 
 			NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
 
-			for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
-				try {
-					TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
-					if (tileEntity != null) {
-						NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
-						int Xx = tag.getInteger("x");
-						int Yy = tag.getInteger("y");
-						int Zz = tag.getInteger("z");
-						BlockPos bPos = new BlockPos(x + Xx, y + Yy, z + Zz);
-						world.removeTileEntity(bPos);
-						world.setTileEntity(bPos, tileEntity);
-						System.out.println(tileEntity);
+			if (i == 0 && j == 0 && k == 0) {
+				for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
+					try {
+						TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+						if (tileEntity != null) {
+							NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
+							int Xx = tag.getInteger("x");
+							int Yy = tag.getInteger("y");
+							int Zz = tag.getInteger("z");
+							BlockPos bPos = new BlockPos(x + Xx, y + Yy, z + Zz);
+							world.removeTileEntity(bPos);
+							// checks if the TE is a return portal and sets the
+							// return destination coords and dimension according
+							// to the dungeon specs
+							if (tileEntity instanceof TileEntityReturnPortalBlock) {
+								TileEntityReturnPortalBlock te = (TileEntityReturnPortalBlock) tileEntity;
+								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ, dungeon.returnDimension);
+								te.writeToNBT(tag);
+								tileEntity = te;
+							}
+							 
+							world.setTileEntity(bPos, tileEntity);
+							world.markChunkDirty(bPos, tileEntity);
+							System.out.println(tileEntity);
+						}
+					} catch (Exception e) {
+						ModularBosses.logger.warn("TileEntity failed to load properly!", e);
 					}
-				} catch (Exception e) {
-					ModularBosses.logger.warn("TileEntity failed to load properly!", e);
 				}
 			}
 
@@ -261,28 +274,23 @@ public class Schematic {
 
 	}
 
-	
-	
 	public static void instantBuild(World world, Dungeon dungeon) {
 
 		for (int i = 0; i < dungeon.dungeonRooms.length; i++) {
 			for (int j = 0; j < dungeon.dungeonRooms[i].length; j++) {
 
-				
 				Room room = dungeon.dungeonRooms[i][j];
 
 				String roomPath = room.roomCode[0] + room.roomCode[1] + room.roomCode[2] + room.roomCode[3];
 				String fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
-				
-				
+
 				double x = dungeon.originX + (dungeon.roomWidth * j);
 				double y = dungeon.originY;
 				double z = dungeon.originZ - (dungeon.roomLength * i);
 
-				
 				quickBuild(fileName, world, x, y, z);
 			}
-			
+
 		}
 		dungeon.finishedBuilding = true;
 	}

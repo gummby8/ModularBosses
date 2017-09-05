@@ -43,6 +43,7 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.ForgeChunkManager.Ticket;
 import net.minecraftforge.common.ForgeChunkManager.Type;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -96,7 +97,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		}
 	}
 
-	
+
 	
 	@Override
 	protected void entityInit() {
@@ -163,7 +164,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			Entity entity = (Entity) par1List.get(i);
 			if (entity instanceof EntityPlayer){
 				EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
-				player.setPosition(spawnPosX, spawnPosY, spawnPosZ);
+				player.setPosition(spawnPosX + (Config.WormRoomSizeX / 2), spawnPosY + (Config.WormRoomSizeY / 2), spawnPosZ + (Config.WormRoomSizeZ / 2));
 				BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
 				WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
 				MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
@@ -185,7 +186,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		TargetUtils.betaMsg(this);
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
-
+			
+			this.worldObj.setBlockState(this.getPosition(), Blocks.obsidian.getDefaultState());
+			
 			spawnPosX = (int) this.posX;
 			spawnPosY = (int) this.posY; 
 			spawnPosZ = (int) this.posZ;
@@ -205,6 +208,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		double faceY = this.dataWatcher.getWatchableObjectInt(RANDOM_Y_WATCHER);
 		double faceZ = this.dataWatcher.getWatchableObjectInt(RANDOM_Z_WATCHER);
 
+		if (faceX == 0 && faceY == 0 && faceZ == 0){
+			nextPosition();
+		}
 	
 		faceLocation(faceX, faceY, faceZ, 2, 1);
 		moveForward(0.5F);
@@ -267,31 +273,8 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	
 	
 	private void createDungeon() {
-		/**
-		Entity entityIn = (Entity)playerIn;
-		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
-			worldIn.theProfiler.startSection("portal");
-			int dim = 0;
-			if (worldIn.provider.getDimensionId() == -3) {
-				dim = 0;
-			} else {
-				dim = -3;
-
-			}
-				
-			EntityPlayerMP player = (EntityPlayerMP) entityIn;
-			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-
-		
-			//MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
-			worldIn.theProfiler.endSection();
-			
-
-		}
-		 */
-		
 		if (!this.worldObj.isRemote){
-			DungeonNurkach dungeon = new DungeonNurkach(this.getPosition());
+			DungeonNurkach dungeon = new DungeonNurkach(this.getPosition(), this.dimension);
 			ModularBosses.instance.dungeonList.add(dungeon);
 		}
 	}

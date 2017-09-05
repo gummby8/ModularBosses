@@ -55,40 +55,19 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
 
-	/**
-		Entity entityIn = (Entity)playerIn;
-		if (entityIn.ridingEntity == null && entityIn.riddenByEntity == null && !worldIn.isRemote && worldIn instanceof WorldServer && entityIn instanceof EntityPlayer) {
-			worldIn.theProfiler.startSection("portal");
-			int dim = 0;
-			if (worldIn.provider.getDimensionId() == -3) {
-				dim = 0;
-			} else {
-				dim = -3;
-
-			}
-				
-			EntityPlayerMP player = (EntityPlayerMP) entityIn;
-			BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-
 		
-			//MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, dim, teleporter);
-			worldIn.theProfiler.endSection();
-			
-
-		}
-
 		
+		
+		
+		
+		/**
 		if (!worldIn.isRemote){
-			DungeonNurkach dungeon = new DungeonNurkach(playerIn.getPosition());
+			DungeonNurkach dungeon = new DungeonNurkach(playerIn.getPosition(), 0);
 			ModularBosses.instance.dungeonList.add(dungeon);
 		}
-	 	*/
+		 */
 
-		
-		
-		ModularBosses.instance.playerTarget = playerIn;
-		MBExtendedPlayer.get(playerIn).knockdownTime = 60;
-		
+
         return itemStackIn;
 	}
 	

@@ -15,6 +15,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -31,6 +32,20 @@ public class TargetUtils {
 	public static void tellPlayer(String msg) {
 		try {
 			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
+		} catch (Exception e) {
+			ModularBosses.logger.debug("Tried to send a chat to player before there was a player");
+		}
+
+	}
+	
+	public static void tellPlayersInList(List list, String msg) {
+		try {
+			for (int i = 0; i < list.size(); ++i) {
+				if (list.get(i) instanceof EntityPlayer){
+					EntityPlayer player = (EntityPlayer) list.get(i);
+					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
+				}
+			}
 		} catch (Exception e) {
 			ModularBosses.logger.debug("Tried to send a chat to player before there was a player");
 		}
