@@ -185,6 +185,8 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	public void onUpdate() {
 		TargetUtils.betaMsg(this);
 		
+		System.out.println(this.getUniqueID().toString());
+		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
 			
 			this.worldObj.setBlockState(this.getPosition(), Blocks.obsidian.getDefaultState());
@@ -274,7 +276,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	
 	private void createDungeon() {
 		if (!this.worldObj.isRemote){
-			DungeonNurkach dungeon = new DungeonNurkach(this.getPosition(), this.dimension);
+			DungeonNurkach dungeon = new DungeonNurkach(this.getUniqueID().toString() ,this.getPosition(), this.dimension);
 			ModularBosses.instance.dungeonList.add(dungeon);
 		}
 	}

@@ -8,6 +8,10 @@ import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.IEntityMultiPart;
+import net.minecraft.entity.boss.EntityDragonPart;
+import net.minecraft.entity.boss.IBossDisplayData;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,10 +20,12 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePlayerListBox {
+public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePlayerListBox, IEntityMultiPart {
 
 	public int ticksExisted;
 	public int countDown;
@@ -28,17 +34,28 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	public int returnX;
 	public int returnY;
 	public int returnZ;
+	
+	public EntityDragonPart[] paragonPartArray;
+	public EntityDragonPart paragonPartFurnace;
+	public EntityDragonPart paragonPartRKnee;
+	public EntityDragonPart paragonPartLKnee;
 
+	public TileEntityReturnPortalBlock(){
+		this.paragonPartArray = new EntityDragonPart[] { this.paragonPartFurnace = new EntityDragonPart(this, "furnace", 10.0F, 10.0F), this.paragonPartRKnee = new EntityDragonPart(this, "RKnee", 1.0F, 1.0F), this.paragonPartLKnee = new EntityDragonPart(this, "LKnee", 1.0F, 1.0F) };
+		this.paragonPartFurnace.width = this.paragonPartFurnace.height = 10.3F;
+		this.paragonPartRKnee.width = this.paragonPartRKnee.height = 10.9F;
+		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 10.9F;		
+	}
+
+	
 	@Override
 	public void update() {
 		if (!this.worldObj.isRemote) {
+		
 			ticksExisted++;
-
 			if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isBlockPowered(pos)) {
-
 				AxisAlignedBB bb = new AxisAlignedBB(this.getPos().down().south().east(), this.getPos().up());
 				List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb.expand(0, 1, 0));
-
 				if (!teleList.isEmpty()) {
 					countDown--;
 					TargetUtils.tellPlayersInList(teleList, "Returning to world in " + countDown);
@@ -98,6 +115,12 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		compound.setInteger("returnY", returnY);
 		compound.setInteger("returnZ", returnZ);
 		compound.setInteger("dimension", returnDimension);
+	}
+
+	@Override
+	public boolean attackEntityFromPart(EntityDragonPart p_70965_1_, DamageSource p_70965_2_, float p_70965_3_) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

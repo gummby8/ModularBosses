@@ -56,7 +56,7 @@ public class BlockReturnPortal extends Block
 	public BlockReturnPortal(Material material) {
 		super(material);
 		setHardness(10.0F);
-		setHarvestLevel("pickaxe", 2);
+		setBlockUnbreakable();
 		setStepSound(soundTypeStone);
 		setCreativeTab(MBCreativeTabs.tabBlocks);
 		

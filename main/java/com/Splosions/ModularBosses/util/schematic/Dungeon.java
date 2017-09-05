@@ -22,6 +22,8 @@ public class Dungeon {
 	public int roomCount = 0;
 	
 	public Boolean finishedBuilding = false;
+	
+	public String dungeonID;
 
 	public Room[][] dungeonRooms;
 	public int dgnRoomsLength = 0;

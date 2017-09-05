@@ -26,7 +26,7 @@ public class DungeonNurkach extends Dungeon {
 	public static final int BOSS = 3;
 	public static final int ENTRANCE = 4;
 
-	public DungeonNurkach(BlockPos pos, int dimension) {
+	public DungeonNurkach(String ID, BlockPos pos, int dimension) {
 		
 	    roomWidth = Config.WormRoomSizeX;
 	    roomHeight = Config.WormRoomSizeY;
@@ -37,6 +37,7 @@ public class DungeonNurkach extends Dungeon {
 		originY = RoomPosY = pos.getY() - 2;
 		originZ = RoomPosZ = pos.getZ();
 		returnDimension = dimension;
+		dungeonID = ID;
 		wormGen();
 	}
 
