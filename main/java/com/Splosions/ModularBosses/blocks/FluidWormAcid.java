@@ -13,16 +13,29 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FluidWormSaliva extends BlockFluidClassic{
+public class FluidWormAcid extends BlockFluidClassic{
 
-	public FluidWormSaliva(Fluid fluid, Material material) {
+	public FluidWormAcid(Fluid fluid, Material material) {
 		super(fluid, Material.water);
-		// limits fluid spread to 4 blocks
-		//quantaPerBlock = 4;
 		this.lightOpacity = 0;
-		this.lightValue = 7;
+		this.lightValue = 15;
 		this.setMaxScaledLight(0);
 	}
+ 
+
+    /**
+     * Called When an Entity Collided with the Block
+     */
+	@Override
+    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+        entityIn.motionX *= 0.4D;
+        entityIn.motionZ *= 0.4D;
+		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
+			entityIn.attackEntityFrom(DamageSource.wither, 5);
+
+		}
+		
+    }
 	
 	@SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
@@ -34,4 +47,5 @@ public class FluidWormSaliva extends BlockFluidClassic{
 	public boolean isOpaqueCube() {
 		return false;
 	}
+
 }

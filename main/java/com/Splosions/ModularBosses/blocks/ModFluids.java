@@ -20,6 +20,7 @@ public class ModFluids {
 	public static Fluid fluidStatic;
 	public static Fluid fluidStaticGas;
 	public static Fluid fluidWormBlood;
+	public static Fluid fluidWormAcid;
 	public static Fluid fluidWormSaliva;
 	public static Fluid gasWormGas;
 
@@ -34,19 +35,23 @@ public class ModFluids {
 	public static Set<IFluidBlock> modFluidBlocks = new HashSet<>();
 
 	public static void registerFluids() {
+		/**
 		fluidStatic = createFluid("static", "mb:blocks/fluid_static", false, 10, 1000, 1000, false,
 				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
 
 		fluidStaticGas = createFluid("staticgas", "mb:blocks/fluid_staticGas", false, 10, -800, 1500, true,
 				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
-
-		fluidWormSaliva = createFluid("fluid_worm_saliva", "mb:blocks/fluid_worm_saliva", true, 10, 1, 1, false,
-				fluid -> new FluidWormSaliva(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		*/
+		fluidWormSaliva = createFluid("fluid_worm_saliva", "mb:blocks/fluid_worm_saliva", true, 10, 1, 1500, false,
+				fluid -> new FluidWormSaliva(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);
 		
-		fluidWormBlood = createFluid("fluid_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1, false,
+		fluidWormBlood = createFluid("fluid_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1500, false,
 				fluid -> new FluidWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		
+		fluidWormAcid = createFluid("fluid_worm_acid", "mb:blocks/fluid_worm_acid", true, 10, 1, 1500, false,
+				fluid -> new FluidWormAcid(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);
 
-		gasWormGas = createFluid("gas_worm_gas", "mb:blocks/gas_worm_gas", true, 10, -10000, -100, true,
+		gasWormGas = createFluid("gas_worm_gas", "mb:blocks/gas_worm_gas", true, 10, -10000, 100, true,
 				fluid -> new GasWormGas(fluid, new MaterialLiquid(MapColor.adobeColor)));
 	}
 

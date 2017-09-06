@@ -166,7 +166,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			Entity entity = (Entity) par1List.get(i);
 			if (entity instanceof EntityPlayer){
 				EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
-				player.setPosition(spawnPosX + (Config.WormRoomSizeX / 2), spawnPosY + (Config.WormRoomSizeY / 2), spawnPosZ + (Config.WormRoomSizeZ / 2));
+				player.setPosition(spawnPosX + (Config.WormRoomSizeX / 2), spawnPosY + (Config.WormRoomSizeY / 2) + 2, spawnPosZ + (Config.WormRoomSizeZ / 2));
 				BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
 				WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
 				MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
@@ -185,15 +185,12 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 */
 	@Override
 	public void onUpdate() {
-		TargetUtils.betaMsg(this);
 		
-		//dungeon was cleared, kill the worm...add death animation
-		if (dungeonCompleted()){
-			this.setDead();
-		}
+		
+
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
-			
+			TargetUtils.betaMsg(this);
 			this.worldObj.setBlockState(this.getPosition(), Blocks.obsidian.getDefaultState());
 			
 			spawnPosX = (int) this.posX;
@@ -203,7 +200,15 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			createDungeon();
 		}
 		
+		//dungeon was cleared, kill the worm...add death animation
+		
+
+		
 		if (!this.worldObj.isRemote){
+			if (dungeonCompleted()){
+				this.setDead();
+			}			
+			
 		AxisAlignedBB bb = new AxisAlignedBB(this.getPosition().down(),this.getPosition()).expand(15, 15, 15);
 		List teleList = this.worldObj.getEntitiesWithinAABB(Entity.class, bb);
 		teleEntitiesInList(teleList);
@@ -282,14 +287,20 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 */
 	public boolean dungeonCompleted(){
 		if(!ModularBosses.instance.dungeonList.isEmpty()) {
+			System.out.println("not empty");
 			int dungeonCount = ModularBosses.instance.dungeonList.size();
 			for (int x = 0; x < dungeonCount; x++) {
 				Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
-				if(dungeon.finishedBuilding && dungeon.dungeonID == this.getUniqueID().toString()){
+				System.out.println("Dungeon ID = " + dungeon.dungeonID);
+				System.out.println("Monster ID = " + this.getUniqueID().toString());
+				if(dungeon.dungeonID.equals(this.getUniqueID().toString())){ //remember to use .equals() to compare strings you dipstick
+					System.out.println("Found it");
 					return false;
 				}
 			}
 		}
+		System.out.println("Killing worm with ID " + this.getUniqueID().toString());
+		TargetUtils.tellPlayer("The Sand Worm Has Been Defeated!");
 		return true;
 	}
 	

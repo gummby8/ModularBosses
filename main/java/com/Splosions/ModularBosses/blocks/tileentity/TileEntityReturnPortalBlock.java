@@ -27,7 +27,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePlayerListBox, IEntityMultiPart {
+public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePlayerListBox {
 
 	public int ticksExisted;
 	public int countDown;
@@ -43,14 +43,7 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	public EntityDragonPart paragonPartRKnee;
 	public EntityDragonPart paragonPartLKnee;
 
-	public TileEntityReturnPortalBlock(){
-		this.paragonPartArray = new EntityDragonPart[] { this.paragonPartFurnace = new EntityDragonPart(this, "furnace", 10.0F, 10.0F), this.paragonPartRKnee = new EntityDragonPart(this, "RKnee", 1.0F, 1.0F), this.paragonPartLKnee = new EntityDragonPart(this, "LKnee", 1.0F, 1.0F) };
-		this.paragonPartFurnace.width = this.paragonPartFurnace.height = 10.3F;
-		this.paragonPartRKnee.width = this.paragonPartRKnee.height = 10.9F;
-		this.paragonPartLKnee.width = this.paragonPartLKnee.height = 10.9F;		
-	}
-
-	
+		
 	@Override
 	public void update() {
 		if (!this.worldObj.isRemote) {
@@ -74,7 +67,8 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 					int dungeonCount = ModularBosses.instance.dungeonList.size();
 					for (int x = 0; x < dungeonCount; x++) {
 						Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
-						if(dungeon.finishedBuilding && dungeon.dungeonID == dungeonID){
+						if(dungeon.dungeonID.equals(dungeonID)){
+							System.out.println("Removed ID = " + dungeonID);
 							ModularBosses.instance.dungeonList.remove(x);
 							break;
 						}
@@ -124,7 +118,7 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		returnY = compound.getInteger("returnY");
 		returnZ = compound.getInteger("returnZ");
 		returnDimension = compound.getInteger("dimension");
-		dungeonID = compound.getString("dungeonID")
+		dungeonID = compound.getString("dungeonID");
 	}
 
 	@Override
@@ -136,11 +130,4 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		compound.setInteger("dimension", returnDimension);
 		compound.setString("dungeonID", dungeonID);
 	}
-
-	@Override
-	public boolean attackEntityFromPart(EntityDragonPart p_70965_1_, DamageSource p_70965_2_, float p_70965_3_) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

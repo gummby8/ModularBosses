@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockForceFieldBlue;
 import com.Splosions.ModularBosses.blocks.BlockInvisible;
+import com.Splosions.ModularBosses.blocks.FluidWormAcid;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
@@ -59,16 +60,24 @@ public class MBClientEventHandler {
 	//custom screen overlay when submerged in worm blood
 	@SubscribeEvent
 	public void RenderBlockOverlayEvent(RenderBlockOverlayEvent event) {
-		if (event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormBlood) {
+		if (event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormBlood || event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormAcid) {
 			event.setCanceled(true);
 			TextureAtlasSprite atlas = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(event.player.worldObj.getBlockState(event.blockPos));
 			Tessellator tessellator = Tessellator.getInstance();
 			WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 			float f1 = 0.1F;
-			GlStateManager.color(0.7F, 0, 0, 0.41F);
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_SRC_COLOR);// favorite so far	
+
+			if (event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormBlood){
+				GlStateManager.color(0.7F, 0, 0, 0.41F);
+				GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_SRC_COLOR);// favorite so far
+			} else 
+			if(event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormAcid){
+				GlStateManager.color(0.5F, 0.5F, 0F, 0.41F);
+				GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);// favorite so far				
+			}
+	
 			float f2 = -1.0F;
 			float f3 = 1.0F;
 			float f4 = -1.0F;

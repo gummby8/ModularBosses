@@ -129,7 +129,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 			face = EnumFacing.DOWN;
 		}
 		*/
-		world.setBlockState(pos, state.withProperty(FACING, face), 3);
+		world.setBlockState(pos, state.withProperty(FACING, face.getOpposite()), 3);
 	}
 
 	@Override
