@@ -26,7 +26,7 @@ import net.minecraft.util.Vec3;
 
 public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
 	
-
+	 ResourceLocation image = new ResourceLocation("mb:textures/blocks/portal_block.png");
 	
     public RenderTileEntityControlBlock(){
 
@@ -37,7 +37,7 @@ public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
     public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f, int number){
     	
     	TileEntityControlBlock te = (TileEntityControlBlock) tileEntity;
-        ResourceLocation image = new ResourceLocation("mb:textures/blocks/portal_block.png");
+       
        
         this.bindTexture(image);
         Tessellator tessellator = Tessellator.getInstance();
@@ -105,10 +105,10 @@ public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
 		GlStateManager.disableLighting();
 		GlStateManager.disableCull();
 		GlStateManager.disableBlend();
+		
 		float f2 = 2.0F;
 		
 		AxisAlignedBB axisalignedbb = te.getRenderBoundingBox().expand(0.5f, 0.5f, 0.5f);
-		//AxisAlignedBB axisalignedbb = new AxisAlignedBB(te.getPos().down().south().east(), te.getPos().up()).expand(0, 1, 0);
 		AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(
 				axisalignedbb.minX - te.getPos().getX() + x + 0.5F + (te.xOff * 2),
 				axisalignedbb.minY - te.getPos().getY() + y + 0.5F + (te.yOff * 2),
@@ -118,10 +118,12 @@ public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
 				axisalignedbb.maxZ - te.getPos().getZ() + z + 0.5F - (te.zOff * 2));
 		RenderGlobal.drawOutlinedBoundingBox(axisalignedbb1, 16777215);
 		Tessellator tessellator = Tessellator.getInstance();
+		
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		//Vec3 vec3 = part.getLook(partialTicks);
+	
 		worldrenderer.startDrawing(3);
 		worldrenderer.setColorOpaque_I(255);
+	
 		tessellator.draw();
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();
