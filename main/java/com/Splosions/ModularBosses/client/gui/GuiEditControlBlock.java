@@ -36,43 +36,42 @@ import com.Splosions.ModularBosses.util.StringUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-
-
 @SideOnly(Side.CLIENT)
-public class GuiEditControlBlock extends GuiScreen
-{
-
+public class GuiEditControlBlock extends GuiScreen {
 
 	private final TileEntityControlBlock te;
 
 	private String message;
 	private GuiEditControlBlock.List list;
-    
-    private GuiTextField txtSpnFreq;
-    //private GuiTextField txtSpnDelay;
-    private GuiTextField txtSpnCount;
-    private String StringtxtSpnFreq;
-    //private String StringtxtSpnDelay;
-    private String StringtxtSpnCount;
+
+	private GuiTextField txtSpnFreq;
+	// private GuiTextField txtSpnDelay;
+	private GuiTextField txtSpnCount;
+	private String StringtxtSpnFreq;
+	// private String StringtxtSpnDelay;
+	private String StringtxtSpnCount;
 	private int inttxtSpnFreq = 1;
-	//private int inttxtSpnDelay;
-	private int inttxtSpnCount = 0;
-    
+	// private int inttxtSpnDelay;
+	private int inttxtSpnCount = 1;
+
 	private GuiButton btnDone;
 	private GuiButton btnScrollUp;
 	private GuiButton btnScrollDn;
+	private GuiButton btnRandomSpnLoc;
 	private GuiButton btnBorder;
-    
+	private int ranspwn = 0;
+	private int border = 0;
+
 	private GuiTextField txtXCoord;
-    private GuiTextField txtYCoord;
-    private GuiTextField txtZCoord;
-    private String StringtxtXCoord;
-    private String StringtxtYCoord;
-    private String StringtxtZCoord;
-    int inttxtXCoord = 10;
-    int inttxtYCoord = 10;
-    int inttxtZCoord = 10;
-	
+	private GuiTextField txtYCoord;
+	private GuiTextField txtZCoord;
+	private String StringtxtXCoord;
+	private String StringtxtYCoord;
+	private String StringtxtZCoord;
+	int inttxtXCoord = 10;
+	int inttxtYCoord = 10;
+	int inttxtZCoord = 10;
+
 	public GuiEditControlBlock(TileEntityControlBlock te) {
 		this.te = te;
 	}
@@ -81,159 +80,157 @@ public class GuiEditControlBlock extends GuiScreen
 	public void initGui() {
 		buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
-		
-		 String[] mesArray = this.te.getMessage().split("\\|", -1);
-		//System.out.println("ReadNBT = " + mesArray.length);
-		 if (mesArray.length >= 7){
-			 inttxtXCoord = Integer.parseInt(mesArray[1]);
-			 inttxtYCoord = Integer.parseInt(mesArray[2]);
-			 inttxtZCoord = Integer.parseInt(mesArray[3]);
-			 inttxtSpnFreq = Integer.parseInt(mesArray[4]);
-			 inttxtSpnCount = Integer.parseInt(mesArray[5]);
-		 }
-		
+		System.out.println(this.te.getMessage());
+		System.out.println("DDDDDDDDDDDDDDERP");
+		String[] mesArray = this.te.getMessage().split("\\|");
+		if (mesArray.length >= 8) {
+			inttxtXCoord = Integer.parseInt(mesArray[1]);
+			inttxtYCoord = Integer.parseInt(mesArray[2]);
+			inttxtZCoord = Integer.parseInt(mesArray[3]);
+			inttxtSpnFreq = Integer.parseInt(mesArray[4]);
+			inttxtSpnCount = Integer.parseInt(mesArray[5]);
+			ranspwn = Integer.parseInt(mesArray[6]);
+			border = Integer.parseInt(mesArray[7]);
+
+
+		}
 
 		txtXCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 - 30, 30, 14);
 		txtXCoord.setCanLoseFocus(true);
 		txtXCoord.setText(inttxtXCoord + "");
-		
+
 		txtYCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 - 30, 30, 14);
 		txtYCoord.setCanLoseFocus(true);
 		txtYCoord.setText(inttxtYCoord + "");
-		
+
 		txtZCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 - 30, 30, 14);
 		txtZCoord.setCanLoseFocus(true);
 		txtZCoord.setText(inttxtZCoord + "");
-		
+
 		txtSpnFreq = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 10, 60, 14);
 		txtSpnFreq.setCanLoseFocus(true);
 		txtSpnFreq.setText(inttxtSpnFreq + "");
-		
+
 		txtSpnCount = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 50, 60, 14);
 		txtSpnCount.setCanLoseFocus(true);
 		txtSpnCount.setText(inttxtSpnCount + "");
-		
-		/**
-		txtSpnDelay = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 90, 60, 14);
-		txtSpnDelay.setCanLoseFocus(true);
-		//txtZCoord.setText("HHHHHHHHHHHHHHHERP");
-		*/
-		
-		btnBorder = new GuiButton(10, width / 2 + 180, height / 4 + 160, 45 , 20 ,"Border");
+
+		btnRandomSpnLoc = new GuiButton(11, width / 2 + 50, height / 4 + 130, 100, 20, "Ran Spawn Loc");
+		buttonList.add(btnRandomSpnLoc);
+
+		btnBorder = new GuiButton(10, width / 2 + 180, height / 4 + 160, 45, 20, "Border");
 		buttonList.add(btnBorder);
-		
-		btnDone = new GuiButton(0, width / 2 + 50, height / 4 + 160, 100 , 20 , "Done");
+
+		btnDone = new GuiButton(0, width / 2 + 50, height / 4 + 160, 100, 20, "Done");
 		buttonList.add(btnDone);
 		
+		btnRandomSpnLoc.displayString = (ranspwn == 0) ? "Ran Spawn Loc" : "On";
+		btnRandomSpnLoc.enabled = (ranspwn == 1) ? false : true;
+		
+		btnBorder.displayString = (border == 0) ? "Border" : "On";
+		btnBorder.enabled = (border == 1) ? false : true;
+		
+		
+
 		this.list = new GuiEditControlBlock.List(this.mc, te.getMessage());
-        this.list.registerScrollButtons(7, 8);
+		this.list.registerScrollButtons(7, 8);
 	}
 
 	@Override
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
 
+		StringtxtXCoord = txtXCoord.getText().replaceAll("[^0-9]", "");
+		if (StringtxtXCoord != null && !StringtxtXCoord.isEmpty() && StringtxtXCoord != "") {
+			inttxtXCoord = Integer.parseInt(StringtxtXCoord);
+			// System.out.println(inttxtXCoord);
+		}
 
-		StringtxtXCoord = txtXCoord.getText().replaceAll("[^0-9]","");
-		if (StringtxtXCoord != null && !StringtxtXCoord.isEmpty() && StringtxtXCoord != ""){
-		inttxtXCoord = Integer.parseInt(StringtxtXCoord);
-		//System.out.println(inttxtXCoord);
+		StringtxtYCoord = txtYCoord.getText().replaceAll("[^0-9]", "");
+		if (StringtxtYCoord != null && !StringtxtYCoord.isEmpty() && StringtxtYCoord != "") {
+			inttxtYCoord = Integer.parseInt(StringtxtYCoord);
+			// System.out.println(inttxtYCoord);
 		}
-		
-		StringtxtYCoord = txtYCoord.getText().replaceAll("[^0-9]","");
-		if (StringtxtYCoord != null && !StringtxtYCoord.isEmpty() && StringtxtYCoord != ""){
-		inttxtYCoord = Integer.parseInt(StringtxtYCoord);
-		//System.out.println(inttxtYCoord);
+
+		StringtxtZCoord = txtZCoord.getText().replaceAll("[^0-9]", "");
+		if (StringtxtZCoord != null && !StringtxtZCoord.isEmpty() && StringtxtZCoord != "") {
+			inttxtZCoord = Integer.parseInt(StringtxtZCoord);
+			// System.out.println(inttxtZCoord);
 		}
-		
-		StringtxtZCoord = txtZCoord.getText().replaceAll("[^0-9]","");
-		if (StringtxtZCoord != null && !StringtxtZCoord.isEmpty() && StringtxtZCoord != ""){
-		inttxtZCoord = Integer.parseInt(StringtxtZCoord);
-		//System.out.println(inttxtZCoord);
+
+		StringtxtSpnFreq = txtSpnFreq.getText().replaceAll("[^0-9]", "");
+		if (StringtxtSpnFreq != null && !StringtxtSpnFreq.isEmpty() && StringtxtSpnFreq != "") {
+			inttxtSpnFreq = Integer.parseInt(StringtxtSpnFreq);
+			// System.out.println(inttxtSpnFreq);
 		}
-		
-		StringtxtSpnFreq = txtSpnFreq.getText().replaceAll("[^0-9]","");
-		if (StringtxtSpnFreq != null && !StringtxtSpnFreq.isEmpty() && StringtxtSpnFreq != ""){
-		inttxtSpnFreq = Integer.parseInt(StringtxtSpnFreq);
-		//System.out.println(inttxtSpnFreq);
+
+		StringtxtSpnCount = txtSpnCount.getText().replaceAll("[^0-9]", "");
+		if (StringtxtSpnCount != null && !StringtxtSpnCount.isEmpty() && StringtxtSpnCount != "") {
+			inttxtSpnCount = Integer.parseInt(StringtxtSpnCount);
+			// System.out.println(inttxtSpnCount);
 		}
-		
-		/**
-		StringtxtSpnDelay = txtSpnDelay.getText().replaceAll("[^0-9]","");
-		if (StringtxtSpnDelay != null && !StringtxtSpnDelay.isEmpty()){
-		inttxtSpnDelay = Integer.parseInt(StringtxtSpnDelay);
-		//System.out.println(inttxtSpnDelay);
-		}
-		*/
-		
-		StringtxtSpnCount = txtSpnCount.getText().replaceAll("[^0-9]","");
-		if (StringtxtSpnCount != null && !StringtxtSpnCount.isEmpty() && StringtxtSpnCount != ""){
-		inttxtSpnCount = Integer.parseInt(StringtxtSpnCount);
-		//System.out.println(inttxtSpnCount);
-		}
-		
-		message = this.list.selectedName + "|" + inttxtXCoord + "|" + inttxtYCoord + "|" + inttxtZCoord + "|" + inttxtSpnFreq + "|" + inttxtSpnCount + "|" + btnBorder.displayString;
-		if (message != null && message != ""){
+
+		ranspwn = (btnRandomSpnLoc.enabled) ? 0 : 1;
+		border = (btnBorder.enabled) ? 0 : 1;
+
+		message = this.list.selectedName + "|" + inttxtXCoord + "|" + inttxtYCoord + "|" + inttxtZCoord + "|" + inttxtSpnFreq + "|" + inttxtSpnCount + "|" + ranspwn + "|" + border;
+		System.out.println("GUI closed message = " + message);
+		if (message != null && message != "") {
 			te.setMessage(message);
 			PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(te));
 		}
 	}
-	
-    /**
-     * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
-     */
-    @Override
-    protected void mouseClicked(int x, int y, int button) throws IOException
-    {
-        super.mouseClicked(x, y, button);
-        txtXCoord.mouseClicked(x, y, button);
-        if (button == 1 && x >= txtXCoord.xPosition && x < txtXCoord.xPosition + txtXCoord.width && y >= txtXCoord.yPosition && y < txtXCoord.yPosition + txtXCoord.height) {
-        	txtXCoord.setText("");
-        }
-        
-        txtYCoord.mouseClicked(x, y, button);
-        if (button == 1 && x >= txtYCoord.xPosition && x < txtYCoord.xPosition + txtYCoord.width && y >= txtYCoord.yPosition && y < txtYCoord.yPosition + txtYCoord.height) {
-        	txtYCoord.setText("");
-        }
-        
-        txtZCoord.mouseClicked(x, y, button);
-        if (button == 1 && x >= txtZCoord.xPosition && x < txtZCoord.xPosition + txtZCoord.width && y >= txtZCoord.yPosition && y < txtZCoord.yPosition + txtZCoord.height) {
-        	txtZCoord.setText("");
-        }
-        
-        txtSpnCount.mouseClicked(x, y, button);
-        if (button == 1 && x >= txtSpnCount.xPosition && x < txtSpnCount.xPosition + txtSpnCount.width && y >= txtSpnCount.yPosition && y < txtSpnCount.yPosition + txtSpnCount.height) {
-        	txtSpnCount.setText("");
-        }
-        
-        txtSpnFreq.mouseClicked(x, y, button);
-        if (button == 1 && x >= txtSpnFreq.xPosition && x < txtSpnFreq.xPosition + txtSpnFreq.width && y >= txtSpnFreq.yPosition && y < txtSpnFreq.yPosition + txtSpnFreq.height) {
-        	txtSpnFreq.setText("");
-        }
-        
-        /**
-        txtSpnDelay.mouseClicked(x, y, button);
-        if (button == 1 && x >= txtSpnDelay.xPosition && x < txtSpnDelay.xPosition + txtSpnDelay.width && y >= txtSpnDelay.yPosition && y < txtSpnDelay.yPosition + txtSpnDelay.height) {
-        	txtSpnDelay.setText("");
-        }
-        */
-        
-        if (button == 0 && x >= btnBorder.xPosition && x < btnBorder.xPosition + btnBorder.width && y >= btnBorder.yPosition && y < btnBorder.yPosition + btnBorder.height) {
-        	btnBorder.enabled = (btnBorder.enabled == true)? false : true;
-        	btnBorder.displayString = (btnBorder.enabled == true)? "Border" : "On";
-        }
-        
-        
-    }
-	
-    /**
-     * Handles mouse input.
-     */
-    public void handleMouseInput() throws IOException
-    {
-        super.handleMouseInput();
-        this.list.handleMouseInput();
-    }
+
+	/**
+	 * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
+	 */
+	@Override
+	protected void mouseClicked(int x, int y, int button) throws IOException {
+		super.mouseClicked(x, y, button);
+		txtXCoord.mouseClicked(x, y, button);
+		if (button == 1 && x >= txtXCoord.xPosition && x < txtXCoord.xPosition + txtXCoord.width && y >= txtXCoord.yPosition && y < txtXCoord.yPosition + txtXCoord.height) {
+			txtXCoord.setText("");
+		}
+
+		txtYCoord.mouseClicked(x, y, button);
+		if (button == 1 && x >= txtYCoord.xPosition && x < txtYCoord.xPosition + txtYCoord.width && y >= txtYCoord.yPosition && y < txtYCoord.yPosition + txtYCoord.height) {
+			txtYCoord.setText("");
+		}
+
+		txtZCoord.mouseClicked(x, y, button);
+		if (button == 1 && x >= txtZCoord.xPosition && x < txtZCoord.xPosition + txtZCoord.width && y >= txtZCoord.yPosition && y < txtZCoord.yPosition + txtZCoord.height) {
+			txtZCoord.setText("");
+		}
+
+		txtSpnCount.mouseClicked(x, y, button);
+		if (button == 1 && x >= txtSpnCount.xPosition && x < txtSpnCount.xPosition + txtSpnCount.width && y >= txtSpnCount.yPosition && y < txtSpnCount.yPosition + txtSpnCount.height) {
+			txtSpnCount.setText("");
+		}
+
+		txtSpnFreq.mouseClicked(x, y, button);
+		if (button == 1 && x >= txtSpnFreq.xPosition && x < txtSpnFreq.xPosition + txtSpnFreq.width && y >= txtSpnFreq.yPosition && y < txtSpnFreq.yPosition + txtSpnFreq.height) {
+			txtSpnFreq.setText("");
+		}
+
+		if (button == 0 && x >= btnRandomSpnLoc.xPosition && x < btnRandomSpnLoc.xPosition + btnRandomSpnLoc.width && y >= btnRandomSpnLoc.yPosition && y < btnRandomSpnLoc.yPosition + btnRandomSpnLoc.height) {
+			btnRandomSpnLoc.enabled = (btnRandomSpnLoc.enabled == true) ? false : true;
+			btnRandomSpnLoc.displayString = (btnRandomSpnLoc.enabled == true) ? "Ran Spawn Loc" : "On";
+		}
+
+		if (button == 0 && x >= btnBorder.xPosition && x < btnBorder.xPosition + btnBorder.width && y >= btnBorder.yPosition && y < btnBorder.yPosition + btnBorder.height) {
+			btnBorder.enabled = (btnBorder.enabled == true) ? false : true;
+			btnBorder.displayString = (btnBorder.enabled == true) ? "Border" : "On";
+		}
+
+	}
+
+	/**
+	 * Handles mouse input.
+	 */
+	public void handleMouseInput() throws IOException {
+		super.handleMouseInput();
+		this.list.handleMouseInput();
+	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) {
@@ -241,185 +238,157 @@ public class GuiEditControlBlock extends GuiScreen
 			te.markDirty();
 			mc.displayGuiScreen(null);
 		}
-		
-        if (button.enabled)
-        {
-            switch (button.id)
-            {
-                case 5:
-                    break;
-                case 6:
-                   // this.mc.displayGuiScreen(this.parentScreen);
-                    break;
-                case 100:
-                    if (button instanceof GuiOptionButton)
-                    {
-                        //this.game_settings_3.setOptionValue(((GuiOptionButton)button).returnEnumOptions(), 1);
-                   //     button.displayString = this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT);
-                        ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
-                        int i = scaledresolution.getScaledWidth();
-                        int j = scaledresolution.getScaledHeight();
-                        this.setWorldAndResolution(this.mc, i, j);
-                    }
 
-                    break;
-                default:
-                    this.list.actionPerformed(button);
-            }
-        }
+		if (button.enabled) {
+			switch (button.id) {
+			case 5:
+				break;
+			case 6:
+				// this.mc.displayGuiScreen(this.parentScreen);
+				break;
+			case 100:
+				if (button instanceof GuiOptionButton) {
+					// this.game_settings_3.setOptionValue(((GuiOptionButton)button).returnEnumOptions(),
+					// 1);
+					// button.displayString =
+					// this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT);
+					ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+					int i = scaledresolution.getScaledWidth();
+					int j = scaledresolution.getScaledHeight();
+					this.setWorldAndResolution(this.mc, i, j);
+				}
+
+				break;
+			default:
+				this.list.actionPerformed(button);
+			}
+		}
 	}
 
-	
-	
 	@Override
-	protected void keyTyped(char c, int keyCode) throws IOException{
+	protected void keyTyped(char c, int keyCode) throws IOException {
 		super.keyTyped(c, keyCode);
 		if (keyCode == Keyboard.KEY_ESCAPE) {
 			actionPerformed(btnDone);
-			
-			
-	       
-		} 
+
+		}
 		txtXCoord.textboxKeyTyped(c, keyCode);
 		txtYCoord.textboxKeyTyped(c, keyCode);
 		txtZCoord.textboxKeyTyped(c, keyCode);
-		
+
 		txtSpnFreq.textboxKeyTyped(c, keyCode);
-		//txtSpnDelay.textboxKeyTyped(c, keyCode);
 		txtSpnCount.textboxKeyTyped(c, keyCode);
 	}
 
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		
+
 		this.list.drawScreen(mouseX, mouseY, partialTicks);
-		
-		
-		
+
 		this.fontRendererObj.drawString("X Off", width / 2 + 50, height / 4 - 40, 0xFFFFFF);
 		this.fontRendererObj.drawString("Y Off", width / 2 + 90, height / 4 - 40, 0xFFFFFF);
 		this.fontRendererObj.drawString("Z Off", width / 2 + 130, height / 4 - 40, 0xFFFFFF);
-		
-		//this.fontRendererObj.drawString("Spawn Delay", width / 2 + 75, height / 4 + 0, 0xFFFFFF);
+
+		// this.fontRendererObj.drawString("Spawn Delay", width / 2 + 75, height
+		// / 4 + 0, 0xFFFFFF);
 		this.fontRendererObj.drawString("Spawn Frequency", width / 2 + 60, height / 4 + 0, 0xFFFFFF);
 		this.fontRendererObj.drawString("Spawn Count", width / 2 + 75, height / 4 + 40, 0xFFFFFF);
-		
+
 		txtXCoord.drawTextBox();
 		txtYCoord.drawTextBox();
 		txtZCoord.drawTextBox();
-		
+
 		txtSpnCount.drawTextBox();
 		txtSpnFreq.drawTextBox();
-		//txtSpnDelay.drawTextBox();
-	
+		// txtSpnDelay.drawTextBox();
+
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
-	
-	
-	
 
-	
-	
-	
-	
-	
-	
-    @SideOnly(Side.CLIENT)
-    class List extends GuiSlot
-    {
-        /** A list containing the many different locale language codes. */
-        private final java.util.List nameArray = Lists.newArrayList();
-        /** The map containing the Locale-Language pairs. */
-        private final Map nameMap = Maps.newHashMap();
-        public String selectedName;
-        private static final String __OBFID = "CL_00000699";
-        
+	@SideOnly(Side.CLIENT)
+	class List extends GuiSlot {
+		/** A list containing the many different locale language codes. */
+		private final java.util.List nameArray = Lists.newArrayList();
+		/** The map containing the Locale-Language pairs. */
+		private final Map nameMap = Maps.newHashMap();
+		public String selectedName;
+		private static final String __OBFID = "CL_00000699";
 
-        public List(Minecraft mcIn, String message)
-        {
-            super(mcIn, GuiEditControlBlock.this.width / 2, GuiEditControlBlock.this.height, 0, GuiEditControlBlock.this.height, 18);
-            
-            String[] mesArray = message.split("\\|", -1);
-            
-            this.selectedName = mesArray[0];
-            
-            Iterator iterator = EntityList.getEntityNameList().iterator();
-            
-            while (iterator.hasNext())
-            {
-                String name = (String) iterator.next();
-                if (name != "ThrownEnderpearl"){
-                	Entity entity = EntityList.createEntityByName(name, te.getWorld());
-                	//System.out.println(entity);
-                	if (entity instanceof EntityLiving && entity != null) {
-                		this.nameMap.put(name, name);
-                		this.nameArray.add(name);
-                	}
-                }
-            }
-            java.util.Collections.sort(this.nameArray);
-        }
-        
-        @Override
-        protected void overlayBackground(int p_148136_1_, int p_148136_2_, int p_148136_3_, int p_148136_4_)
-        {
+		public List(Minecraft mcIn, String message) {
+			super(mcIn, GuiEditControlBlock.this.width / 2, GuiEditControlBlock.this.height, 0, GuiEditControlBlock.this.height, 18);
 
-        }
-        
-        @Override
-        protected void drawContainerBackground(Tessellator tessellator)
-        {
+			String[] mesArray = message.split("\\|", -1);
 
-        }
-        
+			this.selectedName = mesArray[0];
 
-        protected int getSize()
-        {
-            return this.nameArray.size();
-        }
+			Iterator iterator = EntityList.getEntityNameList().iterator();
 
-        /**
-         * The element in the slot that was clicked, boolean for whether it was double clicked or not
-         */
-        protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY)
-        {
-        	
-        	this.selectedName = (this.nameMap.get(this.nameArray.get(slotIndex))).toString();
-        }
+			while (iterator.hasNext()) {
+				String name = (String) iterator.next();
+				if (name != "ThrownEnderpearl") {
+					Entity entity = EntityList.createEntityByName(name, te.getWorld());
+					// System.out.println(entity);
+					if (entity instanceof EntityLiving && entity != null) {
+						this.nameMap.put(name, name);
+						this.nameArray.add(name);
+					}
+				}
+			}
+			java.util.Collections.sort(this.nameArray);
+		}
 
-        /**
-         * Returns true if the element passed in is currently selected
-         */
-        protected boolean isSelected(int slotIndex)
-        {
-        	
-        	if (this.selectedName != null){
-            return this.selectedName.equals((this.nameMap.get(this.nameArray.get(slotIndex))).toString());
-        	} else {
-        		return false;
-        	}
-        }
+		@Override
+		protected void overlayBackground(int p_148136_1_, int p_148136_2_, int p_148136_3_, int p_148136_4_) {
 
-        /**
-         * Return the height of the content being scrolled
-         */
-        protected int getContentHeight()
-        {
-            return this.getSize() * 18;
-        }
+		}
 
-        @Override
-        protected void drawBackground()
-        {
-        	GuiEditControlBlock.this.drawDefaultBackground();
-        }
+		@Override
+		protected void drawContainerBackground(Tessellator tessellator) {
 
-        protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_)
-        {
-        	//GuiEditControlBlock.this.fontRendererObj.setBidiFlag(true);
-            GuiEditControlBlock.this.drawCenteredString(GuiEditControlBlock.this.fontRendererObj, (this.nameMap.get(this.nameArray.get(entryID))).toString(), this.width / 2, p_180791_3_ + 3, 16777215);
-           // GuiEditControlBlock.this.fontRendererObj.setBidiFlag(GuiEditControlBlock.this.languageManager.getCurrentLanguage().isBidirectional());
-        }
-    }
-	
+		}
+
+		protected int getSize() {
+			return this.nameArray.size();
+		}
+
+		/**
+		 * The element in the slot that was clicked, boolean for whether it was
+		 * double clicked or not
+		 */
+		protected void elementClicked(int slotIndex, boolean isDoubleClick, int mouseX, int mouseY) {
+
+			this.selectedName = (this.nameMap.get(this.nameArray.get(slotIndex))).toString();
+		}
+
+		/**
+		 * Returns true if the element passed in is currently selected
+		 */
+		protected boolean isSelected(int slotIndex) {
+
+			if (this.selectedName != null) {
+				return this.selectedName.equals((this.nameMap.get(this.nameArray.get(slotIndex))).toString());
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * Return the height of the content being scrolled
+		 */
+		protected int getContentHeight() {
+			return this.getSize() * 18;
+		}
+
+		@Override
+		protected void drawBackground() {
+			GuiEditControlBlock.this.drawDefaultBackground();
+		}
+
+		protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_) {
+			// GuiEditControlBlock.this.fontRendererObj.setBidiFlag(true);
+			GuiEditControlBlock.this.drawCenteredString(GuiEditControlBlock.this.fontRendererObj, (this.nameMap.get(this.nameArray.get(entryID))).toString(), this.width / 2, p_180791_3_ + 3, 16777215);
+			// GuiEditControlBlock.this.fontRendererObj.setBidiFlag(GuiEditControlBlock.this.languageManager.getCurrentLanguage().isBidirectional());
+		}
+	}
+
 }

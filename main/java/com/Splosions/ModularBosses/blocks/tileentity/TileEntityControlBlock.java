@@ -44,9 +44,12 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	public static final int LINE_LENGTH = 100;
 	public static final int MAX_MESSAGE_LENGTH = LINE_LENGTH * 3;
 	private String message = "";
+	public boolean ranSpawnLoc;
+	public boolean showBorder;
+	
 	public int ticksExisted;
 
-	public boolean powerBlock;
+
 
 	public ArrayList<String> spawnList = new ArrayList<String>();
 	public ArrayList<String> foundList = new ArrayList<String>();
@@ -64,12 +67,111 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	long targetTime = 0;
 	boolean startTime = false;
 
+	public boolean firstSpawn = false;
+
 	public TileEntityControlBlock() {
 	}
 
+	@Override
+	public void update() {
+		if (!this.worldObj.isRemote) {
+			ticksExisted++;
+			// called each tick just like onUpdate
+
+			if (!this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
+				if (triggerPower == 1) {
+					spawnAndFind();
+				} else if (foundList.size() < spawnCount && ticksExisted > 100 && !firstSpawn) {
+					spawnAndFind();
+					firstSpawn = true;
+				} else if (foundList.size() < spawnCount && inputPower == 1) {
+					if (Instant.now().getEpochSecond() >= targetTime) {
+						spawnAndFind();
+					}
+				} else {
+					targetTime = Instant.now().getEpochSecond() + spawnFreq;
+				}
+
+			}
+
+			// searches for mobs every 1 second
+			if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
+				findMobs();
+				System.out.println(targetTime - Instant.now().getEpochSecond());
+			}
+
+		}
+	}
+
+	
+	public void spawnAndFind(){
+		findMobs();
+		spawnList = new ArrayList<String>(foundList);
+		while (spawnList.size() < spawnCount) {
+			spawnCreature(this.worldObj, spawnMob, this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
+		}
+	}
+	
+	
+	public void findMobs() {
+		foundList.clear();
+		int i = this.pos.getX();
+		int j = this.pos.getY();
+		int k = this.pos.getZ();
+		AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) i, (double) j, (double) k, (double) (i + 1), (double) (j + 1 + yOff), (double) (k + 1)));
+
+		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, 0, zOff));
+		Iterator iterator = list.iterator();
+		while (iterator.hasNext()) {
+			Entity entity = (Entity) iterator.next();
+
+			if (spawnList.contains(entity.getUniqueID().toString())) {
+				foundList.add(entity.getUniqueID().toString());
+				// System.out.println(entity.getUniqueID().toString());
+			}
+		}
+		this.worldObj.notifyNeighborsOfStateChange(pos, blockType);
+	}
+
 	/**
-	 * Returns this Tile Entity's message, or a default message if none was
-	 * set. Note that the message is NOT updated on the client side.
+	 * Spawns the creature specified by the egg's type in the location specified
+	 * by the last three parameters.
+	 */
+	public Entity spawnCreature(World world, String entityName, double x, double y, double z) {
+		Entity entity = null;
+		// System.out.println(EntityList.getEntityNameList());
+		entity = EntityList.createEntityByName(entityName, world);
+		// System.out.println("Entity = " + entity);
+		if (entity instanceof EntityLiving && entity != null) {
+			EntityLiving entityliving = (EntityLiving) entity;
+			Random rn = new Random();
+			x += (ranSpawnLoc == true) ? (rn.nextInt(4) - 2) : 0;
+			z += (ranSpawnLoc == true) ? (rn.nextInt(4) - 2) : 0;
+
+			/**
+			 * BlockPos pos = new BlockPos(x, y, z); IBlockState block =
+			 * this.worldObj.getBlockState(pos); block.getBlock().getMaterial();
+			 */
+			entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+			entityliving.rotationYawHead = entityliving.rotationYaw;
+			entityliving.renderYawOffset = entityliving.rotationYaw;
+			spawnList.add(entity.getUniqueID().toString());
+			world.spawnEntityInWorld(entity);
+			entityliving.playLivingSound();
+			// System.out.println("Spawning");
+
+		} else if (entity == null) {
+			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not a valid name");
+		} else {
+			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not an instance of EntityLiving");
+		}
+
+		return entity;
+	}
+
+	/**
+	 * Returns this Tile Entity's message, or a default message if none was set.
+	 * Note that the message is NOT updated on the client side.
 	 */
 	public String getMessage() {
 		return message;
@@ -77,15 +179,17 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 	public void setMessage(String message) {
 		this.message = message;
-		String[] mesArray = message.split("\\|", -1);
-		if (mesArray.length >= 7) {
+		System.out.println(message);
+		String[] mesArray = message.split("\\|");
+		if (mesArray.length >= 8) {
 			spawnMob = mesArray[0];
 			xOff = Integer.parseInt(mesArray[1]);
 			yOff = Integer.parseInt(mesArray[2]);
 			zOff = Integer.parseInt(mesArray[3]);
 			spawnFreq = (Integer.parseInt(mesArray[4]) > 0) ? Integer.parseInt(mesArray[4]) : 1;
-			// spawnDelay = Integer.parseInt(mesArray[5]);
 			spawnCount = Integer.parseInt(mesArray[5]);
+			ranSpawnLoc = (Integer.parseInt(mesArray[6]) == 1)?true:false;
+			showBorder = (Integer.parseInt(mesArray[7]) == 1)?true:false;
 		}
 		markDirty();
 		// System.out.println(this.message);
@@ -108,6 +212,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		setMessage(message);
 		triggerPower = compound.getInteger("triggerPower");
 		inputPower = compound.getInteger("inputPower");
+
 	}
 
 	@Override
@@ -143,96 +248,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	@Override
 	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
-	}
-
-	@Override
-	public void update() {
-		if (!this.worldObj.isRemote) {
-			ticksExisted++;
-			// called each tick just like onUpdate
-
-			if (triggerPower == 1 && !this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
-				findMobs();
-				spawnList = new ArrayList<String>(foundList);
-				while (spawnList.size() < spawnCount) {
-					spawnCreature(this.worldObj, spawnMob, this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
-				}
-			}
-
-			if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
-				findMobs();
-			} // searches for mobs every 1 second
-
-			if (foundList.size() < spawnCount && inputPower == 1) {
-
-				if (Instant.now().getEpochSecond() >= targetTime && inputPower == 1 && !this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
-					findMobs();
-					spawnList = new ArrayList<String>(foundList);
-					while (spawnList.size() < spawnCount) {
-						spawnCreature(this.worldObj, spawnMob, this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
-					}
-				}
-			} else {
-				targetTime = Instant.now().getEpochSecond() + spawnFreq;
-			}
-
-		}
-	}
-
-	public void findMobs() {
-		foundList.clear();
-		int i = this.pos.getX();
-		int j = this.pos.getY();
-		int k = this.pos.getZ();
-		AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) i, (double) j, (double) k, (double) (i + 1), (double) (j + 1 + yOff), (double) (k + 1)));
-
-		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, 0, zOff));
-		Iterator iterator = list.iterator();
-		while (iterator.hasNext()) {
-			Entity entity = (Entity) iterator.next();
-
-			if (spawnList.contains(entity.getUniqueID().toString())) {
-				foundList.add(entity.getUniqueID().toString());
-				// System.out.println(entity.getUniqueID().toString());
-			}
-		}
-		this.worldObj.notifyNeighborsOfStateChange(pos, blockType);
-	}
-
-	/**
-	 * Spawns the creature specified by the egg's type in the location specified
-	 * by the last three parameters.
-	 */
-	public Entity spawnCreature(World world, String entityName, double x, double y, double z) {
-		Entity entity = null;
-		// System.out.println(EntityList.getEntityNameList());
-		entity = EntityList.createEntityByName(entityName, world);
-		// System.out.println("Entity = " + entity);
-		if (entity instanceof EntityLiving && entity != null) {
-			EntityLiving entityliving = (EntityLiving) entity;
-			Random rn = new Random();
-			x += (rn.nextInt(4) - 2);
-			z += (rn.nextInt(4) - 2);
-
-			/**
-			 * BlockPos pos = new BlockPos(x, y, z); IBlockState block =
-			 * this.worldObj.getBlockState(pos); block.getBlock().getMaterial();
-			 */
-			entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
-			entityliving.rotationYawHead = entityliving.rotationYaw;
-			entityliving.renderYawOffset = entityliving.rotationYaw;
-			spawnList.add(entity.getUniqueID().toString());
-			world.spawnEntityInWorld(entity);
-			entityliving.playLivingSound();
-			//System.out.println("Spawning");
-
-		} else if (entity == null) {
-			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not a valid name");
-		} else {
-			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not an instance of EntityLiving");
-		}
-
-		return entity;
 	}
 
 }

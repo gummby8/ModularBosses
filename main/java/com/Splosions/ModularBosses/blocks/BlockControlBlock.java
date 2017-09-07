@@ -177,7 +177,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
     public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side)
     {
     	TileEntityControlBlock te = (TileEntityControlBlock) worldIn.getTileEntity(pos);
-    	if (state.getValue(FACING) == side && te.foundList.size() == 0 ) {
+    	if (state.getValue(FACING) == side && te.foundList.size() == 0 && te.firstSpawn) {
     		return 15;
     	} else {
     		return 0;
