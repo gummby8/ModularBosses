@@ -45,7 +45,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	public static final int MAX_MESSAGE_LENGTH = LINE_LENGTH * 3;
 	private String message = "";
 	public boolean ranSpawnLoc;
-	public boolean showBorder;
+	public boolean showBorder = false;
 	
 	public int ticksExisted;
 
@@ -57,9 +57,9 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	public int inputPower = 0;
 
 	String spawnMob;
-	int xOff = 1;
-	int yOff = 1;
-	int zOff = 1;
+	public int xOff = 1;
+	public int yOff = 1;
+	public int zOff = 1;
 	int spawnFreq = 1;
 	// int spawnDelay;
 	int spawnCount = 0;
@@ -97,7 +97,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			// searches for mobs every 1 second
 			if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
 				findMobs();
-				System.out.println(targetTime - Instant.now().getEpochSecond());
+				//System.out.println(targetTime - Instant.now().getEpochSecond());
 			}
 
 		}
@@ -179,7 +179,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 	public void setMessage(String message) {
 		this.message = message;
-		System.out.println(message);
+		//System.out.println(message);
 		String[] mesArray = message.split("\\|");
 		if (mesArray.length >= 8) {
 			spawnMob = mesArray[0];

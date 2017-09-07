@@ -9,10 +9,12 @@ import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.ICustomStateMapper;
 import com.Splosions.ModularBosses.blocks.ISpecialRenderer;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.ModModelManager;
+import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityControlBlock;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPortalBlock;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
@@ -100,6 +102,7 @@ public class ClientProxy extends CommonProxy{
 		
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPortalBlock.class, new RenderTileEntityPortalBlock());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityReturnPortalBlock.class, new RenderTileEntityReturnPortalBlock());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlBlock.class, new RenderTileEntityControlBlock());
 		
 		try {
 			for (Field f: ModularBossesItems.class.getFields()) {
