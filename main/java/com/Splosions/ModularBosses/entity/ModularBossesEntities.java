@@ -4,6 +4,7 @@ package com.Splosions.ModularBosses.entity;
 import java.util.logging.Level;
 
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.client.models.entity.ModelBrain;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelEyeballOctopus;
 import com.Splosions.ModularBosses.client.models.entity.ModelGolem;
@@ -18,6 +19,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
 import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
 import com.Splosions.ModularBosses.client.models.entity.ModelTick;
+import com.Splosions.ModularBosses.client.render.entity.RenderBrain;
 import com.Splosions.ModularBosses.client.render.entity.RenderCartographer;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
 import com.Splosions.ModularBosses.client.render.entity.RenderCustomFallingBlock;
@@ -91,7 +93,7 @@ public class ModularBossesEntities
 
 	private static void registerEntities() {
 		int modEntityIndex = 0;
-		//Entities
+		//Projectile Entities
 		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.instance, 64, 3, true);
@@ -110,6 +112,9 @@ public class ModularBossesEntities
 		// MOBS and egg colors
 		EntityRegistry.registerModEntity(EntitySkull.class, "Skull", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntitySkull.class, "Skull", 0xFFFBAF, 0x000000);
+		
+		EntityRegistry.registerModEntity(EntityBrain.class, "Brain", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntityBrain.class, "Brain", 0xffc1c1, 0xccbdbd);
 		
 		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
@@ -159,6 +164,7 @@ public class ModularBossesEntities
 		
 		//mobs
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkull.class, new RenderSkull(manager, new ModelSkull(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBrain.class, new RenderBrain(manager, new ModelBrain(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpChorp.class, new RenderChorpChorp(manager, new ModelChorpChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeavyChorp.class, new RenderHeavyChorp(manager, new ModelHeavyChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEyeballOctopus.class, new RenderEyeballOctopus(manager, new ModelEyeballOctopus(), 1));
