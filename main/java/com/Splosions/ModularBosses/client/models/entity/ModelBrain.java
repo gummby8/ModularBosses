@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
+import com.Splosions.ModularBosses.entity.EntityBrain;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 /**
@@ -56,7 +57,7 @@ public class ModelBrain extends ModelBase {
         
         for (int i = 0; i < this.Energy.length; ++i)
         {
-         	this.pixelX = TargetUtils.getRanNum(-70, 70);
+         	this.pixelX = (i < 300)? TargetUtils.getRanNum(-70, 70): TargetUtils.getRanNum(-20, 20);
          	this.pixelY = TargetUtils.getRanNum(0, 360);
         	this.Energy[i] = new ModelRenderer(this, 0, 40);
             this.Energy[i].addBox(0, 0, 50F, 8, 4, 0);
@@ -180,24 +181,9 @@ public class ModelBrain extends ModelBase {
 
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-        GlStateManager.pushMatrix();
+    	EntityBrain brain = (EntityBrain)entity;
         
-		//GL11.glEnable(GL11.GL_BLEND);
-	    //GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-	    GlStateManager.color(0, 0, 2, 1F);
-        for (int i = 0; i < this.Energy.length; ++i) // - this.fade
-        {
-    	this.Energy[i].rotateAngleY += (flip)? 0.04D : -0.04D;
-    	flip = (flip)?false:true;
-	    
-		this.Energy[i].render(f5);
-        }
-        //GL11.glDisable(GL11.GL_BLEND);
-        GlStateManager.color(1, 1, 1);
-
-        GlStateManager.popMatrix();
-        GlStateManager.pushMatrix();
-        
+    	GlStateManager.pushMatrix();
         GlStateManager.translate(this.LEFTPARENT_1.offsetX, this.LEFTPARENT_1.offsetY, this.LEFTPARENT_1.offsetZ);
         GlStateManager.translate(this.LEFTPARENT_1.rotationPointX * f5, this.LEFTPARENT_1.rotationPointY * f5, this.LEFTPARENT_1.rotationPointZ * f5);
         GlStateManager.scale(0.7D, 1.0D, 0.7D);
@@ -228,9 +214,24 @@ public class ModelBrain extends ModelBase {
         GlStateManager.translate(-this.LEFTPARENT.offsetX, -this.LEFTPARENT.offsetY, -this.LEFTPARENT.offsetZ);
         GlStateManager.translate(-this.LEFTPARENT.rotationPointX * f5, -this.LEFTPARENT.rotationPointY * f5, -this.LEFTPARENT.rotationPointZ * f5);
         this.LEFTPARENT.render(f5);
+        GlStateManager.popMatrix();
+        GlStateManager.pushMatrix();
         
+		GL11.glEnable(GL11.GL_BLEND);
+	    GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
+	    GlStateManager.color(0F, 0F, 1F, 0.5F);
+        for (int i = 0; i < this.Energy.length; ++i) // - this.fade
+        {
+    	this.Energy[i].rotateAngleY += (flip)? 0.04D : -0.04D;
+    	flip = (flip)?false:true;
+	    
+    	if (brain.shieldUp){
+		this.Energy[i].render(f5);
+    	}
+        }
+        GL11.glDisable(GL11.GL_BLEND);
 
-        
+
         GlStateManager.popMatrix();
     }
 

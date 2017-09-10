@@ -16,6 +16,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelSandWormHead;
 import com.Splosions.ModularBosses.client.models.entity.ModelSandWormTail;
 import com.Splosions.ModularBosses.client.models.entity.ModelShadeHowler;
 import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
+import com.Splosions.ModularBosses.client.models.entity.ModelSpark;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
 import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
 import com.Splosions.ModularBosses.client.models.entity.ModelTick;
@@ -33,6 +34,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderSandWorm;
 import com.Splosions.ModularBosses.client.render.entity.RenderSandWormTail;
 import com.Splosions.ModularBosses.client.render.entity.RenderShadeHowler;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
+import com.Splosions.ModularBosses.client.render.entity.RenderSpark;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
 import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
@@ -116,6 +118,9 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityBrain.class, "Brain", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityBrain.class, "Brain", 0xffc1c1, 0xccbdbd);
 		
+		EntityRegistry.registerModEntity(EntitySpark.class, "Spark", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		CustomEntityList.addMapping(EntitySpark.class, "Spark", 0xffc1c1, 0xccbdbd);
+		
 		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
@@ -165,6 +170,7 @@ public class ModularBossesEntities
 		//mobs
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkull.class, new RenderSkull(manager, new ModelSkull(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBrain.class, new RenderBrain(manager, new ModelBrain(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySpark.class, new RenderSpark(manager, new ModelSpark(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityChorpChorp.class, new RenderChorpChorp(manager, new ModelChorpChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeavyChorp.class, new RenderHeavyChorp(manager, new ModelHeavyChorp(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEyeballOctopus.class, new RenderEyeballOctopus(manager, new ModelEyeballOctopus(), 1));

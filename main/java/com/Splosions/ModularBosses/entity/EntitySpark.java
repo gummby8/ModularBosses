@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.entity;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.base.Predicate;
 
 import net.minecraft.enchantment.Enchantment;
@@ -35,18 +36,29 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
-public class EntityBrain extends EntityMob {
+public class EntitySpark extends EntityMob {
 
 	private int deathTicks;
 	public boolean shieldUp;
 	
-	public static int brainMaxHealth;
-	public static int brainDmg;
+	public static int sparkMaxHealth;
+	public static int sparkDmg;
+	
+	public int variant;
+	public static final int ORANGE = 1;
+	public static final int BLUE = 2;
+	public static final int GREEN = 3;
+	public static final int PURPLE = 4;
+	
 
-	public EntityBrain(World worldIn) {
+	public EntitySpark(World worldIn) {
 		super(worldIn);
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false)); 
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
+		this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(4, new EntityAIWander(this, 0.25D));
+		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(6, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
@@ -64,6 +76,7 @@ public class EntityBrain extends EntityMob {
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1);
+		variant = TargetUtils.getRanNum(1, 4);
 	}
 
 	@Override
@@ -72,8 +85,8 @@ public class EntityBrain extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		brainMaxHealth = config.get("Brain", "[Max Health] Set the Hp of Brain Spawns [1+]", 20).getInt();
-		brainDmg = config.get("Brain", "[Attack Damage] Set the damage of Brain Spawns [1+]", 10).getInt();
+		sparkMaxHealth = config.get("spark", "[Max Health] Set the Hp of spark Spawns [1+]", 20).getInt();
+		sparkDmg = config.get("spark", "[Attack Damage] Set the damage of spark Spawns [1+]", 10).getInt();
 	}
 
 	@Override
