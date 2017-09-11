@@ -3,8 +3,12 @@ package com.Splosions.ModularBosses.client.models.entity;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
+
+import com.Splosions.ModularBosses.entity.EntityGolem;
 
 /**
  * NewProject - Undefined
@@ -3715,8 +3719,9 @@ public class ModelSandWormHead extends ModelBase {
         GlStateManager.translate(-this.FOOT_3.rotationPointX * f5, -this.FOOT_3.rotationPointY * f5, -this.FOOT_3.rotationPointZ * f5);
         this.FOOT_3.render(f5);
         GlStateManager.popMatrix();
+        setRotationAngles(f, f1, f2, f3, f4, f5, entity);
     }
-
+ 
     /**
      * This is a helper function from Tabula to set the rotation of model parts
      */
@@ -3724,5 +3729,25 @@ public class ModelSandWormHead extends ModelBase {
         modelRenderer.rotateAngleX = x;
         modelRenderer.rotateAngleY = y;
         modelRenderer.rotateAngleZ = z;
+        
+        
     }
+    
+	
+    public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity Entity) {
+		this.MOUTH_INNER1.rotateAngleX = Entity.ticksExisted * 0.139626F / 4; 
+		this.shape1.rotateAngleX = Entity.ticksExisted * 0.139626F / 4;
+		this.MOUTH_INNER2.rotateAngleX = Entity.ticksExisted * -0.139626F / 4;
+		
+		this.FOOT.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(1 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_1.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(2 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_2.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(3 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_3.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(4 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_4.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(5 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_5.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(6 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_6.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(7 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_7.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(8 + Entity.ticksExisted * 0.16662F) * 0.4F;
+	}
+	
+	
 }

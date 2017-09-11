@@ -287,19 +287,19 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 */
 	public boolean dungeonCompleted(){
 		if(!ModularBosses.instance.dungeonList.isEmpty()) {
-			System.out.println("not empty");
+			//System.out.println("not empty");
 			int dungeonCount = ModularBosses.instance.dungeonList.size();
 			for (int x = 0; x < dungeonCount; x++) {
 				Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
-				System.out.println("Dungeon ID = " + dungeon.dungeonID);
-				System.out.println("Monster ID = " + this.getUniqueID().toString());
+				//System.out.println("Dungeon ID = " + dungeon.dungeonID);
+				//System.out.println("Monster ID = " + this.getUniqueID().toString());
 				if(dungeon.dungeonID.equals(this.getUniqueID().toString())){ //remember to use .equals() to compare strings you dipstick
-					System.out.println("Found it");
+					//System.out.println("Found it");
 					return false;
 				}
 			}
 		}
-		System.out.println("Killing worm with ID " + this.getUniqueID().toString());
+		//System.out.println("Killing worm with ID " + this.getUniqueID().toString());
 		TargetUtils.tellPlayer("The Sand Worm Has Been Defeated!");
 		return true;
 	}

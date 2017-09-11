@@ -48,7 +48,7 @@ public class RenderSandWorm extends Render
 		GL11.glRotatef(-worm.pitch, 1, 0, 0);
 		GL11.glRotatef(180, 0, 0, 1);
 		
-		model.render(worm, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
+		model.render(worm, partialTick, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 		GL11.glPopMatrix();
 	}
 	@Override
