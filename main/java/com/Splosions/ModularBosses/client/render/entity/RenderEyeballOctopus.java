@@ -24,7 +24,9 @@ import org.lwjgl.opengl.GL11;
 public class RenderEyeballOctopus extends RenderLiving {
 
 	private static final ResourceLocation enderDragonCrystalBeamTextures = new ResourceLocation("textures/entity/endercrystal/endercrystal_beam.png");
+	ResourceLocation texture = new ResourceLocation("mb:textures/mobs/EyeballOctopus.png");
 
+	
 	public RenderEyeballOctopus(RenderManager renderManager, ModelBase model, float shadowSize) {
 		super(renderManager, model, shadowSize);
 	}
@@ -32,7 +34,7 @@ public class RenderEyeballOctopus extends RenderLiving {
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 
-		return new ResourceLocation("mb:textures/mobs/EyeballOctopus.png");
+		return texture;
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import java.util.List;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
+import com.Splosions.ModularBosses.entity.projectile.EntityBloodBlob;
+import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.base.Predicate;
 
@@ -34,40 +36,30 @@ import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class EntitySpark extends EntityMob {
+public class EntityHeart extends EntityMob {
 
 	private int deathTicks;
-	public boolean shieldUp;
+	public static int heartMaxHealth;
+	public static int heartDmg;
+	public int invulnerable;
 
-	public static int sparkMaxHealth;
-	public static int sparkDmg;
-
-	public int variant;
-	public static final int ORANGE = 1;
-	public static final int BLUE = 2;
-	public static final int GREEN = 3;
-	public static final int PURPLE = 4;
-
-	private static final int COLOR_WATCHER = 17;
 	
-	public EntitySpark(World worldIn) {
+	public EntityHeart(World worldIn) {
 		super(worldIn);
+		//sets hitbox size
+		this.setSize(3F, 4F);
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false));
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
-		this.tasks.addTask(1, new EntityAISwimming(this));
-		this.tasks.addTask(4, new EntityAIWander(this, 0.25D));
-		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(6, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
 
 	}
 	
@@ -77,87 +69,70 @@ public class EntitySpark extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1);
-		if (!this.worldObj.isRemote) {
-			variant = TargetUtils.getRanNum(1, 4);
-			this.dataWatcher.updateObject(COLOR_WATCHER, variant);
-
-		}
-		variant = this.dataWatcher.getWatchableObjectInt(COLOR_WATCHER);
 	}
 
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataWatcher.addObject(COLOR_WATCHER, 0);
 	}
 
 	public static void postInitConfig(Configuration config) {
-		sparkMaxHealth = config.get("spark", "[Max Health] Set the Hp of spark Spawns [1+]", 20).getInt();
-		sparkDmg = config.get("spark", "[Attack Damage] Set the damage of spark Spawns [1+]", 10).getInt();
+		heartMaxHealth = config.get("heart", "[Max Health] Set the Hp of heart Spawns [1+]", 20).getInt();
+		heartDmg = config.get("heart", "[Attack Damage] Set the damage of heart Spawns [1+]", 10).getInt();
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		variant = this.dataWatcher.getWatchableObjectInt(COLOR_WATCHER);
+		invulnerable--;
+		
+		//spew Blood
+		if (this.ticksExisted % 10 == (10 - 1) && !this.worldObj.isRemote && invulnerable > 0) {
+			int xOff = TargetUtils.getRanNum(-5, 5);
+			int zOff = TargetUtils.getRanNum(-5, 5);
+			BlockPos pos = new BlockPos(this.posX + xOff, this.posY, this.posZ + zOff);
+			EntityBloodBlob projectile = new EntityBloodBlob(this.worldObj, this, pos, (float)(Math.random() - 0.2F), 0.1F);
+			worldObj.spawnEntityInWorld(projectile);
 
-		if (this.ticksExisted % 20 == (20 - 1)) {
-			List list = TargetUtils.getList(this, 4, 4);
-			if (this.variant == ORANGE && !this.worldObj.isRemote) {
-				for (int i = 0; i < list.size(); ++i) {
-					Entity entity = (Entity) list.get(i);
-					if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
-						entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
-					}
-				}
-			} else if (this.variant == BLUE && this.worldObj.isRemote) {
-				kickEntitiesInListIfInfront(list, 8, 1.5);
-			} else if (this.variant == PURPLE && !this.worldObj.isRemote) {
-				for (int i = 0; i < list.size(); ++i) {
-					Entity entity = (Entity) list.get(i);
-					if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
-						EntityPlayer player = (EntityPlayer) entity;
-						player.addPotionEffect(new PotionEffect(15, 200, 1));
-					}
-				}
-			} else if (this.variant == GREEN && !this.worldObj.isRemote) {
-				for (int i = 0; i < list.size(); ++i) {
-					Entity entity = (Entity) list.get(i);
-					if (entity instanceof EntityLiving && !(entity instanceof EntityPlayer)) {
-						EntityLiving ent = (EntityLiving) entity;
-						ent.heal(10);
-					}
-				}
-			}
 		}
 
 	}
 
-	private void kickEntitiesInListIfInfront(List par1List, double force, double height) {
-		for (int i = 0; i < par1List.size(); ++i) {
-			Entity entity = (Entity) par1List.get(i);
-			if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
-				double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
-				double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
-				double d2 = entity.posX - d0;
-				double d3 = entity.posZ - d1;
-				double d4 = d2 * d2 + d3 * d3;
-				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
-			}
-
+	/**
+	 * Called when the entity is attacked.
+	 */
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (invulnerable <= 0) {
+			this.Damage(source, amount);
+			invulnerable = 100;
 		}
+
+		return false;
 	}
+
+	protected boolean Damage(DamageSource Source, float DMGAmmount) {
+		return super.attackEntityFrom(Source, DMGAmmount);
+	}
+	
 
 	@Override
 	public void onDeathUpdate() {
-			for (int i = 0; i < 20; ++i) {
+		++this.deathTicks;
+
+		if (this.deathTicks > 30) {
+			int i;
+
+			this.setDead();
+
+			for (i = 0; i < 20; ++i) {
 				double d2 = this.rand.nextGaussian() * 0.02D;
 				double d0 = this.rand.nextGaussian() * 0.02D;
 				double d1 = this.rand.nextGaussian() * 0.02D;
@@ -167,7 +142,7 @@ public class EntitySpark extends EntityMob {
 						this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0,
 						d1, new int[0]);
 			}
-			this.setDead();
+		}
 
 	}
 

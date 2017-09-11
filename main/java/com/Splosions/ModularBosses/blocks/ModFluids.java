@@ -15,6 +15,9 @@ import java.util.Set;
 import java.util.function.Function;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.Reference;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
 
 public class ModFluids {
 	public static Fluid fluidStatic;
@@ -51,7 +54,8 @@ public class ModFluids {
 		
 		fluidTempWormBlood = createFluid("fluid_temp_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1500, false,
 				fluid -> new FluidTempWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
-		
+		GameRegistry.registerTileEntity(TileEntityTempWormBlood.class, Reference.MOD_ID + ":tileEntityTempWormBlood");
+
 		
 		fluidWormAcid = createFluid("fluid_worm_acid", "mb:blocks/fluid_worm_acid", true, 10, 1, 1500, false,
 				fluid -> new FluidWormAcid(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);

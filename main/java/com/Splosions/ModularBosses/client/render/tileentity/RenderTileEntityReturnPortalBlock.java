@@ -127,7 +127,7 @@ public class RenderTileEntityReturnPortalBlock extends TileEntitySpecialRenderer
 			float f10 = 1 * 2.0F + 1.0F + f8 * 21.0F;
 			// worldrenderer.setColorRGBA_I(16760576, (int)(255.0F * (1.0F -
 			// f8)));
-			worldrenderer.setColorRGBA(0, 0, 255, 140);
+			worldrenderer.setColorRGBA(0, 0, 255, 255);
 			worldrenderer.addVertex(0.0D, 0.0D, 0.0D);
 			// worldrenderer.setColorRGBA_I(16711680, 0);
 			worldrenderer.setColorRGBA(0, 255, 0, 0);
