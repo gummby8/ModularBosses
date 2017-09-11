@@ -29,9 +29,14 @@ public class Sounds {
 	public static final String TATTERS_TELEPORT = Reference.MOD_ID + ":tatters_teleport";
 	public static final String TATTERS_DEATH = Reference.MOD_ID + ":tatters_death";		
 	
+	public static final String HEART_UP = Reference.MOD_ID + ":heart_up";
+	public static final String HEART_DOWN = Reference.MOD_ID + ":heart_down";
+	
 	public static final String CHORP_SLIME = Reference.MOD_ID + ":chorp_slime";
 	public static final String CHORP_DEATH = Reference.MOD_ID + ":chorp_death";
 	public static final String CHORP_HURT = Reference.MOD_ID + ":chorp_hurt";
+	
+
 	
 	
 }

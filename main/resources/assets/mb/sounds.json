@@ -18,6 +18,8 @@
 "tatters_teleport": {"category": "hostile","sounds":["entity/Tatters/teleport"]},
 "tatters_death": {"category": "hostile","sounds":["entity/Tatters/death"]},
 
+"heart_up": {"category": "hostile","sounds":["entity/Heart/heart_up"]},
+"heart_down": {"category": "hostile","sounds":["entity/Heart/heart_down"]},
 
 "chorp_hurt": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_hurt"]},
 "chorp_death": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_death"]},

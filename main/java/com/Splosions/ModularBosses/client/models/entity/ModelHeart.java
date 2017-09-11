@@ -138,7 +138,6 @@ public class ModelHeart extends ModelBase {
     	if (heart.invulnerable > 0){
     		hp = 1;
     	}
-    	
     	this.rear1.rotationPointZ = MathHelper.sin(par3/hp ) + 9F;
     	this.rear2.rotationPointZ = MathHelper.sin(par3/hp) * 2 + 16F;
     	this.rear3.rotationPointZ = MathHelper.sin(par3/hp) * 4 + 19F;

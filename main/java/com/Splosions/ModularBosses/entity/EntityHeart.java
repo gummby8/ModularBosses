@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.entity;
 
 import java.util.List;
 
+import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
@@ -88,17 +89,43 @@ public class EntityHeart extends EntityMob {
 		heartDmg = config.get("heart", "[Attack Damage] Set the damage of heart Spawns [1+]", 10).getInt();
 	}
 
+	public boolean pump;
+	public boolean prevPump;
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		invulnerable--;
+		
+    	float hp = 10 - (this.getMaxHealth() / this.getHealth());
+    	hp = (hp <= 1)?1:hp;
+    	
+    	if (this.invulnerable > 0){
+    		hp = 1;
+    	}
+    	if (MathHelper.sin(this.ticksExisted/hp ) > 0.9F ){
+    		
+    		pump = true;
+    	} else if (MathHelper.sin(this.ticksExisted/hp ) < -0.9F ){
+    		pump = false;
+    	}
+    	
+    	if (pump != prevPump){
+    		if (pump){
+    			System.out.println("UP");
+    			this.playSound(Sounds.HEART_UP, 10F, 1.0F);
+    		}else{
+    			this.playSound(Sounds.HEART_DOWN, 10F, 1.0F);
+    			System.out.println("DOWN");
+    		}
+    		prevPump = pump;
+    	}
 		
 		//spew Blood
 		if (this.ticksExisted % 10 == (10 - 1) && !this.worldObj.isRemote && invulnerable > 0) {
 			int xOff = TargetUtils.getRanNum(-5, 5);
 			int zOff = TargetUtils.getRanNum(-5, 5);
 			BlockPos pos = new BlockPos(this.posX + xOff, this.posY, this.posZ + zOff);
-			EntityBloodBlob projectile = new EntityBloodBlob(this.worldObj, this, pos, (float)(Math.random() - 0.2F), 0.1F);
+			EntityBloodBlob projectile = new EntityBloodBlob(this.worldObj, this, pos, (float)(Math.random() - 0.2F), 0.3F);
 			worldObj.spawnEntityInWorld(projectile);
 
 		}
