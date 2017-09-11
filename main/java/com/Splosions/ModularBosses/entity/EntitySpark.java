@@ -78,6 +78,8 @@ public class EntitySpark extends EntityMob {
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1);
 		variant = TargetUtils.getRanNum(1, 4);
 	}
+	
+	
 
 	@Override
 	protected void entityInit() {
@@ -92,7 +94,6 @@ public class EntitySpark extends EntityMob {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-
 		
 
 	}
