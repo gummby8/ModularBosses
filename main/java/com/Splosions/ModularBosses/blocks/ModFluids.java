@@ -20,6 +20,7 @@ public class ModFluids {
 	public static Fluid fluidStatic;
 	public static Fluid fluidStaticGas;
 	public static Fluid fluidWormBlood;
+	public static Fluid fluidTempWormBlood;
 	public static Fluid fluidWormAcid;
 	public static Fluid fluidWormSaliva;
 	public static Fluid gasWormGas;
@@ -47,6 +48,10 @@ public class ModFluids {
 		
 		fluidWormBlood = createFluid("fluid_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1500, false,
 				fluid -> new FluidWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		
+		fluidTempWormBlood = createFluid("fluid_temp_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1500, false,
+				fluid -> new FluidTempWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
+		
 		
 		fluidWormAcid = createFluid("fluid_worm_acid", "mb:blocks/fluid_worm_acid", true, 10, 1, 1500, false,
 				fluid -> new FluidWormAcid(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);

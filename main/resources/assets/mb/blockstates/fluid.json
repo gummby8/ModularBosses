@@ -7,6 +7,12 @@
                 "fluid": "fluid_worm_blood"
             }
         },
+        "fluid_temp_worm_blood": {
+            "model": "forge:fluid",
+            "custom": {
+                "fluid": "fluid_worm_blood"
+            }
+        },
         "fluid_worm_acid": {
             "model": "forge:fluid",
             "custom": {

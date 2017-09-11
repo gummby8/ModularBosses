@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.blocks.ModFluids;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
@@ -22,6 +23,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
@@ -38,6 +41,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkProviderServer;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -48,16 +52,23 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 		super(material);
 	}
 
+	
+	
 	/**
 	 * Called whenever this item is equipped and the right mouse button is
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+	public ItemStack onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
+		if(!world.isRemote){
+			IBlockState state = ModFluids.fluidTempWormBlood.getBlock().getDefaultState();
+			
+			world.setBlockState(playerIn.getPosition(), state);
+		}
+			
 
-
-
-
+		
+ 
         return itemStackIn;
 	}
 	
