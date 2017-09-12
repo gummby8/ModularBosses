@@ -15,6 +15,7 @@ import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock
 import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.util.BlockObject;
 import com.Splosions.ModularBosses.util.NBTHelper;
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.primitives.UnsignedBytes;
 
 import net.minecraft.block.Block;
@@ -63,13 +64,15 @@ public class Schematic {
 			room = dungeon.dungeonRooms[dungeon.dgnRoomsLength][dungeon.dgnRoomsWidth];
 			roomPath = room.roomCode[0] + room.roomCode[1] + room.roomCode[2] + room.roomCode[3];
 
-			fileName = "./schematics/WormOLD/" + roomPath + "/1.schematic";
+			fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
 			file = new File(fileName);
 
 			if (file.exists()) {
 				nbtdata = SchematicUtil.readTagCompoundFromFile(file);
 			} else {
-				System.out.println("FILE NOT FOUND");
+				TargetUtils.tellPlayer("No Schematics found in schematics folder");
+				TargetUtils.tellPlayer("Reverting to built-in starter schematics");
+				TargetUtils.tellPlayer("Please review readme file");
 				fileName = "/assets/mb/StarterSchematics/Worm/" + roomPath + "/1.schematic";
 				nbtdata = CompressedStreamTools
 						.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
