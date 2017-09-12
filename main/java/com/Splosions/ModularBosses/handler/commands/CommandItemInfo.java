@@ -57,6 +57,7 @@ public class CommandItemInfo implements ICommand{
 			EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();	
 			ItemStack stack = player.getEquipmentInSlot(0);
 			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + "Item ModID:ItemName = " + EnumChatFormatting.AQUA + GameRegistry.findUniqueIdentifierFor(stack.getItem()).toString()));
+			
 		}
 		
 		

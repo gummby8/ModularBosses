@@ -45,6 +45,11 @@ public class Schematic {
 	private static int j = 0;
 	private static int k = 0;
 	private static BlockObject[] blockObjects;
+	private static File file;
+	private static String fileName;
+	private static Room room;
+	private static String roomPath;
+	private static NBTTagCompound nbtdata;
 
 	private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
@@ -55,13 +60,20 @@ public class Schematic {
 			int y = dungeon.RoomPosY;
 			int z = dungeon.RoomPosZ;
 
-			Room room = dungeon.dungeonRooms[dungeon.dgnRoomsLength][dungeon.dgnRoomsWidth];
+			room = dungeon.dungeonRooms[dungeon.dgnRoomsLength][dungeon.dgnRoomsWidth];
+			roomPath = room.roomCode[0] + room.roomCode[1] + room.roomCode[2] + room.roomCode[3];
 
-			String roomPath = room.roomCode[0] + room.roomCode[1] + room.roomCode[2] + room.roomCode[3];
-			String fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
+			fileName = "./schematics/WormOLD/" + roomPath + "/1.schematic";
+			file = new File(fileName);
 
-			File file = new File(fileName);
-			NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
+			if (file.exists()) {
+				nbtdata = SchematicUtil.readTagCompoundFromFile(file);
+			} else {
+				System.out.println("FILE NOT FOUND");
+				fileName = "/assets/mb/StarterSchematics/Worm/" + roomPath + "/1.schematic";
+				nbtdata = CompressedStreamTools
+						.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
+			}
 
 			width = nbtdata.getShort("Width");
 			height = nbtdata.getShort("Height");
@@ -145,7 +157,8 @@ public class Schematic {
 			if (i == 0 && j == 0 && k == 0) {
 				for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
 					try {
-						TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+						TileEntity tileEntity = NBTHelper
+								.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
 						if (tileEntity != null) {
 							NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
 							int Xx = tag.getInteger("x");
@@ -158,11 +171,12 @@ public class Schematic {
 							// to the dungeon specs
 							if (tileEntity instanceof TileEntityReturnPortalBlock) {
 								TileEntityReturnPortalBlock te = (TileEntityReturnPortalBlock) tileEntity;
-								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ, dungeon.returnDimension, dungeon.dungeonID);
+								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ,
+										dungeon.returnDimension, dungeon.dungeonID);
 								te.writeToNBT(tag);
 								tileEntity = te;
 							}
-							 
+
 							world.setTileEntity(bPos, tileEntity);
 							world.markChunkDirty(bPos, tileEntity);
 							System.out.println(tileEntity);
@@ -251,7 +265,8 @@ public class Schematic {
 
 				for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
 					try {
-						TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+						TileEntity tileEntity = NBTHelper
+								.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
 						if (tileEntity != null) {
 							NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
 							int Xx = tag.getInteger("x");
