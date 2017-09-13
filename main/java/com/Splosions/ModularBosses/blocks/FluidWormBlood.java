@@ -16,10 +16,7 @@ import net.minecraftforge.fluids.Fluid;
 public class FluidWormBlood extends BlockFluidClassic{
 
 	public FluidWormBlood(Fluid fluid, Material material) {
-		super(fluid, Material.water);
-		// limits fluid spread to 4 blocks
-		quantaPerBlock = 4;
-		
+		super(fluid, Material.water);		
 	}
  
 

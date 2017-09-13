@@ -74,8 +74,7 @@ public class Schematic {
 				TargetUtils.tellPlayer("Reverting to built-in starter schematics");
 				TargetUtils.tellPlayer("Please review readme file");
 				fileName = "/assets/mb/StarterSchematics/Worm/" + roomPath + "/1.schematic";
-				nbtdata = CompressedStreamTools
-						.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
+				nbtdata = CompressedStreamTools.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
 			}
 
 			width = nbtdata.getShort("Width");

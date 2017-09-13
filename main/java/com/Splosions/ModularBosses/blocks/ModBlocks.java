@@ -29,7 +29,8 @@ public class ModBlocks
 	force_field_blue,
 	
 	wormGutsBlock1,
-	wormGutsBlock2
+	wormGutsBlock2,
+	wormTumor
 	;
 	
 	/**
@@ -66,6 +67,9 @@ public class ModBlocks
 		wormGutsBlock2 = new BlockWormGuts(Material.barrier).setUnlocalizedName("worm_guts_2");
 		GameRegistry.registerBlock(wormGutsBlock2, ItemModBlock.class, wormGutsBlock2.getUnlocalizedName().substring(5));
 		
+		wormTumor = new BlockWormTumor(Material.barrier).setUnlocalizedName("worm_tumor").setLightLevel(1);
+		GameRegistry.registerBlock(wormTumor, ItemModBlock.class, wormTumor.getUnlocalizedName().substring(5));
+				
 		force_field_gen = new BlockForceFieldGen(Material.barrier).setUnlocalizedName("force_field_gen");
 		GameRegistry.registerBlock(force_field_gen, ItemModBlock.class, force_field_gen.getUnlocalizedName().substring(5));
 		

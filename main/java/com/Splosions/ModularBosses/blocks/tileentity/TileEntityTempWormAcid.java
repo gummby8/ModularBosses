@@ -7,7 +7,6 @@ import java.util.Random;
 import java.util.Set;
 
 import com.Splosions.ModularBosses.blocks.BlockPortalBlock;
-import com.Splosions.ModularBosses.blocks.FluidTempWormAcid;
 import com.Splosions.ModularBosses.blocks.FluidTempWormBlood;
 import com.Splosions.ModularBosses.blocks.ModFluids;
 import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
@@ -45,14 +44,14 @@ import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityTempWormBlood extends TileEntity implements IUpdatePlayerListBox {
+public class TileEntityTempWormAcid extends TileEntity implements IUpdatePlayerListBox {
 
 	public int ticksExisted;
 
 
 	@Override
 	public void update() {
-		if (Integer.parseInt(this.worldObj.getBlockState(this.pos).getValue(FluidTempWormAcid.LEVEL).toString()) != 0){
+		if (Integer.parseInt(this.worldObj.getBlockState(this.pos).getValue(FluidTempWormBlood.LEVEL).toString()) != 0){
 		this.worldObj.removeTileEntity(this.pos);
 		return;
 		}

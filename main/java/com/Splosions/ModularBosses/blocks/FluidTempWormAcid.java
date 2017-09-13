@@ -1,9 +1,13 @@
 package com.Splosions.ModularBosses.blocks;
 
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormAcid;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -13,14 +17,14 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FluidWormAcid extends BlockFluidClassic{
+public class FluidTempWormAcid extends BlockFluidClassic{
 
-	public FluidWormAcid(Fluid fluid, Material material) {
+	public FluidTempWormAcid(Fluid fluid, Material material) {
 		super(fluid, Material.water);
 		this.lightOpacity = 0;
 		this.lightValue = 15;
 		this.setMaxScaledLight(0);
-
+		quantaPerBlock = 4;
 	}
  
 
@@ -47,6 +51,17 @@ public class FluidWormAcid extends BlockFluidClassic{
 	@Override
 	public boolean isOpaqueCube() {
 		return false;
+	}
+	
+	@Override
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
+	
+		return new TileEntityTempWormAcid();
 	}
 
 }

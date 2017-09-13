@@ -121,7 +121,7 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
 		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
 
-		if (enumfacing == side && ((Boolean) state.getValue(POWERED)).booleanValue()) {
+		if (enumfacing == side && !((Boolean) state.getValue(POWERED)).booleanValue()) {
 			return 15;
 		} else {
 			return 0;

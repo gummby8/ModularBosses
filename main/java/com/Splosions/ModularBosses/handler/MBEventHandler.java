@@ -5,24 +5,33 @@ import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.blocks.FluidWormAcid;
+import com.Splosions.ModularBosses.blocks.FluidWormBlood;
+import com.Splosions.ModularBosses.blocks.FluidWormSaliva;
+import com.Splosions.ModularBosses.blocks.GasWormGas;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.entity.player.EntityRendererAlt;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -32,15 +41,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MBEventHandler {
-	
-	
-	
+
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && MBExtendedPlayer.get((EntityPlayer) event.entity) == null)
 			MBExtendedPlayer.register((EntityPlayer) event.entity);
-		if (event.entity instanceof EntityPlayer && event.entity.getExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME) == null)
-			event.entity.registerExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME, new MBExtendedPlayer((EntityPlayer) event.entity));
+		if (event.entity instanceof EntityPlayer
+				&& event.entity.getExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME) == null)
+			event.entity.registerExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME,
+					new MBExtendedPlayer((EntityPlayer) event.entity));
 	}
 
 	@SubscribeEvent
@@ -59,11 +68,14 @@ public class MBEventHandler {
 			if (object instanceof IBakedModel) {
 				Class<? extends IBakedModel> clazz = ClientProxy.smartModels.get(resource);
 				try {
-					IBakedModel customRender = clazz.getConstructor(IBakedModel.class).newInstance((IBakedModel) object);
+					IBakedModel customRender = clazz.getConstructor(IBakedModel.class)
+							.newInstance((IBakedModel) object);
 					event.modelRegistry.putObject(resource, customRender);
-					ModularBosses.logger.warn("Registered new renderer for resource " + resource + ": " + customRender.getClass().getSimpleName());
+					ModularBosses.logger.warn("Registered new renderer for resource " + resource + ": "
+							+ customRender.getClass().getSimpleName());
 				} catch (NoSuchMethodException e) {
-					ModularBosses.logger.warn("Failed to swap model: class " + clazz.getSimpleName() + " is missing a constructor that takes an IBakedModel");
+					ModularBosses.logger.warn("Failed to swap model: class " + clazz.getSimpleName()
+							+ " is missing a constructor that takes an IBakedModel");
 				} catch (Exception e) {
 					ModularBosses.logger.warn("Failed to swap model with exception: " + e.getMessage());
 				}
@@ -73,19 +85,16 @@ public class MBEventHandler {
 		}
 	}
 
-	
-	
+	@SubscribeEvent
+	public void SpawnEvent(EntityJoinWorldEvent event) {
+		if (event.entity instanceof EntitySquid) {
+			BlockPos pos = new BlockPos(event.entity.posX, event.entity.posY, event.entity.posZ);
+			Block block = event.world.getBlockState(pos).getBlock();
+			if (block instanceof FluidWormBlood || block instanceof FluidWormSaliva || block instanceof FluidWormAcid || block instanceof GasWormGas) {
+				event.setCanceled(true);
+			}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		}
+	}
+
 }
