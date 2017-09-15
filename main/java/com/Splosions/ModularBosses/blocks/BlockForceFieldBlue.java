@@ -85,11 +85,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		//worldIn.scheduleUpdate(pos, this, 1);	
-		//worldIn.setBlockState(pos, state.withProperty(FACING, ((EnumFacing)state.getValue(FACING))).cycleProperty(FACING), 3);
-		//worldIn.setBlockState(pos, state.withProperty(FACING, EnumFacing.EAST), 3);
-		//System.out.println("Dmg = " + ((int)state.getValue(STATE)));
-		if ((int)state.getValue(STATE) == ON){
+		if ((int)state.getValue(STATE) == ON  && !worldIn.isRemote){
 			if ((EnumFacing)state.getValue(FACING) == EnumFacing.NORTH || (EnumFacing)state.getValue(FACING) == EnumFacing.SOUTH){
 				if (!TargetUtils.isBlockPresentPos(worldIn, ModBlocks.force_field_gen, pos.west(10).down(10), pos.east(10).up(10))){
 					worldIn.setBlockToAir(pos);
@@ -129,7 +125,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation
 
 			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(STANDBY)), 3);
 		} else 
-		if((int)state.getValue(STATE) == OFF){
+		if((int)state.getValue(STATE) == OFF && !worldIn.isRemote){
 			if ((EnumFacing)state.getValue(FACING) == EnumFacing.NORTH || (EnumFacing)state.getValue(FACING) == EnumFacing.SOUTH){
 				if (worldIn.getBlockState(pos.east()).getBlock() == ModBlocks.force_field_blue){
 					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing)state.getValue(FACING)).withProperty(STATE, Integer.valueOf(OFF)), 3);

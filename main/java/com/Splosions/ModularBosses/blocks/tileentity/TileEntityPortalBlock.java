@@ -12,6 +12,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
 import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.world.PortalLandingWorldData;
 
 import net.minecraft.block.Block;
@@ -55,13 +56,16 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 	public ArrayList<String> playerNames = new ArrayList<String>();
 
 	Random rand = new Random();
+	private int countDown;
 
 	@Override
 	public void update() {
 
 		if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isRemote) {
-			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), (this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
-			List<AbstractClientPlayer> players = this.worldObj.getEntitiesWithinAABB(AbstractClientPlayer.class, axisalignedbb.expand(3, 2, 3));
+			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(),
+					(this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
+			List<AbstractClientPlayer> players = this.worldObj.getEntitiesWithinAABB(AbstractClientPlayer.class,
+					axisalignedbb.expand(3, 2, 3));
 			for (AbstractClientPlayer player : players) {
 				message = player.getLocationSkin().toString();
 				PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(this));
@@ -69,47 +73,60 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 			}
 		}
 
-		if (this.ticksExisted % 200 == (200 - 1) && !this.worldObj.isRemote) {
-
-			PortalLandingWorldData roomData = (PortalLandingWorldData) this.worldObj.getPerWorldStorage().loadData(PortalLandingWorldData.class, "lobbyPortals");
+		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
+			countDown--;
+			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(),
+					(this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
+			List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
+					axisalignedbb.expand(3, 2, 3));
+			TargetUtils.tellPlayersInList(players, "Teleporting in " + countDown);
+			
+			PortalLandingWorldData roomData = (PortalLandingWorldData) this.worldObj.getPerWorldStorage()
+					.loadData(PortalLandingWorldData.class, "lobbyPortals");
 			if (roomData == null) {
 				System.out.println("No LobbyPortals Tag found, creating one");
 				roomData = new PortalLandingWorldData("lobbyPortals");
 				this.worldObj.getPerWorldStorage().setData("lobbyPortals", roomData);
 			}
+			if (countDown <= 0) {
+				red = getRandomNumberInRange(50, 255);
+				green = getRandomNumberInRange(50, 255);
+				blue = getRandomNumberInRange(50, 255);
 
-			try {
-				int num = (roomData.portalLandingList.size() > 1) ? getRandomNumberInRange(0, roomData.portalLandingList.size() - 1) : 0;
-				String locRaw = roomData.portalLandingList.get(num);
-				String[] locArray = locRaw.split(",", -1);
+				worldObj.markBlockForUpdate(this.pos);
+				try {
+					int num = (roomData.portalLandingList.size() > 1)? getRandomNumberInRange(0, roomData.portalLandingList.size() - 1) : 0;
+					String locRaw = roomData.portalLandingList.get(num);
+					String[] locArray = locRaw.split(",", -1);
 
-				double pX = Double.parseDouble(locArray[1]);
-				double pY = Double.parseDouble(locArray[2]);
-				double pZ = Double.parseDouble(locArray[3]);
+					double pX = Double.parseDouble(locArray[1]);
+					double pY = Double.parseDouble(locArray[2]);
+					double pZ = Double.parseDouble(locArray[3]);
 
-				// TEs dont have a bounding box, have to make an AABB by hand
-				AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(), (this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
-				List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, axisalignedbb.expand(3, 2, 3));
-				for (EntityPlayer player : players) {
-					if (playerNames.contains(player.getDisplayNameString())) {
+					// TEs dont have a bounding box, have to make an AABB by hand
+					
+					for (EntityPlayer player : players) {
+						if (playerNames.contains(player.getDisplayNameString())) {
 
-						EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.worldObj, player, player.posX, player.posY + 1, player.posZ, player.rotationYaw, playerSkins.get(playerNames.indexOf(player.getDisplayNameString())));
-						this.worldObj.spawnEntityInWorld(teleBiped);
-						player.setPositionAndUpdate(pX + 0.5, pY + 1, pZ + 0.5);
+							EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.worldObj, player, player.posX,
+									player.posY + 1, player.posZ, player.rotationYaw,
+									playerSkins.get(playerNames.indexOf(player.getDisplayNameString())));
+							this.worldObj.spawnEntityInWorld(teleBiped);
+							player.setPositionAndUpdate(pX + 0.5, pY + 1, pZ + 0.5);
 
+						}
 					}
-				}
 
-			} catch (Throwable e) {
-				System.out.println("Tried to teleport but no portal landings exist");
+				} catch (Throwable e) {
+					System.out.println("Tried to teleport but no portal landings exist");
+					TargetUtils.tellPlayersInList(players, "Tried to teleport but no portal landings exist");
+
+				}
+				countDown = 10;
 			}
 
-			red = getRandomNumberInRange(50, 255);
-			green = getRandomNumberInRange(50, 255);
-			blue = getRandomNumberInRange(50, 255);
 
-			worldObj.markBlockForUpdate(this.pos);
-		}
+		} 
 
 		ticksExisted++;
 	}

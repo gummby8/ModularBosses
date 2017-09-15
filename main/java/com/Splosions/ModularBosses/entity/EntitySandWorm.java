@@ -299,7 +299,6 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 				}
 			}
 		}
-		//System.out.println("Killing worm with ID " + this.getUniqueID().toString());
 		TargetUtils.tellPlayer("The Sand Worm Has Been Defeated!");
 		return true;
 	}

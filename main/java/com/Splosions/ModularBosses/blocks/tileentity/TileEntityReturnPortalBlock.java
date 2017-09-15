@@ -37,12 +37,6 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	public int returnX;
 	public int returnY;
 	public int returnZ;
-	
-	public EntityDragonPart[] paragonPartArray;
-	public EntityDragonPart paragonPartFurnace;
-	public EntityDragonPart paragonPartRKnee;
-	public EntityDragonPart paragonPartLKnee;
-
 		
 	@Override
 	public void update() {

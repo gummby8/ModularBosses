@@ -59,7 +59,8 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, Boolean.valueOf(false)));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED,
+				Boolean.valueOf(false)));
 		setCreativeTab(MBCreativeTabs.tabBlocks);
 	}
 
@@ -69,13 +70,16 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	}
 
 	@Override
-	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase entity) {
+	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ,
+			int meta, EntityLivingBase entity) {
 		EnumFacing enumfacing = entity.getHorizontalFacing();
-		return super.onBlockPlaced(world, pos, face, hitX, hitY, hitZ, meta, entity).withProperty(FACING, enumfacing).withProperty(POWERED, false);
+		return super.onBlockPlaced(world, pos, face, hitX, hitY, hitZ, meta, entity).withProperty(FACING, enumfacing)
+				.withProperty(POWERED, false);
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity,
+			ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
 		world.setBlockState(pos, state.withProperty(FACING, face.getOpposite()).withProperty(POWERED, false));
 	}
@@ -89,7 +93,8 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 			facing -= 4;
 			powered = true;
 		}
-		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3)).withProperty(POWERED, powered);
+		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta & 3)).withProperty(POWERED,
+				powered);
 	}
 
 	@Override
@@ -145,14 +150,15 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
-
-		if (worldIn.getStrongPower(pos.offset(enumfacing)) == 0) {
-			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, true), 3);
-			worldIn.setBlockState(pos.up(2), ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 1), 3);
-		} else if (worldIn.getStrongPower(pos.offset(enumfacing)) > 0) {
-			worldIn.setBlockState(pos, state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, false), 3);
-			worldIn.setBlockToAir(pos.up(2));
-			worldIn.setBlockState(pos.up(2), ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 0), 3);
+		if (!worldIn.isRemote) {
+			if (worldIn.getStrongPower(pos.offset(enumfacing)) == 0) {
+				worldIn.setBlockState(pos,state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, true), 3);
+				worldIn.setBlockState(pos.up(2),ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 1),3);
+			} else if (worldIn.getStrongPower(pos.offset(enumfacing)) > 0) {
+				worldIn.setBlockState(pos,state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, false),3);
+				worldIn.setBlockToAir(pos.up(2));
+				worldIn.setBlockState(pos.up(2),ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 0),3);
+			}
 		}
 	}
 

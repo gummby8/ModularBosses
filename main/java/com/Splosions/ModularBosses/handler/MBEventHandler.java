@@ -32,6 +32,8 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -50,6 +52,13 @@ public class MBEventHandler {
 				&& event.entity.getExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME) == null)
 			event.entity.registerExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME,
 					new MBExtendedPlayer((EntityPlayer) event.entity));
+	}
+	
+	@SubscribeEvent
+	public void saveDungeonList(Save event){
+		if (event.world.provider.getDimensionId() == 0){
+			
+		}
 	}
 
 	@SubscribeEvent

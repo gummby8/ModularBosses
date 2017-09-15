@@ -143,7 +143,10 @@ public class BlockWormTumor extends Block implements IVanillaRotation
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
     {
         if (entityIn instanceof EntityPlayer){
-        	worldIn.setBlockState(pos, ModFluids.fluidTempWormAcid.getBlock().getDefaultState());
+        	EntityPlayer player = (EntityPlayer)entityIn;
+        	if (!player.capabilities.isCreativeMode) {
+        		worldIn.setBlockState(pos, ModFluids.fluidTempWormAcid.getBlock().getDefaultState());
+			}
         }
     }
 	

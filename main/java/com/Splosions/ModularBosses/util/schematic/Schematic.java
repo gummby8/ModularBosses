@@ -12,7 +12,6 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
-import com.Splosions.ModularBosses.entity.EntityCartographer;
 import com.Splosions.ModularBosses.util.BlockObject;
 import com.Splosions.ModularBosses.util.NBTHelper;
 import com.Splosions.ModularBosses.util.TargetUtils;
@@ -195,101 +194,6 @@ public class Schematic {
 
 	}
 
-	public static void build(String fileName, World world, Entity entity, double x, double y, double z) {
-
-		if (!world.isRemote) {
-			try {
-				File file = new File(fileName);
-				NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
-
-				width = nbtdata.getShort("Width");
-				height = nbtdata.getShort("Height");
-				length = nbtdata.getShort("Length");
-				ItemStack icon = SchematicUtil.getIconFromNBT(nbtdata);
-
-				size = width * height * length;
-				blockObjects = new BlockObject[size];
-
-				byte[] blockIDs = nbtdata.getByteArray("Blocks");
-				byte[] metadata = nbtdata.getByteArray("Data");
-
-				// testing schematica schematics
-				Short id = null;
-				final Map<Short, Short> oldToNew = new HashMap<Short, Short>();
-				if (nbtdata.hasKey("SchematicaMapping")) {
-					final NBTTagCompound mapping = nbtdata.getCompoundTag("SchematicaMapping");
-					final Set<String> names = mapping.getKeySet();
-					for (final String name : names) {
-						oldToNew.put(mapping.getShort(name), (short) BLOCK_REGISTRY.getId(name));
-					}
-				}
-
-				EntityCartographer ent = (EntityCartographer) entity;
-
-				for (int q = 0; q < ent.schemTickInterval; q++) {
-
-					if (i >= height) {
-						counter = 0;
-						i = 0;
-						j = 0;
-						k = 0;
-						ent.mapRoom++;
-						ent.setPositionAndUpdate(ent.posX + ent.roomWidth, ent.posY, ent.posZ);
-						ent.forceChunk();
-						break;
-					} else if (j >= length) {
-						i++;
-						j = 0;
-					} else if (k >= width) {
-						j++;
-						k = 0;
-						System.out.println("Building New Room");
-					} else {
-
-						int blockId = UnsignedBytes.toInt(blockIDs[counter]);
-						// Checks the id reference Map
-						if ((id = oldToNew.get((short) blockId)) != null) {
-							blockId = id;
-						}
-
-						// BlockPos pos = new BlockPos(k, i, j);
-						IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[counter]);
-
-						// blockObjects[counter] = new BlockObject(pos, state);
-						world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
-						counter++;
-
-						k++;
-					}
-				}
-
-				NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
-
-				for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
-					try {
-						TileEntity tileEntity = NBTHelper
-								.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
-						if (tileEntity != null) {
-							NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
-							int Xx = tag.getInteger("x");
-							int Yy = tag.getInteger("y");
-							int Zz = tag.getInteger("z");
-							BlockPos bPos = new BlockPos(x + Xx, y + Yy, z + Zz);
-							world.removeTileEntity(bPos);
-							world.setTileEntity(bPos, tileEntity);
-							System.out.println(tileEntity);
-						}
-					} catch (Exception e) {
-						ModularBosses.logger.warn("TileEntity failed to load properly!", e);
-					}
-				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
 
 	public static void instantBuild(World world, Dungeon dungeon) {
 

@@ -52,14 +52,14 @@ public class TileEntityTempWormBlood extends TileEntity implements IUpdatePlayer
 
 	@Override
 	public void update() {
-		if (Integer.parseInt(this.worldObj.getBlockState(this.pos).getValue(FluidTempWormAcid.LEVEL).toString()) != 0){
+		if (Integer.parseInt(this.worldObj.getBlockState(this.pos).getValue(FluidTempWormBlood.LEVEL).toString()) != 0){
 		this.worldObj.removeTileEntity(this.pos);
 		return;
 		}
 		
 		if (this.ticksExisted > 100 && !this.worldObj.isRemote) {
 			System.out.println("Killing it - " + ticksExisted);	
-			IBlockState state = ModFluids.fluidTempWormAcid.getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, 0);
+			IBlockState state = ModFluids.fluidTempWormBlood.getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, 0);
 			this.worldObj.setBlockState(this.pos, state.withProperty(BlockFluidBase.LEVEL, 1),2);
 			this.worldObj.scheduleUpdate(this.pos, this.worldObj.getBlockState(this.pos).getBlock(), 2);		
 
