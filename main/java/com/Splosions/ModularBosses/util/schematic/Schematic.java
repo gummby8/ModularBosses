@@ -18,6 +18,7 @@ import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.primitives.UnsignedBytes;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
@@ -31,6 +32,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 import net.minecraftforge.fml.common.registry.GameData;
 
@@ -63,15 +65,27 @@ public class Schematic {
 			room = dungeon.dungeonRooms[dungeon.dgnRoomsLength][dungeon.dgnRoomsWidth];
 			roomPath = room.roomCode[0] + room.roomCode[1] + room.roomCode[2] + room.roomCode[3];
 
+			//skips rooms with no doors
+			if (roomPath.equals("WWWW")){
+				dungeon.buildCount = 0;
+				i = 0;
+				j = 0;
+				k = 0;
+				dungeon.roomCount++;
+				dungeon.nextRoom();
+				return;
+			}
+			
+			
 			fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
 			file = new File(fileName);
 
 			if (file.exists()) {
 				nbtdata = SchematicUtil.readTagCompoundFromFile(file);
 			} else {
-				TargetUtils.tellPlayer("No Schematics found in schematics folder");
-				TargetUtils.tellPlayer("Reverting to built-in starter schematics");
-				TargetUtils.tellPlayer("Please review readme file");
+				//TargetUtils.tellPlayer("No Schematics found in schematics folder");
+				//TargetUtils.tellPlayer("Reverting to built-in starter schematics");
+				//TargetUtils.tellPlayer("Please review readme file");
 				fileName = "/assets/mb/StarterSchematics/Worm/" + roomPath + "/1.schematic";
 				nbtdata = CompressedStreamTools.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
 			}
@@ -126,10 +140,18 @@ public class Schematic {
 				if ((id = oldToNew.get((short) blockId)) != null) {
 					blockId = id;
 				}
+				
+				Block block = Block.getBlockById(blockId);
+				
+				if (block instanceof BlockFluidBase || block instanceof BlockLiquid){
+					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
+					System.out.println(state);
+				} else {
+					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
+					world.setBlockState(new BlockPos(x + k, y + i, z + j), state);					
+				}
+				
 
-				IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
-
-				world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
 				dungeon.buildCount++;
 
 				k++;
@@ -180,7 +202,7 @@ public class Schematic {
 
 							world.setTileEntity(bPos, tileEntity);
 							world.markChunkDirty(bPos, tileEntity);
-							System.out.println(tileEntity);
+							//System.out.println(tileEntity);
 						}
 					} catch (Exception e) {
 						ModularBosses.logger.warn("TileEntity failed to load properly!", e);

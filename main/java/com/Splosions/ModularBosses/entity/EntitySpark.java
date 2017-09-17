@@ -114,7 +114,11 @@ public class EntitySpark extends EntityMob {
 				for (int i = 0; i < list.size(); ++i) {
 					Entity entity = (Entity) list.get(i);
 					if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
-						entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);
+						EntityPlayer player = (EntityPlayer) entity;
+						if (!player.capabilities.isCreativeMode){
+							entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);	
+						}
+						
 					}
 				}
 			} else if (this.variant == BLUE && this.worldObj.isRemote) {
@@ -124,7 +128,9 @@ public class EntitySpark extends EntityMob {
 					Entity entity = (Entity) list.get(i);
 					if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
 						EntityPlayer player = (EntityPlayer) entity;
-						player.addPotionEffect(new PotionEffect(15, 200, 1));
+						if (!player.capabilities.isCreativeMode){
+							player.addPotionEffect(new PotionEffect(15, 200, 1));	
+						}
 					}
 				}
 			} else if (this.variant == GREEN && !this.worldObj.isRemote) {
@@ -144,12 +150,15 @@ public class EntitySpark extends EntityMob {
 		for (int i = 0; i < par1List.size(); ++i) {
 			Entity entity = (Entity) par1List.get(i);
 			if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
-				double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
-				double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
-				double d2 = entity.posX - d0;
-				double d3 = entity.posZ - d1;
-				double d4 = d2 * d2 + d3 * d3;
-				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
+				EntityPlayer player = (EntityPlayer) entity;
+				if (!player.capabilities.isCreativeMode){
+					double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
+					double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
+					double d2 = entity.posX - d0;
+					double d3 = entity.posZ - d1;
+					double d4 = d2 * d2 + d3 * d3;
+					entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);	
+				}
 			}
 
 		}

@@ -67,11 +67,11 @@ public class Config {
 		config.load();
 		
 		bossDimension = config.get("000 Dimension Config", "[Config] The Custom Dimension ID [1+]", -3).getInt();
-		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 1).getInt();
+		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 50).getInt();
 		
-		WormRoomSizeX = config.get("001 Worm Dungeon", "[Worm Room Witdth] [1+]", 20).getInt();
-		WormRoomSizeY = config.get("001 Worm Dungeon", "[Worm Room Height] [1+]", 20).getInt();
-		WormRoomSizeZ = config.get("001 Worm Dungeon", "[Worm Room Length] [1+]", 20).getInt();
+		WormRoomSizeX = config.get("001 Worm Dungeon", "[Worm Room Witdth] [1+]", 21).getInt();
+		WormRoomSizeY = config.get("001 Worm Dungeon", "[Worm Room Height] [1+]", 10).getInt();
+		WormRoomSizeZ = config.get("001 Worm Dungeon", "[Worm Room Length] [1+]", 21).getInt();
 		
 		debugHitboxes = config.get("002 Config", "[Config] Show Multi-part monster hitboxes", false).getBoolean(false);
 		
