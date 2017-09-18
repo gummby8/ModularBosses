@@ -35,6 +35,11 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	 */
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
+		
+		
+		
+		
+		
         return itemStackIn;
 	}
 	

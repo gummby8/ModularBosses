@@ -144,6 +144,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		// System.out.println("Entity = " + entity);
 		if (entity instanceof EntityLiving && entity != null) {
 			EntityLiving entityliving = (EntityLiving) entity;
+			entityliving.enablePersistence();
 			Random rn = new Random();
 			x += (ranSpawnLoc == true) ? (rn.nextInt(4) - 2) : 0;
 			z += (ranSpawnLoc == true) ? (rn.nextInt(4) - 2) : 0;
@@ -152,12 +153,12 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			 * BlockPos pos = new BlockPos(x, y, z); IBlockState block =
 			 * this.worldObj.getBlockState(pos); block.getBlock().getMaterial();
 			 */
-			entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+			entityliving.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 			entityliving.rotationYawHead = entityliving.rotationYaw;
 			entityliving.renderYawOffset = entityliving.rotationYaw;
 			spawnList.add(entity.getUniqueID().toString());
-			world.spawnEntityInWorld(entity);
-			entityliving.playLivingSound();
+			world.spawnEntityInWorld(entityliving);
+			//entityliving.playLivingSound();
 			// System.out.println("Spawning");
 
 		} else if (entity == null) {

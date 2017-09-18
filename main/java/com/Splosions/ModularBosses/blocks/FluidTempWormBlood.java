@@ -62,6 +62,22 @@ public class FluidTempWormBlood extends BlockFluidClassic{
 		return this;
 	}
 	
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
+	@Override
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(LEVEL, Integer.valueOf(meta));
+    }
 
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
+	@Override
+    public int getMetaFromState(IBlockState state)
+    {
+        return ((Integer)state.getValue(LEVEL)).intValue();
+    }
 
 }

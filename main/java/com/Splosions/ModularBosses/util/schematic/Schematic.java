@@ -131,8 +131,6 @@ public class Schematic {
 
 			}
 
-			// System.out.println(height + " " + length + " " + width);
-			// System.out.println(i + " " + j + " " + k);
 
 			for (int q = 0; q < dungeon.buildsPerTick; q++) {
 				int blockId = UnsignedBytes.toInt(blockIDs[dungeon.buildCount]);
@@ -145,7 +143,8 @@ public class Schematic {
 				
 				if (block instanceof BlockFluidBase || block instanceof BlockLiquid){
 					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
-					System.out.println(state);
+					world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
+					//System.out.println(state);
 				} else {
 					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
 					world.setBlockState(new BlockPos(x + k, y + i, z + j), state);					

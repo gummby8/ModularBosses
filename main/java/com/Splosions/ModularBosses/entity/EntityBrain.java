@@ -96,7 +96,7 @@ public class EntityBrain extends EntityMob {
 			shieldUp = (sparkCheck()) ? false : true;
 		}
 
-		if (this.ticksExisted % 600 == (20 - 1) && !this.worldObj.isRemote) {
+		if (this.ticksExisted % 600 == (20 - 1) && !this.worldObj.isRemote && target != null) {
 			int count = TargetUtils.getRanNum(1, 6);
 			for (int i = 1; i < count; ++i) {
 				EntitySpark spark = new EntitySpark(worldObj);
@@ -109,7 +109,6 @@ public class EntityBrain extends EntityMob {
 		if (this.ticksExisted % 100 == (20 - 1) && !this.worldObj.isRemote) {
 			int shots = TargetUtils.getRanNum(12, 20);
 			float direction = 360 / shots;
-			System.out.print(shots);
 			for (int i = 0; i < shots; ++i) {
 				EntityBrainEnergy energy = new EntityBrainEnergy(this.worldObj, this.posX,this.posY,this.posZ, (i * direction));
 				this.worldObj.spawnEntityInWorld(energy);
