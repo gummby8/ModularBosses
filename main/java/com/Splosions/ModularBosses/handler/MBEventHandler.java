@@ -32,6 +32,7 @@ import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Save;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -44,6 +45,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MBEventHandler {
 
+	
+	@SubscribeEvent
+	public void onBlockBreak(BreakEvent event){
+		if (event.world.provider.getDimensionId() == Config.bossDimension && !event.getPlayer().capabilities.isCreativeMode){
+			event.setCanceled(true);
+			event.world.scheduleUpdate(event.pos, event.state.getBlock(), 1);
+		}
+	}
+	
+	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer && MBExtendedPlayer.get((EntityPlayer) event.entity) == null)
@@ -54,13 +65,15 @@ public class MBEventHandler {
 					new MBExtendedPlayer((EntityPlayer) event.entity));
 	}
 	
+	/**
 	@SubscribeEvent
 	public void saveDungeonList(Save event){
 		if (event.world.provider.getDimensionId() == 0){
 			
 		}
 	}
-
+	*/
+	
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
 		if (event.entity instanceof EntityPlayer) {

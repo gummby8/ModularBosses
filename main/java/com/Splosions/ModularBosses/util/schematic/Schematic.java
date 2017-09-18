@@ -12,7 +12,6 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
-import com.Splosions.ModularBosses.util.BlockObject;
 import com.Splosions.ModularBosses.util.NBTHelper;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.primitives.UnsignedBytes;
@@ -43,10 +42,9 @@ public class Schematic {
 	private static short length;
 	private static int size;
 	private static int counter = 0;
-	private static int i = 0;
-	private static int j = 0;
-	private static int k = 0;
-	private static BlockObject[] blockObjects;
+	private static int buildHeight = 0;
+	private static int buildLength = 0;
+	private static int buildWidth = 0;
 	private static File file;
 	private static String fileName;
 	private static Room room;
@@ -68,15 +66,15 @@ public class Schematic {
 			//skips rooms with no doors
 			if (roomPath.equals("WWWW")){
 				dungeon.buildCount = 0;
-				i = 0;
-				j = 0;
-				k = 0;
+				buildHeight = 0;
+				buildLength = 0;
+				buildWidth = 0;
 				dungeon.roomCount++;
 				dungeon.nextRoom();
 				return;
 			}
 			
-			
+			//get schematic file from room path folder
 			fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
 			file = new File(fileName);
 
@@ -90,13 +88,7 @@ public class Schematic {
 				nbtdata = CompressedStreamTools.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
 			}
 
-			width = nbtdata.getShort("Width");
-			height = nbtdata.getShort("Height");
-			length = nbtdata.getShort("Length");
-			ItemStack icon = SchematicUtil.getIconFromNBT(nbtdata);
 
-			size = width * height * length;
-			blockObjects = new BlockObject[size];
 
 			byte[] blockIDs = nbtdata.getByteArray("Blocks");
 			byte[] metadata = nbtdata.getByteArray("Data");
@@ -112,20 +104,20 @@ public class Schematic {
 				}
 			}
 
-			i = 0;
-			j = 0;
-			k = 0;
+			buildHeight = 0;
+			buildLength = 0;
+			buildWidth = 0;
 			for (int q = 0; q < dungeon.buildCount; q++) {
-				k++;
-				if (k >= width) {
-					j++;
-					k = 0;
+				buildWidth++;
+				if (buildWidth >= width) {
+					buildLength++;
+					buildWidth = 0;
 				}
-				if (j >= length) {
-					i++;
-					j = 0;
+				if (buildLength >= length) {
+					buildHeight++;
+					buildLength = 0;
 				}
-				if (i >= height) {
+				if (buildHeight >= height) {
 					break;
 				}
 
@@ -141,46 +133,41 @@ public class Schematic {
 				
 				Block block = Block.getBlockById(blockId);
 				
-				if (block instanceof BlockFluidBase || block instanceof BlockLiquid){
-					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
-					world.setBlockState(new BlockPos(x + k, y + i, z + j), state);
-					//System.out.println(state);
-				} else {
-					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
-					world.setBlockState(new BlockPos(x + k, y + i, z + j), state);					
-				}
+				IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
+				world.setBlockState(new BlockPos(x + buildWidth, y + buildHeight, z + buildLength), state);					
+				
+					
 				
 
 				dungeon.buildCount++;
 
-				k++;
+				buildWidth++;
 
-				if (k >= width) {
-					j++;
-					k = 0;
+				if (buildWidth >= width) {
+					buildLength++;
+					buildWidth = 0;
 				}
-				if (j >= length) {
-					i++;
-					j = 0;
+				if (buildLength >= length) {
+					buildHeight++;
+					buildLength = 0;
 				}
-				if (i >= height) {
+				if (buildHeight >= height) {
 					dungeon.buildCount = 0;
-					i = 0;
-					j = 0;
-					k = 0;
+					buildHeight = 0;
+					buildLength = 0;
+					buildWidth = 0;
 					dungeon.roomCount++;
 					dungeon.nextRoom();
 					break;
 				}
 			}
 
+			//rooms finished building, place tile entities
 			NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
-
-			if (i == 0 && j == 0 && k == 0) {
+			if (buildHeight == 0 && buildLength == 0 && buildWidth == 0) {
 				for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
 					try {
-						TileEntity tileEntity = NBTHelper
-								.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+						TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
 						if (tileEntity != null) {
 							NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
 							int Xx = tag.getInteger("x");
@@ -193,8 +180,7 @@ public class Schematic {
 							// to the dungeon specs
 							if (tileEntity instanceof TileEntityReturnPortalBlock) {
 								TileEntityReturnPortalBlock te = (TileEntityReturnPortalBlock) tileEntity;
-								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ,
-										dungeon.returnDimension, dungeon.dungeonID);
+								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ,	dungeon.returnDimension, dungeon.dungeonID);
 								te.writeToNBT(tag);
 								tileEntity = te;
 							}
@@ -242,13 +228,6 @@ public class Schematic {
 			File file = new File(fileName);
 			NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
 
-			width = nbtdata.getShort("Width");
-			height = nbtdata.getShort("Height");
-			length = nbtdata.getShort("Length");
-			ItemStack icon = SchematicUtil.getIconFromNBT(nbtdata);
-
-			size = width * height * length;
-			blockObjects = new BlockObject[size];
 
 			byte[] blockIDs = nbtdata.getByteArray("Blocks");
 			byte[] metadata = nbtdata.getByteArray("Data");
