@@ -3739,14 +3739,14 @@ public class ModelSandWormHead extends ModelBase {
 		this.shape1.rotateAngleX = Entity.ticksExisted * 0.139626F / 4;
 		this.MOUTH_INNER2.rotateAngleX = Entity.ticksExisted * -0.139626F / 4;
 		
-		this.FOOT.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(1 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_1.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(2 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_2.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(3 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_3.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(4 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_4.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(1 + Entity.ticksExisted * -0.16662F) * 0.4F;
-		this.FOOT_5.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(2 + Entity.ticksExisted * -0.16662F) * 0.4F;
-		this.FOOT_6.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(3 + Entity.ticksExisted * -0.16662F) * 0.4F;
-		this.FOOT_7.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(4 + Entity.ticksExisted * -0.16662F) * 0.4F;
+		this.FOOT.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(10 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_1.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(10 + Entity.ticksExisted * 0.16662F) * -0.4F;
+		this.FOOT_2.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(9 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_3.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(9 + Entity.ticksExisted * 0.16662F) * -0.4F;
+		this.FOOT_4.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(3 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_5.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(3 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_6.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(12 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_7.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(12 + Entity.ticksExisted * 0.16662F) * -0.4F;
 	}
 	
 	

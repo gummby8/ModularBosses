@@ -47,6 +47,7 @@ public class EntityBrain extends EntityMob {
 	private int deathTicks;
 	public boolean shieldUp;
 	public EntityPlayer target;
+	public EntityPlayer prevTarget;
 
 	public static int brainMaxHealth;
 	public static int brainDmg;
@@ -91,20 +92,21 @@ public class EntityBrain extends EntityMob {
 	public void onUpdate() {
 		super.onUpdate();
 
+
+
+		if (this.ticksExisted % 600 == (20 - 1) && !this.worldObj.isRemote && target != null) {
+			makeSparks();
+		} 
+		
 		if (this.ticksExisted % 20 == (20 - 1)) {
 			target = TargetUtils.findRandomVisablePlayer(this, 15, 5);
 			shieldUp = (sparkCheck()) ? false : true;
-		}
-
-		if (this.ticksExisted % 600 == (20 - 1) && !this.worldObj.isRemote && target != null) {
-			int count = TargetUtils.getRanNum(1, 6);
-			for (int i = 1; i < count; ++i) {
-				EntitySpark spark = new EntitySpark(worldObj);
-				spark.setPosition(this.posX + TargetUtils.getRanNum(-5, 5), this.posY, this.posZ + TargetUtils.getRanNum(-5, 5));
-				this.worldObj.spawnEntityInWorld(spark);	
+			//Generates sparks the moment a player walks in the room
+			if (prevTarget == null && target != null && !this.worldObj.isRemote){
+				makeSparks();
+				prevTarget = target;
 			}
 		}
-
 		
 		if (this.ticksExisted % 100 == (20 - 1) && !this.worldObj.isRemote) {
 			int shots = TargetUtils.getRanNum(12, 20);
@@ -120,6 +122,16 @@ public class EntityBrain extends EntityMob {
 		
 	}
 
+	
+	public void makeSparks(){
+		int count = TargetUtils.getRanNum(3, 6);
+		for (int i = 1; i < count; ++i) {
+			EntitySpark spark = new EntitySpark(worldObj);
+			spark.setPosition(this.posX + TargetUtils.getRanNum(-5, 5), this.posY, this.posZ + TargetUtils.getRanNum(-5, 5));
+			this.worldObj.spawnEntityInWorld(spark);	
+		}
+	}
+	
 	@Override
 	public void onDeathUpdate() {
 		++this.deathTicks;
@@ -142,7 +154,7 @@ public class EntityBrain extends EntityMob {
 	}
 
 	public boolean sparkCheck() {
-		return TargetUtils.getSpecificList(this, EntitySpark.class, 15, 5).isEmpty();
+		return TargetUtils.getSpecificList(this, EntitySpark.class, 10, 5).isEmpty();
 
 	}
 
