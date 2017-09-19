@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "mb:chunk_loader" },
+        "inventory": { "model": "mb:chunk_loader" }
+    }
+}

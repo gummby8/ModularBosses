@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityChunkLoader;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
@@ -20,6 +21,8 @@ public class ModBlocks
 {
 	public static Block
 	invisibleBlock,
+	chunkLoaderBlock,
+	
 	controlBlock,
 	portalBlock,
 	portalLanding,
@@ -27,6 +30,7 @@ public class ModBlocks
 	phaseFire,
 	force_field_gen,
 	force_field_blue,
+	
 	
 	wormGutsBlock1,
 	wormGutsBlock2,
@@ -79,7 +83,9 @@ public class ModBlocks
 		invisibleBlock = new BlockInvisible(Material.barrier).setUnlocalizedName("invisible_block");
 		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));
 		
-
+		chunkLoaderBlock = new BlockChunkLoader(Material.barrier).setUnlocalizedName("chunk_loader");
+		GameRegistry.registerBlock(chunkLoaderBlock, ItemModBlock.class, chunkLoaderBlock.getUnlocalizedName().substring(5));
+		GameRegistry.registerTileEntity(TileEntityChunkLoader.class, Reference.MOD_ID + ":tileEntityChunkLoader");
 		
 		// register block items for creative tab comparator sorting:
 		try {

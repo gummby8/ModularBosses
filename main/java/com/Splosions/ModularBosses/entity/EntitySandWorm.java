@@ -206,8 +206,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		
 		if (!this.worldObj.isRemote){
 			if (dungeonCompleted()){
+				System.out.println("Worm Dead");
 				this.setDead();
 			}			
+
 			
 		AxisAlignedBB bb = new AxisAlignedBB(this.getPosition().down(),this.getPosition()).expand(15, 15, 15);
 		List teleList = this.worldObj.getEntitiesWithinAABB(Entity.class, bb);
@@ -286,11 +288,11 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 *checks if there is a dungeon with and ID that matches the worms UUID. 
 	 */
 	public boolean dungeonCompleted(){
-		if(!ModularBosses.instance.dungeonList.isEmpty()) {
+		if(!ModularBosses.INSTANCE.dungeonList.isEmpty()) {
 			//System.out.println("not empty");
-			int dungeonCount = ModularBosses.instance.dungeonList.size();
+			int dungeonCount = ModularBosses.INSTANCE.dungeonList.size();
 			for (int x = 0; x < dungeonCount; x++) {
-				Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
+				Dungeon dungeon = ModularBosses.INSTANCE.dungeonList.get(x);
 				//System.out.println("Dungeon ID = " + dungeon.dungeonID);
 				//System.out.println("Monster ID = " + this.getUniqueID().toString());
 				if(dungeon.dungeonID.equals(this.getUniqueID().toString())){ //remember to use .equals() to compare strings you dipstick
@@ -299,7 +301,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 				}
 			}
 		}
-		TargetUtils.tellPlayer("The Sand Worm Has Been Defeated!");
+		
 		return true;
 	}
 	
@@ -309,7 +311,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	private void createDungeon() {
 		if (!this.worldObj.isRemote){
 			DungeonNurkach dungeon = new DungeonNurkach(this.getUniqueID().toString() ,this.getPosition(), this.dimension);
-			ModularBosses.instance.dungeonList.add(dungeon);
+			ModularBosses.INSTANCE.dungeonList.add(dungeon);
 		}
 	}
 

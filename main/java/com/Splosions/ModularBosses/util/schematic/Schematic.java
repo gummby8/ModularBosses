@@ -9,9 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.blocks.BlockControlBlock;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
+import com.Splosions.ModularBosses.util.BlockObject;
 import com.Splosions.ModularBosses.util.NBTHelper;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.primitives.UnsignedBytes;
@@ -45,6 +44,7 @@ public class Schematic {
 	private static int buildHeight = 0;
 	private static int buildLength = 0;
 	private static int buildWidth = 0;
+	private static BlockObject[] blockObjects;
 	private static File file;
 	private static String fileName;
 	private static Room room;
@@ -74,7 +74,7 @@ public class Schematic {
 				return;
 			}
 			
-			//get schematic file from room path folder
+			
 			fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
 			file = new File(fileName);
 
@@ -85,10 +85,16 @@ public class Schematic {
 				//TargetUtils.tellPlayer("Reverting to built-in starter schematics");
 				//TargetUtils.tellPlayer("Please review readme file");
 				fileName = "/assets/mb/StarterSchematics/Worm/" + roomPath + "/1.schematic";
-				nbtdata = CompressedStreamTools.readCompressed(ModularBosses.class.getClass().getResourceAsStream(fileName));
+				nbtdata = CompressedStreamTools.readCompressed(ModularBosses.INSTANCE.getClass().getResourceAsStream(fileName));
 			}
 
+			width = nbtdata.getShort("Width");
+			height = nbtdata.getShort("Height");
+			length = nbtdata.getShort("Length");
+			ItemStack icon = SchematicUtil.getIconFromNBT(nbtdata);
 
+			size = width * height * length;
+			blockObjects = new BlockObject[size];
 
 			byte[] blockIDs = nbtdata.getByteArray("Blocks");
 			byte[] metadata = nbtdata.getByteArray("Data");
@@ -133,10 +139,14 @@ public class Schematic {
 				
 				Block block = Block.getBlockById(blockId);
 				
-				IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
-				world.setBlockState(new BlockPos(x + buildWidth, y + buildHeight, z + buildLength), state);					
-				
-					
+				//stores blockstates in second pass for placement after first pass
+				if (block == Blocks.redstone_torch || block == Blocks.unlit_redstone_torch || block instanceof BlockFluidBase || block instanceof BlockLiquid){
+					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
+					room.secondPass.add(new BlockObject(new BlockPos(x + buildWidth, y + buildHeight, z + buildLength), state));
+				} else {
+					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
+					world.setBlockState(new BlockPos(x + buildWidth, y + buildHeight, z + buildLength), state);					
+				}
 				
 
 				dungeon.buildCount++;
@@ -161,13 +171,19 @@ public class Schematic {
 					break;
 				}
 			}
+			
+			//Place blocks from second pass
+			for (int b = 0; b < room.secondPass.size(); b++) {
+				world.setBlockState(new BlockPos(room.secondPass.get(b).getPos().getX(), room.secondPass.get(b).getPos().getY(), room.secondPass.get(b).getPos().getZ()), room.secondPass.get(b).getState());	
+			}
 
-			//rooms finished building, place tile entities
 			NBTTagList tileEntitiesList = nbtdata.getTagList("TileEntities", Constants.NBT.TAG_COMPOUND);
+
 			if (buildHeight == 0 && buildLength == 0 && buildWidth == 0) {
 				for (int i = 0; i < tileEntitiesList.tagCount(); i++) {
 					try {
-						TileEntity tileEntity = NBTHelper.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
+						TileEntity tileEntity = NBTHelper
+								.readTileEntityFromCompound(tileEntitiesList.getCompoundTagAt(i));
 						if (tileEntity != null) {
 							NBTTagCompound tag = tileEntitiesList.getCompoundTagAt(i);
 							int Xx = tag.getInteger("x");
@@ -180,7 +196,8 @@ public class Schematic {
 							// to the dungeon specs
 							if (tileEntity instanceof TileEntityReturnPortalBlock) {
 								TileEntityReturnPortalBlock te = (TileEntityReturnPortalBlock) tileEntity;
-								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ,	dungeon.returnDimension, dungeon.dungeonID);
+								te.setReturnLocation(dungeon.originX, dungeon.originY, dungeon.originZ,
+										dungeon.returnDimension, dungeon.dungeonID);
 								te.writeToNBT(tag);
 								tileEntity = te;
 							}
@@ -228,6 +245,13 @@ public class Schematic {
 			File file = new File(fileName);
 			NBTTagCompound nbtdata = SchematicUtil.readTagCompoundFromFile(file);
 
+			width = nbtdata.getShort("Width");
+			height = nbtdata.getShort("Height");
+			length = nbtdata.getShort("Length");
+			ItemStack icon = SchematicUtil.getIconFromNBT(nbtdata);
+
+			size = width * height * length;
+			blockObjects = new BlockObject[size];
 
 			byte[] blockIDs = nbtdata.getByteArray("Blocks");
 			byte[] metadata = nbtdata.getByteArray("Data");

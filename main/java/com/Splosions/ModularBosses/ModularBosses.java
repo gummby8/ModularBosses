@@ -28,6 +28,7 @@ import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
+import com.Splosions.ModularBosses.handler.ChunkLoadingHandler;
 import com.Splosions.ModularBosses.handler.GuiHandler;
 import com.Splosions.ModularBosses.handler.MBEventHandler;
 import com.Splosions.ModularBosses.handler.TickHandler;
@@ -50,7 +51,7 @@ public class ModularBosses {
 	public static CommonProxy proxy;
 
 	@Instance(Reference.MOD_ID)
-	public static ModularBosses instance;
+	public static ModularBosses INSTANCE;
 
 	@EventHandler
 	public void serverLoad(FMLServerStartingEvent event)
@@ -60,6 +61,7 @@ public class ModularBosses {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+ 		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, new ChunkLoadingHandler());
 		FMLCommonHandler.instance().bus().register(new TickHandler());
 		TestBiomesRegistry.registerBiomes();
 		ModFluids.registerFluids();

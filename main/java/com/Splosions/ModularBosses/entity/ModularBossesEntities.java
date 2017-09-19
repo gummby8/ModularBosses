@@ -101,70 +101,70 @@ public class ModularBossesEntities
 	private static void registerEntities() {
 		int modEntityIndex = 0;
 		//Projectile Entities
-		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.instance, 64, 3, true);
-		EntityRegistry.registerModEntity(EntityEnergyArrow.class, "Energy Arrow", ++modEntityIndex, ModularBosses.instance, 300, 1, true);
-		EntityRegistry.registerModEntity(EntityBrainEnergy.class, "Brain Energy", ++modEntityIndex, ModularBosses.instance, 300, 1, true);
-		EntityRegistry.registerModEntity(EntityBloodBlob.class, "Blood Blob", ++modEntityIndex, ModularBosses.instance, 300, 1, true);
-		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityBait.class, "Bait", ++modEntityIndex, ModularBosses.instance, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.INSTANCE, 64, 3, true);
+		EntityRegistry.registerModEntity(EntityEnergyArrow.class, "Energy Arrow", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
+		EntityRegistry.registerModEntity(EntityBrainEnergy.class, "Brain Energy", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
+		EntityRegistry.registerModEntity(EntityBloodBlob.class, "Blood Blob", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
+		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityBait.class, "Bait", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlueWave.class, "Blue Wave", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntitySpiritShard.class, "Spirit Shard", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlackHole.class, "Black Hole", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityFlameShot.class, "Flame SHot", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityTeleportBiped.class, "Teleport Model", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityTeleportBiped.class, "Teleport Model", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 	
 		
 		// MOBS and egg colors
-		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.instance, 400, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.INSTANCE, 400, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.INSTANCE, 400, 3, true);
 		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xFFFFFF);
 		
-		EntityRegistry.registerModEntity(EntityBrain.class, "Brain", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityBrain.class, "Brain", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityBrain.class, "Brain", 0xffc1c1, 0xccbdbd);
 		
-		EntityRegistry.registerModEntity(EntityHeart.class, "Heart", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityHeart.class, "Heart", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityHeart.class, "Heart", 0xff0000, 0x000000);
 		
-		EntityRegistry.registerModEntity(EntitySpark.class, "Spark", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySpark.class, "Spark", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntitySpark.class, "Spark", 0x9800ff, 0x00ff2a);
 		
-		EntityRegistry.registerModEntity(EntitySkull.class, "Skull", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntitySkull.class, "Skull", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntitySkull.class, "Skull", 0xFFFBAF, 0x000000);
 				
-		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
-		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
 		
-		EntityRegistry.registerModEntity(EntityMoldormAlpha.class, "Moldorm", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityMoldormAlpha.class, "Moldorm", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityMoldormAlpha.class, "Moldorm", 0x89FF01, 0xDEFF01);
 		
-		EntityRegistry.registerModEntity(EntityHeavyChorp.class, "HeavyChorp", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityHeavyChorp.class, "HeavyChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityHeavyChorp.class, "HeavyChorp", 0x8C713F, 0xFFFFFF);
 		
-		EntityRegistry.registerModEntity(EntityParagon.class, "Paragon", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityParagon.class, "Paragon", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityParagon.class, "Paragon", 0x5C2918, 0xFF9100);
 		
-		EntityRegistry.registerModEntity(EntityTatters.class, "Tatters", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityTatters.class, "Tatters", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityTatters.class, "Tatters", 0x666565, 0x000000);
 		
-		EntityRegistry.registerModEntity(EntityEyeballOctopus.class, "EyeballOctopus", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityEyeballOctopus.class, "EyeballOctopus", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityEyeballOctopus.class, "EyeballOctopus", 0xff66cc, 0x00ccff);
 		
-		EntityRegistry.registerModEntity(EntityTick.class, "Tick", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityTick.class, "Tick", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityTick.class, "Tick", 0x6B3201, 0xFF6200);
 		
-		EntityRegistry.registerModEntity(EntityShadeHowler.class, "ShadeHowler", ++modEntityIndex, ModularBosses.instance, 80, 3, true);
+		EntityRegistry.registerModEntity(EntityShadeHowler.class, "ShadeHowler", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityShadeHowler.class, "ShadeHowler", 0x000000, 0x00ccff);
 
 		}
 
 	public static void registerEntity(Class<? extends Entity> entityClass, String name, int modEntityIndex, int primaryColor, int secondaryColor) {
-		EntityRegistry.registerModEntity(entityClass, name, modEntityIndex, ModularBosses.instance, 80, 3, false);
+		EntityRegistry.registerModEntity(entityClass, name, modEntityIndex, ModularBosses.INSTANCE, 80, 3, false);
 		CustomEntityList.addMapping(entityClass, name, primaryColor, secondaryColor);
 	}
 

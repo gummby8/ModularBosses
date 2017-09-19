@@ -119,10 +119,10 @@ public class MBClientEventHandler {
 			GlStateManager.blendFunc(1, 1);
 		}
 
-		if (ModularBosses.instance.playerTarget != null && !ModularBosses.instance.playerTarget.isDead && event.entityPlayer == Minecraft.getMinecraft().thePlayer) {
+		if (ModularBosses.INSTANCE.playerTarget != null && !ModularBosses.INSTANCE.playerTarget.isDead && event.entityPlayer == Minecraft.getMinecraft().thePlayer) {
 			player.motionX = player.motionY = player.motionZ = 0;
 
-			Entity target = ModularBosses.instance.playerTarget;
+			Entity target = ModularBosses.INSTANCE.playerTarget;
 			double dx = player.posX - target.posX;
 			double dz = player.posZ - target.posZ;
 			double angle = Math.atan2(dz, dx) * 180 / Math.PI;

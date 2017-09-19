@@ -57,7 +57,7 @@ public class TileEntityTempWormAcid extends TileEntity implements IUpdatePlayerL
 		}
 		
 		if (this.ticksExisted > 100 && !this.worldObj.isRemote) {
-			System.out.println("Killing it - " + ticksExisted);	
+			//System.out.println("Killing it - " + ticksExisted);	
 			IBlockState state = ModFluids.fluidTempWormAcid.getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, 0);
 			this.worldObj.setBlockState(this.pos, state.withProperty(BlockFluidBase.LEVEL, 1),2);
 			this.worldObj.scheduleUpdate(this.pos, this.worldObj.getBlockState(this.pos).getBlock(), 2);		

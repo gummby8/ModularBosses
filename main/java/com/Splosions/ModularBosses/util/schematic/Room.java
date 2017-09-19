@@ -1,10 +1,16 @@
 package com.Splosions.ModularBosses.util.schematic;
 
+import java.util.ArrayList;
+
+import com.Splosions.ModularBosses.util.BlockObject;
+
 public class Room {
 	public int north;
 	public int west;
 	public int south;
 	public int east;
+	
+	public ArrayList<BlockObject> secondPass = new ArrayList<BlockObject>();;
 	
 	public int type = 0;
 	

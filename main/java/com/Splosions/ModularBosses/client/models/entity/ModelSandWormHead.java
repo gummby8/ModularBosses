@@ -3743,10 +3743,10 @@ public class ModelSandWormHead extends ModelBase {
 		this.FOOT_1.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(2 + Entity.ticksExisted * 0.16662F) * 0.4F;
 		this.FOOT_2.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(3 + Entity.ticksExisted * 0.16662F) * 0.4F;
 		this.FOOT_3.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(4 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_4.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(5 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_5.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(6 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_6.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(7 + Entity.ticksExisted * 0.16662F) * 0.4F;
-		this.FOOT_7.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(8 + Entity.ticksExisted * 0.16662F) * 0.4F;
+		this.FOOT_4.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(1 + Entity.ticksExisted * -0.16662F) * 0.4F;
+		this.FOOT_5.rotateAngleY = (float) Math.toRadians(-150) + MathHelper.cos(2 + Entity.ticksExisted * -0.16662F) * 0.4F;
+		this.FOOT_6.rotateAngleY = (float) Math.toRadians(-130) + MathHelper.cos(3 + Entity.ticksExisted * -0.16662F) * 0.4F;
+		this.FOOT_7.rotateAngleY = (float) Math.toRadians(-50) + MathHelper.cos(4 + Entity.ticksExisted * -0.16662F) * 0.4F;
 	}
 	
 	

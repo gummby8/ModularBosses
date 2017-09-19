@@ -39,6 +39,6 @@ public class OpenControlBlockEditorPacket extends AbstractClientMessage<OpenCont
 	@Override
 	protected void process(EntityPlayer player, Side side) {
 		// TileEntity checked in IGuiHandler, so no need to do so here
-		player.openGui(ModularBosses.instance, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
+		player.openGui(ModularBosses.INSTANCE, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
 	}
 }

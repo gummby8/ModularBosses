@@ -32,7 +32,7 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	public int ticksExisted;
 	public int countDown;
 
-	public String dungeonID;
+	public String dungeonID = "";
 	public int returnDimension;
 	public int returnX;
 	public int returnY;
@@ -57,13 +57,13 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 				}
 				//if the block is powered that means the boss has died, the dungeon is complete
 				//remove the dungeon from the dungeon list so the worm entity can die
-				if(!ModularBosses.instance.dungeonList.isEmpty()) {
-					int dungeonCount = ModularBosses.instance.dungeonList.size();
+				if(!ModularBosses.INSTANCE.dungeonList.isEmpty()) {
+					int dungeonCount = ModularBosses.INSTANCE.dungeonList.size();
 					for (int x = 0; x < dungeonCount; x++) {
-						Dungeon dungeon = ModularBosses.instance.dungeonList.get(x);
+						Dungeon dungeon = ModularBosses.INSTANCE.dungeonList.get(x);
 						if(dungeon.dungeonID.equals(dungeonID)){
 							System.out.println("Removed ID = " + dungeonID);
-							ModularBosses.instance.dungeonList.remove(x);
+							ModularBosses.INSTANCE.dungeonList.remove(x);
 							break;
 						}
 					}

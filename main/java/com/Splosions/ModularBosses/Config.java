@@ -67,7 +67,7 @@ public class Config {
 		config.load();
 		
 		bossDimension = config.get("000 Dimension Config", "[Config] The Custom Dimension ID [1+]", -3).getInt();
-		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 50).getInt();
+		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 5000).getInt();
 		
 		WormRoomSizeX = config.get("001 Worm Dungeon", "[Worm Room Witdth] [1+]", 21).getInt();
 		WormRoomSizeY = config.get("001 Worm Dungeon", "[Worm Room Height] [1+]", 10).getInt();

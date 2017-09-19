@@ -87,7 +87,7 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 			if (world.isRemote && te instanceof TileEntityControlBlock && player.getHeldItem() == null) {
 			
 					//System.out.println("GUI?");
-					player.openGui(ModularBosses.instance, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
+					player.openGui(ModularBosses.INSTANCE, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
 
 			}
 			

@@ -9,6 +9,7 @@ import com.Splosions.ModularBosses.blocks.FluidWormAcid;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.FluidWormSaliva;
 import com.Splosions.ModularBosses.blocks.GasWormGas;
+import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.entity.player.EntityRendererAlt;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
@@ -34,7 +35,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.event.world.WorldEvent.Save;
+import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -65,14 +66,14 @@ public class MBEventHandler {
 					new MBExtendedPlayer((EntityPlayer) event.entity));
 	}
 	
-	/**
+	@SideOnly(Side.SERVER)
 	@SubscribeEvent
-	public void saveDungeonList(Save event){
+	public void dimensionLoad(Load event){
 		if (event.world.provider.getDimensionId() == 0){
-			
+			MinecraftServer.getServer().worldServerForDimension(Config.bossDimension).setBlockState(new BlockPos(1,1,1), ModBlocks.chunkLoaderBlock.getDefaultState());
 		}
 	}
-	*/
+	
 	
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {

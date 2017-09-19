@@ -211,7 +211,7 @@ public class EntityShadeHowler extends EntityMob {
 					this.target = (Entity) list.get(0);
 					MBExtendedPlayer.get((EntityPlayer) this.target).knockdownTime = 20;
 					if (this.target == Minecraft.getMinecraft().thePlayer) {
-						ModularBosses.instance.playerTarget = this;
+						ModularBosses.INSTANCE.playerTarget = this;
 					}
 				}
 
@@ -264,7 +264,7 @@ public class EntityShadeHowler extends EntityMob {
 	 * wont go away
 	 */
 	protected void onDeathUpdate() {
-		ModularBosses.instance.playerTarget = null;	
+		ModularBosses.INSTANCE.playerTarget = null;	
 		setDead();
 	}
 	
@@ -299,7 +299,7 @@ public class EntityShadeHowler extends EntityMob {
 				
 				//entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
 				//entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
-				ModularBosses.instance.playerTarget = this;
+				ModularBosses.INSTANCE.playerTarget = this;
 				//MBExtendedPlayer.get(player).knockdownTime = 60;
 					
 				//System.out.println(entity);
