@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses;
 
 import java.io.File;
 
+import com.Splosions.ModularBosses.entity.EntityBrain;
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 import com.Splosions.ModularBosses.entity.EntityGolem;
@@ -25,27 +26,6 @@ public class Config {
 	public static int WormRoomSizeZ;
 	
 	public static boolean debugHitboxes;
-	/*================== BOSS & MONSTER SETTINGS  =====================*/
-	
-	
-	/*================== SHADE HOWLER SETTINGS  =====================*/
-	public static double shadehowlerMaxHealth;
-	public static double shadehowlerTouchDmg;
-	
-	
-	/*================== SKULL SETTINGS  =====================*/
-	public static double skullMaxHealth;
-	public static double skullTouchDmg;
-	
-	/*================== GOLEM SETTINGS  =====================*/
-	public static double golemMaxHealth;
-	public static double golemBoulderDmg;
-	public static double golemPunchDmg;
-	
-	/*================== MOLDORM SETTINGS  =====================*/
-	public static double moldormMaxHealth;
-	public static double moldormTouchDmg;
-	
 	
 	
 	/*================== WEAPON & TOOL SETTINGS  =====================*/
@@ -94,6 +74,7 @@ public class Config {
 	public static void postInit() {
 		config.addCustomCategoryComment("200 Boss & Monster Settings", "This Category Contains Settings For All Of The Various Bosses And Monsters From Modular Bosses");
 
+		EntityBrain.postInitConfig(config);
 		EntityParagon.postInitConfig(config); 
 		EntityTatters.postInitConfig(config);
 		EntityChorpChorp.postInitConfig(config); 
