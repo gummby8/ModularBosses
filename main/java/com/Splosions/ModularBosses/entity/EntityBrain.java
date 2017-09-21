@@ -51,13 +51,17 @@ public class EntityBrain extends EntityMob {
 
 	public static int brainMaxHealth;
 	public static int brainDmg;
+	public static int brainAttackTImer;
+	public static int sparkTimer;
+	public static int sparkMax;
+	public static int sparkMin;
 
 	public EntityBrain(World worldIn) {
 		super(worldIn);
 		//sets hitbox size
 		this.setSize(4F, 3F);
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false));
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, brainDmg, false));
+		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, brainDmg, true));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
@@ -68,13 +72,11 @@ public class EntityBrain extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(brainMaxHealth);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
-		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0);
 	}
 
 	@Override
@@ -84,8 +86,12 @@ public class EntityBrain extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		brainMaxHealth = config.get("Brain", "[Max Health] Set the Hp of Brain Spawns [1+]", 20).getInt();
-		brainDmg = config.get("Brain", "[Attack Damage] Set the damage of Brain Spawns [1+]", 10).getInt();
+		brainMaxHealth = config.get("201 Brain", "[Max Health] Set max Hp[1+]", 200).getInt();
+		brainDmg = config.get("201 Brain", "[Attack Damage] Set the damage [1+]", 10).getInt();
+		brainAttackTImer = config.get("201 Brain", "[Attack Times] Set the attack interval[1+]", 5).getInt() * 20;
+		sparkTimer = config.get("201 Brain", "[Spark Spawn TIme] Set the spawn interval of Spark waves [1+]", 30).getInt() * 20;
+		sparkMax = config.get("201 Brain", "[Spark Wave Count Max] Set the maximum spawn count for Spark waves [1+]", 3).getInt();
+		sparkMin = config.get("201 Brain", "[Spark Wave Count Min] Set the minimum spawn count for Spark waves [1+]", 6).getInt();
 	}
 
 	@Override
@@ -94,7 +100,7 @@ public class EntityBrain extends EntityMob {
 
 
 
-		if (this.ticksExisted % 600 == (20 - 1) && !this.worldObj.isRemote && target != null) {
+		if (this.ticksExisted % sparkTimer == (20 - 1) && !this.worldObj.isRemote && target != null) {
 			makeSparks();
 		} 
 		
@@ -108,11 +114,11 @@ public class EntityBrain extends EntityMob {
 			}
 		}
 		
-		if (this.ticksExisted % 100 == (20 - 1) && !this.worldObj.isRemote) {
+		if (this.ticksExisted % brainAttackTImer == (20 - 1) && !this.worldObj.isRemote) {
 			int shots = TargetUtils.getRanNum(12, 20);
 			float direction = 360 / shots;
 			for (int i = 0; i < shots; ++i) {
-				EntityBrainEnergy energy = new EntityBrainEnergy(this.worldObj, this.posX,this.posY,this.posZ, (i * direction));
+				EntityBrainEnergy energy = new EntityBrainEnergy(this.worldObj, this.posX,this.posY,this.posZ, (i * direction), brainDmg);
 				this.worldObj.spawnEntityInWorld(energy);
 			}
 		}
@@ -124,7 +130,7 @@ public class EntityBrain extends EntityMob {
 
 	
 	public void makeSparks(){
-		int count = TargetUtils.getRanNum(3, 6);
+		int count = TargetUtils.getRanNum(sparkMin, sparkMax);
 		for (int i = 1; i < count; ++i) {
 			EntitySpark spark = new EntitySpark(worldObj);
 			spark.setPosition(this.posX + TargetUtils.getRanNum(-5, 5), this.posY, this.posZ + TargetUtils.getRanNum(-5, 5));

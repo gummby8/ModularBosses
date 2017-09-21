@@ -39,6 +39,7 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 
 	public static int eyeballOctopusMaxHealth;
 	public static int eyeballOctopusDmg;
+	public static int attackInterval;
 	
 	private static final int DEATH_WATCHER = 16;
 	private static final int TARGET_ID_WATCHER = 17;
@@ -99,8 +100,9 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 
 	
 	public static void postInitConfig(Configuration config) {
-		eyeballOctopusMaxHealth = config.get("Eyeball Octopus", "[Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
-		eyeballOctopusDmg = config.get("Eyeball Octopus", "[Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+		eyeballOctopusMaxHealth = config.get("209 Eyeball Octopus", "[Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
+		eyeballOctopusDmg = config.get("209 Eyeball Octopus", "[Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+		attackInterval = config.get("209 Eyeball Octopus", "[Attack Interval] Set the Beam Interval timer [1+]", 1).getInt() * 20;
 	}
 	
 	/**
@@ -108,7 +110,7 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 	 */
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase entity, float p_82196_2_) {
-		this.attackCounter = 10;
+		this.attackCounter += attackInterval;
 		this.target = entity;
 		this.dataWatcher.updateObject(TARGET_ID_WATCHER, this.target.getEntityId());
 		this.dataWatcher.updateObject(ATTACK_WATCHER, this.attackCounter);

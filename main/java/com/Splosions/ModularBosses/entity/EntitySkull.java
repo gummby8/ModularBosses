@@ -77,9 +77,9 @@ public class EntitySkull  extends EntityFlying implements IMob
 
     
 	public static void postInitConfig(Configuration config) {
-		skullMaxHealth = config.get("Skull", "[Max Health] Set the Hp of Skull Spawns [1+]", 20).getInt();
-		skullDmg = config.get("Skull", "[Attack Damage] Set the Beam Damage of Skull Spawns [1+]", 10).getInt();
-		skullFollowDistance = config.get("Skull", "[Config] Set the distance a Skull can follow a player [1+]", 20).getInt();
+		skullMaxHealth = config.get("210 Skull", "[Max Health] Set the Hp of Skull Spawns [1+]", 20).getInt();
+		skullDmg = config.get("210 Skull", "[Attack Damage] Set the Beam Damage of Skull Spawns [1+]", 10).getInt();
+		skullFollowDistance = config.get("210 Skull", "[Config] Set the distance a Skull can follow a player [1+]", 20).getInt();
 		
 	}
 

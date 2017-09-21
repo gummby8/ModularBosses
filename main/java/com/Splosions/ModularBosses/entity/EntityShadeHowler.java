@@ -30,6 +30,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -118,6 +119,13 @@ public class EntityShadeHowler extends EntityMob {
 
 	}
 
+	
+	public static void postInitConfig(Configuration config) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	/**
 	 * Called to update the entity's position/logic.
 	 */
@@ -317,5 +325,7 @@ public class EntityShadeHowler extends EntityMob {
 			howlEndZ = ze;
 		}
 	}
+
+
 
 }

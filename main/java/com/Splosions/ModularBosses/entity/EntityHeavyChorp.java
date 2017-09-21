@@ -1,6 +1,7 @@
 package com.Splosions.ModularBosses.entity;
 
 
+import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 
 import net.minecraft.entity.Entity;
@@ -124,11 +125,11 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	}
 	
 	public static void postInitConfig(Configuration config) {
-		heavychorpMaxHealth = config.get("Heavy Chorp", "[Max Health] Set the Hp of Heavy Chorp Spawns [1+]", 20).getInt();
-		heavychorpTouchDmg = config.get("Heavy Chorp", "[Attack Damage] Set the Touch Damage of Heavy Chorp Spawns [1+]", 20).getInt();
-		heavychorpSlimeDmg = config.get("Heavy Chorp", "[Attack Damage] Set Slime Damage of Heavy Chorp Spawns [1+]", 10).getInt();
-		heavychorpSlimeSlow = config.get("Heavy Chorp", "[Attribute] Set Slime Slow Debuff Strength of Heavy Chorp Spawns [1+]", 4).getInt();
-		heavychorpSlimeSlowDuration = config.get("Heavy Chorp", "[Attribute] Set Slime Slow Debuff Durration of Heavy Chorp Spawns [1+]", 120).getInt();
+		heavychorpMaxHealth = config.get("207 Heavy Chorp", "[Max Health] Set the Hp of Heavy Chorp Spawns [1+]", 600).getInt();
+		heavychorpTouchDmg = config.get("207 Heavy Chorp", "[Attack Damage] Set the Touch Damage of Heavy Chorp Spawns [1+]", 100).getInt();
+		heavychorpSlimeDmg = config.get("207 Heavy Chorp", "[Attack Damage] Set Slime Damage of Heavy Chorp Spawns [1+]", 10).getInt();
+		heavychorpSlimeSlow = config.get("207 Heavy Chorp", "[Attribute] Set Slime Slow Debuff Strength of Heavy Chorp Spawns [1+]", 4).getInt();
+		heavychorpSlimeSlowDuration = config.get("207 Heavy Chorp", "[Attribute] Set Slime Slow Debuff Durration of Heavy Chorp Spawns [1+]", 6).getInt() * 20;
 	}
 	
     protected void entityInit()
@@ -241,7 +242,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
      */
     protected Entity findPlayerToAttack()
     {
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 16.0D);
+        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 25.0D);
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
     
@@ -257,7 +258,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 			
 		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
 			distance = entityToAttack.getDistanceToEntity(this);
-			if (distance > 16.0F) {
+			if (distance > 25.0F) {
 				entityToAttack = null;
 			} else if (canEntityBeSeen(entityToAttack)) {
 				faceEntity(entityToAttack, 30.0F, 120.0F);
@@ -270,32 +271,31 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 
     }
     
-
+	
 	protected void attackEntity(Entity entity, float distance) {
 		EntityLivingBase ent = (EntityLivingBase) entity;
-			if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
-				if (this.attackCounter == 40) {
-					this.worldObj.playSoundAtEntity(this, "modularbosses:chorp_slime", 1.0F, 1.0F);
-				}
-				
-				if (this.attackCounter >= 40) {
-					float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
-					Entity projectile;
-					projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14),0,0,0,0,0, heavychorpSlimeDmg, heavychorpSlimeSlowDuration, heavychorpSlimeSlow);
-					if (!this.worldObj.isRemote){
+		if (!this.worldObj.isRemote){
+		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
+			if (this.attackCounter == 40) {
+				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
+			}
+			if (this.attackCounter >= 40) {
+				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+				Entity projectile;
+				for (int i = 0; i < 4; i++){
+						projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.1F, 14,0,0,0,0,0, heavychorpSlimeDmg, heavychorpSlimeSlowDuration, heavychorpSlimeSlow);
 						worldObj.spawnEntityInWorld(projectile);
-					}
-					
-				}
-			if (this.attackCounter >= 60) 
-			{
+					}	
+			}
+			if (this.attackCounter >= 60) {
 				this.attackCounter = -40;
 			}
 		}
-		
-		this.attackCounter++;
 
-    }
+		this.attackCounter++;
+		
+		}		
+	}
     	 
     	 
 }

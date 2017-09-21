@@ -24,7 +24,7 @@ public class EntityBrainEnergy extends EntityMobThrowable {
 	protected static final int SHOOTER_INDEX = 22;
 	public EntityLivingBase Shooter;
 
-	private float Dmg;
+	private float Dmg = 1;
 
 	public EntityBrainEnergy(World world) {
 		super(world);
@@ -35,9 +35,10 @@ public class EntityBrainEnergy extends EntityMobThrowable {
 		super(world, entity);
 	}
 
-	public EntityBrainEnergy(World world, double x, double y, double z, float YAW) {
+	public EntityBrainEnergy(World world, double x, double y, double z, float YAW, int dmg) {
 		super(world, x, y, z);
 		this.YAW = YAW;
+		this.Dmg = dmg;
 	}
 
 	public EntityBrainEnergy(World world, EntityLivingBase shooter, float wobble, float FrontToBack, float YOffset, float SideToSide) {

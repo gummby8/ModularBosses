@@ -83,8 +83,8 @@ public class EntityTick extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		tickMaxHealth = config.get("Tick", "[Max Health] Set the Hp of Tick Spawns [1+]", 20).getInt();
-		tickDmg = config.get("Tick", "[Attack Damage] Set the damage of Tick Spawns [1+]", 10).getInt();
+		tickMaxHealth = config.get("209 Tick", "[Max Health] Set the Hp of Tick Spawns [1+]", 40).getInt();
+		tickDmg = config.get("209  Tick", "[Attack Damage] Set the damage of Tick Spawns [1+]", 10).getInt();
 	}
 
 	@Override

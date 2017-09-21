@@ -129,11 +129,11 @@ public class EntityChorpChorp extends EntityMob
 	}
 
 	public static void postInitConfig(Configuration config) {
-		chorpchorpMaxHealth = config.get("Chorp Chorp", "[Max Health] Set the Hp of Chorp Chorp Spawns [1+]", 10).getInt();
-		chorpchorpTouchDmg = config.get("Chorp Chorp", "[Attack Damage] Set the Touch Damage of Chorp Chorp Spawns [1+]", 20).getInt();
-		chorpchorpSlimeDmg = config.get("Chorp Chorp", "[Attack Damage] Set Slime Damage of Chorp Chorp Spawns [1+]", 10).getInt();
-		chorpchorpSlimeSlow = config.get("Chorp Chorp", "[Attribute] Set Slime Slow Debuff Strength of Chorp Chorp Spawns [1+]", 60).getInt();
-		chorpchorpSlimeSlowDuration = config.get("Chorp Chorp", "[Attribute] Set Slime Slow Debuff Durration of Chorp Chorp Spawns [1+]", 2).getInt();
+		chorpchorpMaxHealth = config.get("208 Chorp Chorp", "[Max Health] Set the Hp of Chorp Chorp Spawns [1+]", 100).getInt();
+		chorpchorpTouchDmg = config.get("208 Chorp Chorp", "[Attack Damage] Set the Touch Damage of Chorp Chorp Spawns [1+]", 40).getInt();
+		chorpchorpSlimeDmg = config.get("208 Chorp Chorp", "[Attack Damage] Set Slime Damage of Chorp Chorp Spawns [1+]", 10).getInt();
+		chorpchorpSlimeSlow = config.get("208 Chorp Chorp", "[Attribute] Set Slime Slow Debuff Strength of Chorp Chorp Spawns [1+]", 2).getInt();
+		chorpchorpSlimeSlowDuration = config.get("208 Chorp Chorp", "[Attribute] Set Slime Slow Debuff Durration of Chorp Chorp Spawns [1+]", 4).getInt() * 20;
 	}
 
 	protected void entityInit()
@@ -277,6 +277,7 @@ public class EntityChorpChorp extends EntityMob
 
 	protected void attackEntity(Entity entity, float distance) {
 		EntityLivingBase ent = (EntityLivingBase) entity;
+		if (!this.worldObj.isRemote){
 		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
 			if (this.attackCounter == 40) {
 				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
@@ -284,11 +285,8 @@ public class EntityChorpChorp extends EntityMob
 			if (this.attackCounter >= 40) {
 				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
 				Entity projectile;
-				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.0F, (float)(14 - difficulty * 4),0,0,0,0,0,chorpchorpSlimeDmg, chorpchorpSlimeSlowDuration, chorpchorpSlimeSlow);
-				if (!this.worldObj.isRemote){
-					worldObj.spawnEntityInWorld(projectile);
-				}
+				projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.1F, 14,0,0,0,0,0,chorpchorpSlimeDmg, chorpchorpSlimeSlowDuration, chorpchorpSlimeSlow);
+				worldObj.spawnEntityInWorld(projectile);
 			}
 			if (this.attackCounter >= 60) {
 				this.attackCounter = -40;
@@ -297,7 +295,7 @@ public class EntityChorpChorp extends EntityMob
 
 		this.attackCounter++;
 		
-		
+		}		
 	}
 
 

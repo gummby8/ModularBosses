@@ -48,6 +48,9 @@ public class EntitySpark extends EntityMob {
 
 	public static int sparkMaxHealth;
 	public static int sparkDmg;
+	public static int sparkHeal;
+	public static int sparkDark;
+	public static int sparkAttackInterval;
 
 	public int variant;
 	public static final int ORANGE = 1;
@@ -77,7 +80,7 @@ public class EntitySpark extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(20);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(sparkMaxHealth);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
@@ -99,8 +102,11 @@ public class EntitySpark extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		sparkMaxHealth = config.get("spark", "[Max Health] Set the Hp of spark Spawns [1+]", 20).getInt();
-		sparkDmg = config.get("spark", "[Attack Damage] Set the damage of spark Spawns [1+]", 10).getInt();
+		sparkMaxHealth = config.get("211 spark", "[Max Health] Set the Hp of spark Spawns [1+]", 20).getInt();
+		sparkDmg = config.get("211 spark", "[Attack Damage] Set the damage of spark Spawns [1+]", 10).getInt();
+		sparkHeal = config.get("211 spark", "[Heal] Set the heal ammount of Green Sparks [1+]", 20).getInt();
+		sparkDark = config.get("211 spark", "[Status Durration] Set the darkness durration of Purple Sparks [1+]", 5).getInt() * 20;
+		sparkAttackInterval = config.get("211 spark", "[Attack Interval] Set the attack timer of Sparks [1+]", 1).getInt() * 20;
 	}
 
 	@Override
@@ -108,7 +114,7 @@ public class EntitySpark extends EntityMob {
 		super.onUpdate();
 		variant = this.dataWatcher.getWatchableObjectInt(COLOR_WATCHER);
 
-		if (this.ticksExisted % 20 == (20 - 1)) {
+		if (this.ticksExisted % sparkAttackInterval == (20 - 1)) {
 			List list = TargetUtils.getList(this, 4, 4);
 			if (this.variant == ORANGE && !this.worldObj.isRemote) {
 				for (int i = 0; i < list.size(); ++i) {
@@ -116,7 +122,7 @@ public class EntitySpark extends EntityMob {
 					if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
 						EntityPlayer player = (EntityPlayer) entity;
 						if (!player.capabilities.isCreativeMode){
-							entity.attackEntityFrom(DamageSource.causeMobDamage(this), 10);	
+							entity.attackEntityFrom(DamageSource.causeMobDamage(this), sparkDmg);	
 						}
 						
 					}
@@ -129,7 +135,7 @@ public class EntitySpark extends EntityMob {
 					if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
 						EntityPlayer player = (EntityPlayer) entity;
 						if (!player.capabilities.isCreativeMode){
-							player.addPotionEffect(new PotionEffect(15, 200, 1));	
+							player.addPotionEffect(new PotionEffect(15, sparkDark, 1));	
 						}
 					}
 				}
@@ -138,7 +144,7 @@ public class EntitySpark extends EntityMob {
 					Entity entity = (Entity) list.get(i);
 					if (entity instanceof EntityLiving && !(entity instanceof EntityPlayer)) {
 						EntityLiving ent = (EntityLiving) entity;
-						ent.heal(10);
+						ent.heal(sparkHeal);
 					}
 				}
 			}

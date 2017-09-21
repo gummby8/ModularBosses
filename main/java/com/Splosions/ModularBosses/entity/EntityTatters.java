@@ -178,9 +178,9 @@ public class EntityTatters extends EntityMob {
 
 	public static void postInitConfig(Configuration config) {
 		/** Tatters Max HP */
-		tattersMaxHealth = config.get("Tatters", "[Max Health] Set the Hp of Tatters Spawns [1+]", 20).getInt();
-		tattersScytheDmg = config.get("Tatters", "[Attack Dmg] Thrown Scythe Attack Damage [1+]", 20).getInt();
-		tattersTeleportChance = MathHelper.clamp_int(config.get("Tatters", "[Attribute] Chance to Teleport on Damage [1/Chance] [1-100]", 2).getInt(), 1, 100);
+		tattersMaxHealth = config.get("205 Tatters", "[Max Health] Set the Hp of Tatters Spawns [1+]", 200).getInt();
+		tattersScytheDmg = config.get("205 Tatters", "[Attack Dmg] Thrown Scythe Attack Damage [1+]", 20).getInt();
+		tattersTeleportChance = MathHelper.clamp_int(config.get("205 Tatters", "[Attribute] Chance to Teleport on Damage [1/Chance] [1-100]", 2).getInt(), 1, 100);
 	}
 	
 	protected void entityInit() {

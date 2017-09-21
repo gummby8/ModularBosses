@@ -50,7 +50,7 @@ public class EntityHeart extends EntityMob {
 
 	private int deathTicks;
 	public static int heartMaxHealth;
-	public static int heartDmg;
+	public static int invulTime;
 	public int invulnerable;
 
 	
@@ -74,7 +74,7 @@ public class EntityHeart extends EntityMob {
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1);
 	}
@@ -85,8 +85,8 @@ public class EntityHeart extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		heartMaxHealth = config.get("heart", "[Max Health] Set the Hp of heart Spawns [1+]", 20).getInt();
-		heartDmg = config.get("heart", "[Attack Damage] Set the damage of heart Spawns [1+]", 10).getInt();
+		heartMaxHealth = config.get("202 heart", "[Max Health] Set the max HP [1+]", 200).getInt();
+		invulTime = config.get("202 heart", "[Invul Time] Set the ammount of time the Heart is invulnerable after taking dmg  [1+]", 5).getInt()*20;
 	}
 
 	public boolean pump;
@@ -139,7 +139,7 @@ public class EntityHeart extends EntityMob {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (invulnerable <= 0) {
 			this.Damage(source, amount);
-			invulnerable = 100;
+			invulnerable += invulTime;
 		}
 
 		return false;

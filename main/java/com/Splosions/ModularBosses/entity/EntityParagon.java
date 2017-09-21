@@ -63,6 +63,8 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	
 	/*================== PARAGON CONFIG SETTINGS  =====================*/
 	public static double paragonMaxHealth;
+	public static double paragonKneeHealth;
+	public static int paragonAttackTimer;
 	/** Paragon Kick Damage */
 	public static int paragonKickDmg;
 	/** Paragon Jump Damage */
@@ -189,7 +191,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(paragonMaxHealth);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(40.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
@@ -199,13 +201,15 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	}
 
 	public static void postInitConfig(Configuration config) {
-		paragonMaxHealth = config.get("Paragon", "[Max Health] Set the Hp of Paragon Spawns [1+]", 20).getInt();
-		paragonKickDmg = config.get("Paragon", "[Attack Dmg] Kick Attack Damage [1+]", 20).getInt();
-		paragonJumpDmg = config.get("Paragon", "[Attack Dmg] Jump Attack Damage [1+]", 20).getInt();
-		paragonFlameDmg = config.get("Paragon", "[Attack Dmg] Flame THrower Attack Damage [1+]", 20).getInt();
-		paragonStompDmg = config.get("Paragon", "[Attack Dmg] Stomp Attack Damage [1+]", 20).getInt();
-		paragonBackhandDmg = config.get("Paragon", "[Attack Dmg] Backhand Attack Damage [1+]", 20).getInt();
-		paragonDoubleFistDmg = config.get("Paragon", "[Attack Dmg] Double Fist Slam Attack Damage [1+]", 20).getInt();
+		paragonMaxHealth = config.get("204 Paragon", "[Max Health] Set the Hp of Paragon Spawns [1+]", 400).getInt();
+		paragonKneeHealth = config.get("204 Paragon", "[Knee Health] Set number of hits to collapse knees [1+]", 10).getInt();
+		paragonAttackTimer = config.get("204 Paragon", "[Attack Time] Set number of seconds between attacks [1+]", 4).getInt() * 20;
+		paragonKickDmg = config.get("204 Paragon", "[Attack Dmg] Kick Attack Damage [1+]", 60).getInt();
+		paragonJumpDmg = config.get("204 Paragon", "[Attack Dmg] Jump Attack Damage [1+]", 40).getInt();
+		paragonFlameDmg = config.get("204 Paragon", "[Attack Dmg] Flame THrower Attack Damage [1+]", 20).getInt();
+		paragonStompDmg = config.get("204 Paragon", "[Attack Dmg] Stomp Attack Damage [1+]", 40).getInt();
+		paragonBackhandDmg = config.get("204 Paragon", "[Attack Dmg] Backhand Attack Damage [1+]", 20).getInt();
+		paragonDoubleFistDmg = config.get("204 Paragon", "[Attack Dmg] Double Fist Slam Attack Damage [1+]", 40).getInt();
 	}
 	
 	@Override
@@ -304,7 +308,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		setHitBoxes();
 		// Spawn some particles in the furnace
 		furnaceParticles();
-		// Plays sound effects at spesified point sin amimations
+		// Plays sound effects at spesified points in amimations
 		playSoundEffects();
 
 		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote && this.target == null) {
@@ -320,17 +324,17 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 
 		if (this.motionX == 0 && this.motionZ == 0 && this.AniID < TRANSSPRINT) {
 			this.Moving = false;
-			this.AniID = 0;
+			this.AniID = STAND;
 		} else if (this.motionX != 0 || this.motionZ != 0) {
 			this.Moving = true;
 		}
 		if (this.Moving == true && this.AniID == 0) {
-			this.AniID = 1;
+			this.AniID = TRANSWALK;
 		}
 
 		if (KneeHP <= 0) {
-			this.KneeHP = 10;
-			this.AniID = 5;
+			this.KneeHP += paragonKneeHealth;
+			this.AniID = COLLAPSE;
 			this.AniFrame = 0;
 		}
 
@@ -504,7 +508,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	}
 
 	private void pickAttack() {
-		int attack = rand.nextInt(3);
+		int attack = rand.nextInt(4);
 		switch (attack) {
 		case 0:
 			this.sprintAttack = true;
@@ -517,6 +521,10 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 			this.AniID = FLAMETHROWER;
 			this.flameAttackCounter = 80;
 			break;
+		case 3:
+			this.AniID = DOUBLEFISTSLAM;
+			this.AniFrame = 0;
+			break;
 		default:
 			this.AniID = STAND;
 			this.AniFrame = 0;
@@ -526,7 +534,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	}
 
 	private void setLastAttackCounter() {
-		this.lastAttackCounter = 80;
+		this.lastAttackCounter += paragonAttackTimer;
 		this.target = null;
 	}
 

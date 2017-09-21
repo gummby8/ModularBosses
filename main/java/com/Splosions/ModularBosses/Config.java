@@ -6,9 +6,12 @@ import com.Splosions.ModularBosses.entity.EntityBrain;
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 import com.Splosions.ModularBosses.entity.EntityGolem;
+import com.Splosions.ModularBosses.entity.EntityHeart;
 import com.Splosions.ModularBosses.entity.EntityHeavyChorp;
 import com.Splosions.ModularBosses.entity.EntityParagon;
+import com.Splosions.ModularBosses.entity.EntityShadeHowler;
 import com.Splosions.ModularBosses.entity.EntitySkull;
+import com.Splosions.ModularBosses.entity.EntitySpark;
 import com.Splosions.ModularBosses.entity.EntityTatters;
 import com.Splosions.ModularBosses.entity.EntityTick;
 
@@ -65,8 +68,6 @@ public class Config {
 		tattersScytheDmg = config.get("101 Weapon & Item Settings", "[Weapon Dmg] Tatter's Scythe Melee Damage [1+]", 20).getInt();
 		tattersScytheThrowDmg = config.get("101 Weapon & Item Settings", "[Weapon Dmg] Tatter's Scythe Thrown Damage [1+]", 10).getInt();
 		
-		
-		
 		config.save();
 	}
 	
@@ -74,15 +75,25 @@ public class Config {
 	public static void postInit() {
 		config.addCustomCategoryComment("200 Boss & Monster Settings", "This Category Contains Settings For All Of The Various Bosses And Monsters From Modular Bosses");
 
-		EntityBrain.postInitConfig(config);
-		EntityParagon.postInitConfig(config); 
-		EntityTatters.postInitConfig(config);
-		EntityChorpChorp.postInitConfig(config); 
-		EntityHeavyChorp.postInitConfig(config);
-		EntityGolem.postInitConfig(config); 
-		EntityEyeballOctopus.postInitConfig(config);
-		EntityTick.postInitConfig(config);
-		EntitySkull.postInitConfig(config);
+		
+		EntityBrain.postInitConfig(config);//201
+		EntityHeart.postInitConfig(config);//202
+		EntityShadeHowler.postInitConfig(config);//203 TO DO
+		EntityParagon.postInitConfig(config);//204 
+		EntityTatters.postInitConfig(config);//205 
+		EntityGolem.postInitConfig(config); //206 TO DO
+		EntityHeavyChorp.postInitConfig(config);//207 
+		EntityChorpChorp.postInitConfig(config);//208 
+		EntityEyeballOctopus.postInitConfig(config);//209 
+		EntityTick.postInitConfig(config);//209 
+		EntitySkull.postInitConfig(config);//210 
+		EntitySpark.postInitConfig(config);//211 
+
+
+
+		
+		
+		
 
 		
 		if (config.hasChanged()) {
