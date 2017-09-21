@@ -1,5 +1,7 @@
 package com.Splosions.ModularBosses.blocks;
 
+import com.Splosions.ModularBosses.Config;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -24,7 +26,7 @@ public class GasWormGas extends BlockFluidClassic{
 	@Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, 5);
+			entityIn.attackEntityFrom(DamageSource.wither, Config.WormGasDmg);
 
 		}
     }

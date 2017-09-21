@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.blocks;
 
 import java.util.Random;
 
+import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
 
@@ -51,7 +52,7 @@ public class FluidTempWormBlood extends BlockFluidClassic{
         entityIn.motionX *= 0.4D;
         entityIn.motionZ *= 0.4D;
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, 5);
+			entityIn.attackEntityFrom(DamageSource.wither, Config.WormBloodDmg);
 
 		}
 		

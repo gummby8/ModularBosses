@@ -1,5 +1,7 @@
 package com.Splosions.ModularBosses.blocks;
 
+import com.Splosions.ModularBosses.Config;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -32,7 +34,7 @@ public class FluidWormAcid extends BlockFluidClassic{
         entityIn.motionX *= 0.4D;
         entityIn.motionZ *= 0.4D;
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, 5);
+			entityIn.attackEntityFrom(DamageSource.wither, Config.WormAcidDmg);
 
 		}
 		

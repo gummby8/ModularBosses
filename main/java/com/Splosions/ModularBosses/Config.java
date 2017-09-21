@@ -28,6 +28,10 @@ public class Config {
 	public static int WormRoomSizeY;
 	public static int WormRoomSizeZ;
 	
+	public static int WormAcidDmg;
+	public static int WormBloodDmg;
+	public static int WormGasDmg;
+	
 	public static boolean debugHitboxes;
 	
 	
@@ -55,6 +59,10 @@ public class Config {
 		WormRoomSizeX = config.get("001 Worm Dungeon", "[Worm Room Witdth] [1+]", 21).getInt();
 		WormRoomSizeY = config.get("001 Worm Dungeon", "[Worm Room Height] [1+]", 10).getInt();
 		WormRoomSizeZ = config.get("001 Worm Dungeon", "[Worm Room Length] [1+]", 21).getInt();
+		
+		WormAcidDmg = config.get("001 Worm Dungeon", "[Worm Acid Dmg] [1+]", 10).getInt();
+		WormBloodDmg = config.get("001 Worm Dungeon", "[Worm Blood Dmg] [1+]", 10).getInt();
+		WormGasDmg = config.get("001 Worm Dungeon", "[Worm Gas Dmg] [1+]", 10).getInt();
 		
 		debugHitboxes = config.get("002 Config", "[Config] Show Multi-part monster hitboxes", false).getBoolean(false);
 		
