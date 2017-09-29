@@ -251,41 +251,6 @@ public class ModelGolem extends ModelBase {
 
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-		if (entity.ticksExisted <= 1){
-			ModelUtils.teleportPiece(WAIST, FWAIST);
-			ModelUtils.teleportPiece(RARM, FRARM);
-			ModelUtils.teleportPiece(LARM, FLARM);
-			ModelUtils.teleportPiece(LRShoulder2, FLRShoulder2);
-			ModelUtils.teleportPiece(LFShoulder2, FLFShoulder2);
-			ModelUtils.teleportPiece(RFShoulder2, FRFShoulder2);
-			ModelUtils.teleportPiece(RRShoulder2, FRRShoulder2);
-			ModelUtils.teleportPiece(RFShoulder1, FRFShoulder1);
-			ModelUtils.teleportPiece(RRShoulder1, FRRShoulder1);
-			ModelUtils.teleportPiece(LRShoulder1, FLRShoulder1);
-			ModelUtils.teleportPiece(LFShoulder1, FLFShoulder1);
-			ModelUtils.teleportPiece(RChest, FRChest);
-			ModelUtils.teleportPiece(LChest, FLChest);
-			ModelUtils.teleportPiece(HEAD, FHEAD);
-			ModelUtils.teleportPiece(RArm1, FRArm1);
-			ModelUtils.teleportPiece(RArm2, FRArm2);
-			ModelUtils.teleportPiece(LArm1, FLArm1);
-			ModelUtils.teleportPiece(LArm2, FLArm2);
-			
-			ModelUtils.teleportPiece(RFHip, FRFHip);
-			ModelUtils.teleportPiece(RRHip, FRRHip);
-
-			ModelUtils.teleportPiece(LFHip, FLFHip);
-			ModelUtils.teleportPiece(LRHip, FLRHip);
-			
-			ModelUtils.teleportPiece(LLEG, FLLEG);
-			ModelUtils.teleportPiece(LLeg1, FLLeg1);
-			ModelUtils.teleportPiece(LLeg2, FLLeg2);
-			
-			ModelUtils.teleportPiece(RLEG, FRLEG);
-			ModelUtils.teleportPiece(RLeg1, FRLeg1);
-			ModelUtils.teleportPiece(RLeg2, FRLeg2);
-		}
-		
 		this.WAIST.render(f5);
 		this.HIP.render(f5);
 	}
@@ -304,123 +269,243 @@ public class ModelGolem extends ModelBase {
 		setLivingAnimations((EntityGolem) entity, par2, par3, partialTick);
 	}
 
-	/**
-	 * Used for easily adding entity-dependent animations. The second and third
-	 * float params here are the same second and third as in the
-	 * setRotationAngles method.
-	 */
+
+
+	
+	public float[] WAIST_rotationPointX;
+	public float[] WAIST_rotationPointY;
+	public float[] WAIST_rotationPointZ;
+	public float[] WAIST_rotateAngleX;
+	public float[] WAIST_rotateAngleY;
+	public float[] WAIST_rotateAngleZ;
+
+	public float[] Body_rotationPointX;
+	public float[] Body_rotationPointY;
+	public float[] Body_rotationPointZ;
+	public float[] Body_rotateAngleX;
+	public float[] Body_rotateAngleY;
+	public float[] Body_rotateAngleZ;
+
+	public float[] RARM_rotationPointX;
+	public float[] RARM_rotationPointY;
+	public float[] RARM_rotationPointZ;
+	public float[] RARM_rotateAngleX;
+	public float[] RARM_rotateAngleY;
+	public float[] RARM_rotateAngleZ;
+
+	public float[] RArm1_rotationPointX;
+	public float[] RArm1_rotationPointY;
+	public float[] RArm1_rotationPointZ;
+	public float[] RArm1_rotateAngleX;
+	public float[] RArm1_rotateAngleY;
+	public float[] RArm1_rotateAngleZ;
+
+	public float[] RArm2_rotationPointX;
+	public float[] RArm2_rotationPointY;
+	public float[] RArm2_rotationPointZ;
+	public float[] RArm2_rotateAngleX;
+	public float[] RArm2_rotateAngleY;
+	public float[] RArm2_rotateAngleZ;
+
+	public float[] LARM_rotationPointX;
+	public float[] LARM_rotationPointY;
+	public float[] LARM_rotationPointZ;
+	public float[] LARM_rotateAngleX;
+	public float[] LARM_rotateAngleY;
+	public float[] LARM_rotateAngleZ;
+
+	public float[] LArm1_rotationPointX;
+	public float[] LArm1_rotationPointY;
+	public float[] LArm1_rotationPointZ;
+	public float[] LArm1_rotateAngleX;
+	public float[] LArm1_rotateAngleY;
+	public float[] LArm1_rotateAngleZ;
+
+	public float[] LArm2_rotationPointX;
+	public float[] LArm2_rotationPointY;
+	public float[] LArm2_rotationPointZ;
+	public float[] LArm2_rotateAngleX;
+	public float[] LArm2_rotateAngleY;
+	public float[] LArm2_rotateAngleZ;
+
+	public float[] LRShoulder2_rotationPointX;
+	public float[] LRShoulder2_rotationPointY;
+	public float[] LRShoulder2_rotationPointZ;
+	public float[] LRShoulder2_rotateAngleX;
+	public float[] LRShoulder2_rotateAngleY;
+	public float[] LRShoulder2_rotateAngleZ;
+
+	public float[] LFShoulder2_rotationPointX;
+	public float[] LFShoulder2_rotationPointY;
+	public float[] LFShoulder2_rotationPointZ;
+	public float[] LFShoulder2_rotateAngleX;
+	public float[] LFShoulder2_rotateAngleY;
+	public float[] LFShoulder2_rotateAngleZ;
+
+	public float[] RFShoulder2_rotationPointX;
+	public float[] RFShoulder2_rotationPointY;
+	public float[] RFShoulder2_rotationPointZ;
+	public float[] RFShoulder2_rotateAngleX;
+	public float[] RFShoulder2_rotateAngleY;
+	public float[] RFShoulder2_rotateAngleZ;
+
+	public float[] RRShoulder2_rotationPointX;
+	public float[] RRShoulder2_rotationPointY;
+	public float[] RRShoulder2_rotationPointZ;
+	public float[] RRShoulder2_rotateAngleX;
+	public float[] RRShoulder2_rotateAngleY;
+	public float[] RRShoulder2_rotateAngleZ;
+
+	public float[] RFShoulder1_rotationPointX;
+	public float[] RFShoulder1_rotationPointY;
+	public float[] RFShoulder1_rotationPointZ;
+	public float[] RFShoulder1_rotateAngleX;
+	public float[] RFShoulder1_rotateAngleY;
+	public float[] RFShoulder1_rotateAngleZ;
+
+	public float[] RRShoulder1_rotationPointX;
+	public float[] RRShoulder1_rotationPointY;
+	public float[] RRShoulder1_rotationPointZ;
+	public float[] RRShoulder1_rotateAngleX;
+	public float[] RRShoulder1_rotateAngleY;
+	public float[] RRShoulder1_rotateAngleZ;
+
+	public float[] LRShoulder1_rotationPointX;
+	public float[] LRShoulder1_rotationPointY;
+	public float[] LRShoulder1_rotationPointZ;
+	public float[] LRShoulder1_rotateAngleX;
+	public float[] LRShoulder1_rotateAngleY;
+	public float[] LRShoulder1_rotateAngleZ;
+
+	public float[] LFShoulder1_rotationPointX;
+	public float[] LFShoulder1_rotationPointY;
+	public float[] LFShoulder1_rotationPointZ;
+	public float[] LFShoulder1_rotateAngleX;
+	public float[] LFShoulder1_rotateAngleY;
+	public float[] LFShoulder1_rotateAngleZ;
+
+	public float[] RChest_rotationPointX;
+	public float[] RChest_rotationPointY;
+	public float[] RChest_rotationPointZ;
+	public float[] RChest_rotateAngleX;
+	public float[] RChest_rotateAngleY;
+	public float[] RChest_rotateAngleZ;
+
+	public float[] LChest_rotationPointX;
+	public float[] LChest_rotationPointY;
+	public float[] LChest_rotationPointZ;
+	public float[] LChest_rotateAngleX;
+	public float[] LChest_rotateAngleY;
+	public float[] LChest_rotateAngleZ;
+
+	public float[] HEAD_rotationPointX;
+	public float[] HEAD_rotationPointY;
+	public float[] HEAD_rotationPointZ;
+	public float[] HEAD_rotateAngleX;
+	public float[] HEAD_rotateAngleY;
+	public float[] HEAD_rotateAngleZ;
+
+	public float[] HIP_rotationPointX;
+	public float[] HIP_rotationPointY;
+	public float[] HIP_rotationPointZ;
+	public float[] HIP_rotateAngleX;
+	public float[] HIP_rotateAngleY;
+	public float[] HIP_rotateAngleZ;
+
+	public float[] LFHip_rotationPointX;
+	public float[] LFHip_rotationPointY;
+	public float[] LFHip_rotationPointZ;
+	public float[] LFHip_rotateAngleX;
+	public float[] LFHip_rotateAngleY;
+	public float[] LFHip_rotateAngleZ;
+
+	public float[] RRHip_rotationPointX;
+	public float[] RRHip_rotationPointY;
+	public float[] RRHip_rotationPointZ;
+	public float[] RRHip_rotateAngleX;
+	public float[] RRHip_rotateAngleY;
+	public float[] RRHip_rotateAngleZ;
+
+	public float[] LRHip_rotationPointX;
+	public float[] LRHip_rotationPointY;
+	public float[] LRHip_rotationPointZ;
+	public float[] LRHip_rotateAngleX;
+	public float[] LRHip_rotateAngleY;
+	public float[] LRHip_rotateAngleZ;
+
+	public float[] RFHip_rotationPointX;
+	public float[] RFHip_rotationPointY;
+	public float[] RFHip_rotationPointZ;
+	public float[] RFHip_rotateAngleX;
+	public float[] RFHip_rotateAngleY;
+	public float[] RFHip_rotateAngleZ;
+
+	public float[] LLEG_rotationPointX;
+	public float[] LLEG_rotationPointY;
+	public float[] LLEG_rotationPointZ;
+	public float[] LLEG_rotateAngleX;
+	public float[] LLEG_rotateAngleY;
+	public float[] LLEG_rotateAngleZ;
+
+	public float[] LLeg1_rotationPointX;
+	public float[] LLeg1_rotationPointY;
+	public float[] LLeg1_rotationPointZ;
+	public float[] LLeg1_rotateAngleX;
+	public float[] LLeg1_rotateAngleY;
+	public float[] LLeg1_rotateAngleZ;
+
+	public float[] LLeg2_rotationPointX;
+	public float[] LLeg2_rotationPointY;
+	public float[] LLeg2_rotationPointZ;
+	public float[] LLeg2_rotateAngleX;
+	public float[] LLeg2_rotateAngleY;
+	public float[] LLeg2_rotateAngleZ;
+
+	public float[] RLEG_rotationPointX;
+	public float[] RLEG_rotationPointY;
+	public float[] RLEG_rotationPointZ;
+	public float[] RLEG_rotateAngleX;
+	public float[] RLEG_rotateAngleY;
+	public float[] RLEG_rotateAngleZ;
+
+	public float[] RLeg1_rotationPointX;
+	public float[] RLeg1_rotationPointY;
+	public float[] RLeg1_rotationPointZ;
+	public float[] RLeg1_rotateAngleX;
+	public float[] RLeg1_rotateAngleY;
+	public float[] RLeg1_rotateAngleZ;
+
+	public float[] RLeg2_rotationPointX;
+	public float[] RLeg2_rotationPointY;
+	public float[] RLeg2_rotationPointZ;
+	public float[] RLeg2_rotateAngleX;
+	public float[] RLeg2_rotateAngleY;
+	public float[] RLeg2_rotateAngleZ;
+	
+	
+	
+	
 	private void setLivingAnimations(EntityGolem entity, float moveCounter, float speed, float PartialTick) {
 
-		if (entity.ticksExisted > 1 && entity.ticksExisted < 110){
-			ModelUtils.movePieceOverTime(WAIST, entity.WAIST, 100);
-			ModelUtils.movePieceOverTime(RARM, entity.RARM, 100);
-			ModelUtils.movePieceOverTime(RArm1, entity.RArm1, 100);
-			ModelUtils.movePieceOverTime(RArm2, entity.RArm2, 100);
-			
-			ModelUtils.movePieceOverTime(LARM, entity.LARM, 100);
-			ModelUtils.movePieceOverTime(LArm1, entity.LArm1, 100);
-			ModelUtils.movePieceOverTime(LArm2, entity.LArm2, 100);
-		
-			ModelUtils.movePieceOverTime(LRShoulder1, entity.LRShoulder1, 100);
-			ModelUtils.movePieceOverTime(LFShoulder1, entity.LFShoulder1, 100);
-			ModelUtils.movePieceOverTime(LRShoulder2, entity.LRShoulder2, 100);
-			ModelUtils.movePieceOverTime(LFShoulder2, entity.LFShoulder2, 100);
-			
-			ModelUtils.movePieceOverTime(RFShoulder1, entity.RFShoulder1, 100);
-			ModelUtils.movePieceOverTime(RRShoulder1, entity.RRShoulder1, 100);
-			ModelUtils.movePieceOverTime(RFShoulder2, entity.RFShoulder2, 100);
-			ModelUtils.movePieceOverTime(RRShoulder2, entity.RRShoulder2, 100);
-						
-			ModelUtils.movePieceOverTime(RChest, entity.RChest, 100);
-			ModelUtils.movePieceOverTime(LChest, entity.LChest, 100); 
-			
-			ModelUtils.movePieceOverTime(HEAD, entity.HEAD, 100);
-			
-			ModelUtils.movePieceOverTime(LFHip, entity.LFHip, 100);
-			ModelUtils.movePieceOverTime(LRHip, entity.LRHip, 100);
-			
-			ModelUtils.movePieceOverTime(RFHip, entity.RFHip, 100);
-			ModelUtils.movePieceOverTime(RRHip, entity.RRHip, 100);
 
-			ModelUtils.movePieceOverTime(LLEG, entity.LLEG, 100);
-			ModelUtils.movePieceOverTime(LLeg1, entity.LLeg1, 100);
-			ModelUtils.movePieceOverTime(LLeg2, entity.LLeg2, 100);
-			
-			ModelUtils.movePieceOverTime(RLEG, entity.RLEG, 100);
-			ModelUtils.movePieceOverTime(RLeg1, entity.RLeg1, 100);
-			ModelUtils.movePieceOverTime(RLeg2, entity.RLeg2, 100);
-
-
-		} else {
-			
-			ModelUtils.setPiece(WAIST, 0, 0, 0, 0, -25, 0);
-			ModelUtils.setPiece(RARM, -40, 0, 0, 0, -40, -21);
-			ModelUtils.setPiece(LARM, 40, 0, 0, 0, -40, 21);
-			ModelUtils.setPiece(LRShoulder2, -30, 0, -15, -4.22F, -42, 18);
-			ModelUtils.setPiece(LFShoulder2, -30, 0, 15, 4.21F, -42, 18);
-			ModelUtils.setPiece(RFShoulder2, 30, 0, 15, 4.2F, -42, -18);
-			ModelUtils.setPiece(RRShoulder2, 30, 0, -15, -4.2F, -42, -18);
-			ModelUtils.setPiece(RFShoulder1, 15, 0, 15, 5.5F, -47, -5.5F);
-			ModelUtils.setPiece(RRShoulder1, 15, 0, -15, -5.52F, -47, -5.5F);
-			ModelUtils.setPiece(LRShoulder1, -15, 0, -15, -5.5F, -47, 5.5F);
-			ModelUtils.setPiece(LFShoulder1, -15, 0, 15, 5.52F, -47F, 5.5F);
-			ModelUtils.setPiece(RChest, 0, 0, 0, 0, -38, -8);
-			ModelUtils.setPiece(LChest, 0, 0, 0, 0, -38, 8);
-			ModelUtils.setPiece(HEAD, 0, 0, 0, 0, -54, 0);
-			ModelUtils.setPiece(RArm1, 25, 0, 0, 0.02F, 12, 0.01F);
-			ModelUtils.setPiece(RArm2, 10, 0, 0, 0.02F, 12, 0.01F);
-			ModelUtils.setPiece(LArm1, -25, 0, 0, 0.02F, 12, 0.01F);
-			ModelUtils.setPiece(LArm2, -10, 0, 0, 0.02F, 12, 0.01F);
-			ModelUtils.setPiece(LFHip, 15, 0, 15, 5.5F, -9, -5.5F);
-			ModelUtils.setPiece(LLEG, 20, 0, 0, 0, -11, 7);
-			ModelUtils.setPiece(RLEG, -20, 0, 0, 0, -11, -7);
-			ModelUtils.setPiece(RRHip, -15, 0, -15, -5.5F, -9, 5.5F);
-			ModelUtils.setPiece(LRHip, 15, 0, -15, -5.52F, -9, -5.5F);
-			ModelUtils.setPiece(RFHip, -15, 0, 15, 5.52F, -9, 5.5F);
-			ModelUtils.setPiece(LLeg1, -20, 0, 0, 0.02F, 13.3F, 0.5F);
-			ModelUtils.setPiece(LLeg2, 0, 0, 0, 0.01F, 16, 0.01F);
-			ModelUtils.setPiece(RLeg1, 20, 0, 0, 0.02F, 13.3F, -0.5F);
-			ModelUtils.setPiece(RLeg2, 0, 0, 0, 0.01F, 16, 0.01F);
-			
-			
-		
-			float RAngle = MathHelper.cos(moveCounter / 2) * (speed / 2);
-			float idle = MathHelper.cos((entity.ticksExisted + PartialTick) / 20) - 2.7F;
-
-			this.LLEG.rotateAngleZ = RAngle * 3F;
-			this.RLEG.rotateAngleZ = -RAngle * 3F;
-
-			this.LLeg1.rotateAngleZ = this.LLeg2.rotateAngleZ = (RAngle <= 0) ? 0 : RAngle * 3F;
-			this.RLeg1.rotateAngleZ = this.RLeg2.rotateAngleZ = (-RAngle <= 0) ? 0 : -RAngle * 3F;
-
-			this.WAIST.rotationPointY = -24 - (MathHelper.cos(moveCounter) * (speed * 5));
-			this.HIP.rotationPointY = -9 - (MathHelper.cos(moveCounter) * (speed * 5));
-
-			this.LARM.rotateAngleZ = -RAngle * 3F;
-			this.RARM.rotateAngleZ = RAngle * 3F;
-
-			this.LArm1.rotateAngleZ = this.LArm2.rotateAngleZ = (-RAngle >= 0) ? 0 : -RAngle * 3F;
-			this.RArm1.rotateAngleZ = this.RArm2.rotateAngleZ = (RAngle >= 0) ? 0 : RAngle * 3F;
-
-			this.LARM.rotateAngleX = -idle / 6;
-			this.RARM.rotateAngleX = idle / 6;
-
-			this.LArm1.rotateAngleX = (idle + 1) / 10;
-			this.RArm1.rotateAngleX = (-idle - 1) / 10;
-
-		        if (entity.attack < 0)
-		        {
-		            this.LARM.rotateAngleZ = 2.0F + 1.5F * -this.maths((float)entity.attack + PartialTick, 10.0F);
-		            this.RARM.rotateAngleZ = 2.0F + 1.5F * -this.maths((float)entity.attack + PartialTick, 10.0F);
-		        }
-		}
 
 	}
 	
 	
-    private float maths(float p_78172_1_, float p_78172_2_)
-    {
-        return (Math.abs(p_78172_1_ % p_78172_2_ - p_78172_2_ * 0.5F) - p_78172_2_ * 0.25F) / (p_78172_2_ * 0.25F);
-    }
+	
+	public void Build(){
+		
+	}
+	
+	
+	public void Roll(){
+		
+	}
+	
+	
+	public void Punch(){
+		
+	}
+
 	
 }

@@ -4,7 +4,6 @@ package com.Splosions.ModularBosses.entity;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.util.TargetUtils;
@@ -51,36 +50,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityGolem extends EntityMob
 {
-	public FakeModelRenderer WAIST;
-	public FakeModelRenderer HIP;
-	public FakeModelRenderer Body;
-	public FakeModelRenderer RARM;
-	public FakeModelRenderer LARM;
-	public FakeModelRenderer LRShoulder2;
-	public FakeModelRenderer LFShoulder2;
-	public FakeModelRenderer RFShoulder2;
-	public FakeModelRenderer RRShoulder2;
-	public FakeModelRenderer RFShoulder1;
-	public FakeModelRenderer RRShoulder1;
-	public FakeModelRenderer LRShoulder1;
-	public FakeModelRenderer LFShoulder1;
-	public FakeModelRenderer RChest;
-	public FakeModelRenderer LChest;
-	public FakeModelRenderer HEAD;
-	public FakeModelRenderer RArm1;
-	public FakeModelRenderer RArm2;
-	public FakeModelRenderer LArm1;
-	public FakeModelRenderer LArm2;
-	public FakeModelRenderer LFHip;
-	public FakeModelRenderer LLEG;
-	public FakeModelRenderer RLEG;
-	public FakeModelRenderer RRHip;
-	public FakeModelRenderer LRHip;
-	public FakeModelRenderer RFHip;
-	public FakeModelRenderer LLeg1;
-	public FakeModelRenderer LLeg2;
-	public FakeModelRenderer RLeg1;
-	public FakeModelRenderer RLeg2;
 
     /** The Entity this EntityCreature is set to attack. */
     public Entity entityToAttack;
@@ -128,68 +97,6 @@ public class EntityGolem extends EntityMob
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
-		
-		
-		WAIST = new FakeModelRenderer();
-		HIP = new FakeModelRenderer();
-		Body = new FakeModelRenderer();
-		RARM = new FakeModelRenderer();
-		LARM = new FakeModelRenderer();
-		LRShoulder2 = new FakeModelRenderer();
-		LFShoulder2 = new FakeModelRenderer();
-		RFShoulder2 = new FakeModelRenderer();
-		RRShoulder2 = new FakeModelRenderer();
-		RFShoulder1 = new FakeModelRenderer();
-		RRShoulder1 = new FakeModelRenderer();
-		LRShoulder1 = new FakeModelRenderer();
-		LFShoulder1 = new FakeModelRenderer();
-		RChest = new FakeModelRenderer();
-		LChest = new FakeModelRenderer();
-		HEAD = new FakeModelRenderer();
-		RArm1 = new FakeModelRenderer();
-		RArm2 = new FakeModelRenderer();
-		LArm1 = new FakeModelRenderer();
-		LArm2 = new FakeModelRenderer();
-		LFHip = new FakeModelRenderer();
-		LLEG = new FakeModelRenderer();
-		RLEG = new FakeModelRenderer();
-		RRHip = new FakeModelRenderer();
-		LRHip = new FakeModelRenderer();
-		RFHip = new FakeModelRenderer();
-		LLeg1 = new FakeModelRenderer();
-		LLeg2 = new FakeModelRenderer();
-		RLeg1 = new FakeModelRenderer();
-		RLeg2 = new FakeModelRenderer();
-		
-		
-		WAIST.setModelVars(0, 0, 0, 0, -25, 0);
-		RARM.setModelVars(-40, 0, 0, 0, -40, -21);
-		LARM.setModelVars(40, 0, 0, 0, -40, 21);
-		LRShoulder2.setModelVars(-30, 0, -15, -4.22F, -42, 18);
-		LFShoulder2.setModelVars(-30, 0, 15, 4.21F, -42, 18);
-		RFShoulder2.setModelVars(30, 0, 15, 4.2F, -42, -18);
-		RRShoulder2.setModelVars(30, 0, -15, -4.2F, -42, -18);
-		RFShoulder1.setModelVars(15, 0, 15, 5.5F, -47, -5.5F);
-		RRShoulder1.setModelVars(15, 0, -15, -5.52F, -47, -5.5F);
-		LRShoulder1.setModelVars(-15, 0, -15, -5.5F, -47, 5.5F);
-		LFShoulder1.setModelVars(-15, 0, 15, 5.52F, -47F, 5.5F);
-		RChest.setModelVars(0, 0, 0, 0, -38, -8);
-		LChest.setModelVars(0, 0, 0, 0, -38, 8);
-		HEAD.setModelVars(0, 0, 0, 0, -54, 0);
-		RArm1.setModelVars(25, 0, 0, 0.02F, 12, 0.01F);
-		RArm2.setModelVars(10, 0, 0, 0.02F, 12, 0.01F);
-		LArm1.setModelVars(-25, 0, 0, 0.02F, 12, 0.01F);
-		LArm2.setModelVars(-10, 0, 0, 0.02F, 12, 0.01F);
-		LFHip.setModelVars(15, 0, 15, 5.5F, -9, -5.5F);
-		LLEG.setModelVars(20, 0, 0, 0, -11, 7);
-		RLEG.setModelVars(-20, 0, 0, 0, -11, -7);
-		RRHip.setModelVars(-15, 0, -15, -5.5F, -9, 5.5F);
-		LRHip.setModelVars(15, 0, -15, -5.52F, -9, -5.5F);
-		RFHip.setModelVars(-15, 0, 15, 5.52F, -9, 5.5F);
-		LLeg1.setModelVars(-20, 0, 0, 0.02F, 13.3F, 0.5F);
-		LLeg2.setModelVars(0, 0, 0, 0.01F, 16, 0.01F);
-		RLeg1.setModelVars(20, 0, 0, 0.02F, 13.3F, -0.5F);
-		RLeg2.setModelVars(0, 0, 0, 0.01F, 16, 0.01F);
 	}
 
 	//stuns the mob

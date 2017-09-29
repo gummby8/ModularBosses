@@ -90,8 +90,8 @@ public class EntityBrain extends EntityMob {
 		brainDmg = config.get("201 Brain", "[Attack Damage] Set the damage [1+]", 10).getInt();
 		brainAttackTImer = config.get("201 Brain", "[Attack Times] Set the attack interval[1+]", 5).getInt() * 20;
 		sparkTimer = config.get("201 Brain", "[Spark Spawn TIme] Set the spawn interval of Spark waves [1+]", 30).getInt() * 20;
-		sparkMax = config.get("201 Brain", "[Spark Wave Count Max] Set the maximum spawn count for Spark waves [1+]", 3).getInt();
-		sparkMin = config.get("201 Brain", "[Spark Wave Count Min] Set the minimum spawn count for Spark waves [1+]", 6).getInt();
+		sparkMax = config.get("201 Brain", "[Spark Wave Count Max] Set the maximum spawn count for Spark waves [1+]", 6).getInt();
+		sparkMin = config.get("201 Brain", "[Spark Wave Count Min] Set the minimum spawn count for Spark waves [1+]", 3).getInt();
 	}
 
 	@Override
