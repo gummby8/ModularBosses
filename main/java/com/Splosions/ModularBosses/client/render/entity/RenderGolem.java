@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +24,7 @@ import org.lwjgl.opengl.GL11;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityChorpChorp;
 import com.Splosions.ModularBosses.entity.EntityGolem;
+import com.Splosions.ModularBosses.entity.EntityParagon;
 
 
 
@@ -35,7 +37,8 @@ public class RenderGolem extends RenderLiving
 		super(renderManager, model, shadowSize);
  
     }
-	
+    
+
 	@Override
 	protected ResourceLocation getEntityTexture(Entity entity) {
 		return getGolemTexture((EntityGolem) entity);

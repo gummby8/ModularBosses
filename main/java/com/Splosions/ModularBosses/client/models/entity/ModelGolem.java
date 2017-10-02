@@ -1,6 +1,7 @@
 package com.Splosions.ModularBosses.client.models.entity;
 
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
+import com.Splosions.ModularBosses.client.models.KeyFrame;
 import com.Splosions.ModularBosses.entity.EntityGolem;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.util.ModelUtils;
@@ -43,65 +44,9 @@ public class ModelGolem extends ModelBase {
 	public ModelRenderer RLeg1;
 	public ModelRenderer RLeg2;
 
-	public FakeModelRenderer FWAIST = new FakeModelRenderer();
-	public FakeModelRenderer FRARM = new FakeModelRenderer();
-	public FakeModelRenderer FLARM = new FakeModelRenderer();
-	public FakeModelRenderer FLRShoulder2 = new FakeModelRenderer();
-	public FakeModelRenderer FLFShoulder2 = new FakeModelRenderer();
-	public FakeModelRenderer FRFShoulder2 = new FakeModelRenderer();
-	public FakeModelRenderer FRRShoulder2 = new FakeModelRenderer();
-	public FakeModelRenderer FRFShoulder1 = new FakeModelRenderer();
-	public FakeModelRenderer FRRShoulder1 = new FakeModelRenderer();
-	public FakeModelRenderer FLRShoulder1 = new FakeModelRenderer();
-	public FakeModelRenderer FLFShoulder1 = new FakeModelRenderer();
-	public FakeModelRenderer FRChest = new FakeModelRenderer();
-	public FakeModelRenderer FLChest = new FakeModelRenderer();
-	public FakeModelRenderer FHEAD = new FakeModelRenderer();
-	public FakeModelRenderer FRArm1 = new FakeModelRenderer();
-	public FakeModelRenderer FRArm2 = new FakeModelRenderer();
-	public FakeModelRenderer FLArm1 = new FakeModelRenderer();
-	public FakeModelRenderer FLArm2 = new FakeModelRenderer();
-	public FakeModelRenderer FLFHip = new FakeModelRenderer();
-	public FakeModelRenderer FLLEG = new FakeModelRenderer();
-	public FakeModelRenderer FRLEG = new FakeModelRenderer();
-	public FakeModelRenderer FRRHip = new FakeModelRenderer();
-	public FakeModelRenderer FLRHip = new FakeModelRenderer();
-	public FakeModelRenderer FRFHip = new FakeModelRenderer();
-	public FakeModelRenderer FLLeg1 = new FakeModelRenderer();
-	public FakeModelRenderer FLLeg2 = new FakeModelRenderer();
-	public FakeModelRenderer FRLeg1 = new FakeModelRenderer();
-	public FakeModelRenderer FRLeg2 = new FakeModelRenderer();
+
 
 	public ModelGolem() {
-
-		FWAIST.setModelVars(-25, 24, -22, 0, 46, 39);
-		FRARM.setModelVars(-100, 42, -28, -3, -51, -63);
-		FLARM.setModelVars(88, 222, 11.17F, -52, 64, 55);
-		FLRShoulder2.setModelVars(-200, 90, 50, -55.22F, 60, 23);
-		FLFShoulder2.setModelVars(160, 200, -200, 45.21F, 56, 44);
-		FRFShoulder2.setModelVars(-90, 120, -60, 38.2F, 60, -35);
-		FRRShoulder2.setModelVars(-50, 200, 90, -47.2F, 50, -33);
-		FRFShoulder1.setModelVars(100, 200, -200, 59.5F, 50, -58.5F);
-		FRRShoulder1.setModelVars(200, 200, 90, -40, 70, -43.5F);
-		FLRShoulder1.setModelVars(120, 200, 160, -15.5F, 55, 35.5F);
-		FLFShoulder1.setModelVars(230, 170, 100, 32.52F, 50, 29.5F);
-		FRChest.setModelVars(-222, 222, 111, 0, 60, -49);
-		FLChest.setModelVars(220, -170, 160, 0, 60, 63);
-		FHEAD.setModelVars(33, 48, 160, 70, 54, 0);
-		FRArm1.setModelVars(81, -91, -55, -63.98F, 93, 46.01F);
-		FRArm2.setModelVars(200, 190, 55, 13.02F, 90, 0.01F);
-		FLArm1.setModelVars(80, 120, 194.78F, -48.98F, 74, -59.99F);
-		FLArm2.setModelVars(30, 88, 112.17F, 49.02F, 87, 40.01F);
-		FLFHip.setModelVars(140, -170, 112, 26.5F, 49, -51.5F);
-		FLLEG.setModelVars(200, 200, 200, -20, 42, 20);
-		FRLEG.setModelVars(100, 150, 10, 35, 63, -26);
-		FRRHip.setModelVars(222, 111, 200, -41.5F, 53, 37.5F);
-		FLRHip.setModelVars(220, 111, 111, -40.52F, 53, -50.5F);
-		FRFHip.setModelVars(-200, 70, -80, 27.52F, 50, 42.5F);
-		FLLeg1.setModelVars(100, 201, 0, 12.02F, 38.3F, 13.5F);
-		FLLeg2.setModelVars(100, -100, 50, 22.01F, 48, -20.99F);
-		FRLeg1.setModelVars(100, 201, 0, 12.02F, 38.3F, 13.5F);
-		FRLeg2.setModelVars(56, -50, 200, -34.99F, 56, -10.99F);
 
 		this.textureWidth = 16;
 		this.textureHeight = 16;
@@ -247,6 +192,8 @@ public class ModelGolem extends ModelBase {
 		this.Body.addChild(this.LRShoulder1);
 		this.Body.addChild(this.LARM);
 		this.Body.addChild(this.LFShoulder1);
+		
+		build_Build();
 	}
 
 	@Override
@@ -266,246 +213,280 @@ public class ModelGolem extends ModelBase {
 
 	@Override
 	public void setLivingAnimations(EntityLivingBase entity, float par2, float par3, float partialTick) {
+		
 		setLivingAnimations((EntityGolem) entity, par2, par3, partialTick);
-	}
-
-
-
-	
-	public float[] WAIST_rotationPointX;
-	public float[] WAIST_rotationPointY;
-	public float[] WAIST_rotationPointZ;
-	public float[] WAIST_rotateAngleX;
-	public float[] WAIST_rotateAngleY;
-	public float[] WAIST_rotateAngleZ;
-
-	public float[] Body_rotationPointX;
-	public float[] Body_rotationPointY;
-	public float[] Body_rotationPointZ;
-	public float[] Body_rotateAngleX;
-	public float[] Body_rotateAngleY;
-	public float[] Body_rotateAngleZ;
-
-	public float[] RARM_rotationPointX;
-	public float[] RARM_rotationPointY;
-	public float[] RARM_rotationPointZ;
-	public float[] RARM_rotateAngleX;
-	public float[] RARM_rotateAngleY;
-	public float[] RARM_rotateAngleZ;
-
-	public float[] RArm1_rotationPointX;
-	public float[] RArm1_rotationPointY;
-	public float[] RArm1_rotationPointZ;
-	public float[] RArm1_rotateAngleX;
-	public float[] RArm1_rotateAngleY;
-	public float[] RArm1_rotateAngleZ;
-
-	public float[] RArm2_rotationPointX;
-	public float[] RArm2_rotationPointY;
-	public float[] RArm2_rotationPointZ;
-	public float[] RArm2_rotateAngleX;
-	public float[] RArm2_rotateAngleY;
-	public float[] RArm2_rotateAngleZ;
-
-	public float[] LARM_rotationPointX;
-	public float[] LARM_rotationPointY;
-	public float[] LARM_rotationPointZ;
-	public float[] LARM_rotateAngleX;
-	public float[] LARM_rotateAngleY;
-	public float[] LARM_rotateAngleZ;
-
-	public float[] LArm1_rotationPointX;
-	public float[] LArm1_rotationPointY;
-	public float[] LArm1_rotationPointZ;
-	public float[] LArm1_rotateAngleX;
-	public float[] LArm1_rotateAngleY;
-	public float[] LArm1_rotateAngleZ;
-
-	public float[] LArm2_rotationPointX;
-	public float[] LArm2_rotationPointY;
-	public float[] LArm2_rotationPointZ;
-	public float[] LArm2_rotateAngleX;
-	public float[] LArm2_rotateAngleY;
-	public float[] LArm2_rotateAngleZ;
-
-	public float[] LRShoulder2_rotationPointX;
-	public float[] LRShoulder2_rotationPointY;
-	public float[] LRShoulder2_rotationPointZ;
-	public float[] LRShoulder2_rotateAngleX;
-	public float[] LRShoulder2_rotateAngleY;
-	public float[] LRShoulder2_rotateAngleZ;
-
-	public float[] LFShoulder2_rotationPointX;
-	public float[] LFShoulder2_rotationPointY;
-	public float[] LFShoulder2_rotationPointZ;
-	public float[] LFShoulder2_rotateAngleX;
-	public float[] LFShoulder2_rotateAngleY;
-	public float[] LFShoulder2_rotateAngleZ;
-
-	public float[] RFShoulder2_rotationPointX;
-	public float[] RFShoulder2_rotationPointY;
-	public float[] RFShoulder2_rotationPointZ;
-	public float[] RFShoulder2_rotateAngleX;
-	public float[] RFShoulder2_rotateAngleY;
-	public float[] RFShoulder2_rotateAngleZ;
-
-	public float[] RRShoulder2_rotationPointX;
-	public float[] RRShoulder2_rotationPointY;
-	public float[] RRShoulder2_rotationPointZ;
-	public float[] RRShoulder2_rotateAngleX;
-	public float[] RRShoulder2_rotateAngleY;
-	public float[] RRShoulder2_rotateAngleZ;
-
-	public float[] RFShoulder1_rotationPointX;
-	public float[] RFShoulder1_rotationPointY;
-	public float[] RFShoulder1_rotationPointZ;
-	public float[] RFShoulder1_rotateAngleX;
-	public float[] RFShoulder1_rotateAngleY;
-	public float[] RFShoulder1_rotateAngleZ;
-
-	public float[] RRShoulder1_rotationPointX;
-	public float[] RRShoulder1_rotationPointY;
-	public float[] RRShoulder1_rotationPointZ;
-	public float[] RRShoulder1_rotateAngleX;
-	public float[] RRShoulder1_rotateAngleY;
-	public float[] RRShoulder1_rotateAngleZ;
-
-	public float[] LRShoulder1_rotationPointX;
-	public float[] LRShoulder1_rotationPointY;
-	public float[] LRShoulder1_rotationPointZ;
-	public float[] LRShoulder1_rotateAngleX;
-	public float[] LRShoulder1_rotateAngleY;
-	public float[] LRShoulder1_rotateAngleZ;
-
-	public float[] LFShoulder1_rotationPointX;
-	public float[] LFShoulder1_rotationPointY;
-	public float[] LFShoulder1_rotationPointZ;
-	public float[] LFShoulder1_rotateAngleX;
-	public float[] LFShoulder1_rotateAngleY;
-	public float[] LFShoulder1_rotateAngleZ;
-
-	public float[] RChest_rotationPointX;
-	public float[] RChest_rotationPointY;
-	public float[] RChest_rotationPointZ;
-	public float[] RChest_rotateAngleX;
-	public float[] RChest_rotateAngleY;
-	public float[] RChest_rotateAngleZ;
-
-	public float[] LChest_rotationPointX;
-	public float[] LChest_rotationPointY;
-	public float[] LChest_rotationPointZ;
-	public float[] LChest_rotateAngleX;
-	public float[] LChest_rotateAngleY;
-	public float[] LChest_rotateAngleZ;
-
-	public float[] HEAD_rotationPointX;
-	public float[] HEAD_rotationPointY;
-	public float[] HEAD_rotationPointZ;
-	public float[] HEAD_rotateAngleX;
-	public float[] HEAD_rotateAngleY;
-	public float[] HEAD_rotateAngleZ;
-
-	public float[] HIP_rotationPointX;
-	public float[] HIP_rotationPointY;
-	public float[] HIP_rotationPointZ;
-	public float[] HIP_rotateAngleX;
-	public float[] HIP_rotateAngleY;
-	public float[] HIP_rotateAngleZ;
-
-	public float[] LFHip_rotationPointX;
-	public float[] LFHip_rotationPointY;
-	public float[] LFHip_rotationPointZ;
-	public float[] LFHip_rotateAngleX;
-	public float[] LFHip_rotateAngleY;
-	public float[] LFHip_rotateAngleZ;
-
-	public float[] RRHip_rotationPointX;
-	public float[] RRHip_rotationPointY;
-	public float[] RRHip_rotationPointZ;
-	public float[] RRHip_rotateAngleX;
-	public float[] RRHip_rotateAngleY;
-	public float[] RRHip_rotateAngleZ;
-
-	public float[] LRHip_rotationPointX;
-	public float[] LRHip_rotationPointY;
-	public float[] LRHip_rotationPointZ;
-	public float[] LRHip_rotateAngleX;
-	public float[] LRHip_rotateAngleY;
-	public float[] LRHip_rotateAngleZ;
-
-	public float[] RFHip_rotationPointX;
-	public float[] RFHip_rotationPointY;
-	public float[] RFHip_rotationPointZ;
-	public float[] RFHip_rotateAngleX;
-	public float[] RFHip_rotateAngleY;
-	public float[] RFHip_rotateAngleZ;
-
-	public float[] LLEG_rotationPointX;
-	public float[] LLEG_rotationPointY;
-	public float[] LLEG_rotationPointZ;
-	public float[] LLEG_rotateAngleX;
-	public float[] LLEG_rotateAngleY;
-	public float[] LLEG_rotateAngleZ;
-
-	public float[] LLeg1_rotationPointX;
-	public float[] LLeg1_rotationPointY;
-	public float[] LLeg1_rotationPointZ;
-	public float[] LLeg1_rotateAngleX;
-	public float[] LLeg1_rotateAngleY;
-	public float[] LLeg1_rotateAngleZ;
-
-	public float[] LLeg2_rotationPointX;
-	public float[] LLeg2_rotationPointY;
-	public float[] LLeg2_rotationPointZ;
-	public float[] LLeg2_rotateAngleX;
-	public float[] LLeg2_rotateAngleY;
-	public float[] LLeg2_rotateAngleZ;
-
-	public float[] RLEG_rotationPointX;
-	public float[] RLEG_rotationPointY;
-	public float[] RLEG_rotationPointZ;
-	public float[] RLEG_rotateAngleX;
-	public float[] RLEG_rotateAngleY;
-	public float[] RLEG_rotateAngleZ;
-
-	public float[] RLeg1_rotationPointX;
-	public float[] RLeg1_rotationPointY;
-	public float[] RLeg1_rotationPointZ;
-	public float[] RLeg1_rotateAngleX;
-	public float[] RLeg1_rotateAngleY;
-	public float[] RLeg1_rotateAngleZ;
-
-	public float[] RLeg2_rotationPointX;
-	public float[] RLeg2_rotationPointY;
-	public float[] RLeg2_rotationPointZ;
-	public float[] RLeg2_rotateAngleX;
-	public float[] RLeg2_rotateAngleY;
-	public float[] RLeg2_rotateAngleZ;
+	}	
 	
 	
-	
-	
-	private void setLivingAnimations(EntityGolem entity, float moveCounter, float speed, float PartialTick) {
-
+	private void setLivingAnimations(EntityGolem golem, float moveCounter, float speed, float PartialTick) {
+		if (golem.AniID == golem.BUILD){
+			Build(golem.AniFrame, PartialTick);
+		}
 
 
 	}
 	
 	
+	public void moveParts(int frame, ModelRenderer part, KeyFrame[] keyArray, float partialTick){
+		int keyId = getKeyFrameNum(frame, keyArray);
+		KeyFrame curKey = keyArray[keyId];
+
+		//if it is the very first frame OR if it is the last frame in an animation
+		if (frame == 0 || frame == keyArray[keyArray.length - 1].frame){
+			part.rotationPointX = curKey.posX;
+			part.rotationPointY = curKey.posY;
+			part.rotationPointZ = curKey.posZ;
+			part.rotateAngleX = curKey.rotX * 0.0174533F; //Remember kids, always conver to radians;;
+			part.rotateAngleY = curKey.rotY * 0.0174533F; //Remember kids, always conver to radians;;
+			part.rotateAngleZ = curKey.rotZ * 0.0174533F; //Remember kids, always conver to radians;;
+		}else{
+			KeyFrame nextKey = keyArray[keyId + 1];
+			float step;
+			float position;
+			float nextPosition;
+			//float total = nextKey.posX - curKey.posX
+			//int dur = nextKey.frame - curKey.frame;
+			
+			step = (nextKey.posX - curKey.posX) / (nextKey.frame - curKey.frame); //total / duration   this is how much movement there is between each tick
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotationPointX = curKey.posX + position + (partialTick * (nextPosition - position));
+			
+			step = (nextKey.posY - curKey.posY) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotationPointY = curKey.posY + position + (partialTick * (nextPosition - position));
+			
+			step = (nextKey.posZ - curKey.posZ) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotationPointZ = curKey.posZ + position + (partialTick * (nextPosition - position));
+			
+			step = (nextKey.rotX - curKey.rotX) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotateAngleX = (curKey.rotX + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians;
+			
+			step = (nextKey.rotY - curKey.rotY) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotateAngleY = (curKey.rotY + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians
+			
+			step = (nextKey.rotZ - curKey.rotZ) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotateAngleZ = (curKey.rotZ + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians
+		}
+	}
 	
-	public void Build(){
+	
+	public int getKeyFrameNum(int frame, KeyFrame[] keyArray){
+		for (int x = 0; x < keyArray.length; x++){
+			if (frame == keyArray[x].frame ){
+				return x;
+			} else 
+			if(frame > keyArray[x].frame && frame < keyArray[x + 1].frame){
+				return x;
+			}
+		}
+		return 0;
+	}
+
+
+	//Remember 0 indexed
+	KeyFrame[] KF_HEAD = new KeyFrame[3];
+	KeyFrame[] KF_LFHip = new KeyFrame[4];
+	KeyFrame[] KF_RChest = new KeyFrame[4];
+	KeyFrame[] KF_LRShoulder2 = new KeyFrame[4];
+	KeyFrame[] KF_RArm1 = new KeyFrame[4];
+	KeyFrame[] KF_LFShoulder1 = new KeyFrame[4];
+	KeyFrame[] KF_LArm2 = new KeyFrame[4];
+	KeyFrame[] KF_LARM = new KeyFrame[4];
+	KeyFrame[] KF_RLeg2 = new KeyFrame[3];
+	KeyFrame[] KF_RRShoulder2 = new KeyFrame[4];
+	KeyFrame[] KF_RFShoulder1 = new KeyFrame[4];
+	KeyFrame[] KF_RRHip = new KeyFrame[4];
+	KeyFrame[] KF_LLEG = new KeyFrame[3];
+	KeyFrame[] KF_LRShoulder1 = new KeyFrame[4];
+	KeyFrame[] KF_RLeg1 = new KeyFrame[3];
+	KeyFrame[] KF_LArm1 = new KeyFrame[4];
+	KeyFrame[] KF_LFShoulder2 = new KeyFrame[4];
+	KeyFrame[] KF_LLeg2 = new KeyFrame[3];
+	KeyFrame[] KF_RArm2 = new KeyFrame[4];
+	KeyFrame[] KF_LChest = new KeyFrame[4];
+	KeyFrame[] KF_RFShoulder2 = new KeyFrame[4];
+	KeyFrame[] KF_LLeg1 = new KeyFrame[3];
+	KeyFrame[] KF_RFHip = new KeyFrame[4];
+	KeyFrame[] KF_RRShoulder1 = new KeyFrame[4];
+	KeyFrame[] KF_RARM = new KeyFrame[4];
+	KeyFrame[] KF_RLEG = new KeyFrame[3];
+	KeyFrame[] KF_LRHip = new KeyFrame[4];
+	KeyFrame[] KF_WAIST = new KeyFrame[4];
+	
+	public void build_Build(){
+		KF_LFHip[0] = new KeyFrame(0, 26.5F, 49, -51.5F, 140, -170, 112);
+		KF_LFHip[1] = new KeyFrame(10, 26.5F, 49, -51.5F, 140, -170, 112);
+		KF_LFHip[2] = new KeyFrame(30, 5.5F , -9, -5.5F , 15 ,    0, 15);
+		KF_LFHip[3] = new KeyFrame(90, 5.5F , -9, -5.5F , 15 ,    0, 15);
 		
-	}
-	
-	
-	public void Roll(){
+		KF_RChest[0] = new KeyFrame(0 , 0,  60, -49, -222, 222, 111);
+		KF_RChest[1] = new KeyFrame(20, 0,  60, -49, -222, 222, 111);
+		KF_RChest[2] = new KeyFrame(40, 0, -38,  -8,    0,   0,   0);
+		KF_RChest[3] = new KeyFrame(90, 0, -38,  -8,    0,   0,   0);
 		
-	}
-	
-	
-	public void Punch(){
+		KF_LRShoulder2[0] = new KeyFrame(0 , -55.22F,  60,  23, -200,  90,  50);
+		KF_LRShoulder2[1] = new KeyFrame(30, -55.22F,  60,  23, -200,  90,  50);
+		KF_LRShoulder2[2] = new KeyFrame(50,  -4.22F, -42,  18,  -30,   0, -15);
+		KF_LRShoulder2[3] = new KeyFrame(90,  -4.22F, -42,  18,  -30,   0, -15);
 		
+		KF_RArm1[0] = new KeyFrame(0 , -63.98F, 93, 46.01F, 81, -91, -55);
+		KF_RArm1[1] = new KeyFrame(45, -63.98F, 93, 46.01F, 81, -91, -55);
+		KF_RArm1[2] = new KeyFrame(65,   0.02F, 12,  0.01F, 25,   0,   0);
+		KF_RArm1[3] = new KeyFrame(90,   0.02F, 12,  0.01F, 25,   0,   0);
+		
+		KF_LFShoulder1[0] = new KeyFrame(0 , 32.52F,  50, 29.5F, 230, 170, 100);
+		KF_LFShoulder1[1] = new KeyFrame(25, 32.52F,  50, 29.5F, 230, 170, 100);
+		KF_LFShoulder1[2] = new KeyFrame(45,  5.52F, -47,  5.5F, -15,   0,  15);
+		KF_LFShoulder1[3] = new KeyFrame(90,  5.52F, -47,  5.5F, -15,   0,  15);
+		
+		KF_LArm2[0] = new KeyFrame(0 , 49.02F, 87, 40.01F,  30, 88, 120);
+		KF_LArm2[1] = new KeyFrame(50, 49.02F, 87, 40.01F,  30, 88, 120);
+		KF_LArm2[2] = new KeyFrame(70,  0.02F, 12,  0.01F, -10,  0,   0);
+		KF_LArm2[3] = new KeyFrame(90,  0.02F, 12,  0.01F, -10,  0,   0);
+		
+		KF_LARM[0] = new KeyFrame(0 , -52,  64, 55, 88, 220, 19);
+		KF_LARM[1] = new KeyFrame(35, -52,  64, 55, 88, 220, 19);
+		KF_LARM[2] = new KeyFrame(55,   0, -40, 21, 40,   0,  0);
+		KF_LARM[3] = new KeyFrame(90,   0, -40, 21, 40,   0,  0);
+		
+		KF_RLeg2[0] = new KeyFrame(0 , -34.99F, 56, -10.99F, 56, -50, 200);
+		KF_RLeg2[1] = new KeyFrame(20,   0.01F, 16,   0.01F,  0,   0,   0);
+		KF_RLeg2[2] = new KeyFrame(90,   0.01F, 16,   0.01F,  0,   0,   0);
+		
+		KF_RRShoulder2[0] = new KeyFrame(0 , -47.2F,  50, -33, -50, 200, 90);
+		KF_RRShoulder2[1] = new KeyFrame(30, -47.2F,  50, -33, -50, 200, 90);
+		KF_RRShoulder2[2] = new KeyFrame(50,  -4.2F, -42, -18,  30,   0, -15);
+		KF_RRShoulder2[3] = new KeyFrame(90,  -4.2F, -42, -18,  30,   0, -15);
+		
+		KF_RFShoulder1[0] = new KeyFrame(0 , 59.5F,  50, -58.5F, 100, 200, -200);
+		KF_RFShoulder1[1] = new KeyFrame(25, 59.5F,  50, -58.5F, 100, 200, -200);
+		KF_RFShoulder1[2] = new KeyFrame(45,  5.5F, -47,  -5.5F,  15,   0,   15);
+		KF_RFShoulder1[3] = new KeyFrame(90,  5.5F, -47,  -5.5F,  15,   0,   15);
+		
+		KF_RRHip[0] = new KeyFrame(0 , -41.5F, 53, 37.5F, 222, 111, 200);
+		KF_RRHip[1] = new KeyFrame(10, -41.5F, 53, 37.5F, 222, 111, 200); 
+		KF_RRHip[2] = new KeyFrame(30,  -5.5F, -9,  5.5F,  -15,  0, -15);
+		KF_RRHip[3] = new KeyFrame(90,  -5.5F, -9,  5.5F,  -15,  0, -15);
+				
+		KF_LLEG[0] = new KeyFrame(0 , -20,  42, 20, 200, 200, 200);
+		KF_LLEG[1] = new KeyFrame(20,   0, -11,  7,  20,   0,   0);
+		KF_LLEG[2] = new KeyFrame(90,   0, -11,  7,  20,   0,   0);
+		
+		KF_LRShoulder1[0] = new KeyFrame(0 , -15.5F,  55, 35.5F, 120, -200, 160);
+		KF_LRShoulder1[1] = new KeyFrame(25, -15.5F,  55, 35.5F, 120, -200, 160);
+		KF_LRShoulder1[2] = new KeyFrame(45,  -5.5F, -47,  5.5F, -15,    0, -15);
+		KF_LRShoulder1[3] = new KeyFrame(90,  -5.5F, -47,  5.5F, -15,    0, -15);
+		
+		KF_RLeg1[0] = new KeyFrame(0 , 0.02F, 41.3F, -13.5F, 20, -60, 0);
+		KF_RLeg1[1] = new KeyFrame(20, 0.02F, 13.3F,  -0.5F, 20,   0, 0);
+		KF_RLeg1[2] = new KeyFrame(90, 0.02F, 13.3F,  -0.5F, 20,   0, 0);
+		
+		KF_LArm1[0] = new KeyFrame(0 , -48.98F, 74, -59.99F,  80, 120, 200);
+		KF_LArm1[1] = new KeyFrame(46, -48.98F, 74, -59.99F,  80, 120, 200); 
+		KF_LArm1[2] = new KeyFrame(66,   0.02F, 12,   0.01F, -25,   0,   0);
+		KF_LArm1[3] = new KeyFrame(90,   0.02F, 12,   0.01F, -25,   0,   0);
+		
+		KF_LFShoulder2[0] = new KeyFrame(0 , 45.21F,  56, 44, 160, 200, -200);
+		KF_LFShoulder2[1] = new KeyFrame(30, 45.21F,  56, 44, 160, 200, -200); 
+		KF_LFShoulder2[2] = new KeyFrame(50,  4.21F, -42, 18, -30,   0,   15);
+		KF_LFShoulder2[3] = new KeyFrame(90,  4.21F, -42, 18, -30,   0,   15);
+		
+		KF_LLeg2[0] = new KeyFrame(0 , 22.01F, 48, -20.99F, 100, -100, 50);
+		KF_LLeg2[1] = new KeyFrame(20,  0.01F, 16,   0.01F,   0,    0,  0);
+		KF_LLeg2[2] = new KeyFrame(90,  0.01F, 16,   0.01F,   0,    0,  0);
+		
+		KF_RArm2[0] = new KeyFrame(0 , 13.02F, 90, 0.01F, 200, 190, 55);
+		KF_RArm2[1] = new KeyFrame(48, 13.02F, 90, 0.01F, 200, 190, 55); 
+		KF_RArm2[2] = new KeyFrame(68,  0.02F, 12, 0.01F, 10,    0,  0);
+		KF_RArm2[3] = new KeyFrame(90,  0.02F, 12, 0.01F, 10,    0,  0);
+		
+		KF_LChest[0] = new KeyFrame(0 , 0,  60, 63, 220, -170, 160);
+		KF_LChest[1] = new KeyFrame(20, 0,  60, 63, 220, -170, 160); 
+		KF_LChest[2] = new KeyFrame(40, 0, -38,  8,   0,    0,   0);
+		KF_LChest[3] = new KeyFrame(90, 0, -38,  8,   0,    0,   0);
+		
+		KF_RFShoulder2[0] = new KeyFrame(0 , 38.2F,  60, -35, -90, 120, -60);
+		KF_RFShoulder2[1] = new KeyFrame(30, 38.2F,  60, -35, -90, 120, -60); 
+		KF_RFShoulder2[2] = new KeyFrame(50,  4.2F, -42, -18,  30,   0,  15);
+		KF_RFShoulder2[3] = new KeyFrame(90,  4.2F, -42, -18,  30,   0,  15);
+		
+		KF_LLeg1[0] = new KeyFrame(0 , 12.02F, 38.3F, 13.5F, 100, 201, 0);
+		KF_LLeg1[1] = new KeyFrame(20,  0.02F, 13.3F,  0.5F, -20,   0, 0);
+		KF_LLeg1[2] = new KeyFrame(90,  0.02F, 13.3F,  0.5F, -20,   0, 0);
+		
+		KF_RFHip[0] = new KeyFrame(0 , 27.52F, 50, 42.5F, -200, 70, -80);
+		KF_RFHip[1] = new KeyFrame(10, 27.52F, 50, 42.5F, -200, 70, -80); 
+		KF_RFHip[2] = new KeyFrame(30,  5.52F, -9,  5.5F,  -15,  0,  15);
+		KF_RFHip[3] = new KeyFrame(90,  5.52F, -9,  5.5F,  -15,  0,  15);
+		
+		KF_HEAD[0] = new KeyFrame(0 , 70,  54, 0, 33, 48, 160);
+		KF_HEAD[1] = new KeyFrame(70, 70,  54, 0, 33, 48, 160);
+		KF_HEAD[2] = new KeyFrame(90,  0, -54, 0,  0,  0,   0);
+		
+		KF_RRShoulder1[0] = new KeyFrame(0 ,   -40,   70, -43.5F, 200, 200,  90);
+		KF_RRShoulder1[1] = new KeyFrame(25,   -40,   70, -43.5F, 200, 200,  90); 
+		KF_RRShoulder1[2] = new KeyFrame(45, -5.52F, -47,  -5.5F,  15,   0, -15);
+		KF_RRShoulder1[3] = new KeyFrame(90, -5.52F, -47,  -5.5F,  15,   0, -15);
+		
+		KF_RARM[0] = new KeyFrame(0 , -3,  51, -63, -101, 42, -28);
+		KF_RARM[1] = new KeyFrame(40, -3,  51, -63, -101, 42, -28);
+		KF_RARM[2] = new KeyFrame(60,  0, -40, -21,  -40,  0,   0);
+		KF_RARM[3] = new KeyFrame(90,  0, -40, -21,  -40,  0,   0);
+		
+		KF_RLEG[0] = new KeyFrame(0 , 35,  63, -26, 100, 150, 10);
+		KF_RLEG[1] = new KeyFrame(20,  0, -11,  -7, -20,   0,  0);
+		KF_RLEG[2] = new KeyFrame(90,  0, -11,  -7, -20,   0,  0);
+		
+		KF_LRHip[0] = new KeyFrame(0 , -40.52F, 53, -50.5F, 222, 111, 111);
+		KF_LRHip[1] = new KeyFrame(10, -40.52F, 53, -50.5F, 222, 111, 111);
+		KF_LRHip[2] = new KeyFrame(30,  -5.52F, -9,  -5.5F,  15,   0, -15);
+		KF_LRHip[3] = new KeyFrame(90,  -5.52F, -9,  -5.5F,  15,   0, -15);
+		
+		KF_WAIST[0] = new KeyFrame(0 , 0,  46, 39, -25, 24, -22);
+		KF_WAIST[1] = new KeyFrame(15, 0,  46, 39, -25, 24, -22); 
+		KF_WAIST[2] = new KeyFrame(35, 0, -25,  0,   0,  0,   0);
+		KF_WAIST[3] = new KeyFrame(90, 0, -25,  0,   0,  0,   0);
 	}
-
 	
+	public void Build(int frame, float partialTick){
+		moveParts(frame, WAIST, KF_WAIST, partialTick);
+		moveParts(frame, LFHip, KF_LFHip, partialTick);
+		moveParts(frame, RChest, KF_RChest, partialTick);
+		moveParts(frame, LRShoulder2, KF_LRShoulder2, partialTick);
+		moveParts(frame, RArm1, KF_RArm1, partialTick);
+		moveParts(frame, LFShoulder1, KF_LFShoulder1, partialTick);
+		moveParts(frame, LArm2, KF_LArm2, partialTick);
+		moveParts(frame, LARM, KF_LARM, partialTick);
+		moveParts(frame, RLeg2, KF_RLeg2, partialTick);
+		moveParts(frame, RRShoulder2, KF_RRShoulder2, partialTick);
+		moveParts(frame, RFShoulder1, KF_RFShoulder1, partialTick);
+		moveParts(frame, RRHip, KF_RRHip, partialTick);
+		moveParts(frame, LLEG, KF_LLEG, partialTick);
+		moveParts(frame, LRShoulder1, KF_LRShoulder1, partialTick);
+		moveParts(frame, RLeg1, KF_RLeg1, partialTick);
+		moveParts(frame, LArm1, KF_LArm1, partialTick);
+		moveParts(frame, LFShoulder2, KF_LFShoulder2, partialTick);
+		moveParts(frame, LLeg2, KF_LLeg2, partialTick);
+		moveParts(frame, RArm2, KF_RArm2, partialTick);
+		moveParts(frame, LChest, KF_LChest, partialTick);
+		moveParts(frame, RFShoulder2, KF_RFShoulder2, partialTick);
+		moveParts(frame, LLeg1, KF_LLeg1, partialTick);
+		moveParts(frame, RFHip, KF_RFHip, partialTick);
+		moveParts(frame, HEAD, KF_HEAD, partialTick);
+		moveParts(frame, RRShoulder1, KF_RRShoulder1, partialTick);
+		moveParts(frame, RARM, KF_RARM, partialTick);
+		moveParts(frame, RLEG, KF_RLEG, partialTick);
+		moveParts(frame, LRHip, KF_LRHip, partialTick);
+		
+	}	
 }

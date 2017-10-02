@@ -62,8 +62,6 @@ public class ModelUtils {
 		return part;
 	}
 	
-	
-	
 	public static void movePiecePos(ModelRenderer targetPart, FakeModelRenderer destinationPart, float speed){
 		targetPart.rotationPointX += ((destinationPart.rotationPointX - targetPart.rotationPointX) / speed);
 		targetPart.rotationPointY += ((destinationPart.rotationPointY - targetPart.rotationPointY) / speed);
@@ -74,6 +72,11 @@ public class ModelUtils {
 		targetPart.rotateAngleX += ((destinationPart.rotateAngleX - targetPart.rotateAngleX) / speed);
 		targetPart.rotateAngleY += ((destinationPart.rotateAngleY - targetPart.rotateAngleY) / speed);
 		targetPart.rotateAngleZ += ((destinationPart.rotateAngleZ - targetPart.rotateAngleZ) / speed);
+	}
+	
+	
+	public float toRadians(float degrees){
+		return degrees * 0.0174533F;
 	}
 
 }

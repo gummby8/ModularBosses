@@ -57,16 +57,31 @@ public class EntityGolem extends EntityMob
 	public int attackCounter;
 	public int deathTicks;
 
-	private float randomMotionVecX;
-	private float randomMotionVecY;
-	private float randomMotionVecZ;
 
-	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	public float DeadRot;
-	public int attack;
 	public float hardness;
 	public ResourceLocation textureLoc;
+
+
 	
+	public static final int BUILD = 0;
+	public static final int STAND = 1;
+	public static final int WALK = 2;
+	public static final int TRANSSPRINT = 3;
+	public static final int SPRINT = 4;
+	public static final int COLLAPSE = 5;
+	public static final int KICK = 6;
+	public static final int DOUBLEFISTSLAM = 7;
+	public static final int SQUISH = 8;
+	public static final int JUMP = 9;
+	public static final int FLAMETHROWER = 10;
+	public static final int SLAP = 11;
+	
+	private static final int ANI_ID_WATCHER = 17;
+	
+	public int AniID = 0;
+	public int PrevAniID = 0;
+	public int AniFrame = 0;
 	
 	/*================== PARAGON CONFIG SETTINGS  =====================*/
 	public static double golemMaxHealthMulti;
@@ -101,11 +116,7 @@ public class EntityGolem extends EntityMob
 
 	//stuns the mob
 	public boolean isMovementBlocked() {
-		if (b0 == 1){
-			return true;
-		} else {
 			return false;
-		}
 	}
 	//won't despawn even if the chunk unloads
 	protected boolean canDespawn()
@@ -146,7 +157,7 @@ public class EntityGolem extends EntityMob
 	protected void entityInit()
 	{
 		super.entityInit();
-		this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
+		this.dataWatcher.addObject(ANI_ID_WATCHER, 0);
 	}
 
 
@@ -157,90 +168,51 @@ public class EntityGolem extends EntityMob
 
 
 
-	/**
-	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
-	 */
-	protected void onDeathUpdate() {
-
-		this.setDead();
-
-		entityToAttack = null;
-		byte b1 = 1;
-		this.dataWatcher.updateObject(16, Byte.valueOf(b1));
-		b0 = this.dataWatcher.getWatchableObjectByte(16);
-
-		++this.deathTicks;
 
 
-		if (this.deathTicks == 100 && !this.worldObj.isRemote){
-			this.dropItem(Item.getItemById(3), 1);
-			   	
-		}
+
+	public void onLivingUpdate() {
+		//super.onLivingUpdate();
+		TargetUtils.betaMsg(this);
+		getTexture();
+
+		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
+		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
+		
+		this.AniID = 0;
+		
+		float distance = 0.0F;
 
 
-	}
+		if (entityToAttack == null) {
+			entityToAttack = findPlayerToAttack();
 
-
-	@SideOnly(Side.CLIENT)
-	public int DeathWatcher()
-	{
-		if (this.dataWatcher.getWatchableObjectByte(16) == 1) {
-			return this.deathTicks;
-		} else {
-			return -1;
-		}
-	}
-
-	//@SideOnly(Side.CLIENT)
-	public float DeathRotation()
-	{
-		if (this.dataWatcher.getWatchableObjectByte(16) == 1) {
-			this.DeadRot += 0.0003F;
-			if (this.DeadRot > 0.209F) {
-				this.DeadRot = 0.209F;
+		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
+			distance = entityToAttack.getDistanceToEntity(this);
+			if (distance > 30.0F) {
+				entityToAttack = null;
+			} else if (canEntityBeSeen(entityToAttack)) {
+				
+				faceEntity(entityToAttack, 10.0F, 10.0F);
+				attackEntity(entityToAttack, distance);
 			}
 		} else {
-			return 0;
+			entityToAttack = null;
 		}
-		return DeadRot;
+		
+		
+		this.AniFrame++;
+		if (this.AniID == 0 && this.AniFrame > 90){
+			this.AniFrame = 0;
+			
+		}
+		
+		this.PrevAniID = this.AniID;
+		
+		if (!this.worldObj.isRemote) {this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);}
 	}
-
-	/**
-	 * Returns the sound this mob makes while it's alive.
-
-    protected String getLivingSound() {
-        return "mob.zombie.say";
-    }
-	 */
-
-	/**
-	 * Returns the sound this mob makes when it is hurt.
-	 */
-	@Override
-	protected String getHurtSound() {
-		return Sounds.CHORP_HURT;
-	}
-
-	/**
-	 * Returns the sound this mob makes on death.
-	 */
-	@Override
-	protected String getDeathSound() {
-		return Sounds.CHORP_DEATH;
-	}
-
-	/**
-	 * Plays step sound at given x, y, z for the entity
-	 */
-	protected void playStepSound(int par1, int par2, int par3, int par4) {
-		this.playSound("mob.zombie.step", 0.15F, 1.0F);
-	}
-
-
-
-
-
-
+	
+	
     /**
      * Finds the closest player within 16 blocks to attack, or null if this Entity isn't interested in attacking
      * (Animals, Spiders at day, peaceful PigZombies).
@@ -252,10 +224,30 @@ public class EntityGolem extends EntityMob
     }
 
 
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		TargetUtils.betaMsg(this);
-		
+	protected void attackEntity(Entity entity, float distance) {
+		EntityLivingBase ent = (EntityLivingBase) entity;
+		if (!ent.isPotionActive(Potion.moveSlowdown)) {
+			if (this.attackCounter == 40) {
+				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
+				this.attackCounter = -10;
+			}
+			if (this.attackCounter == 45) {
+				float dmg = this.hardness * golemDmgMulti;
+				Entity projectile;
+				int difficulty = worldObj.getDifficulty().getDifficultyId();
+				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,0,0).setDamage(dmg * difficulty);
+				if (!this.worldObj.isRemote){
+				worldObj.spawnEntityInWorld(projectile);
+				}
+			}
+			if (this.attackCounter >= 60) {
+				this.attackCounter = -40;
+			}
+		}
+		//this.attackCounter++;
+	}
+	
+	public void getTexture(){
 		try{
 		if (this.textureLoc == null){
 		IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
@@ -273,54 +265,7 @@ public class EntityGolem extends EntityMob
 			ModularBosses.logger.warn("A Golem Tried To Spaw Without A Texture At Position - " + this.getPosition() );
 			this.setDead();
 		}
-		
-		this.attack++;
-		float distance = 0.0F;
-
-
-		if (entityToAttack == null) {
-			entityToAttack = findPlayerToAttack();
-
-		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
-			distance = entityToAttack.getDistanceToEntity(this);
-			if (distance > 30.0F) {
-				entityToAttack = null;
-			} else if (canEntityBeSeen(entityToAttack)) {
-				
-				//faceEntity(entityToAttack, 10.0F, 10.0F);
-				attackEntity(entityToAttack, distance);
-			}
-		} else {
-			entityToAttack = null;
-		}
-
-
 	}
-
-
-	protected void attackEntity(Entity entity, float distance) {
-		EntityLivingBase ent = (EntityLivingBase) entity;
-		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
-			if (this.attackCounter == 40) {
-				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
-				this.attack = -10;
-			}
-			if (this.attackCounter == 45) {
-				float dmg = this.hardness * golemDmgMulti;
-				Entity projectile;
-				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,0,0).setDamage(dmg * difficulty);
-				if (!this.worldObj.isRemote){
-				worldObj.spawnEntityInWorld(projectile);
-				}
-			}
-			if (this.attackCounter >= 60) {
-				this.attackCounter = -40;
-			}
-		}
-		this.attackCounter++;
-	}
-	
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -331,7 +276,7 @@ public class EntityGolem extends EntityMob
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-
+		getTexture();
 		compound.setString("textureLoc", this.textureLoc.toString());
 
 	}

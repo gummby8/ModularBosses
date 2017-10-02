@@ -1,36 +1,44 @@
 package com.Splosions.ModularBosses.client.models;
 
+import net.minecraft.client.model.ModelRenderer;
+
 public class KeyFrame {
-	public Boolean move;
-	public int startFrame;
-	public int endFrame;
 	
-	public int duration;
-	public float startValue;
-	public float endValue;
-	public float totalValue;
+	public int frame;
+	public float posX;
+	public float posY;
+	public float posZ;
+	public float rotX;
+	public float rotY;
+	public float rotZ;
 	
+
+	public KeyFrame(int frame, float posX, float posY, float posZ, float rotX, float rotY, float rotZ){
+		 this.frame = frame;
+		 this.posX = posX;
+		 this.posY = posY;
+		 this.posZ = posZ;
+		 this.rotX = rotX;
+		 this.rotY = rotY;
+		 this.rotZ = rotZ;
+	}
 	
-	KeyFrame(Boolean shouldMove, int firstFrame, int lastFrame, float startPos, float endPos){
-		move = shouldMove;
-		startFrame = firstFrame;
-		endFrame = lastFrame;
-		duration = endFrame - startFrame;
-		startValue = startPos;
-		endValue = endPos;
-		totalValue = endValue - startValue;
-		
+	public void setVars(int frame, float posX, float posY, float posZ, float rotX, float rotY, float rotZ){
+		 this.frame = frame;
+		 this.posX = posX;
+		 this.posY = posY;
+		 this.posZ = posZ;
+		 this.rotX = rotX;
+		 this.rotY = rotY;
+		 this.rotZ = rotZ;
 	}
 	
 	
-	KeyFrame(float position){
-		move = false;
-		startValue = position;
-	}	
+	
 	
 	
 
-	
+	/**
 	public float getValue(int frame){
 		if (move){
 			if (frame > startFrame && frame < endFrame){
@@ -46,7 +54,7 @@ public class KeyFrame {
 		}		
 		return startValue;
 	}
-	
+	*/
 	
 	
 

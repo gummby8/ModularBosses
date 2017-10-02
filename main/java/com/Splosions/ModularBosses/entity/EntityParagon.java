@@ -82,7 +82,7 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 	
 	private static final int DEATH_WATCHER = 16;
 	private static final int ANI_ID_WATCHER = 17;
-	private static final int ANI_FRAME_WATCHER = 18;
+
 
 	private static final int STAND = 0;
 	private static final int TRANSWALK = 1;
@@ -217,8 +217,6 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 		super.entityInit();
 		this.dataWatcher.addObject(DEATH_WATCHER, 0);
 		this.dataWatcher.addObject(ANI_ID_WATCHER, 0);
-		this.dataWatcher.addObject(ANI_FRAME_WATCHER, 0);
-
 	}
 
 	/**

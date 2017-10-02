@@ -28,11 +28,12 @@ public class RenderParagon extends RenderLiving {
 		super(renderManager, model, shadowSize);
 	}
 
+	@Override
 	public void doRender(EntityLiving entity, double x, double y, double z, float yaw, float partialTicks) {
 		this.doRender((EntityParagon) entity, x, y, z, yaw, partialTicks);
-
 	}
 
+	
 	public void doRender(EntityParagon entity, double x, double y, double z, float yaw, float partialTicks) {
 		super.doRender((EntityLiving) entity, x, y, z, yaw, partialTicks);
 		if (Config.debugHitboxes) {
