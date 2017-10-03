@@ -24,6 +24,10 @@ public class Config {
 	public static int bossDimension;
 	public static int buildsPerTick;
 	
+	public static Boolean bossDimBuild;
+	public static Boolean bossDimBreak;
+	public static Boolean bossDimExplosions;
+	
 	public static int WormRoomSizeX;
 	public static int WormRoomSizeY;
 	public static int WormRoomSizeZ;
@@ -55,6 +59,10 @@ public class Config {
 		
 		bossDimension = config.get("000 Dimension Config", "[Config] The Custom Dimension ID [1+]", -3).getInt();
 		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 5000).getInt();
+		
+		bossDimBuild = config.get("000 Config", "[Config] Allow players to place blocks in the boss dimension", false).getBoolean(false);
+		bossDimBreak = config.get("000 Config", "[Config] Allow players to break blocks in the boss dimension", false).getBoolean(false);
+		bossDimExplosions = config.get("000 Config", "[Config] Allow explosions to break blocks in the boss dimension", false).getBoolean(false);
 		
 		WormRoomSizeX = config.get("001 Worm Dungeon", "[Worm Room Witdth] [1+]", 21).getInt();
 		WormRoomSizeY = config.get("001 Worm Dungeon", "[Worm Room Height] [1+]", 10).getInt();

@@ -11,6 +11,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.util.ModelUtils;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -40,6 +41,7 @@ import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.MathHelper;
@@ -49,7 +51,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityMoldormAlpha extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob 
+public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob 
 {
 	public EntityDragonPart[] moldormPartArray;
 	public EntityDragonPart moldormPart1;
@@ -75,7 +77,7 @@ public class EntityMoldormAlpha extends EntityMob implements IBossDisplayData, I
 
 
 
-	public EntityMoldormAlpha(World par1World) {
+	public EntityMoldorm(World par1World) {
 		super(par1World);
 		//sets hitbox size
 		this.setSize(3F, 3F);
@@ -202,6 +204,15 @@ public class EntityMoldormAlpha extends EntityMob implements IBossDisplayData, I
 		TargetUtils.betaMsg(this);
 		
 		this.ignoreFrustumCheck = true;
+		
+		Vec3 look = this.getLookVec();
+		float distance = 0.5F; //distance in front of entity
+		double dx = this.posX + (look.xCoord * distance);
+		double dy = this.posY; 
+		double dz = this.posZ + (look.zCoord * distance);
+		BlockPos bp = new BlockPos(dx, dy - 1, dz);
+		Block block = this.worldObj.getBlockState(bp).getBlock();
+		System.out.println(block);
 		
 		if (this.ticksExisted % this.ranTicks== (20 - 1) && !this.worldObj.isRemote){
 		this.ranTicks = getRandomNumberInRange(20, 40);

@@ -34,6 +34,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
+import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
+import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.event.world.WorldEvent.Load;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -46,15 +48,40 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class MBEventHandler {
 
-	
+	// no block breaking in the boss dimension
 	@SubscribeEvent
-	public void onBlockBreak(BreakEvent event){
-		if (event.world.provider.getDimensionId() == Config.bossDimension && !event.getPlayer().capabilities.isCreativeMode){
-			event.setCanceled(true);
-			event.world.scheduleUpdate(event.pos, event.state.getBlock(), 1);
+	public void onBlockBreak(BreakEvent event) {
+		if (Config.bossDimBreak) {
+			if (event.world.provider.getDimensionId() == Config.bossDimension
+					&& !event.getPlayer().capabilities.isCreativeMode) {
+				event.setCanceled(true);
+				event.world.scheduleUpdate(event.pos, event.state.getBlock(), 1);
+			}
+		}
+	}
+
+	// Explosions will hurt entities, but won't break blocks in the boss
+	// dimension
+	@SubscribeEvent
+	public void onExplosion(ExplosionEvent.Detonate event) {
+		if (Config.bossDimExplosions) {
+			if (event.world.provider.getDimensionId() == Config.bossDimension) {
+				event.getAffectedBlocks().clear();
+			}
 		}
 	}
 	
+	// no block placing in the boss dimension
+	@SubscribeEvent
+	public void onBlockPlace(PlaceEvent event) {
+		if (Config.bossDimBuild) {
+			if (event.world.provider.getDimensionId() == Config.bossDimension
+					&& !event.player.capabilities.isCreativeMode) {
+				event.setCanceled(true);
+				event.world.scheduleUpdate(event.pos, event.state.getBlock(), 1);
+			}
+		}
+	}
 	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {

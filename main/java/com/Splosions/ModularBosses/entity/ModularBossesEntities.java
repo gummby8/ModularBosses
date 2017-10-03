@@ -140,8 +140,8 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
 		
-		EntityRegistry.registerModEntity(EntityMoldormAlpha.class, "Moldorm", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
-		CustomEntityList.addMapping(EntityMoldormAlpha.class, "Moldorm", 0x89FF01, 0xDEFF01);
+		EntityRegistry.registerModEntity(EntityMoldorm.class, "Moldorm", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
+		CustomEntityList.addMapping(EntityMoldorm.class, "Moldorm", 0x89FF01, 0xDEFF01);
 		
 		EntityRegistry.registerModEntity(EntityHeavyChorp.class, "HeavyChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityHeavyChorp.class, "HeavyChorp", 0x8C713F, 0xFFFFFF);
@@ -187,7 +187,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityGolem.class, new RenderGolem(manager, new ModelGolem(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityParagon.class, new RenderParagon(manager, new ModelParagon(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTatters.class, new RenderTatters(manager, new ModelTatters(), 1));
-		RenderingRegistry.registerEntityRenderingHandler(EntityMoldormAlpha.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMoldorm.class, new RenderMoldormAlpha(manager, new ModelMoldormAlpha(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWorm.class, new RenderSandWorm(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormTail.class, new RenderSandWormTail(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTick.class, new RenderTick(manager, new ModelTick(), 1));

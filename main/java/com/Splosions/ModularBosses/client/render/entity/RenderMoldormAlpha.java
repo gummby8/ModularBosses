@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldormAlpha;
 import com.Splosions.ModularBosses.client.models.entity.ModelTeleportBiped;
-import com.Splosions.ModularBosses.entity.EntityMoldormAlpha;
+import com.Splosions.ModularBosses.entity.EntityMoldorm;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
 
@@ -40,7 +40,7 @@ public class RenderMoldormAlpha extends Render {
     
     @Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float partialTicks) {
-    	EntityMoldormAlpha ent = (EntityMoldormAlpha) entity;
+    	EntityMoldorm ent = (EntityMoldorm) entity;
 
     	GL11.glPushMatrix();
     	if (entity.hurtResistantTime <= 40 && entity.hurtResistantTime >= 35){

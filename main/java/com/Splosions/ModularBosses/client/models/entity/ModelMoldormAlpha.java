@@ -3,7 +3,7 @@ package com.Splosions.ModularBosses.client.models.entity;
 
 
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
-import com.Splosions.ModularBosses.entity.EntityMoldormAlpha;
+import com.Splosions.ModularBosses.entity.EntityMoldorm;
 import com.Splosions.ModularBosses.util.ModelUtils;
 
 import net.minecraft.client.model.ModelBase;
@@ -410,7 +410,7 @@ public class ModelMoldormAlpha extends ModelBase {
 
     @Override
     public void render(Entity entity, float yaw, float partialTick, float f2, float f3, float f4, float f5) { 
-    	EntityMoldormAlpha worm = (EntityMoldormAlpha) entity;
+    	EntityMoldorm worm = (EntityMoldorm) entity;
     	this.Part1.rotateAngleY = (float)Math.toRadians(yaw);
     	this.Part2.rotateAngleY = (float)Math.toRadians(worm.moldormPart2.rotationYaw);
     	this.Part3.rotateAngleY = (float)Math.toRadians(worm.moldormPart3.rotationYaw);
@@ -463,7 +463,7 @@ public class ModelMoldormAlpha extends ModelBase {
     
 	@Override
 	public void setLivingAnimations(EntityLivingBase entity, float par2, float par3, float partialTick) {
-		setLivingAnimations((EntityMoldormAlpha) entity, par2, par3, partialTick);
+		setLivingAnimations((EntityMoldorm) entity, par2, par3, partialTick);
 	}
 
 
@@ -472,7 +472,7 @@ public class ModelMoldormAlpha extends ModelBase {
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    private void setLivingAnimations(EntityMoldormAlpha worm, float par2, float par3, float PartialTick)  {
+    private void setLivingAnimations(EntityMoldorm worm, float par2, float par3, float PartialTick)  {
 
     	/**
     	 * Eyes spin around when damaged
