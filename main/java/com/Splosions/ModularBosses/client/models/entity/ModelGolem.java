@@ -232,7 +232,7 @@ public class ModelGolem extends ModelBase {
 		KeyFrame curKey = keyArray[keyId];
 
 		//if it is the very first frame OR if it is the last frame in an animation
-		if (frame == 0 || frame == keyArray[keyArray.length - 1].frame){
+		if (keyArray.length == 1 || frame == 0 || frame == keyArray[keyArray.length - 1].frame){
 			part.rotationPointX = curKey.posX;
 			part.rotationPointY = curKey.posY;
 			part.rotationPointZ = curKey.posZ;
@@ -281,6 +281,10 @@ public class ModelGolem extends ModelBase {
 	
 	
 	public int getKeyFrameNum(int frame, KeyFrame[] keyArray){
+		if (keyArray.length == 1){
+		return 0;	
+		}
+		
 		for (int x = 0; x < keyArray.length; x++){
 			if (frame == keyArray[x].frame ){
 				return x;
@@ -292,201 +296,247 @@ public class ModelGolem extends ModelBase {
 		return 0;
 	}
 
+	/**
+	 * Throw Animation
+	 */
+	static final KeyFrame[] KF_Throw_HEAD = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_LRShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LFShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RRShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RFShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LRShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LFShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RFShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RRShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LARM = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LArm1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LArm2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Throw_RARM = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_RArm1 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_RArm2 = new KeyFrame[6];	
+	static final KeyFrame[] KF_Throw_RChest = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LChest = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_WAIST = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_HIP = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LFHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RFHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RLEG = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_RLeg1 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_RLeg2 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LLEG = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LLeg1 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LLeg2 = new KeyFrame[6];
+	
+	public void build_Throw(){
+		
+	}
+	
+	public void Throw(){
+		
+	}
 
-	//Remember 0 indexed
-	KeyFrame[] KF_HEAD = new KeyFrame[3];
-	KeyFrame[] KF_LFHip = new KeyFrame[4];
-	KeyFrame[] KF_RChest = new KeyFrame[4];
-	KeyFrame[] KF_LRShoulder2 = new KeyFrame[4];
-	KeyFrame[] KF_RArm1 = new KeyFrame[4];
-	KeyFrame[] KF_LFShoulder1 = new KeyFrame[4];
-	KeyFrame[] KF_LArm2 = new KeyFrame[4];
-	KeyFrame[] KF_LARM = new KeyFrame[4];
-	KeyFrame[] KF_RLeg2 = new KeyFrame[3];
-	KeyFrame[] KF_RRShoulder2 = new KeyFrame[4];
-	KeyFrame[] KF_RFShoulder1 = new KeyFrame[4];
-	KeyFrame[] KF_RRHip = new KeyFrame[4];
-	KeyFrame[] KF_LLEG = new KeyFrame[3];
-	KeyFrame[] KF_LRShoulder1 = new KeyFrame[4];
-	KeyFrame[] KF_RLeg1 = new KeyFrame[3];
-	KeyFrame[] KF_LArm1 = new KeyFrame[4];
-	KeyFrame[] KF_LFShoulder2 = new KeyFrame[4];
-	KeyFrame[] KF_LLeg2 = new KeyFrame[3];
-	KeyFrame[] KF_RArm2 = new KeyFrame[4];
-	KeyFrame[] KF_LChest = new KeyFrame[4];
-	KeyFrame[] KF_RFShoulder2 = new KeyFrame[4];
-	KeyFrame[] KF_LLeg1 = new KeyFrame[3];
-	KeyFrame[] KF_RFHip = new KeyFrame[4];
-	KeyFrame[] KF_RRShoulder1 = new KeyFrame[4];
-	KeyFrame[] KF_RARM = new KeyFrame[4];
-	KeyFrame[] KF_RLEG = new KeyFrame[3];
-	KeyFrame[] KF_LRHip = new KeyFrame[4];
-	KeyFrame[] KF_WAIST = new KeyFrame[4];
+	/**
+	 * Build Animation
+	 */
+	static final KeyFrame[] KF_Build_HEAD = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_LRShoulder2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LFShoulder1 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RRShoulder2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RFShoulder1 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LRShoulder1 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LFShoulder2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RFShoulder2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RRShoulder1 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LARM = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LArm1 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LArm2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RARM = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RArm1 = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RArm2 = new KeyFrame[4];	
+	static final KeyFrame[] KF_Build_RChest = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LChest = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_WAIST = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LFHip = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RRHip = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RFHip = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_LRHip = new KeyFrame[4];
+	static final KeyFrame[] KF_Build_RLEG = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_RLeg1 = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_RLeg2 = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_LLEG = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_LLeg1 = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_LLeg2 = new KeyFrame[3];
+	static final KeyFrame[] KF_Build_HIP = new KeyFrame[1];
 	
 	public void build_Build(){
-		KF_LFHip[0] = new KeyFrame(0, 26.5F, 49, -51.5F, 140, -170, 112);
-		KF_LFHip[1] = new KeyFrame(10, 26.5F, 49, -51.5F, 140, -170, 112);
-		KF_LFHip[2] = new KeyFrame(30, 5.5F , -9, -5.5F , 15 ,    0, 15);
-		KF_LFHip[3] = new KeyFrame(90, 5.5F , -9, -5.5F , 15 ,    0, 15);
+		KF_Build_HIP[0] = new KeyFrame(0, 0, -9, 0, 0, 90, 0);
 		
-		KF_RChest[0] = new KeyFrame(0 , 0,  60, -49, -222, 222, 111);
-		KF_RChest[1] = new KeyFrame(20, 0,  60, -49, -222, 222, 111);
-		KF_RChest[2] = new KeyFrame(40, 0, -38,  -8,    0,   0,   0);
-		KF_RChest[3] = new KeyFrame(90, 0, -38,  -8,    0,   0,   0);
+		KF_Build_LFHip[0] = new KeyFrame(0, 26.5F, 49, -51.5F, 140, -170, 112);
+		KF_Build_LFHip[1] = new KeyFrame(10, 26.5F, 49, -51.5F, 140, -170, 112);
+		KF_Build_LFHip[2] = new KeyFrame(30, 5.5F , -9, -5.5F , 15 ,    0, 15);
+		KF_Build_LFHip[3] = new KeyFrame(90, 5.5F , -9, -5.5F , 15 ,    0, 15);
 		
-		KF_LRShoulder2[0] = new KeyFrame(0 , -55.22F,  60,  23, -200,  90,  50);
-		KF_LRShoulder2[1] = new KeyFrame(30, -55.22F,  60,  23, -200,  90,  50);
-		KF_LRShoulder2[2] = new KeyFrame(50,  -4.22F, -42,  18,  -30,   0, -15);
-		KF_LRShoulder2[3] = new KeyFrame(90,  -4.22F, -42,  18,  -30,   0, -15);
+		KF_Build_RChest[0] = new KeyFrame(0 , 0,  60, -49, -222, 222, 111);
+		KF_Build_RChest[1] = new KeyFrame(20, 0,  60, -49, -222, 222, 111);
+		KF_Build_RChest[2] = new KeyFrame(40, 0, -38,  -8,    0,   0,   0);
+		KF_Build_RChest[3] = new KeyFrame(90, 0, -38,  -8,    0,   0,   0);
 		
-		KF_RArm1[0] = new KeyFrame(0 , -63.98F, 93, 46.01F, 81, -91, -55);
-		KF_RArm1[1] = new KeyFrame(45, -63.98F, 93, 46.01F, 81, -91, -55);
-		KF_RArm1[2] = new KeyFrame(65,   0.02F, 12,  0.01F, 25,   0,   0);
-		KF_RArm1[3] = new KeyFrame(90,   0.02F, 12,  0.01F, 25,   0,   0);
+		KF_Build_LRShoulder2[0] = new KeyFrame(0 , -55.22F,  60,  23, -200,  90,  50);
+		KF_Build_LRShoulder2[1] = new KeyFrame(30, -55.22F,  60,  23, -200,  90,  50);
+		KF_Build_LRShoulder2[2] = new KeyFrame(50,  -4.22F, -42,  18,  -30,   0, -15);
+		KF_Build_LRShoulder2[3] = new KeyFrame(90,  -4.22F, -42,  18,  -30,   0, -15);
 		
-		KF_LFShoulder1[0] = new KeyFrame(0 , 32.52F,  50, 29.5F, 230, 170, 100);
-		KF_LFShoulder1[1] = new KeyFrame(25, 32.52F,  50, 29.5F, 230, 170, 100);
-		KF_LFShoulder1[2] = new KeyFrame(45,  5.52F, -47,  5.5F, -15,   0,  15);
-		KF_LFShoulder1[3] = new KeyFrame(90,  5.52F, -47,  5.5F, -15,   0,  15);
+		KF_Build_RArm1[0] = new KeyFrame(0 , -63.98F, 93, 46.01F, 81, -91, -55);
+		KF_Build_RArm1[1] = new KeyFrame(45, -63.98F, 93, 46.01F, 81, -91, -55);
+		KF_Build_RArm1[2] = new KeyFrame(65,   0.02F, 12,  0.01F, 25,   0,   0);
+		KF_Build_RArm1[3] = new KeyFrame(90,   0.02F, 12,  0.01F, 25,   0,   0);
 		
-		KF_LArm2[0] = new KeyFrame(0 , 49.02F, 87, 40.01F,  30, 88, 120);
-		KF_LArm2[1] = new KeyFrame(50, 49.02F, 87, 40.01F,  30, 88, 120);
-		KF_LArm2[2] = new KeyFrame(70,  0.02F, 12,  0.01F, -10,  0,   0);
-		KF_LArm2[3] = new KeyFrame(90,  0.02F, 12,  0.01F, -10,  0,   0);
+		KF_Build_LFShoulder1[0] = new KeyFrame(0 , 32.52F,  50, 29.5F, 230, 170, 100);
+		KF_Build_LFShoulder1[1] = new KeyFrame(25, 32.52F,  50, 29.5F, 230, 170, 100);
+		KF_Build_LFShoulder1[2] = new KeyFrame(45,  5.52F, -47,  5.5F, -15,   0,  15);
+		KF_Build_LFShoulder1[3] = new KeyFrame(90,  5.52F, -47,  5.5F, -15,   0,  15);
 		
-		KF_LARM[0] = new KeyFrame(0 , -52,  64, 55, 88, 220, 19);
-		KF_LARM[1] = new KeyFrame(35, -52,  64, 55, 88, 220, 19);
-		KF_LARM[2] = new KeyFrame(55,   0, -40, 21, 40,   0,  0);
-		KF_LARM[3] = new KeyFrame(90,   0, -40, 21, 40,   0,  0);
+		KF_Build_LArm2[0] = new KeyFrame(0 , 49.02F, 87, 40.01F,  30, 88, 120);
+		KF_Build_LArm2[1] = new KeyFrame(50, 49.02F, 87, 40.01F,  30, 88, 120);
+		KF_Build_LArm2[2] = new KeyFrame(70,  0.02F, 12,  0.01F, -10,  0,   0);
+		KF_Build_LArm2[3] = new KeyFrame(90,  0.02F, 12,  0.01F, -10,  0,   0);
 		
-		KF_RLeg2[0] = new KeyFrame(0 , -34.99F, 56, -10.99F, 56, -50, 200);
-		KF_RLeg2[1] = new KeyFrame(20,   0.01F, 16,   0.01F,  0,   0,   0);
-		KF_RLeg2[2] = new KeyFrame(90,   0.01F, 16,   0.01F,  0,   0,   0);
+		KF_Build_LARM[0] = new KeyFrame(0 , -52,  64, 55, 88, 220, 19);
+		KF_Build_LARM[1] = new KeyFrame(35, -52,  64, 55, 88, 220, 19);
+		KF_Build_LARM[2] = new KeyFrame(55,   0, -40, 21, 40,   0,  0);
+		KF_Build_LARM[3] = new KeyFrame(90,   0, -40, 21, 40,   0,  0);
 		
-		KF_RRShoulder2[0] = new KeyFrame(0 , -47.2F,  50, -33, -50, 200, 90);
-		KF_RRShoulder2[1] = new KeyFrame(30, -47.2F,  50, -33, -50, 200, 90);
-		KF_RRShoulder2[2] = new KeyFrame(50,  -4.2F, -42, -18,  30,   0, -15);
-		KF_RRShoulder2[3] = new KeyFrame(90,  -4.2F, -42, -18,  30,   0, -15);
+		KF_Build_RLeg2[0] = new KeyFrame(0 , -34.99F, 56, -10.99F, 56, -50, 200);
+		KF_Build_RLeg2[1] = new KeyFrame(20,   0.01F, 16,   0.01F,  0,   0,   0);
+		KF_Build_RLeg2[2] = new KeyFrame(90,   0.01F, 16,   0.01F,  0,   0,   0);
 		
-		KF_RFShoulder1[0] = new KeyFrame(0 , 59.5F,  50, -58.5F, 100, 200, -200);
-		KF_RFShoulder1[1] = new KeyFrame(25, 59.5F,  50, -58.5F, 100, 200, -200);
-		KF_RFShoulder1[2] = new KeyFrame(45,  5.5F, -47,  -5.5F,  15,   0,   15);
-		KF_RFShoulder1[3] = new KeyFrame(90,  5.5F, -47,  -5.5F,  15,   0,   15);
+		KF_Build_RRShoulder2[0] = new KeyFrame(0 , -47.2F,  50, -33, -50, 200, 90);
+		KF_Build_RRShoulder2[1] = new KeyFrame(30, -47.2F,  50, -33, -50, 200, 90);
+		KF_Build_RRShoulder2[2] = new KeyFrame(50,  -4.2F, -42, -18,  30,   0, -15);
+		KF_Build_RRShoulder2[3] = new KeyFrame(90,  -4.2F, -42, -18,  30,   0, -15);
 		
-		KF_RRHip[0] = new KeyFrame(0 , -41.5F, 53, 37.5F, 222, 111, 200);
-		KF_RRHip[1] = new KeyFrame(10, -41.5F, 53, 37.5F, 222, 111, 200); 
-		KF_RRHip[2] = new KeyFrame(30,  -5.5F, -9,  5.5F,  -15,  0, -15);
-		KF_RRHip[3] = new KeyFrame(90,  -5.5F, -9,  5.5F,  -15,  0, -15);
+		KF_Build_RFShoulder1[0] = new KeyFrame(0 , 59.5F,  50, -58.5F, 100, 200, -200);
+		KF_Build_RFShoulder1[1] = new KeyFrame(25, 59.5F,  50, -58.5F, 100, 200, -200);
+		KF_Build_RFShoulder1[2] = new KeyFrame(45,  5.5F, -47,  -5.5F,  15,   0,   15);
+		KF_Build_RFShoulder1[3] = new KeyFrame(90,  5.5F, -47,  -5.5F,  15,   0,   15);
+		
+		KF_Build_RRHip[0] = new KeyFrame(0 , -41.5F, 53, 37.5F, 222, 111, 200);
+		KF_Build_RRHip[1] = new KeyFrame(10, -41.5F, 53, 37.5F, 222, 111, 200); 
+		KF_Build_RRHip[2] = new KeyFrame(30,  -5.5F, -9,  5.5F,  -15,  0, -15);
+		KF_Build_RRHip[3] = new KeyFrame(90,  -5.5F, -9,  5.5F,  -15,  0, -15);
 				
-		KF_LLEG[0] = new KeyFrame(0 , -20,  42, 20, 200, 200, 200);
-		KF_LLEG[1] = new KeyFrame(20,   0, -11,  7,  20,   0,   0);
-		KF_LLEG[2] = new KeyFrame(90,   0, -11,  7,  20,   0,   0);
+		KF_Build_LLEG[0] = new KeyFrame(0 , -20,  42, 20, 200, 200, 200);
+		KF_Build_LLEG[1] = new KeyFrame(20,   0, -11,  7,  20,   0,   0);
+		KF_Build_LLEG[2] = new KeyFrame(90,   0, -11,  7,  20,   0,   0);
 		
-		KF_LRShoulder1[0] = new KeyFrame(0 , -15.5F,  55, 35.5F, 120, -200, 160);
-		KF_LRShoulder1[1] = new KeyFrame(25, -15.5F,  55, 35.5F, 120, -200, 160);
-		KF_LRShoulder1[2] = new KeyFrame(45,  -5.5F, -47,  5.5F, -15,    0, -15);
-		KF_LRShoulder1[3] = new KeyFrame(90,  -5.5F, -47,  5.5F, -15,    0, -15);
+		KF_Build_LRShoulder1[0] = new KeyFrame(0 , -15.5F,  55, 35.5F, 120, -200, 160);
+		KF_Build_LRShoulder1[1] = new KeyFrame(25, -15.5F,  55, 35.5F, 120, -200, 160);
+		KF_Build_LRShoulder1[2] = new KeyFrame(45,  -5.5F, -47,  5.5F, -15,    0, -15);
+		KF_Build_LRShoulder1[3] = new KeyFrame(90,  -5.5F, -47,  5.5F, -15,    0, -15);
 		
-		KF_RLeg1[0] = new KeyFrame(0 , 0.02F, 41.3F, -13.5F, 20, -60, 0);
-		KF_RLeg1[1] = new KeyFrame(20, 0.02F, 13.3F,  -0.5F, 20,   0, 0);
-		KF_RLeg1[2] = new KeyFrame(90, 0.02F, 13.3F,  -0.5F, 20,   0, 0);
+		KF_Build_RLeg1[0] = new KeyFrame(0 , 0.02F, 41.3F, -13.5F, 20, -60, 0);
+		KF_Build_RLeg1[1] = new KeyFrame(20, 0.02F, 13.3F,  -0.5F, 20,   0, 0);
+		KF_Build_RLeg1[2] = new KeyFrame(90, 0.02F, 13.3F,  -0.5F, 20,   0, 0);
 		
-		KF_LArm1[0] = new KeyFrame(0 , -48.98F, 74, -59.99F,  80, 120, 200);
-		KF_LArm1[1] = new KeyFrame(46, -48.98F, 74, -59.99F,  80, 120, 200); 
-		KF_LArm1[2] = new KeyFrame(66,   0.02F, 12,   0.01F, -25,   0,   0);
-		KF_LArm1[3] = new KeyFrame(90,   0.02F, 12,   0.01F, -25,   0,   0);
+		KF_Build_LArm1[0] = new KeyFrame(0 , -48.98F, 74, -59.99F,  80, 120, 200);
+		KF_Build_LArm1[1] = new KeyFrame(46, -48.98F, 74, -59.99F,  80, 120, 200); 
+		KF_Build_LArm1[2] = new KeyFrame(66,   0.02F, 12,   0.01F, -25,   0,   0);
+		KF_Build_LArm1[3] = new KeyFrame(90,   0.02F, 12,   0.01F, -25,   0,   0);
 		
-		KF_LFShoulder2[0] = new KeyFrame(0 , 45.21F,  56, 44, 160, 200, -200);
-		KF_LFShoulder2[1] = new KeyFrame(30, 45.21F,  56, 44, 160, 200, -200); 
-		KF_LFShoulder2[2] = new KeyFrame(50,  4.21F, -42, 18, -30,   0,   15);
-		KF_LFShoulder2[3] = new KeyFrame(90,  4.21F, -42, 18, -30,   0,   15);
+		KF_Build_LFShoulder2[0] = new KeyFrame(0 , 45.21F,  56, 44, 160, 200, -200);
+		KF_Build_LFShoulder2[1] = new KeyFrame(30, 45.21F,  56, 44, 160, 200, -200); 
+		KF_Build_LFShoulder2[2] = new KeyFrame(50,  4.21F, -42, 18, -30,   0,   15);
+		KF_Build_LFShoulder2[3] = new KeyFrame(90,  4.21F, -42, 18, -30,   0,   15);
 		
-		KF_LLeg2[0] = new KeyFrame(0 , 22.01F, 48, -20.99F, 100, -100, 50);
-		KF_LLeg2[1] = new KeyFrame(20,  0.01F, 16,   0.01F,   0,    0,  0);
-		KF_LLeg2[2] = new KeyFrame(90,  0.01F, 16,   0.01F,   0,    0,  0);
+		KF_Build_LLeg2[0] = new KeyFrame(0 , 22.01F, 48, -20.99F, 100, -100, 50);
+		KF_Build_LLeg2[1] = new KeyFrame(20,  0.01F, 16,   0.01F,   0,    0,  0);
+		KF_Build_LLeg2[2] = new KeyFrame(90,  0.01F, 16,   0.01F,   0,    0,  0);
 		
-		KF_RArm2[0] = new KeyFrame(0 , 13.02F, 90, 0.01F, 200, 190, 55);
-		KF_RArm2[1] = new KeyFrame(48, 13.02F, 90, 0.01F, 200, 190, 55); 
-		KF_RArm2[2] = new KeyFrame(68,  0.02F, 12, 0.01F, 10,    0,  0);
-		KF_RArm2[3] = new KeyFrame(90,  0.02F, 12, 0.01F, 10,    0,  0);
+		KF_Build_RArm2[0] = new KeyFrame(0 , 13.02F, 90, 0.01F, 200, 190, 55);
+		KF_Build_RArm2[1] = new KeyFrame(48, 13.02F, 90, 0.01F, 200, 190, 55); 
+		KF_Build_RArm2[2] = new KeyFrame(68,  0.02F, 12, 0.01F, 10,    0,  0);
+		KF_Build_RArm2[3] = new KeyFrame(90,  0.02F, 12, 0.01F, 10,    0,  0);
 		
-		KF_LChest[0] = new KeyFrame(0 , 0,  60, 63, 220, -170, 160);
-		KF_LChest[1] = new KeyFrame(20, 0,  60, 63, 220, -170, 160); 
-		KF_LChest[2] = new KeyFrame(40, 0, -38,  8,   0,    0,   0);
-		KF_LChest[3] = new KeyFrame(90, 0, -38,  8,   0,    0,   0);
+		KF_Build_LChest[0] = new KeyFrame(0 , 0,  60, 63, 220, -170, 160);
+		KF_Build_LChest[1] = new KeyFrame(20, 0,  60, 63, 220, -170, 160); 
+		KF_Build_LChest[2] = new KeyFrame(40, 0, -38,  8,   0,    0,   0);
+		KF_Build_LChest[3] = new KeyFrame(90, 0, -38,  8,   0,    0,   0);
 		
-		KF_RFShoulder2[0] = new KeyFrame(0 , 38.2F,  60, -35, -90, 120, -60);
-		KF_RFShoulder2[1] = new KeyFrame(30, 38.2F,  60, -35, -90, 120, -60); 
-		KF_RFShoulder2[2] = new KeyFrame(50,  4.2F, -42, -18,  30,   0,  15);
-		KF_RFShoulder2[3] = new KeyFrame(90,  4.2F, -42, -18,  30,   0,  15);
+		KF_Build_RFShoulder2[0] = new KeyFrame(0 , 38.2F,  60, -35, -90, 120, -60);
+		KF_Build_RFShoulder2[1] = new KeyFrame(30, 38.2F,  60, -35, -90, 120, -60); 
+		KF_Build_RFShoulder2[2] = new KeyFrame(50,  4.2F, -42, -18,  30,   0,  15);
+		KF_Build_RFShoulder2[3] = new KeyFrame(90,  4.2F, -42, -18,  30,   0,  15);
 		
-		KF_LLeg1[0] = new KeyFrame(0 , 12.02F, 38.3F, 13.5F, 100, 201, 0);
-		KF_LLeg1[1] = new KeyFrame(20,  0.02F, 13.3F,  0.5F, -20,   0, 0);
-		KF_LLeg1[2] = new KeyFrame(90,  0.02F, 13.3F,  0.5F, -20,   0, 0);
+		KF_Build_LLeg1[0] = new KeyFrame(0 , 12.02F, 38.3F, 13.5F, 100, 201, 0);
+		KF_Build_LLeg1[1] = new KeyFrame(20,  0.02F, 13.3F,  0.5F, -20,   0, 0);
+		KF_Build_LLeg1[2] = new KeyFrame(90,  0.02F, 13.3F,  0.5F, -20,   0, 0);
 		
-		KF_RFHip[0] = new KeyFrame(0 , 27.52F, 50, 42.5F, -200, 70, -80);
-		KF_RFHip[1] = new KeyFrame(10, 27.52F, 50, 42.5F, -200, 70, -80); 
-		KF_RFHip[2] = new KeyFrame(30,  5.52F, -9,  5.5F,  -15,  0,  15);
-		KF_RFHip[3] = new KeyFrame(90,  5.52F, -9,  5.5F,  -15,  0,  15);
+		KF_Build_RFHip[0] = new KeyFrame(0 , 27.52F, 50, 42.5F, -200, 70, -80);
+		KF_Build_RFHip[1] = new KeyFrame(10, 27.52F, 50, 42.5F, -200, 70, -80); 
+		KF_Build_RFHip[2] = new KeyFrame(30,  5.52F, -9,  5.5F,  -15,  0,  15);
+		KF_Build_RFHip[3] = new KeyFrame(90,  5.52F, -9,  5.5F,  -15,  0,  15);
 		
-		KF_HEAD[0] = new KeyFrame(0 , 70,  54, 0, 33, 48, 160);
-		KF_HEAD[1] = new KeyFrame(70, 70,  54, 0, 33, 48, 160);
-		KF_HEAD[2] = new KeyFrame(90,  0, -54, 0,  0,  0,   0);
+		KF_Build_HEAD[0] = new KeyFrame(0 , 70,  54, 0, 33, 48, 160);
+		KF_Build_HEAD[1] = new KeyFrame(70, 70,  54, 0, 33, 48, 160);
+		KF_Build_HEAD[2] = new KeyFrame(90,  0, -54, 0,  0,  0,   0);
 		
-		KF_RRShoulder1[0] = new KeyFrame(0 ,   -40,   70, -43.5F, 200, 200,  90);
-		KF_RRShoulder1[1] = new KeyFrame(25,   -40,   70, -43.5F, 200, 200,  90); 
-		KF_RRShoulder1[2] = new KeyFrame(45, -5.52F, -47,  -5.5F,  15,   0, -15);
-		KF_RRShoulder1[3] = new KeyFrame(90, -5.52F, -47,  -5.5F,  15,   0, -15);
+		KF_Build_RRShoulder1[0] = new KeyFrame(0 ,   -40,   70, -43.5F, 200, 200,  90);
+		KF_Build_RRShoulder1[1] = new KeyFrame(25,   -40,   70, -43.5F, 200, 200,  90); 
+		KF_Build_RRShoulder1[2] = new KeyFrame(45, -5.52F, -47,  -5.5F,  15,   0, -15);
+		KF_Build_RRShoulder1[3] = new KeyFrame(90, -5.52F, -47,  -5.5F,  15,   0, -15);
 		
-		KF_RARM[0] = new KeyFrame(0 , -3,  51, -63, -101, 42, -28);
-		KF_RARM[1] = new KeyFrame(40, -3,  51, -63, -101, 42, -28);
-		KF_RARM[2] = new KeyFrame(60,  0, -40, -21,  -40,  0,   0);
-		KF_RARM[3] = new KeyFrame(90,  0, -40, -21,  -40,  0,   0);
+		KF_Build_RARM[0] = new KeyFrame(0 , -3,  51, -63, -101, 42, -28);
+		KF_Build_RARM[1] = new KeyFrame(40, -3,  51, -63, -101, 42, -28);
+		KF_Build_RARM[2] = new KeyFrame(60,  0, -40, -21,  -40,  0,   0);
+		KF_Build_RARM[3] = new KeyFrame(90,  0, -40, -21,  -40,  0,   0);
 		
-		KF_RLEG[0] = new KeyFrame(0 , 35,  63, -26, 100, 150, 10);
-		KF_RLEG[1] = new KeyFrame(20,  0, -11,  -7, -20,   0,  0);
-		KF_RLEG[2] = new KeyFrame(90,  0, -11,  -7, -20,   0,  0);
+		KF_Build_RLEG[0] = new KeyFrame(0 , 35,  63, -26, 100, 150, 10);
+		KF_Build_RLEG[1] = new KeyFrame(20,  0, -11,  -7, -20,   0,  0);
+		KF_Build_RLEG[2] = new KeyFrame(90,  0, -11,  -7, -20,   0,  0);
 		
-		KF_LRHip[0] = new KeyFrame(0 , -40.52F, 53, -50.5F, 222, 111, 111);
-		KF_LRHip[1] = new KeyFrame(10, -40.52F, 53, -50.5F, 222, 111, 111);
-		KF_LRHip[2] = new KeyFrame(30,  -5.52F, -9,  -5.5F,  15,   0, -15);
-		KF_LRHip[3] = new KeyFrame(90,  -5.52F, -9,  -5.5F,  15,   0, -15);
+		KF_Build_LRHip[0] = new KeyFrame(0 , -40.52F, 53, -50.5F, 222, 111, 111);
+		KF_Build_LRHip[1] = new KeyFrame(10, -40.52F, 53, -50.5F, 222, 111, 111);
+		KF_Build_LRHip[2] = new KeyFrame(30,  -5.52F, -9,  -5.5F,  15,   0, -15);
+		KF_Build_LRHip[3] = new KeyFrame(90,  -5.52F, -9,  -5.5F,  15,   0, -15);
 		
-		KF_WAIST[0] = new KeyFrame(0 , 0,  46, 39, -25, 24, -22);
-		KF_WAIST[1] = new KeyFrame(15, 0,  46, 39, -25, 24, -22); 
-		KF_WAIST[2] = new KeyFrame(35, 0, -25,  0,   0,  0,   0);
-		KF_WAIST[3] = new KeyFrame(90, 0, -25,  0,   0,  0,   0);
+		KF_Build_WAIST[0] = new KeyFrame(0 , 0,  46, 39, -25, 24, -22);
+		KF_Build_WAIST[1] = new KeyFrame(15, 0,  46, 39, -25, 24, -22); 
+		KF_Build_WAIST[2] = new KeyFrame(35, 0, -25,  0,   0,  0,   0);
+		KF_Build_WAIST[3] = new KeyFrame(90, 0, -25,  0,   0,  0,   0);
 	}
 	
 	public void Build(int frame, float partialTick){
-		moveParts(frame, WAIST, KF_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_LFHip, partialTick);
-		moveParts(frame, RChest, KF_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_LArm2, partialTick);
-		moveParts(frame, LARM, KF_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_RArm2, partialTick);
-		moveParts(frame, LChest, KF_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_RARM, partialTick);
-		moveParts(frame, RLEG, KF_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_LRHip, partialTick);
+		moveParts(frame, HIP, KF_Build_HIP, partialTick);
+		moveParts(frame, WAIST, KF_Build_WAIST, partialTick);
+		moveParts(frame, LFHip, KF_Build_LFHip, partialTick);
+		moveParts(frame, RChest, KF_Build_RChest, partialTick);
+		moveParts(frame, LRShoulder2, KF_Build_LRShoulder2, partialTick);
+		moveParts(frame, RArm1, KF_Build_RArm1, partialTick);
+		moveParts(frame, LFShoulder1, KF_Build_LFShoulder1, partialTick);
+		moveParts(frame, LArm2, KF_Build_LArm2, partialTick);
+		moveParts(frame, LARM, KF_Build_LARM, partialTick);
+		moveParts(frame, RLeg2, KF_Build_RLeg2, partialTick);
+		moveParts(frame, RRShoulder2, KF_Build_RRShoulder2, partialTick);
+		moveParts(frame, RFShoulder1, KF_Build_RFShoulder1, partialTick);
+		moveParts(frame, RRHip, KF_Build_RRHip, partialTick);
+		moveParts(frame, LLEG, KF_Build_LLEG, partialTick);
+		moveParts(frame, LRShoulder1, KF_Build_LRShoulder1, partialTick);
+		moveParts(frame, RLeg1, KF_Build_RLeg1, partialTick);
+		moveParts(frame, LArm1, KF_Build_LArm1, partialTick);
+		moveParts(frame, LFShoulder2, KF_Build_LFShoulder2, partialTick);
+		moveParts(frame, LLeg2, KF_Build_LLeg2, partialTick);
+		moveParts(frame, RArm2, KF_Build_RArm2, partialTick);
+		moveParts(frame, LChest, KF_Build_LChest, partialTick);
+		moveParts(frame, RFShoulder2, KF_Build_RFShoulder2, partialTick);
+		moveParts(frame, LLeg1, KF_Build_LLeg1, partialTick);
+		moveParts(frame, RFHip, KF_Build_RFHip, partialTick);
+		moveParts(frame, HEAD, KF_Build_HEAD, partialTick);
+		moveParts(frame, RRShoulder1, KF_Build_RRShoulder1, partialTick);
+		moveParts(frame, RARM, KF_Build_RARM, partialTick);
+		moveParts(frame, RLEG, KF_Build_RLEG, partialTick);
+		moveParts(frame, LRHip, KF_Build_LRHip, partialTick);
 		
 	}	
 }
