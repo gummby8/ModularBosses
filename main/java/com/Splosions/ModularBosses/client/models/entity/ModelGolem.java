@@ -194,6 +194,7 @@ public class ModelGolem extends ModelBase {
 		this.Body.addChild(this.LFShoulder1);
 		
 		build_Build();
+		build_Throw();
 	}
 
 	@Override
@@ -221,6 +222,9 @@ public class ModelGolem extends ModelBase {
 	private void setLivingAnimations(EntityGolem golem, float moveCounter, float speed, float PartialTick) {
 		if (golem.AniID == golem.BUILD){
 			Build(golem.AniFrame, PartialTick);
+		} else 
+		if (golem.AniID == golem.THROW){
+			Throw(golem.AniFrame, PartialTick);
 		}
 
 
@@ -322,12 +326,12 @@ public class ModelGolem extends ModelBase {
 	static final KeyFrame[] KF_Throw_RRHip = new KeyFrame[1];//
 	static final KeyFrame[] KF_Throw_RFHip = new KeyFrame[1];//
 	static final KeyFrame[] KF_Throw_LRHip = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RLEG = new KeyFrame[6];
-	static final KeyFrame[] KF_Throw_RLeg1 = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_RLeg2 = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_LLEG = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_LLeg1 = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_LLeg2 = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_RLEG = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_RLeg1 = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_RLeg2 = new KeyFrame[7];//
+	static final KeyFrame[] KF_Throw_LLEG = new KeyFrame[7];//
+	static final KeyFrame[] KF_Throw_LLeg1 = new KeyFrame[7];//
+	static final KeyFrame[] KF_Throw_LLeg2 = new KeyFrame[6];//
 	
 	public void build_Throw(){
 		KF_Throw_HEAD[0] = new KeyFrame(0 , 0, -54, 0, 0, 0, 0);
@@ -341,7 +345,7 @@ public class ModelGolem extends ModelBase {
 		KF_Throw_LFShoulder1[0] = new KeyFrame(0, 5.52F, -47, 5.5F, -15, 0, 15);
 		KF_Throw_RRShoulder2[0] = new KeyFrame(0, -4.2F, -42, -18, 30, 0, -15);
 		KF_Throw_RFShoulder1[0] = new KeyFrame(0, 5.5F, -47, -5.5F, 15, 0, 15);
-		KF_Throw_LRShoulder1[0] = new KeyFrame(0, 5.52F, -47, 5.5F, -15, 0, 15);
+		KF_Throw_LRShoulder1[0] = new KeyFrame(0, -5.5F, -47, 5.5F, -15, 0, -15);
 		KF_Throw_LFShoulder2[0] = new KeyFrame(0, 4.21F, -42, 18, -30, 0, 15);
 		KF_Throw_RFShoulder2[0] = new KeyFrame(0, 4.2F, -42, -18, 30, 0, 15);
 		KF_Throw_RRShoulder1[0] = new KeyFrame(0, -5.52F, -47, -5.5F, 15, 0, -15);
@@ -351,7 +355,7 @@ public class ModelGolem extends ModelBase {
 		KF_Throw_LARM[2] = new KeyFrame(12, 0, -40, 21, 40, 0, -20);
 		KF_Throw_LARM[3] = new KeyFrame(15, 0, -40, 21, 40, 0, 30);
 		KF_Throw_LARM[4] = new KeyFrame(19, 0, -40, 21, 40, 0, 30);
-		KF_Throw_LARM[6] = new KeyFrame(29, 0, -40, 21, 40, 0, 0);
+		KF_Throw_LARM[5] = new KeyFrame(29, 0, -40, 21, 40, 0, 0);
 		
 		KF_Throw_LArm1[0] = new KeyFrame(0, 0.02F, 12, 0.01F, -25, 0, 0);
 		
@@ -405,10 +409,83 @@ public class ModelGolem extends ModelBase {
 		KF_Throw_RRHip[0] = new KeyFrame(0, -5.5F, -9, 5.5F, -15, 0, -15);
 		KF_Throw_RFHip[0] = new KeyFrame(0, 5.52F, -9, 5.5F, -15, 0, 15);
 		KF_Throw_LRHip[0] = new KeyFrame(0, -5.52F, -9, -5.5F, 15, 0, -15);
+		
+		KF_Throw_RLEG[0] = new KeyFrame(0 , 0, -11, -7, -20, 0, 0);
+		KF_Throw_RLEG[1] = new KeyFrame(10, 0, -11, -7, -25, 0, 0);
+		KF_Throw_RLEG[2] = new KeyFrame(15, 0, -11, -7, -25, 0, 0);
+		KF_Throw_RLEG[3] = new KeyFrame(17, 0, -11, -7, -25, 25, -25);
+		KF_Throw_RLEG[4] = new KeyFrame(19, 0, -11, -7, -25, 25, -25);
+		KF_Throw_RLEG[5] = new KeyFrame(29, 0, -11, -7, -20, 0, 0);
+		
+		KF_Throw_RLeg1[0] = new KeyFrame(0 , 0.02F, 13.3F, -0.5F, 20, 0, 0);
+		KF_Throw_RLeg1[1] = new KeyFrame(10, 0.02F, 13.3F, -0.5F, 5, 5.5F, 0); 
+		KF_Throw_RLeg1[2] = new KeyFrame(12, 0.02F, 13.3F, -0.5F, 5, 5.5F, 0);
+		KF_Throw_RLeg1[3] = new KeyFrame(15, 0.02F, 15.3F, -0.5F, 5, 5.5F, 0);
+		KF_Throw_RLeg1[4] = new KeyFrame(19, 0.02F, 15.3F, -0.5F, 5, 5.5F, 0);
+		KF_Throw_RLeg1[5] = new KeyFrame(29, 0.02F, 13.3F, -0.5F, 20, 0, 0);
+		
+		KF_Throw_RLeg2[0] = new KeyFrame(0 , 0.01F, 16, 0.01F, 0, 0, 0);
+		KF_Throw_RLeg2[1] = new KeyFrame(10, 0.01F, 14, 0.01F, 15, 0, 0);
+		KF_Throw_RLeg2[2] = new KeyFrame(12, 0.01F, 14, 0.01F, 15, 0, 0);
+		KF_Throw_RLeg2[3] = new KeyFrame(15, 0.01F, 11, 0.01F, 15, 0, 41.74F);
+		KF_Throw_RLeg2[4] = new KeyFrame(17, 0.01F, 12, 0.01F, 5, 0, 25);
+		KF_Throw_RLeg2[5] = new KeyFrame(19, 0.01F, 12, 0.01F, 5, 0, 25);
+		KF_Throw_RLeg2[6] = new KeyFrame(29, 0.01F, 16, 0.01F, 0, 0, 0);
+		
+		KF_Throw_LLEG[0] = new KeyFrame(0 , 0, -11, 7, 20, 0, 0);
+		KF_Throw_LLEG[1] = new KeyFrame(10, 0, -11, 7, 20, -60, -20);
+		KF_Throw_LLEG[2] = new KeyFrame(12, 0, -11, 7, 20, -60, -20);
+		KF_Throw_LLEG[3] = new KeyFrame(15, 0, -11, 7, 25, -75, -30); 
+		KF_Throw_LLEG[4] = new KeyFrame(17, 0, -11, 7, 30, -15, -10);
+		KF_Throw_LLEG[5] = new KeyFrame(19, 0, -11, 7, 30, -15, -10);
+		KF_Throw_LLEG[6] = new KeyFrame(29, 0, -11, 7, 20, 0, 0);
+		
+		KF_Throw_LLeg1[0] = new KeyFrame(0 , 0.02F, 13.3F, 0.5F, -20, 0, 0);
+		KF_Throw_LLeg1[1] = new KeyFrame(10, 0.02F, 13.3F, 0.5F, -8, 10, -15);
+		KF_Throw_LLeg1[2] = new KeyFrame(12, 0.02F, 13.3F, 0.5F, -8, 10, -15);
+		KF_Throw_LLeg1[3] = new KeyFrame(15, 0.02F, 13.3F, 0.5F, 5, 0, 0);
+		KF_Throw_LLeg1[4] = new KeyFrame(17, 0.02F, 13.3F, 0.5F, 5, 0, 0);
+		KF_Throw_LLeg1[5] = new KeyFrame(19, 0.02F, 13.3F, 0.5F, 5, 0, 20);
+		KF_Throw_LLeg1[6] = new KeyFrame(29, 0.02F, 13.3F, 0.5F, -20, 0, 0);
+		
+		KF_Throw_LLeg2[0] = new KeyFrame(0 , 0.01F, 16, 0.01F, 0, 0, 0);
+		KF_Throw_LLeg2[1] = new KeyFrame(10, 0.01F, 13, 0.01F, 0, -15, 20);  
+		KF_Throw_LLeg2[2] = new KeyFrame(12, 0.01F, 13, 0.01F, 0, -15, 20);
+		KF_Throw_LLeg2[3] = new KeyFrame(15, 0.01F, 14, 0.01F, 0, 0, 10);
+		KF_Throw_LLeg2[4] = new KeyFrame(19, 0.01F, 14, 0.01F, 0, 0, 10); 
+		KF_Throw_LLeg2[5] = new KeyFrame(29, 0.01F, 16, 0.01F, 0, 0, 0);
 	}
 	
-	public void Throw(){
-		
+	public void Throw(int frame, float partialTick){
+		moveParts(frame, HIP, KF_Throw_HIP, partialTick);
+		moveParts(frame, WAIST, KF_Throw_WAIST, partialTick);
+		moveParts(frame, LFHip, KF_Throw_LFHip, partialTick);
+		moveParts(frame, RChest, KF_Throw_RChest, partialTick);
+		moveParts(frame, LRShoulder2, KF_Throw_LRShoulder2, partialTick);
+		moveParts(frame, RArm1, KF_Throw_RArm1, partialTick);
+		moveParts(frame, LFShoulder1, KF_Throw_LFShoulder1, partialTick);
+		moveParts(frame, LArm2, KF_Throw_LArm2, partialTick);
+		moveParts(frame, LARM, KF_Throw_LARM, partialTick);
+		moveParts(frame, RLeg2, KF_Throw_RLeg2, partialTick);
+		moveParts(frame, RRShoulder2, KF_Throw_RRShoulder2, partialTick);
+		moveParts(frame, RFShoulder1, KF_Throw_RFShoulder1, partialTick);
+		moveParts(frame, RRHip, KF_Throw_RRHip, partialTick);
+		moveParts(frame, LLEG, KF_Throw_LLEG, partialTick);
+		moveParts(frame, LRShoulder1, KF_Throw_LRShoulder1, partialTick);
+		moveParts(frame, RLeg1, KF_Throw_RLeg1, partialTick);
+		moveParts(frame, LArm1, KF_Throw_LArm1, partialTick);
+		moveParts(frame, LFShoulder2, KF_Throw_LFShoulder2, partialTick);
+		moveParts(frame, LLeg2, KF_Throw_LLeg2, partialTick);
+		moveParts(frame, RArm2, KF_Throw_RArm2, partialTick);
+		moveParts(frame, LChest, KF_Throw_LChest, partialTick);
+		moveParts(frame, RFShoulder2, KF_Throw_RFShoulder2, partialTick);
+		moveParts(frame, LLeg1, KF_Throw_LLeg1, partialTick);
+		moveParts(frame, RFHip, KF_Throw_RFHip, partialTick);
+		moveParts(frame, HEAD, KF_Throw_HEAD, partialTick);
+		moveParts(frame, RRShoulder1, KF_Throw_RRShoulder1, partialTick);
+		moveParts(frame, RARM, KF_Throw_RARM, partialTick);
+		moveParts(frame, RLEG, KF_Throw_RLEG, partialTick);
+		moveParts(frame, LRHip, KF_Throw_LRHip, partialTick);
 	}
 
 	/**

@@ -67,7 +67,7 @@ public class EntityGolem extends EntityMob
 	public static final int BUILD = 0;
 	public static final int STAND = 1;
 	public static final int WALK = 2;
-	public static final int TRANSSPRINT = 3;
+	public static final int THROW = 3;
 	public static final int SPRINT = 4;
 	public static final int COLLAPSE = 5;
 	public static final int KICK = 6;
@@ -179,7 +179,7 @@ public class EntityGolem extends EntityMob
 		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
 		
-		this.AniID = 0;
+		this.AniID = THROW;
 		
 		float distance = 0.0F;
 
@@ -202,9 +202,11 @@ public class EntityGolem extends EntityMob
 		
 		
 		this.AniFrame++;
-		if (this.AniID == 0 && this.AniFrame > 90){
+		if (this.AniID == BUILD && this.AniFrame > 90){
 			this.AniFrame = 0;
-			
+		} else
+		if (this.AniID == THROW && this.AniFrame > 29){
+			this.AniFrame = 0;
 		}
 		
 		this.PrevAniID = this.AniID;
