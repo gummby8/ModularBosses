@@ -12,6 +12,7 @@ import com.Splosions.ModularBosses.util.ModelUtils;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockAir;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -205,33 +206,40 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 		this.ignoreFrustumCheck = true;
 		
-		Vec3 look = this.getLookVec();
-		float distance = 0.5F; //distance in front of entity
-		double dx = this.posX + (look.xCoord * distance);
-		double dy = this.posY; 
-		double dz = this.posZ + (look.zCoord * distance);
-		BlockPos bp = new BlockPos(dx, dy - 1, dz);
-		Block block = this.worldObj.getBlockState(bp).getBlock();
-		System.out.println(block);
+
 		
-		if (this.ticksExisted % this.ranTicks== (20 - 1) && !this.worldObj.isRemote){
+		if (this.ticksExisted % this.ranTicks== (20 - 1) && !this.worldObj.isRemote && flip == 0){
 		this.ranTicks = getRandomNumberInRange(20, 40);
 		this.ranPosX = getRandomNumberInRange(-20, 20);
 		this.ranPosZ = getRandomNumberInRange(-20, 20);
 		}
 		
-		if (this.isCollidedHorizontally && !this.worldObj.isRemote && this.flip == 0){
-			this.ranPosX *= -1;
-			this.ranPosZ *= -1;
-			this.flip = 10;
-		} 
+		Vec3 look = this.getLookVec();
+		float distance = 4F; //distance in front of entity
+		double dx = this.posX + (look.xCoord * distance);
+		double dy = this.posY; 
+		double dz = this.posZ + (look.zCoord * distance);
+		BlockPos bp = new BlockPos(dx, dy - 1, dz);
+		Block block = this.worldObj.getBlockState(bp).getBlock();
+		
+		
+		if (!this.worldObj.isRemote && this.flip == 0) {
+			if (block instanceof BlockAir || isCollidedHorizontally) {
+				this.ranPosX *= -1;
+				this.ranPosZ *= -1;
+				this.flip = 10; 
+			}
+		}
 		
 		if (!this.worldObj.isRemote){
 			this.flip -=(this.flip <= 0)? 0 : 1;
 		}
 		
+		
 		this.moveHelper.setMoveTo(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
 		setHitBoxes();
+		
+		
 		this.kickEntitiesInList(TargetUtils.getList(this.moldormPart1, 0, 0), 3, 1, 5);
 		this.kickEntitiesInList(TargetUtils.getList(this.moldormPart2, 0, 0), 3, 1, 5);
 		this.kickEntitiesInList(TargetUtils.getList(this.moldormPart3, 0, 0), 3, 1, 5);
