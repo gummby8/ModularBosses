@@ -13,6 +13,7 @@ import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -208,35 +209,33 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 
 		
-		if (this.ticksExisted % this.ranTicks== (20 - 1) && !this.worldObj.isRemote && flip == 0){
-		this.ranTicks = getRandomNumberInRange(20, 40);
-		this.ranPosX = getRandomNumberInRange(-20, 20);
-		this.ranPosZ = getRandomNumberInRange(-20, 20);
+		if ( !this.worldObj.isRemote && this.ticksExisted % this.ranTicks == (20 - 1) && flip == 0) {
+			this.ranTicks = getRandomNumberInRange(20, 40);
+			this.ranPosX = getRandomNumberInRange(-20, 20);
+			this.ranPosZ = getRandomNumberInRange(-20, 20);
 		}
 		
-		Vec3 look = this.getLookVec();
-		float distance = 4F; //distance in front of entity
-		double dx = this.posX + (look.xCoord * distance);
-		double dy = this.posY; 
-		double dz = this.posZ + (look.zCoord * distance);
-		BlockPos bp = new BlockPos(dx, dy - 1, dz);
-		Block block = this.worldObj.getBlockState(bp).getBlock();
+
 		
-		
-		if (!this.worldObj.isRemote && this.flip == 0) {
-			if (block instanceof BlockAir || isCollidedHorizontally) {
-				this.ranPosX *= -1;
-				this.ranPosZ *= -1;
+		if (!this.worldObj.isRemote) {
+			if (edgeDetect() || isCollidedHorizontally) {
+				while (isAir()){}
 				this.flip = 10; 
+				this.motionX = 0;
+				this.motionZ = 0;
 			}
 		}
+
 		
+
+
 		if (!this.worldObj.isRemote){
 			this.flip -=(this.flip <= 0)? 0 : 1;
 		}
 		
 		
 		this.moveHelper.setMoveTo(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
+		//moveForward(0.2F);
 		setHitBoxes();
 		
 		
@@ -247,7 +246,37 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 	}
 
+	public boolean edgeDetect(){
+		Vec3 look = this.getLookVec();
+		float distance = 1.5F; //distance in front of entity
+		double dx = this.posX + (look.xCoord * distance);
+		double dy = this.posY; 
+		double dz = this.posZ + (look.zCoord * distance);
+		BlockPos bp = new BlockPos(dx, dy - 1, dz);
+		Block block = this.worldObj.getBlockState(bp).getBlock();
+		return (block instanceof BlockAir);
+	}
+	
+	public Boolean isAir(){
+		this.ranPosX = getRandomNumberInRange(-20, 20);
+		this.ranPosZ = getRandomNumberInRange(-20, 20);
+		BlockPos pos = new BlockPos(this.posX + ranPosX, this.posY - 1, this.posZ + ranPosZ);
+		if (this.worldObj.getBlockState(pos).getBlock() instanceof BlockAir){
+			return true;	
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public void moveForward(float speed) {
 
+		float f2 = MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F);
+		float f3 = MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F);
+		this.motionX += (double) (-1 * speed * f2);
+		this.motionZ += (double) (speed * f3);
+	}
+	
 	@Override
 	public World getWorld() {
 		return this.worldObj;
@@ -282,19 +311,18 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		return super.attackEntityFrom(Source, DMGAmmount);
 	}
 	
-	/**
-	 * Attacks all entities inside this list, dealing 5 hearts of damage.
-	 */
+
 	private void kickEntitiesInList(List par1List, double force, double height, float Damage) {
 		for (int i = 0; i < par1List.size(); ++i) {
 			Entity entity = (Entity) par1List.get(i);
-			if (entity instanceof EntityPlayer) {
+			if (entity instanceof EntityPlayer && entity.hurtResistantTime == 0) {
 				double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
 				double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
 				double d2 = entity.posX - d0;
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
 				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
+				entity.hurtResistantTime = 10;
 				System.out.println(entity);
 			}
 		}

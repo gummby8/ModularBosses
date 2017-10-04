@@ -328,7 +328,7 @@ public class GuiEditControlBlock extends GuiScreen {
 				if (name != "ThrownEnderpearl") {
 					Entity entity = EntityList.createEntityByName(name, te.getWorld());
 					// System.out.println(entity);
-					if (entity instanceof EntityLiving && entity != null) {
+					if (entity != null && entity instanceof EntityLiving) {
 						this.nameMap.put(name, name);
 						this.nameArray.add(name);
 					}
