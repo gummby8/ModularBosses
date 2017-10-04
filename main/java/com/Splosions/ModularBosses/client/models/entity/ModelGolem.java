@@ -236,9 +236,9 @@ public class ModelGolem extends ModelBase {
 			part.rotationPointX = curKey.posX;
 			part.rotationPointY = curKey.posY;
 			part.rotationPointZ = curKey.posZ;
-			part.rotateAngleX = curKey.rotX * 0.0174533F; //Remember kids, always conver to radians;;
-			part.rotateAngleY = curKey.rotY * 0.0174533F; //Remember kids, always conver to radians;;
-			part.rotateAngleZ = curKey.rotZ * 0.0174533F; //Remember kids, always conver to radians;;
+			part.rotateAngleX = curKey.rotX * 0.0174533F; //Remember kids, always convert to radians;
+			part.rotateAngleY = curKey.rotY * 0.0174533F; //Remember kids, always convert to radians;
+			part.rotateAngleZ = curKey.rotZ * 0.0174533F; //Remember kids, always convert to radians;
 		}else{
 			KeyFrame nextKey = keyArray[keyId + 1];
 			float step;
@@ -299,29 +299,29 @@ public class ModelGolem extends ModelBase {
 	/**
 	 * Throw Animation
 	 */
-	static final KeyFrame[] KF_Throw_HEAD = new KeyFrame[6];
-	static final KeyFrame[] KF_Throw_LRShoulder2 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LFShoulder1 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_RRShoulder2 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_RFShoulder1 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LRShoulder1 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LFShoulder2 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_RFShoulder2 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_RRShoulder1 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LARM = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_LArm1 = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LArm2 = new KeyFrame[4];
-	static final KeyFrame[] KF_Throw_RARM = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_RArm1 = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_RArm2 = new KeyFrame[6];	
-	static final KeyFrame[] KF_Throw_RChest = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LChest = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_WAIST = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_HIP = new KeyFrame[7];
-	static final KeyFrame[] KF_Throw_LFHip = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_RRHip = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_RFHip = new KeyFrame[1];
-	static final KeyFrame[] KF_Throw_LRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_HEAD = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_LRShoulder2 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LFShoulder1 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_RRShoulder2 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_RFShoulder1 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LRShoulder1 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LFShoulder2 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_RFShoulder2 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_RRShoulder1 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LARM = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_LArm1 = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LArm2 = new KeyFrame[4];//
+	static final KeyFrame[] KF_Throw_RARM = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_RArm1 = new KeyFrame[7];//
+	static final KeyFrame[] KF_Throw_RArm2 = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_RChest = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LChest = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_WAIST = new KeyFrame[7];//
+	static final KeyFrame[] KF_Throw_HIP = new KeyFrame[7];//
+	static final KeyFrame[] KF_Throw_LFHip = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_RRHip = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_RFHip = new KeyFrame[1];//
+	static final KeyFrame[] KF_Throw_LRHip = new KeyFrame[1];//
 	static final KeyFrame[] KF_Throw_RLEG = new KeyFrame[6];
 	static final KeyFrame[] KF_Throw_RLeg1 = new KeyFrame[7];
 	static final KeyFrame[] KF_Throw_RLeg2 = new KeyFrame[7];
@@ -330,7 +330,81 @@ public class ModelGolem extends ModelBase {
 	static final KeyFrame[] KF_Throw_LLeg2 = new KeyFrame[6];
 	
 	public void build_Throw(){
+		KF_Throw_HEAD[0] = new KeyFrame(0 , 0, -54, 0, 0, 0, 0);
+		KF_Throw_HEAD[1] = new KeyFrame(10, 0, -54, 0, 0, -50, 0);
+		KF_Throw_HEAD[2] = new KeyFrame(12, 0, -54, 0, 0, -50, 0);
+		KF_Throw_HEAD[3] = new KeyFrame(17, 0, -54, 0, 0,  40, 0);
+		KF_Throw_HEAD[4] = new KeyFrame(19, 0, -54, 0, 0,  40, 0);
+		KF_Throw_HEAD[5] = new KeyFrame(29, 0, -54, 0, 0, 0, 0);
 		
+		KF_Throw_LRShoulder2[0] = new KeyFrame(0, -4.22F, -42, 18, -30, 0, -15);
+		KF_Throw_LFShoulder1[0] = new KeyFrame(0, 5.52F, -47, 5.5F, -15, 0, 15);
+		KF_Throw_RRShoulder2[0] = new KeyFrame(0, -4.2F, -42, -18, 30, 0, -15);
+		KF_Throw_RFShoulder1[0] = new KeyFrame(0, 5.5F, -47, -5.5F, 15, 0, 15);
+		KF_Throw_LRShoulder1[0] = new KeyFrame(0, 5.52F, -47, 5.5F, -15, 0, 15);
+		KF_Throw_LFShoulder2[0] = new KeyFrame(0, 4.21F, -42, 18, -30, 0, 15);
+		KF_Throw_RFShoulder2[0] = new KeyFrame(0, 4.2F, -42, -18, 30, 0, 15);
+		KF_Throw_RRShoulder1[0] = new KeyFrame(0, -5.52F, -47, -5.5F, 15, 0, -15);
+		
+		KF_Throw_LARM[0] = new KeyFrame(0 , 0, -40, 21, 40, 0, 0);
+		KF_Throw_LARM[1] = new KeyFrame(10, 0, -40, 21, 40, 0, -20); 
+		KF_Throw_LARM[2] = new KeyFrame(12, 0, -40, 21, 40, 0, -20);
+		KF_Throw_LARM[3] = new KeyFrame(15, 0, -40, 21, 40, 0, 30);
+		KF_Throw_LARM[4] = new KeyFrame(19, 0, -40, 21, 40, 0, 30);
+		KF_Throw_LARM[6] = new KeyFrame(29, 0, -40, 21, 40, 0, 0);
+		
+		KF_Throw_LArm1[0] = new KeyFrame(0, 0.02F, 12, 0.01F, -25, 0, 0);
+		
+		KF_Throw_LArm2[0] = new KeyFrame(0 , 0.02F, 12, 0.01F, -10, 0, 0);
+		KF_Throw_LArm2[1] = new KeyFrame(10, 0.02F, 12, 0.01F, -10, 0, -25);
+		KF_Throw_LArm2[2] = new KeyFrame(19, 0.02F, 12, 0.01F, -10, 0, -25); 
+		KF_Throw_LArm2[3] = new KeyFrame(29 , 0.02F, 12, 0.01F, -10, 0, 0);
+		
+		KF_Throw_RARM[0] = new KeyFrame(0 , 0, -40, -21, -40, 0, 0);
+		KF_Throw_RARM[1] = new KeyFrame(12, 0, -40, -21, -42, 2.61F, -180);
+		KF_Throw_RARM[2] = new KeyFrame(15, 0, -40, -21, -100, 0, -180);
+		KF_Throw_RARM[3] = new KeyFrame(17, 0, -40, -21, -80, 35, -155);
+		KF_Throw_RARM[4] = new KeyFrame(19, 0, -40, -21, -80, 35, -155);
+		KF_Throw_RARM[5] = new KeyFrame(29, 0, -40, -21, -40, 0, 0);
+		
+		KF_Throw_RArm1[0] = new KeyFrame(0 , 0.02F, 12, 0.01F, 25, 0, 0);
+		KF_Throw_RArm1[1] = new KeyFrame(10, 0.02F, 12, 0.01F, -5.22F, 0, 10);
+		KF_Throw_RArm1[2] = new KeyFrame(12, 0.02F, 12, 0.01F, -5.22F, 0, 10); 
+		KF_Throw_RArm1[3] = new KeyFrame(15, 0.02F, 12, 0.01F, 50, 0, 10);
+		KF_Throw_RArm1[4] = new KeyFrame(17, 0.02F, 12, 0.01F, 10, 0, 30);
+		KF_Throw_RArm1[5] = new KeyFrame(19, 0.02F, 12, 0.01F, 10, 0, 30); 
+		KF_Throw_RArm1[6] = new KeyFrame(29, 0.02F, 12, 0.01F, 25, 0, 0);
+		
+		KF_Throw_RArm2[0] = new KeyFrame(0 , 0.02F, 12, 0.01F, 10, 0, 0); 
+		KF_Throw_RArm2[1] = new KeyFrame(12, 0.02F, 12, 0.01F, 10, 0, 0);
+		KF_Throw_RArm2[2] = new KeyFrame(15, 0.02F, 12, 0.01F, 35, 0, 0);
+		KF_Throw_RArm2[3] = new KeyFrame(17, 0.02F, 12, 0.01F, 15, 0, 0);
+		KF_Throw_RArm2[4] = new KeyFrame(19, 0.02F, 12, 0.01F, 15, 0, 0);
+		KF_Throw_RArm2[5] = new KeyFrame(29, 0.02F, 12, 0.01F, 10, 0, 0);
+		
+		KF_Throw_RChest[0] = new KeyFrame(0, 0, -38, -8, 0, 0, 0);
+		KF_Throw_LChest[0] = new KeyFrame(0, 0, -38, 8, 0, 0, 0);
+		
+		KF_Throw_WAIST[0] = new KeyFrame(0 , 0, -25, 0, 0, 0, 0);
+		KF_Throw_WAIST[1] = new KeyFrame(10, 0, -22, 16, 0, 60, 0);
+		KF_Throw_WAIST[2] = new KeyFrame(12, 0, -22, 16, 0, 60, 0);
+		KF_Throw_WAIST[3] = new KeyFrame(15, 0, -24, -3.2F, 0, 0, 0);
+		KF_Throw_WAIST[4] = new KeyFrame(17, 0, -22, -16, 0, -40, 0);
+		KF_Throw_WAIST[5] = new KeyFrame(19, 0, -22, -16, 0, -40, 0);
+		KF_Throw_WAIST[6] = new KeyFrame(29, 0, -25, 0, 0, 0, 0);
+		
+		KF_Throw_HIP[0] = new KeyFrame(0 , 0, -9, 0, 0, 90, 0);
+		KF_Throw_HIP[1] = new KeyFrame(10, 0, -6, 16, 0, 150, 0);
+		KF_Throw_HIP[2] = new KeyFrame(12, 0, -6, 16, 0, 150, 0);
+		KF_Throw_HIP[3] = new KeyFrame(15, 0, -8, -3.2F, 0, 90, 0);
+		KF_Throw_HIP[4] = new KeyFrame(17, 0, -6, -16, 0, 50, 0);
+		KF_Throw_HIP[5] = new KeyFrame(19, 0, -6, -16, 0, 50, 0);
+		KF_Throw_HIP[6] = new KeyFrame(29, 0, -9, 0, 0, 90, 0);
+		
+		KF_Throw_LFHip[0] = new KeyFrame(0, 5.5F, -9, -5.5F, 15, 0, 15);
+		KF_Throw_RRHip[0] = new KeyFrame(0, -5.5F, -9, 5.5F, -15, 0, -15);
+		KF_Throw_RFHip[0] = new KeyFrame(0, 5.52F, -9, 5.5F, -15, 0, 15);
+		KF_Throw_LRHip[0] = new KeyFrame(0, -5.52F, -9, -5.5F, 15, 0, -15);
 	}
 	
 	public void Throw(){
