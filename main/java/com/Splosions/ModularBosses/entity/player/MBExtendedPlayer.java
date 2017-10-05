@@ -25,6 +25,7 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	public int knockdownTime;
 
 	public static final int LIMBO_WATCHER = 27;
+	public static final int KNOCKDOWN_WATCHER = 28;
 	
 	
 	public MBExtendedPlayer(EntityPlayer player)
@@ -35,6 +36,7 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	this.preLimbo = 0;
 	this.limboTime = 0;
 	player.getDataWatcher().addObject(LIMBO_WATCHER, 0);
+	player.getDataWatcher().addObject(KNOCKDOWN_WATCHER, 0);
 	
 	this.knockdownTime = 0;
 	}
@@ -62,6 +64,8 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	
 	public void onUpdate() {
 		if (this.player.getEntityWorld().isRemote) {
+			this.knockdownTime = this.player.getDataWatcher().getWatchableObjectInt(KNOCKDOWN_WATCHER);
+			
 			this.limbo = this.player.getDataWatcher().getWatchableObjectInt(LIMBO_WATCHER);
 			if (this.preLimbo != this.limbo && this.player == Minecraft.getMinecraft().thePlayer) {
 				if (this.limbo == 1) {
@@ -75,7 +79,6 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 			this.preLimbo = this.limbo;
 			
 			
-			this.knockdownTime -= (this.knockdownTime > 0) ? 1 : 0;
 			if (this.knockdownTime >= 2 && this.player == Minecraft.getMinecraft().thePlayer){
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			} else 
@@ -86,10 +89,12 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 			
 		} else {
 			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (this.limboTime > 0 ? 1 : 0));
-		
+			this.player.getDataWatcher().updateObject(KNOCKDOWN_WATCHER, knockdownTime);
 		
 
 		}
+		
+		this.knockdownTime -= (this.knockdownTime > 0) ? 1 : 0;
 		this.limboTime -= (this.limboTime > 0) ? 1 : 0;
 		
 		

@@ -218,6 +218,8 @@ public class EntityShadeHowler extends EntityMob {
 					this.bite = true;
 					this.target = (Entity) list.get(0);
 					MBExtendedPlayer.get((EntityPlayer) this.target).knockdownTime = 20;
+					((EntityLivingBase) this.target).addPotionEffect(new PotionEffect(2, 20, 100));
+					System.out.println(this.target);
 					if (this.target == Minecraft.getMinecraft().thePlayer) {
 						ModularBosses.INSTANCE.playerTarget = this;
 					}
@@ -304,12 +306,10 @@ public class EntityShadeHowler extends EntityMob {
 				double d4 = d2 * d2 + d3 * d3;
 				entity.hurtResistantTime = 10;
 				//player.addPotionEffect(new PotionEffect(15, 200, 1));
-				
 				//entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
 				//entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
 				ModularBosses.INSTANCE.playerTarget = this;
 				//MBExtendedPlayer.get(player).knockdownTime = 60;
-					
 				//System.out.println(entity);
 			}
 		}

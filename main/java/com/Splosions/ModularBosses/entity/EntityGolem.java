@@ -8,6 +8,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelRenderer;
@@ -38,6 +39,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
@@ -82,6 +84,8 @@ public class EntityGolem extends EntityMob
 	public int AniID = 0;
 	public int PrevAniID = 0;
 	public int AniFrame = 0;
+
+	public Block block;
 	
 	/*================== PARAGON CONFIG SETTINGS  =====================*/
 	public static double golemMaxHealthMulti;
@@ -172,27 +176,31 @@ public class EntityGolem extends EntityMob
 
 
 	public void onLivingUpdate() {
-		//super.onLivingUpdate();
+		if (AniID != BUILD){
+		super.onLivingUpdate();
+		}
+		
+		
+		
 		TargetUtils.betaMsg(this);
 		getTexture();
 
 		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
 		
-		this.AniID = THROW;
+		
 		
 		float distance = 0.0F;
 
 
 		if (entityToAttack == null) {
 			entityToAttack = findPlayerToAttack();
-
 		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
 			distance = entityToAttack.getDistanceToEntity(this);
 			if (distance > 30.0F) {
 				entityToAttack = null;
 			} else if (canEntityBeSeen(entityToAttack)) {
-				
+
 				faceEntity(entityToAttack, 10.0F, 10.0F);
 				attackEntity(entityToAttack, distance);
 			}
@@ -204,6 +212,7 @@ public class EntityGolem extends EntityMob
 		this.AniFrame++;
 		if (this.AniID == BUILD && this.AniFrame > 90){
 			this.AniFrame = 0;
+			this.AniID = THROW;
 		} else
 		if (this.AniID == THROW && this.AniFrame > 29){
 			this.AniFrame = 0;
@@ -228,16 +237,15 @@ public class EntityGolem extends EntityMob
 
 	protected void attackEntity(Entity entity, float distance) {
 		EntityLivingBase ent = (EntityLivingBase) entity;
-		if (!ent.isPotionActive(Potion.moveSlowdown)) {
 			if (this.attackCounter == 40) {
 				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
-				this.attackCounter = -10;
 			}
+			
 			if (this.attackCounter == 45) {
 				float dmg = this.hardness * golemDmgMulti;
 				Entity projectile;
 				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,0,0).setDamage(dmg * difficulty);
+				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,1,1).setDamage(dmg * difficulty);
 				if (!this.worldObj.isRemote){
 				worldObj.spawnEntityInWorld(projectile);
 				}
@@ -245,14 +253,15 @@ public class EntityGolem extends EntityMob
 			if (this.attackCounter >= 60) {
 				this.attackCounter = -40;
 			}
-		}
-		//this.attackCounter++;
+		this.attackCounter++;
+		
 	}
 	
 	public void getTexture(){
 		try{
 		if (this.textureLoc == null){
 		IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
+		this.block = iblockstate.getBlock();
 		this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, this.getPosition().down());
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, this.getPosition());
