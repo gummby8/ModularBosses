@@ -8,6 +8,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -46,11 +47,13 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityGolem extends EntityMob
+public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 {
 
     /** The Entity this EntityCreature is set to attack. */
@@ -85,7 +88,7 @@ public class EntityGolem extends EntityMob
 	public int PrevAniID = 0;
 	public int AniFrame = 0;
 
-	public Block block;
+	public int textureBlockID;
 	
 	/*================== PARAGON CONFIG SETTINGS  =====================*/
 	public static double golemMaxHealthMulti;
@@ -185,6 +188,8 @@ public class EntityGolem extends EntityMob
 		TargetUtils.betaMsg(this);
 		getTexture();
 
+		
+		
 		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
 		
@@ -241,11 +246,11 @@ public class EntityGolem extends EntityMob
 				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
 			}
 			
-			if (this.attackCounter == 45) {
+			if (this.AniID == THROW && this.AniFrame == 15){
 				float dmg = this.hardness * golemDmgMulti;
 				Entity projectile;
-				int difficulty = worldObj.getDifficulty().getDifficultyId();
-				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0,0,-2,0,1,1).setDamage(dmg * difficulty);
+				int difficulty = worldObj.getDifficulty().getDifficultyId();					   
+				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) entity, 1.5F, 0, 2.4F, -1.6F ,0F,1,1).setDamage(dmg * difficulty);
 				if (!this.worldObj.isRemote){
 				worldObj.spawnEntityInWorld(projectile);
 				}
@@ -261,14 +266,13 @@ public class EntityGolem extends EntityMob
 		try{
 		if (this.textureLoc == null){
 		IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
-		this.block = iblockstate.getBlock();
+		textureBlockID = Block.getStateId(iblockstate.getBlock().getDefaultState());
 		this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, this.getPosition().down());
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, this.getPosition());
         String string = ibakedmodel.getTexture().getIconName() + ".png";
         String[] parts = string.split(":");
         textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
-        System.out.println(textureLoc);
        	this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.golemMaxHealthMulti * this.hardness);       	
        	this.heal((float) (this.golemMaxHealthMulti * this.hardness));
         }
@@ -276,12 +280,14 @@ public class EntityGolem extends EntityMob
 			ModularBosses.logger.warn("A Golem Tried To Spaw Without A Texture At Position - " + this.getPosition() );
 			this.setDead();
 		}
+		
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.textureLoc = new ResourceLocation(compound.getString("textureLoc"));
+		this.textureBlockID = compound.getInteger("textureBlockID");
 	}
 
 	@Override
@@ -289,7 +295,23 @@ public class EntityGolem extends EntityMob
 		super.writeToNBT(compound);
 		getTexture();
 		compound.setString("textureLoc", this.textureLoc.toString());
-
+		compound.setInteger("textureBlockID", textureBlockID);
 	}
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		getTexture();
+		ByteBufUtils.writeUTF8String(buffer, this.textureLoc.toString());
+		ByteBufUtils.writeVarInt(buffer, textureBlockID, 2);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		textureLoc = new ResourceLocation(ByteBufUtils.readUTF8String(additionalData));
+		textureBlockID = ByteBufUtils.readVarInt(additionalData, 2);
+		
+	}
+	
+	
 	
 }

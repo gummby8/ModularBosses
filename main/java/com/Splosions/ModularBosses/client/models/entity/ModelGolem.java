@@ -194,6 +194,7 @@ public class ModelGolem extends ModelBase {
 		this.Body.addChild(this.LFShoulder1);
 		
 		build_Build();
+		build_Stand();
 		build_Throw();
 	}
 
@@ -301,37 +302,80 @@ public class ModelGolem extends ModelBase {
 	}
 
 	/**
+	 * Stand
+	 */
+	static final KeyFrame[] KF_Stand_HEAD = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LRShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LFShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RRShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RFShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LRShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LFShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RFShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RRShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LARM = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LArm1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LArm2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RARM = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RArm1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RArm2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RChest = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LChest = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_WAIST = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_HIP = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LFHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RFHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RLEG = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RLeg1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_RLeg2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LLEG = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LLeg1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Stand_LLeg2 = new KeyFrame[1];
+	
+	public void build_Stand(){
+		
+	}
+	
+	public void Stand(int frame, float partialTick){
+		
+	}
+	
+	
+	
+	/**
 	 * Throw Animation
 	 */
-	static final KeyFrame[] KF_Throw_HEAD = new KeyFrame[6];//
-	static final KeyFrame[] KF_Throw_LRShoulder2 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LFShoulder1 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RRShoulder2 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RFShoulder1 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LRShoulder1 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LFShoulder2 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RFShoulder2 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RRShoulder1 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LARM = new KeyFrame[6];//
-	static final KeyFrame[] KF_Throw_LArm1 = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LArm2 = new KeyFrame[4];//
-	static final KeyFrame[] KF_Throw_RARM = new KeyFrame[6];//
-	static final KeyFrame[] KF_Throw_RArm1 = new KeyFrame[7];//
-	static final KeyFrame[] KF_Throw_RArm2 = new KeyFrame[6];//
-	static final KeyFrame[] KF_Throw_RChest = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LChest = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_WAIST = new KeyFrame[7];//
-	static final KeyFrame[] KF_Throw_HIP = new KeyFrame[7];//
-	static final KeyFrame[] KF_Throw_LFHip = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RRHip = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RFHip = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_LRHip = new KeyFrame[1];//
-	static final KeyFrame[] KF_Throw_RLEG = new KeyFrame[6];//
-	static final KeyFrame[] KF_Throw_RLeg1 = new KeyFrame[6];//
-	static final KeyFrame[] KF_Throw_RLeg2 = new KeyFrame[7];//
-	static final KeyFrame[] KF_Throw_LLEG = new KeyFrame[7];//
-	static final KeyFrame[] KF_Throw_LLeg1 = new KeyFrame[7];//
-	static final KeyFrame[] KF_Throw_LLeg2 = new KeyFrame[6];//
+	static final KeyFrame[] KF_Throw_HEAD = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_LRShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LFShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RRShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RFShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LRShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LFShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RFShoulder2 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RRShoulder1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LARM = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_LArm1 = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LArm2 = new KeyFrame[4];
+	static final KeyFrame[] KF_Throw_RARM = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_RArm1 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_RArm2 = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_RChest = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LChest = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_WAIST = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_HIP = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LFHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RFHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_LRHip = new KeyFrame[1];
+	static final KeyFrame[] KF_Throw_RLEG = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_RLeg1 = new KeyFrame[6];
+	static final KeyFrame[] KF_Throw_RLeg2 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LLEG = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LLeg1 = new KeyFrame[7];
+	static final KeyFrame[] KF_Throw_LLeg2 = new KeyFrame[6];
 	
 	public void build_Throw(){
 		KF_Throw_HEAD[0] = new KeyFrame(0 , 0, -54, 0, 0, 0, 0);

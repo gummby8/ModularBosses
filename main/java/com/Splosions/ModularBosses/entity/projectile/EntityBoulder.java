@@ -44,7 +44,7 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		this.shooter = (EntityGolem) shooter;
 		this.textureLoc = this.shooter.textureLoc;
 		try{
-			textureBlockID = Block.getStateId(this.shooter.block.getDefaultState());	
+			textureBlockID = this.shooter.textureBlockID;	
 		} catch (Exception e){
 			this.setDead();
 			return;
@@ -59,12 +59,8 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		if (this.worldObj.isRemote){
 			for (int x = 0; x < 15; x++){
 				this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random() / 5, Math.random() / 5, Math.random() / 5, textureBlockID );
-
-			}
-				
+			}		
 		}
-		
-		System.out.println("Wheee");
 	}
 	
 	@Override
@@ -72,11 +68,10 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		
 		if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer) {
 			Potion potioneffect = (Potion.moveSlowdown);
-			System.out.println(mop.entityHit);
 			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
-			((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, 60,100));
+			//((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, 60,100));
 			EntityPlayer player = (EntityPlayer) mop.entityHit;
-			MBExtendedPlayer.get(player).knockdownTime = 60;
+			//MBExtendedPlayer.get(player).knockdownTime = 60;
 		}
 		if (mop.entityHit != this.shooter) {
 			setDead();
