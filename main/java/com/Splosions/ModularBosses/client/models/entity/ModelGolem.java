@@ -335,11 +335,67 @@ public class ModelGolem extends ModelBase {
 	static final KeyFrame[] KF_Stand_LLeg2 = new KeyFrame[1];
 	
 	public void build_Stand(){
-		
+		KF_Stand_HEAD[0] = new KeyFrame(0, 0, -54, 0, 0, 0, 0);
+		KF_Stand_LRShoulder2[0] = new KeyFrame(0, -4.22F, -42, 18, -30, 0, -15);
+		KF_Stand_LFShoulder1[0] = new KeyFrame(0, 5.52F, -47, 5.5F, -15, 0, 15);
+		KF_Stand_RRShoulder2[0] = new KeyFrame(0, -4.2F, -42, -18, 30, 0, -15);
+		KF_Stand_RFShoulder1[0] = new KeyFrame(0, 5.5F, -47, -5.5F, 15, 0, 15);
+		KF_Stand_LRShoulder1[0] = new KeyFrame(0, -5.5F, -47, 5.5F, -15, 0, -15);
+		KF_Stand_LFShoulder2[0] = new KeyFrame(0, 4.21F, -42, 18, -30, 0, 15);
+		KF_Stand_RFShoulder2[0] = new KeyFrame(0, 4.2F, -42, -18, 30, 0, 15);
+		KF_Stand_RRShoulder1[0] = new KeyFrame(0, -5.52F, -47, -5.5F, 15, 0, -15); 
+		KF_Stand_LARM[0] = new KeyFrame(0, 0, -40, 21, 40, 0, 0);
+		KF_Stand_LArm1[0] = new KeyFrame(0, 0.02F, 12, 0.01F, -25, 0, 0);
+		KF_Stand_LArm2[0] = new KeyFrame(0, 0.02F, 12, 0.01F, -10, 0, 0);
+		KF_Stand_RARM[0] = new KeyFrame(0, 0, -40, -21, -40, 0, 0);
+		KF_Stand_RArm1[0] = new KeyFrame(0, 0.2F, 12, 0.01F, 25, 0, 0);
+		KF_Stand_RArm2[0] = new KeyFrame(0, 0.02F, 12, 0.01F, 10, 0, 0);
+		KF_Stand_RChest[0] = new KeyFrame(0, 0, -38, -8, 0, 0, 0);
+		KF_Stand_LChest[0] = new KeyFrame(0, 0, -38, 8, 0, 0, 0);
+		KF_Stand_WAIST[0] = new KeyFrame(0, 0, -25, 0, 0, 0, 0);
+		KF_Stand_HIP[0] = new KeyFrame(0, 0, -9, 0, 0, 90, 0);
+		KF_Stand_LFHip[0] = new KeyFrame(0, 5.5F, -9, -5.5F, 15, 0, 15);
+		KF_Stand_RRHip[0] = new KeyFrame(0, -5.5F, -9, 5.5F, -15, 0, -15);
+		KF_Stand_RFHip[0] = new KeyFrame(0, 5.52F, -9, 5.5F, -15, 0, 15);
+		KF_Stand_LRHip[0] = new KeyFrame(0, -5.52F, -9, -5.5F, 15, 0, -15);
+		KF_Stand_RLEG[0] = new KeyFrame(0, 0, -11, -7, -20, 0, 0);
+		KF_Stand_RLeg1[0] = new KeyFrame(0, 0.02F, 13.3F,-0.5F, 20, 0, 0);
+		KF_Stand_RLeg2[0] = new KeyFrame(0, 0.01F, 16, 0.01F, 0, 0, 0);
+		KF_Stand_LLEG[0] = new KeyFrame(0, 0, -11, 7, 20, 0, 0);
+		KF_Stand_LLeg1[0] = new KeyFrame(0, 0.02F, 13.3F, 0.5F, -20, 0, 0);
+		KF_Stand_LLeg2[0] = new KeyFrame(0, 0.01F, 16, 0.01F, 0, 0, 0);
 	}
 	
 	public void Stand(int frame, float partialTick){
-		
+		moveParts(frame, HIP, KF_Stand_HIP, partialTick);
+		moveParts(frame, WAIST, KF_Stand_WAIST, partialTick);
+		moveParts(frame, LFHip, KF_Stand_LFHip, partialTick);
+		moveParts(frame, RChest, KF_Stand_RChest, partialTick);
+		moveParts(frame, LRShoulder2, KF_Stand_LRShoulder2, partialTick);
+		moveParts(frame, RArm1, KF_Stand_RArm1, partialTick);
+		moveParts(frame, LFShoulder1, KF_Stand_LFShoulder1, partialTick);
+		moveParts(frame, LArm2, KF_Stand_LArm2, partialTick);
+		moveParts(frame, LARM, KF_Stand_LARM, partialTick);
+		moveParts(frame, RLeg2, KF_Stand_RLeg2, partialTick);
+		moveParts(frame, RRShoulder2, KF_Stand_RRShoulder2, partialTick);
+		moveParts(frame, RFShoulder1, KF_Stand_RFShoulder1, partialTick);
+		moveParts(frame, RRHip, KF_Stand_RRHip, partialTick);
+		moveParts(frame, LLEG, KF_Stand_LLEG, partialTick);
+		moveParts(frame, LRShoulder1, KF_Stand_LRShoulder1, partialTick);
+		moveParts(frame, RLeg1, KF_Stand_RLeg1, partialTick);
+		moveParts(frame, LArm1, KF_Stand_LArm1, partialTick);
+		moveParts(frame, LFShoulder2, KF_Stand_LFShoulder2, partialTick);
+		moveParts(frame, LLeg2, KF_Stand_LLeg2, partialTick);
+		moveParts(frame, RArm2, KF_Stand_RArm2, partialTick);
+		moveParts(frame, LChest, KF_Stand_LChest, partialTick);
+		moveParts(frame, RFShoulder2, KF_Stand_RFShoulder2, partialTick);
+		moveParts(frame, LLeg1, KF_Stand_LLeg1, partialTick);
+		moveParts(frame, RFHip, KF_Stand_RFHip, partialTick);
+		moveParts(frame, HEAD, KF_Stand_HEAD, partialTick);
+		moveParts(frame, RRShoulder1, KF_Stand_RRShoulder1, partialTick);
+		moveParts(frame, RARM, KF_Stand_RARM, partialTick);
+		moveParts(frame, RLEG, KF_Stand_RLEG, partialTick);
+		moveParts(frame, LRHip, KF_Stand_LRHip, partialTick);
 	}
 	
 	
