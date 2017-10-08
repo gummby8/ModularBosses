@@ -23,5 +23,10 @@
 
 "chorp_hurt": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_hurt"]},
 "chorp_death": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_death"]},
-"chorp_slime": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_slime"]}
+"chorp_slime": {"category": "hostile","sounds":["entity/ChorpChorp/chorp_slime"]},
+
+"golem_living": {"category": "hostile","sounds":["entity/Golem/golem_living_1","entity/Golem/golem_living_2","entity/Golem/golem_living_3"]},
+"golem_build": {"category": "hostile","sounds":["entity/Golem/golem_build"]},
+"golem_roll": {"category": "hostile","sounds":["entity/Golem/golem_roll"]},
+"boulder_hit": {"category": "hostile","sounds":["entity/Golem/boulder_hit"]}
 }

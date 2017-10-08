@@ -1,5 +1,6 @@
 package com.Splosions.ModularBosses.entity.projectile;
 
+import com.Splosions.ModularBosses.entity.EntityGolem;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.google.common.collect.Lists;
 
@@ -48,6 +49,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     private static final String __OBFID = "CL_00001668";
     public BlockPos bPos;
 	public int damage;
+	public Entity shooter;
 
     public EntityCustomFallingBlock(World worldIn)
     {
@@ -70,6 +72,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
         this.prevPosZ = z;
         this.noClip = true;
         this.damage = dmg;
+        this.shooter = shooter;
         
     } 
 
@@ -122,7 +125,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
                 double d3 = entity.posZ - d1;
                 double d4 = d2 * d2 + d3 * d3;
                 
-                if (entity.hurtResistantTime == 0 && entity instanceof EntityCustomFallingBlock == false && entity instanceof EntityParagon == false){
+                if (entity.hurtResistantTime == 0 && !(entity instanceof EntityCustomFallingBlock) && !(entity instanceof EntityParagon) && !(entity instanceof EntityGolem)){
                 entity.addVelocity(d2 / d4 * 0.2D, 1.2D, d3 / d4 * 0.2D);
                 entity.attackEntityFrom(DamageSource.fall, damage);
                 entity.hurtResistantTime = 10;

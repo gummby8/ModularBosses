@@ -1,6 +1,11 @@
 package com.Splosions.ModularBosses.entity.projectile;
 
+import java.util.Iterator;
+import java.util.List;
+
+import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.entity.EntityGolem;
+import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 
 import io.netty.buffer.ByteBuf;
@@ -56,6 +61,10 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 	@Override
 	public void onUpdate(){
 		super.onUpdate();
+		
+        this.collideWithEntities(this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox()));
+
+		
 		if (this.worldObj.isRemote){
 			for (int x = 0; x < 15; x++){
 				this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random() / 5, Math.random() / 5, Math.random() / 5, textureBlockID );
@@ -63,21 +72,28 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		}
 	}
 	
-	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		
-		if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer) {
-			Potion potioneffect = (Potion.moveSlowdown);
-			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
-			//((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, 60,100));
-			EntityPlayer player = (EntityPlayer) mop.entityHit;
-			//MBExtendedPlayer.get(player).knockdownTime = 60;
-		}
-		if (mop.entityHit != this.shooter) {
-			setDead();
-		}
-	}
+	
+    private void collideWithEntities(List list)
+    {
+        Iterator iterator = list.iterator();
 
+        while (iterator.hasNext())
+        {
+        	System.out.println("derp");
+            Entity entity = (Entity)iterator.next();
+                if (entity.hurtResistantTime == 0 && entity instanceof EntityPlayer){
+                entity.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
+                }
+        }
+        
+        if (!list.isEmpty()){
+			for (int x = 0; x < 40; x++){this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random(), Math.random(), Math.random(), textureBlockID );}	
+        	this.playSound(Sounds.BOULDER_HIT, 1F, 1.0F);
+        	this.setDead();
+        }
+    }
+	
+	
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
 		ByteBufUtils.writeUTF8String(buffer, this.textureLoc.toString());
@@ -103,6 +119,12 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		compound.setString("textureLoc", this.textureLoc.toString());
 		compound.setInteger("blockID", textureBlockID);
 
+	}
+
+	@Override
+	protected void onImpact(MovingObjectPosition p_70184_1_) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

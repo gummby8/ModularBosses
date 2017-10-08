@@ -68,21 +68,6 @@ public class EntityBrainEnergy extends EntityMobThrowable {
 
 	}
 
-	/**
-	 * Attacks all entities inside this list, dealing 5 hearts of damage.
-	 */
-	private void attackEntitiesInList(List par1List) {
-		for (int i = 0; i < par1List.size(); ++i) {
-			Entity entity = (Entity) par1List.get(i);
-
-			if (entity instanceof EntityLivingBase && entity != this.Shooter) {
-
-				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-
-				System.out.println(entity);
-			}
-		}
-	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
