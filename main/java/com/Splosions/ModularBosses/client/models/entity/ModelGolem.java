@@ -224,7 +224,35 @@ public class ModelGolem extends ModelBase {
 	
 	
 	private void setLivingAnimations(EntityGolem golem, float moveCounter, float speed, float PartialTick) {
-		if (golem.AniID == golem.BUILD){
+		 if (golem.AniID == golem.STAND){
+			 	Stand(golem.AniFrame, PartialTick);
+				
+			 	speed /= 2;
+			 	
+			 	float RAngle = MathHelper.cos(moveCounter / 2) * (speed / 2);
+				float idle = MathHelper.cos((golem.ticksExisted + PartialTick) / 20) - 2.7F;
+
+				this.LLEG.rotateAngleZ = RAngle * 3F;
+				this.RLEG.rotateAngleZ = -RAngle * 3F;
+
+				this.LLeg1.rotateAngleZ = this.LLeg2.rotateAngleZ = (RAngle <= 0) ? 0 : RAngle * 3F;
+				this.RLeg1.rotateAngleZ = this.RLeg2.rotateAngleZ = (-RAngle <= 0) ? 0 : -RAngle * 3F;
+
+				this.WAIST.rotationPointY = -24 - (MathHelper.cos(moveCounter) * (speed * 5));
+				this.HIP.rotationPointY = -9 - (MathHelper.cos(moveCounter) * (speed * 5));
+
+				this.LARM.rotateAngleZ = -RAngle * 3F;
+				this.RARM.rotateAngleZ = RAngle * 3F;
+
+				this.LArm1.rotateAngleZ = this.LArm2.rotateAngleZ = (-RAngle >= 0) ? 0 : -RAngle * 3F;
+				this.RArm1.rotateAngleZ = this.RArm2.rotateAngleZ = (RAngle >= 0) ? 0 : RAngle * 3F;
+
+				this.LARM.rotateAngleX = -idle / 6;
+				this.RARM.rotateAngleX = idle / 6;
+
+				this.LArm1.rotateAngleX = (idle + 1) / 10;
+				this.RArm1.rotateAngleX = (-idle - 1) / 10;
+		} else if (golem.AniID == golem.BUILD){
 			Build(golem.AniFrame, PartialTick);
 		} else 
 		if (golem.AniID == golem.THROW){
@@ -232,9 +260,6 @@ public class ModelGolem extends ModelBase {
 		} else 
 		if (golem.AniID == golem.ROLL){
 			Roll(golem.AniFrame, PartialTick);
-		} else  
-		if (golem.AniID == golem.STAND){
-			Stand(golem.AniFrame, PartialTick);
 		} else  
 		if (golem.AniID == golem.STOMP){
 			Stomp(golem.AniFrame, PartialTick);

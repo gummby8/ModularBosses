@@ -205,6 +205,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
 		
         if (this.fallTile.getBlock() instanceof BlockStaticLiquid){ //kills the block if it is a liquid, liquid blocks don't show textures. 
         	this.setDead();
+        	return;
         }
 		
 		this.motionY = additionalData.readDouble();

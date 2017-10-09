@@ -80,6 +80,8 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 			
 			
 			if (this.knockdownTime >= 2 && this.player == Minecraft.getMinecraft().thePlayer){
+				this.player.setInWeb();
+				this.player.setVelocity(0, 0, 0);
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
 			} else 
 			if (this.knockdownTime == 1){
@@ -101,11 +103,6 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 		
 		
 	}
-	
-	
-	
-	
-	
 	
 	
 

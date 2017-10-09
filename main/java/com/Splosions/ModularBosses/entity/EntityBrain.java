@@ -82,7 +82,6 @@ public class EntityBrain extends EntityMob {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		
 	}
 
 	public static void postInitConfig(Configuration config) {
@@ -122,10 +121,6 @@ public class EntityBrain extends EntityMob {
 				this.worldObj.spawnEntityInWorld(energy);
 			}
 		}
-		
-		
-		
-		
 	}
 
 	
@@ -137,6 +132,7 @@ public class EntityBrain extends EntityMob {
 			this.worldObj.spawnEntityInWorld(spark);	
 		}
 	}
+	
 	
 	@Override
 	public void onDeathUpdate() {

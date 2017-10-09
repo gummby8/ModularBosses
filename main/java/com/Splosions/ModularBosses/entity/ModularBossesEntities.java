@@ -101,15 +101,15 @@ public class ModularBossesEntities
 	private static void registerEntities() {
 		int modEntityIndex = 0;
 		//Projectile Entities
-		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.INSTANCE, 64, 3, true);
-		EntityRegistry.registerModEntity(EntityEnergyArrow.class, "Energy Arrow", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
+		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityEnergyArrow.class, "Energy Arrow", ++modEntityIndex, ModularBosses.INSTANCE, 400, 1, true);
 		EntityRegistry.registerModEntity(EntityBrainEnergy.class, "Brain Energy", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
 		EntityRegistry.registerModEntity(EntityBloodBlob.class, "Blood Blob", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
-		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityBait.class, "Bait", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
+		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityBait.class, "Bait", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
 		//EntityRegistry.registerModEntity(EntityBlueWave.class, "Blue Wave", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntitySpiritShard.class, "Spirit Shard", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlackHole.class, "Black Hole", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);

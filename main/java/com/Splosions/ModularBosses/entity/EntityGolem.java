@@ -42,6 +42,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -58,6 +59,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 
 	/** The Entity this EntityCreature is set to attack. */
 	public Entity entityToAttack;
+
 
 	public int attackCounter;
 	public int deathTicks;
@@ -82,14 +84,14 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	public int PrevAniID = 0;
 	public int AniFrame = 0;
 
-	public int textureBlockID;
+	public int textureBlockID = -1;
 
-	/* ================== PARAGON CONFIG SETTINGS ===================== */
+	/* ================== GOLEM CONFIG SETTINGS ===================== */
 	public static double golemMaxHealthMulti;
-	/** Golem Damage Multiplier */
 	public static int golemDmgMulti;
-
-	/** Paragon Jump Damage */
+	public static int attackCooldown;
+	
+	  private EntityAIWander entityAIWander = new EntityAIWander(this, 0.25D);
 
 	public EntityGolem(World par1World) {
 		super(par1World);
@@ -97,20 +99,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		this.setSize(2F, 6.5F);
 		this.experienceValue = 10;
 		this.isImmuneToFire = false;
-
-		// AI STUFF
-		// this.getNavigator().setBreakDoors(true);
-		this.tasks.addTask(0, new EntityAISwimming(this));
-		// this.tasks.addTask(1, new EntityAIBreakDoor(this));
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.21D, false));
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.21D, true));
-		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
-		this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
-		this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); // Wander speed
-		this.tasks.addTask(7, new EntityAILookIdle(this));
-		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
+		this.enablePersistence();
 	}
 
 	// stuns the mob
@@ -170,31 +159,50 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	public static void postInitConfig(Configuration config) {
 		golemMaxHealthMulti = config.get("Golem", "[Max Health] Golem Spawn Block Hardness multiplied by... [1+]", 20).getInt();
 		golemDmgMulti = config.get("Golem", "[Attack Dmg] Golem Spawn Block Hardness multiplied by... [1+]", 1).getInt();
+		attackCooldown = config.get("Golem", "[Attack Cooldown] Ammount of seconds between attacks... [1+]", 2).getInt() * 20;
 	}
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		TargetUtils.betaMsg(this);
 		getTexture();
-
+		
+		if (entityToAttack == null && !this.worldObj.isRemote) {
+			entityToAttack = TargetUtils.findRandomVisablePlayer(this, 20, 4);
+		} 
+		
+		if (this.AniID == STAND && entityToAttack != null && !this.worldObj.isRemote) {
+			this.moveHelper.setMoveTo(this.entityToAttack.posX, this.entityToAttack.posY, this.entityToAttack.posZ, 0.35F);
+		} 
+		
+		if (this.entityToAttack == null){
+			this.tasks.addTask(1, entityAIWander);
+		} else {
+			this.tasks.removeTask(entityAIWander);
+		}
+		
+		if (!this.worldObj.isRemote && this.AniID == STAND && entityToAttack != null) {
+			attackPicker();
+		}
+		
+		
+		
 		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID) ? 0 : this.AniFrame;
 
 
-		if (entityToAttack == null) {
-			entityToAttack = TargetUtils.findRandomVisablePlayer(this, 20, 4);
-		} 
-		
+
 
 		this.AniFrame++;
 		if (this.AniID == BUILD && this.AniFrame == 1) {
-        	this.playSound(Sounds.GOLEM_BUILD, 5F, 1.0F);
+        	this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
 		} else if (this.AniID == BUILD && this.AniFrame > 90) {
 			this.AniFrame = 0;
 			this.AniID = STAND;
 		} else if (this.AniID == THROW && this.AniFrame == 15) {
-			throwRock();		
+			if (!this.worldObj.isRemote){throwRock();}		
 		} else if (this.AniID == THROW && this.AniFrame > 29) {
+			entityToAttack = null;
 			this.AniFrame = 0;
 			this.AniID = STAND;
 		} else if (this.AniID == ROLL && this.AniFrame > 0 && this.AniFrame < 9) {
@@ -203,7 +211,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 				this.moveHelper.setMoveTo(this.entityToAttack.posX, this.posY, this.entityToAttack.posZ, 0.3F);
 			}
 		} else if (this.AniID == ROLL && this.AniFrame == 9) {
-			this.playSound(Sounds.GOLEM_ROLL, 5F, 1.0F);
+			this.playSound(Sounds.GOLEM_ROLL, 4F, 1.0F);
 			count = 0;
 			Vec3 look = this.getLookVec();
 			float distance = 20F; //distance in front of entity
@@ -212,11 +220,14 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			double dz = this.posZ + (look.zCoord * distance);
 			this.targetPos = new BlockPos(dx, dy - 1, dz);
 		} else if (this.AniID == ROLL && this.AniFrame > 9 && this.AniFrame < 20) {
+			List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(1, 0, 1));
+			this.kickEntities(list, 3D, 1D, this.hardness * golemDmgMulti);	
 			this.moveHelper.setMoveTo(this.targetPos.getX(), this.posY, this.targetPos.getZ(), 1);				
 		} else if (this.AniID == ROLL && this.AniFrame == 20 && this.count < 2) {
 			this.AniFrame = 10;
 			this.count++;
 		} else if (this.AniID == ROLL && this.AniFrame > 23) {
+			entityToAttack = null;
 			this.AniFrame = 0;
 			this.AniID = STAND;
 		} else if (this.AniID == STOMP && this.AniFrame > 8 && this.AniFrame < 16) {
@@ -224,9 +235,10 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		} else if (this.AniID == STOMP && this.AniFrame > 17) {
 			this.AniFrame = 0;
 			this.AniID = STAND;
+			entityToAttack = null;			
 		} else if (this.AniID == DIE && this.AniFrame == 1) {
-			this.playSound(Sounds.GOLEM_BUILD, 5F, 1.0F);
-			this.playSound(Sounds.GOLEM_LIVING, 5F, 1.0F);
+			this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
+			this.playSound(Sounds.GOLEM_LIVING, 4F, 1.0F);
 		} else if (this.AniID == DIE && this.AniFrame > 54) {
 			for (int x = 0; x < 40; x++){
 		         float f = (this.rand.nextFloat() - 0.5F) * 3;
@@ -236,21 +248,62 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			}
 			this.setDead();
 		}
-		System.out.println(this.AniID);
+		
 		this.PrevAniID = this.AniID;
-
 		if (!this.worldObj.isRemote) {
 			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
 		}
 	}
 	
+	
+	public void attackPicker(){
+		if (this.attackCounter <= 0){
+			int pick = TargetUtils.getRanNum(0, 10);
+			if (pick < 5){
+				this.AniID = THROW;
+			} else if (pick >= 5 && pick <= 7 ){
+				this.AniID = STOMP;
+			} else {
+				this.AniID = ROLL;
+			}
+			this.attackCounter = attackCooldown;
+			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+		} else {
+			this.attackCounter--;
+		}
+	}
+	
+	
+	
+	
 	@Override
 	 protected void onDeathUpdate() {
 		 this.AniID = DIE;
+		 entityToAttack = null;
 			if (!this.worldObj.isRemote) {
 				this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
 			}
 	 }
+	
+	
+	/**
+	 * Attacks all entities inside this list, dealing 5 hearts of damage.
+	 */
+	private void kickEntities(List par1List, double force, double height, float Damage) {
+		for (int i = 0; i < par1List.size(); ++i) {
+			Entity entity = (Entity) par1List.get(i);
+			if (entity instanceof EntityPlayer) {
+				double d0 = (this.getEntityBoundingBox().minX + this.getEntityBoundingBox().maxX) / 2.0D;
+				double d1 = (this.getEntityBoundingBox().minZ + this.getEntityBoundingBox().maxZ) / 2.0D;
+				double d2 = entity.posX - d0;
+				double d3 = entity.posZ - d1;
+				double d4 = d2 * d2 + d3 * d3;
+				entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
+				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
+			}
+
+		}
+	}
 		 
 
 
@@ -283,14 +336,14 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	
 	
 	public void stompAttack(){
-		this.playSound("mob.ghast.fireball", 1F, 1.0F);
-		// CamShake(this, 10, 40);
+		this.playSound("mob.ghast.fireball", 4F, 1.0F);
+		 CamShake(this, 15, 40);
 		for (float i = 0.5F; i < 3; ++i) {
 			double x = ((AniFrame - 6) * Math.cos(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posX;
 			double z = ((AniFrame - 6) * Math.sin(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posZ;
 
 			BlockPos pos = new BlockPos(x, this.posY - 1, z);
-			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * 6) + this.rotationYaw + 90, pos, 1);
+			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * 6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
 			if (!this.worldObj.isRemote) {
 				this.worldObj.spawnEntityInWorld(falling);
 			}
@@ -300,7 +353,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			double z = ((AniFrame - 6) * Math.sin(Math.toRadians((i * -6) + this.rotationYaw + 90))) + this.posZ;
 
 			BlockPos pos = new BlockPos(x, this.posY - 1, z);
-			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * -6) + this.rotationYaw + 90, pos, 1);
+			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * -6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
 			if (!this.worldObj.isRemote) {
 				this.worldObj.spawnEntityInWorld(falling);
 			}
@@ -326,39 +379,40 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	}
 
 	public void getTexture() {
-		try {
-			if (this.textureLoc == null) {
-				IBlockState iblockstate = this.worldObj.getBlockState(this.getPosition().down());
-				textureBlockID = Block.getStateId(iblockstate.getBlock().getDefaultState());
-				this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, this.getPosition().down());
-				BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-				IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, this.getPosition());
-				String string = ibakedmodel.getTexture().getIconName() + ".png";
-				String[] parts = string.split(":");
-				textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
+			if (textureBlockID == -1) {
+				BlockPos blockPos = new BlockPos(this.posX, this.posY, this.posZ);
+				while (!worldObj.getBlockState(blockPos).getBlock().getMaterial().blocksMovement()) {
+					blockPos = blockPos.down();
+				}
+				IBlockState iblockstate = this.worldObj.getBlockState(blockPos);
+				textureBlockID = Block.getStateId(iblockstate);
+				System.out.println("" + textureBlockID);
+				this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, blockPos);
 				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.golemMaxHealthMulti * this.hardness);
 				this.heal((float) (this.golemMaxHealthMulti * this.hardness));
 			}
-		} catch (Exception e) {
-			ModularBosses.logger.warn("A Golem Tried To Spaw Without A Texture At Position - " + this.getPosition());
-			this.setDead();
-		}
-
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		this.textureLoc = new ResourceLocation(compound.getString("textureLoc"));
-		this.textureBlockID = compound.getInteger("textureBlockID");
-		this.hardness = compound.getFloat("hardness");
+			this.textureBlockID = compound.getInteger("textureBlockID");
+			this.hardness = compound.getFloat("hardness");
+			this.dataWatcher.updateObject(ANI_ID_WATCHER, STAND);
+			
+			IBlockState iblockstate = Block.getStateById(textureBlockID);
+			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+			IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
+			String string = ibakedmodel.getTexture().getIconName() + ".png";
+			System.out.println(string);
+			String[] parts = string.split(":");
+			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);	
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		getTexture();
-		compound.setString("textureLoc", this.textureLoc.toString());
 		compound.setInteger("textureBlockID", textureBlockID);
 		compound.setFloat("hardness", this.hardness);
 	}
@@ -366,15 +420,18 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
 		getTexture();
-		ByteBufUtils.writeUTF8String(buffer, this.textureLoc.toString());
-		ByteBufUtils.writeVarInt(buffer, textureBlockID, 2);
+		ByteBufUtils.writeVarInt(buffer, textureBlockID, 4);
 	}
 
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
-		textureLoc = new ResourceLocation(ByteBufUtils.readUTF8String(additionalData));
-		textureBlockID = ByteBufUtils.readVarInt(additionalData, 2);
-
+			textureBlockID = ByteBufUtils.readVarInt(additionalData, 4);
+			IBlockState iblockstate = Block.getStateById(textureBlockID);
+			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+			IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
+			String string = ibakedmodel.getTexture().getIconName() + ".png";
+			String[] parts = string.split(":");
+			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
 	}
 
 }
