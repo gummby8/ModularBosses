@@ -289,7 +289,6 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 			Damage(source , dmg);
 			return true;	
 		} else {
-			
 			dmg = 0;
 			return false;
 		}
@@ -338,11 +337,13 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	
 	
 	private void setHitBoxes() {
+		
 		if(this.ticksExisted == 1){
 			this.moldormPart2.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0);
 			this.moldormPart3.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0);
 			this.moldormPart4.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0);
 			this.moldormPart5.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0);
+
 		}
 
 		
@@ -351,7 +352,6 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
     	movePiecePos(this.moldormPart3, this.moldormPart2, 6, 4);
     	movePiecePos(this.moldormPart4, this.moldormPart3, 7, 3);
     	movePiecePos(this.moldormPart5, this.moldormPart4, 7, 3);
-		
 	}
 	
     
@@ -370,9 +370,9 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	
 
 
-	/*
+	/**
 	 * Called to move the hitboses of the knees when the mob turns
-	 */
+	 
 	public void moveHitBoxes(EntityDragonPart part, double FrontToBack, double SideToSide, double TopToBot) {
 
 		float f3 = this.rotationYaw * (float) Math.PI / 180.0F;
@@ -381,8 +381,6 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 
 		part.setLocationAndAngles(this.posX + (double) (f11 * -FrontToBack) + (double) (f4 * SideToSide), this.posY + TopToBot, this.posZ + (double) (f4 * FrontToBack) + (double) (f11 * SideToSide), 0.0F, 0.0F);
 		part.onUpdate();
-		
-
 	}
-
+	 */
 }

@@ -46,13 +46,14 @@ public class ItemScythe extends BaseModItem implements ISwapModel {
 		itemStackIn.setRepairCost(itemStackIn.getRepairCost() + 1);
 		playerIn.swingItem();
 		if (!worldIn.isRemote) {
-			EntityScythe projectile = new EntityScythe(playerIn.worldObj, playerIn, playerIn, 0, 0, 0, 1, 0, 1, 2, 40, Config.tattersScytheThrowDmg).setInvStack(playerIn.inventory.currentItem);
+			EntityScythe projectile = new EntityScythe(playerIn.worldObj, playerIn, playerIn, 0, 0, 0, 1, 0, 1, 2, 30, Config.tattersScytheThrowDmg).setInvStack(playerIn.inventory.currentItem);
 			playerIn.worldObj.spawnEntityInWorld(projectile);
-					
 		}
 		playerIn.setCurrentItemOrArmor(0, null);
 		return itemStackIn;
 	}
+	
+	
 	
 	/**
 	 * Override to add custom weapon damage field rather than vanilla ItemSword's field

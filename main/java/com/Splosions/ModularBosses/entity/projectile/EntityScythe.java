@@ -71,7 +71,8 @@ public class EntityScythe extends EntityMobThrowable {
 		this.Shooter = (EntityLivingBase) getShooter();
 		setSpin(spin);
 		this.spin = getSpin();
-		this.setPositionAndRotation(this.Shooter.posX, this.Shooter.posY + YOffset, this.Shooter.posZ, this.Shooter.rotationYaw, 0);
+		float pitch = (this.Shooter instanceof EntityPlayer)? this.Shooter.rotationPitch : 0;
+		this.setPositionAndRotation(this.Shooter.posX, this.Shooter.posY + YOffset, this.Shooter.posZ, this.Shooter.rotationYaw, pitch);
 		this.Dmg = dmg;
 	}
 
@@ -140,10 +141,13 @@ public class EntityScythe extends EntityMobThrowable {
 
 		if (this.Shooter != null) {
 			if (this.ticksExisted < 10 && this.thrown == 1) {
-				this.setPositionAndRotation(this.posX, this.posY, this.posZ, this.Shooter.rotationYaw, 0);
+				float pitch = (this.Shooter instanceof EntityPlayer)? this.Shooter.rotationPitch : 0;
+				this.setPositionAndRotation(this.posX, this.posY, this.posZ, this.Shooter.rotationYaw, pitch);
 				this.motionX = 0;
 				this.motionY = 0;
 				this.motionZ = 0;
+				
+
 				moveForward(1F);
 			}
 
@@ -206,6 +210,8 @@ public class EntityScythe extends EntityMobThrowable {
 		this.motionX += (double) (-1 * speed * f2);
 		this.motionZ += (double) (speed * f3);
 	}
+	
+
 
 	/**
 	 * Catches the Scythe
@@ -306,7 +312,7 @@ public class EntityScythe extends EntityMobThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		try {
-			if (!(mop.entityHit instanceof Entity) && !(this.worldObj.getBlockState(mop.getBlockPos()).getBlock().getMaterial().blocksMovement())) {
+			if (!(mop.entityHit instanceof Entity) && this.worldObj.getBlockState(mop.getBlockPos()).getBlock().getMaterial().blocksMovement()) {
 				this.motionX = 0;
 				this.motionY = 0;
 				this.motionZ = 0;

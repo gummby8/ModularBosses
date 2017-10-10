@@ -14,7 +14,7 @@ import net.minecraft.util.MathHelper;
 
 
 
-public class ModelMoldormAlpha extends ModelBase {
+public class ModelMoldorm extends ModelBase {
     public ModelRenderer Part1;
     public ModelRenderer Part2;
     public ModelRenderer Part3;
@@ -94,7 +94,7 @@ public class ModelMoldormAlpha extends ModelBase {
     public ModelRenderer shape12_4;
     public ModelRenderer shape13_4;
 
-    public ModelMoldormAlpha() {
+    public ModelMoldorm() {
         this.textureWidth = 256;
         this.textureHeight = 256;
         this.shape10_1 = new ModelRenderer(this, 0, 0);
