@@ -164,17 +164,6 @@ public class EntityScythe extends EntityMobThrowable {
 			setDead();
 		}
 
-		/**
-		 * double d0 = this.Shooter.posX - this.posX; double d1 =
-		 * this.Shooter.posY + 1 - this.posY; double d2 = this.Shooter.posZ -
-		 * this.posZ;
-		 * 
-		 * SetThrowableHeading(d0, d1, d2, 0.4F, 1.0F);
-		 * 
-		 * this.motionX = MovePart(this.motionX, this.PerfectMotionX, 0.04);
-		 * this.motionY = MovePart(this.motionY, this.PerfectMotionY, 0.005);
-		 * this.motionZ = MovePart(this.motionZ, this.PerfectMotionZ, 0.04);
-		 */
 
 		if (this.ticksExisted > 600 && !this.worldObj.isRemote && this.Shooter != null && !(this.Shooter instanceof EntityTatters)) {
 			worldObj.spawnEntityInWorld(new EntityItem(worldObj, posX, posY, posZ, item));
@@ -317,13 +306,12 @@ public class EntityScythe extends EntityMobThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		try {
-			if (!(mop.entityHit instanceof Entity) && !(this.worldObj.getBlockState(mop.getBlockPos()) instanceof BlockAir)) {
+			if (!(mop.entityHit instanceof Entity) && !(this.worldObj.getBlockState(mop.getBlockPos()).getBlock().getMaterial().blocksMovement())) {
 				this.motionX = 0;
 				this.motionY = 0;
 				this.motionZ = 0;
 				rotate();
 				moveForward(0.1F);
-
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
