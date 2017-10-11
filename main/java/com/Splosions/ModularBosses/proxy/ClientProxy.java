@@ -172,7 +172,7 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void preInit() {
 		super.preInit();
-		FMLCommonHandler.instance().bus().register(new RenderTickHandler());
+		//FMLCommonHandler.instance().bus().register(new RenderTickHandler());
 		ModModelManager.INSTANCE.registerAllModels();
 		MinecraftForge.EVENT_BUS.register(new MBClientEventHandler());
 	}

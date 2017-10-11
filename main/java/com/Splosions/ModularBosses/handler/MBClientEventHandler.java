@@ -9,10 +9,13 @@ import com.Splosions.ModularBosses.blocks.FluidWormAcid;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.items.ItemNote;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -22,12 +25,14 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -99,15 +104,7 @@ public class MBClientEventHandler {
 		}
 	}
 
-	@SubscribeEvent
-	public void onKeypress(KeyboardInputEvent.Pre event) {
-		// event.setCanceled(true);
-	}
 
-	@SubscribeEvent
-	public void onMouseInput(MouseInputEvent.Pre event) {
-		// event.setCanceled(true);
-	}
 
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Pre event) {
@@ -153,5 +150,40 @@ public class MBClientEventHandler {
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
 	}
+	
+	
 
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent	
+	public void renderHand(RenderHandEvent event){
+		AbstractClientPlayer player = Minecraft.getMinecraft().thePlayer;
+		ItemStack weapon = player.getHeldItem();
+		
+
+        
+
+		
+
+		
+		if (weapon != null && weapon.getItem() instanceof ItemNote)	{
+			event.setCanceled(true);
+	        float f1 = 1.0F;
+
+	        float f2 = 0;
+	        float f3 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * event.partialTicks;
+	        float f4 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * event.partialTicks;
+	        
+	        GlStateManager.enableRescaleNormal();
+	        GlStateManager.pushMatrix();
+	        MBItemRenderer.func_178101_a(f3, f4);
+	        //MBItemRenderer.func_178109_a(player);
+	        MBItemRenderer.func_178110_a((EntityPlayerSP)player, event.partialTicks);
+			
+			MBItemRenderer.renderNote(player, f3, f1,  f2); 
+	        GlStateManager.popMatrix();
+	        GlStateManager.disableRescaleNormal();
+		}
+	}
+	
+	
 }

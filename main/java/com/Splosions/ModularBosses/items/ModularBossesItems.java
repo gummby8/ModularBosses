@@ -82,7 +82,8 @@ public class ModularBossesItems {
 	itemScythe,
 	itemLegendsBow,
 	itemLegendsSword,
-	itemBait;
+	itemBait,
+	itemNote;
 	
 	
 	
@@ -101,11 +102,11 @@ public class ModularBossesItems {
 		itemScythe = new ItemScythe(ToolMaterial.EMERALD).setUnlocalizedName("itemScythe");
 		itemLegendsBow = new ItemLegendsBow(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Bow");
 		itemLegendsSword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
+		itemNote = new ItemNote(ToolMaterial.EMERALD).setUnlocalizedName("itemNote");
 		itemBait = new ItemBait(ToolMaterial.WOOD).setUnlocalizedName("itemBait");
 		 
-		 slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
-		 
-		 spawn_egg = new ItemCustomEgg().setUnlocalizedName("spawn_egg");
+		slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
+		spawn_egg = new ItemCustomEgg().setUnlocalizedName("spawn_egg");
 	}
 
 	

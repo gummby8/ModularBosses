@@ -18,42 +18,5 @@ public class RenderTickHandler {
 	public RenderTickHandler() {
 		this.mc = Minecraft.getMinecraft();
 	}
-	/**
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onRenderTick(RenderTickEvent event) {
-		//System.out.println("Derp?");
-		if (event.phase == Phase.START) {
-			
-			
-			if (mc.thePlayer != null) {
-				updateRenderer();
-				
-			}
-		}
-	}
 
-
-	@SuppressWarnings("unused")
-	private void updateRenderer() {
-		//make this a real if statement later
-		//if (true) {
-			if (renderer == null) {
-				System.out.println("Renderer was nul making a new alt render");
-				renderer = new EntityRendererAlt(mc);
-			}
-			if (mc.entityRenderer != renderer) {
-				prevRenderer = mc.entityRenderer;
-				mc.entityRenderer = renderer;
-				System.out.println("Doing stuff");
-			}
-	
-		} else if (prevRenderer != null && mc.entityRenderer != prevRenderer) {
-			mc.entityRenderer = prevRenderer;
-			System.out.println("Undoing stuff");
-		}
-
-	}
-	*/
 }

@@ -17,63 +17,41 @@ import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomEgg;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multisets;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockStone;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemMapBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.network.Packet;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.storage.MapData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBait extends BaseModItem implements ISwapModel {
+public class ItemNote extends BaseModItem {
 
-	public ItemBait(ToolMaterial material) {
+	public ItemNote(ToolMaterial material) {
 		setCreativeTab(MBCreativeTabs.tabTools);
 		setMaxStackSize(1);
 	}
-
-	/**
-	 * Called whenever this item is equipped and the right mouse button is
-	 * pressed. Args: itemStack, world, entityPlayer
-	 */
-	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!world.isRemote) {
-			Entity projectile = new EntityBait(world, player);
-			world.spawnEntityInWorld(projectile);
-			if (!player.capabilities.isCreativeMode) {
-				--stack.stackSize;
-			}
-		}
-
-		return stack;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Collection<ModelResourceLocation> getDefaultResources() {
-		List<ModelResourceLocation> resources = Lists.newArrayList();
-		resources.add(new ModelResourceLocation("mb:itemBait", "inventory"));
-		return resources;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Class<? extends IBakedModel> getNewModel() {
-		return RenderItemBait.class;
-	}
-	
-	
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)	{
-	list.add("Smelly bait to lure out Sand Worms");
-	}
-	
 }
