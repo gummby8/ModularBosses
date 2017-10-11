@@ -30,7 +30,7 @@ public class FluidWormBlood extends BlockFluidClassic{
         entityIn.motionX *= 0.4D;
         entityIn.motionZ *= 0.4D;
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, Config.WormBloodDmg);
+			entityIn.attackEntityFrom(DamageSource.generic, Config.WormBloodDmg);
 
 		}
 		

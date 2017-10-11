@@ -432,6 +432,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			String string = ibakedmodel.getTexture().getIconName() + ".png";
 			String[] parts = string.split(":");
 			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
+			System.out.println(textureLoc);
 	}
 
 }

@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.Fluid;
 public class GasWormGas extends BlockFluidClassic{
 
 	public GasWormGas(Fluid fluid, Material material) {
-		super(fluid, Material.water);
+		super(fluid, material);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -26,7 +26,7 @@ public class GasWormGas extends BlockFluidClassic{
 	@Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, Config.WormGasDmg);
+			entityIn.attackEntityFrom(DamageSource.generic, Config.WormGasDmg);
 
 		}
     }
