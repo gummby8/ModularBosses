@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.handler;
+package com.Splosions.ModularBosses.client.render.items;
 
 import org.lwjgl.opengl.GL11;
 
@@ -17,18 +17,34 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
 
-public class MBItemRenderer {
+public class RenderItemNote {
 	
-	private static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("mb:textures/items/loot_note.png");
+	private static final ResourceLocation NOTE_1 = new ResourceLocation("mb:textures/items/loot_note_1.png");
+	private static final ResourceLocation NOTE_2 = new ResourceLocation("mb:textures/items/loot_note_2.png");
+	private static final ResourceLocation NOTE_3 = new ResourceLocation("mb:textures/items/loot_note_3.png");
 	
-    public static void renderNote(AbstractClientPlayer p_178097_1_, float p_178097_2_, float p_178097_3_, float p_178097_4_)
+    public static void renderNote(AbstractClientPlayer p_178097_1_, float p_178097_2_, float p_178097_3_, float p_178097_4_, ItemStack note)
     {
-    	Minecraft mc = Minecraft.getMinecraft();
+    	ResourceLocation rec;
+    	if (note.getItemDamage() == 1){}
+
+        switch (note.getItemDamage()) {
+            case 1:  rec = NOTE_1;
+                     break;
+            case 2:  rec = NOTE_2;
+                     break;
+            case 3:  rec = NOTE_3;
+                     break;
+            default: rec = NOTE_1;
+            break;
+        }
     	
+    	Minecraft mc = Minecraft.getMinecraft();
         float f3 = -0.4F * MathHelper.sin(MathHelper.sqrt_float(p_178097_4_) * (float)Math.PI);
         float f4 = 0.2F * MathHelper.sin(MathHelper.sqrt_float(p_178097_4_) * (float)Math.PI * 2.0F);
         float f5 = -0.2F * MathHelper.sin(p_178097_4_ * (float)Math.PI);
@@ -52,7 +68,7 @@ public class MBItemRenderer {
         GlStateManager.rotate(0.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.translate(-1.0F, -1.0F, 0.0F);
         GlStateManager.scale(0.015625F, 0.015625F, 0.015625F);
-        mc.getTextureManager().bindTexture(RES_MAP_BACKGROUND);
+        mc.getTextureManager().bindTexture(rec);
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         GL11.glNormal3f(0.0F, 0.0F, -1.0F);

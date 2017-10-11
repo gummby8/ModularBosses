@@ -48,7 +48,8 @@ public class EntityChorpChorp extends EntityMob
 	public static int chorpchorpSlimeDmg;
 	public static int chorpchorpSlimeSlow;
 	public static int chorpchorpSlimeSlowDuration;
-	public static String[] chorpchorpLoot = new String[]{"50|2|mb:itemBait","100|3|mb:Legends_Sword"};
+	public static int chorpchorpExpDrop;
+	public static String[] chorpchorpLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
 
 	
     /** The Entity this EntityCreature is set to attack. */
@@ -137,9 +138,9 @@ public class EntityChorpChorp extends EntityMob
 		chorpchorpSlimeDmg = config.get("208 Chorp Chorp", "3 [Attack Damage] Set Slime Damage of Chorp Chorp Spawns [1+]", 10).getInt();
 		chorpchorpSlimeSlow = config.get("208 Chorp Chorp", "4 [Attribute] Set Slime Slow Debuff Strength of Chorp Chorp Spawns [1+]", 2).getInt();
 		chorpchorpSlimeSlowDuration = config.get("208 Chorp Chorp", "5 [Attribute] Set Slime Slow Debuff Durration of Chorp Chorp Spawns [1+]", 4).getInt() * 20;
-		//chorpchorpLoot = config.get("208 Chorp Chorp", "[Attribute] Set Slime Slow Debuff Durration of Chorp Chorp Spawns [1+]", "mb:itemBait:1").getString();
-		chorpchorpLoot = config.getStringList("6 [Loot]", "208 Chorp Chorp", chorpchorpLoot, "Set loot drops for Chorp Chorps {% Drop Chance|Quantity|Item Name}");
-		//chorpchorpLoot = config.getStringList(name, category, defaultValues, comment)
+		chorpchorpExpDrop = config.get("208 Chorp Chorp", "6 [Attribute] Set Exp drop of Chorp Chorp Spawns [1+]", 100).getInt();
+		chorpchorpLoot = config.getStringList("7 [Loot]", "208 Chorp Chorp", chorpchorpLoot, "Set loot drops for Chorp Chorps {% Drop Chance|Quantity|Item Name}");
+
 	}
 
 	protected void entityInit()
@@ -169,7 +170,8 @@ public class EntityChorpChorp extends EntityMob
 
 		if (this.deathTicks == 100 && !this.worldObj.isRemote){
 			if (!this.worldObj.isRemote) {
-				TargetUtils.dropLoot(this.chorpchorpLoot, this);
+				TargetUtils.dropLoot(this, this.chorpchorpLoot);
+				TargetUtils.dropExp(this, chorpchorpExpDrop);
 			}
 			
 			this.setDead();   	
@@ -202,14 +204,6 @@ public class EntityChorpChorp extends EntityMob
 		}
 		return DeadRot;
 	}
-
-	/**
-	 * Returns the sound this mob makes while it's alive.
-
-    protected String getLivingSound() {
-        return "mob.zombie.say";
-    }
-	 */
 
 	/**
 	 * Returns the sound this mob makes when it is hurt.

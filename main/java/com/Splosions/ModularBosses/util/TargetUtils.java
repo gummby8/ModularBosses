@@ -15,6 +15,7 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -179,30 +180,39 @@ public class TargetUtils {
 	 * @param lootList
 	 * @param ent
 	 */
-	public static void dropLoot(String[] lootList, Entity ent){
-		//ent.dropItem(GameRegistry.findItem("mb", "itemBait"), 1);
-		
-		try{
-			for (String string : lootList) {
-				String[] split = string.split("\\|");
-				String[] item = split[2].split("\\:");
-				
-				int qty = Integer.parseInt(split[1]);
-				
-				int chance = Integer.parseInt(split[0]);
-				chance = (chance > 100)? 100 : chance;
-				int roll = getRanNum(1, 100);
-				System.out.println(roll);
-				if (roll <= chance){
-					ent.dropItem(GameRegistry.findItem(item[0], item[1]), qty);
+	public static void dropLoot(Entity ent, String[] lootList) {
+		// ent.dropItem(GameRegistry.findItem("mb", "itemBait"), 1);
+
+		try {
+			if (lootList.length > 0) {
+				for (String string : lootList) {
+					String[] split = string.split("\\|");
+					String[] item = split[2].split("\\:");
+
+					int qty = Integer.parseInt(split[1]);
+
+					int chance = Integer.parseInt(split[0]);
+					chance = (chance > 100) ? 100 : chance;
+					int roll = getRanNum(1, 100);
+					System.out.println(roll);
+					if (roll <= chance) {
+						ent.dropItem(GameRegistry.findItem(item[0], item[1]), qty);
+					}
 				}
-				
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
+	}
+	
+	public static void dropExp(Entity ent, int ammount){
+        int j;
+		while (ammount > 0)
+        {
+            j = EntityXPOrb.getXPSplit(ammount);
+            ammount -= j;
+            ent.worldObj.spawnEntityInWorld(new EntityXPOrb(ent.worldObj, ent.posX, ent.posY, ent.posZ, j));
+        }
 	}
 
 }

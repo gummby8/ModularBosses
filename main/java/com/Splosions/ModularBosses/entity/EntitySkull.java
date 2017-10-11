@@ -2,6 +2,8 @@ package com.Splosions.ModularBosses.entity;
 
 import java.util.Random;
 
+import com.Splosions.ModularBosses.util.TargetUtils;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityFlying;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,6 +35,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.EnumDifficulty;
@@ -52,6 +55,9 @@ public class EntitySkull  extends EntityFlying implements IMob
 	public static int skullMaxHealth;
 	public static int skullDmg;
 	public static int skullFollowDistance;
+	
+	public static int skullExpDrop;
+	public static String[] skullLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
 
     public EntitySkull(World worldIn)
     {
@@ -77,10 +83,12 @@ public class EntitySkull  extends EntityFlying implements IMob
 
     
 	public static void postInitConfig(Configuration config) {
-		skullMaxHealth = config.get("210 Skull", "[Max Health] Set the Hp of Skull Spawns [1+]", 20).getInt();
-		skullDmg = config.get("210 Skull", "[Attack Damage] Set the Beam Damage of Skull Spawns [1+]", 10).getInt();
-		skullFollowDistance = config.get("210 Skull", "[Config] Set the distance a Skull can follow a player [1+]", 20).getInt();
+		skullMaxHealth = config.get("210 Skull", "1 [Max Health] Set the Hp of Skull Spawns [1+]", 20).getInt();
+		skullDmg = config.get("210 Skull", "2 [Attack Damage] Set the Beam Damage of Skull Spawns [1+]", 10).getInt();
+		skullFollowDistance = config.get("210 Skull", "3 [Config] Set the distance a Skull can follow a player [1+]", 20).getInt();
 		
+		skullExpDrop = config.get("210 Skull", "4 [Attribute] Set Exp drop of skull Spawns [1+]", 100).getInt();
+		skullLoot = config.getStringList("5 [Loot]", "210 Skull", skullLoot, "Set loot drops for skull {% Drop Chance|Quantity|Item Name}");
 	}
 
     @SideOnly(Side.CLIENT)
@@ -201,10 +209,14 @@ public class EntitySkull  extends EntityFlying implements IMob
         return "mob.ghast.death";
     }
 
-    protected Item getDropItem()
-    {
-        return Items.gunpowder;
-    }
+	@Override
+	public void onDeathUpdate() {
+		super.onDeathUpdate();
+			if (!this.worldObj.isRemote && this.deathTime == 20) {
+				TargetUtils.dropExp(this, this.skullExpDrop);
+				TargetUtils.dropLoot(this, this.skullLoot);
+			}
+	}
 
     /**
      * Drop 0-2 items of this living's type

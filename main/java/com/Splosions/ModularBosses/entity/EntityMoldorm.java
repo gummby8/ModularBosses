@@ -141,7 +141,11 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
 	 */
 	protected void onDeathUpdate() {
-			this.setDead();   	
+			if (!this.worldObj.isRemote) {
+				//TargetUtils.dropExp(this, this.heartExpDrop);
+				//TargetUtils.dropLoot(this, this.heartLoot);
+			}
+			this.setDead();
 	}
 
 

@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.entity;
 
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
+import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -44,6 +45,9 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	public static int heavychorpSlimeDmg;
 	public static int heavychorpSlimeSlow;
 	public static int heavychorpSlimeSlowDuration;
+	
+	public static int heavyChorpExpDrop;
+	public static String[] heavyChorpLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
 	
     /** The Entity this EntityCreature is set to attack. */
     public Entity entityToAttack;
@@ -125,11 +129,14 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	}
 	
 	public static void postInitConfig(Configuration config) {
-		heavychorpMaxHealth = config.get("207 Heavy Chorp", "[Max Health] Set the Hp of Heavy Chorp Spawns [1+]", 600).getInt();
-		heavychorpTouchDmg = config.get("207 Heavy Chorp", "[Attack Damage] Set the Touch Damage of Heavy Chorp Spawns [1+]", 100).getInt();
-		heavychorpSlimeDmg = config.get("207 Heavy Chorp", "[Attack Damage] Set Slime Damage of Heavy Chorp Spawns [1+]", 10).getInt();
-		heavychorpSlimeSlow = config.get("207 Heavy Chorp", "[Attribute] Set Slime Slow Debuff Strength of Heavy Chorp Spawns [1+]", 4).getInt();
-		heavychorpSlimeSlowDuration = config.get("207 Heavy Chorp", "[Attribute] Set Slime Slow Debuff Durration of Heavy Chorp Spawns [1+]", 6).getInt() * 20;
+		heavychorpMaxHealth = config.get("207 Heavy Chorp", "1 [Max Health] Set the Hp of Heavy Chorp Spawns [1+]", 600).getInt();
+		heavychorpTouchDmg = config.get("207 Heavy Chorp", "2 [Attack Damage] Set the Touch Damage of Heavy Chorp Spawns [1+]", 100).getInt();
+		heavychorpSlimeDmg = config.get("207 Heavy Chorp", "3 [Attack Damage] Set Slime Damage of Heavy Chorp Spawns [1+]", 10).getInt();
+		heavychorpSlimeSlow = config.get("207 Heavy Chorp", "4 [Attribute] Set Slime Slow Debuff Strength of Heavy Chorp Spawns [1+]", 4).getInt();
+		heavychorpSlimeSlowDuration = config.get("207 Heavy Chorp", "5 [Attribute] Set Slime Slow Debuff Durration of Heavy Chorp Spawns [1+]", 6).getInt() * 20;
+		
+		heavyChorpExpDrop = config.get("207 Heavy Chorp", "6 [Attribute] Set Exp drop of Heavy Chorp Spawns [1+]", 100).getInt();
+		heavyChorpLoot = config.getStringList("7 [Loot]", "207 Heavy Chorp", heavyChorpLoot, "Set loot drops for Heavy Chorp {% Drop Chance|Quantity|Item Name}");
 	}
 	
     protected void entityInit()
@@ -165,8 +172,8 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 		 
 		 
 	        if (this.deathTicks >= 100 && !this.worldObj.isRemote){
-	        	//drops and item item (id, quantity)
-	        	this.dropItem( Items.apple, 1);
+					TargetUtils.dropExp(this, this.heavyChorpExpDrop);
+					TargetUtils.dropLoot(this, this.heavyChorpLoot);
 	        	this.setDead();   	
 	        }
 	        

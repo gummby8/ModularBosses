@@ -51,6 +51,9 @@ public class EntitySpark extends EntityMob {
 	public static int sparkHeal;
 	public static int sparkDark;
 	public static int sparkAttackInterval;
+	
+	public static int sparkExpDrop;
+	public static String[] sparkLoot = new String[]{};
 
 	public int variant;
 	public static final int ORANGE = 1;
@@ -102,11 +105,14 @@ public class EntitySpark extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		sparkMaxHealth = config.get("211 spark", "[Max Health] Set the Hp of spark Spawns [1+]", 20).getInt();
-		sparkDmg = config.get("211 spark", "[Attack Damage] Set the damage of spark Spawns [1+]", 10).getInt();
-		sparkHeal = config.get("211 spark", "[Heal] Set the heal ammount of Green Sparks [1+]", 20).getInt();
-		sparkDark = config.get("211 spark", "[Status Durration] Set the darkness durration of Purple Sparks [1+]", 5).getInt() * 20;
-		sparkAttackInterval = config.get("211 spark", "[Attack Interval] Set the attack timer of Sparks [1+]", 1).getInt() * 20;
+		sparkMaxHealth = config.get("211 spark", "1 [Max Health] Set the Hp of spark Spawns [1+]", 20).getInt();
+		sparkDmg = config.get("211 spark", "2 [Attack Damage] Set the damage of spark Spawns [1+]", 10).getInt();
+		sparkHeal = config.get("211 spark", "3 [Heal] Set the heal ammount of Green Sparks [1+]", 20).getInt();
+		sparkDark = config.get("211 spark", "4 [Status Durration] Set the darkness durration of Purple Sparks [1+]", 5).getInt() * 20;
+		sparkAttackInterval = config.get("211 spark", "5 [Attack Interval] Set the attack timer of Sparks [1+]", 1).getInt() * 20;
+		
+		sparkExpDrop = config.get("211 Spark", "6 [Attribute] Set Exp drop of Spark Spawns [1+]", 100).getInt();
+		sparkLoot = config.getStringList("7 [Loot]", "211 Spark", sparkLoot, "Set loot drops for Spark {% Drop Chance|Quantity|Item Name}");
 	}
 
 	@Override
@@ -182,6 +188,12 @@ public class EntitySpark extends EntityMob {
 						this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0,
 						d1, new int[0]);
 			}
+			
+			if (!this.worldObj.isRemote){
+				TargetUtils.dropExp(this, this.sparkExpDrop);
+				TargetUtils.dropLoot(this, this.sparkLoot);	
+			}
+			
 			this.setDead();
 
 	}

@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.entity;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.base.Predicate;
 
 import net.minecraft.enchantment.Enchantment;
@@ -45,6 +46,9 @@ public class EntityTick extends EntityMob {
 	
 	public static int tickMaxHealth;
 	public static int tickDmg;
+	
+	public static int tickExpDrop;
+	public static String[] tickLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
 
 	public EntityTick(World worldIn) {
 		super(worldIn);
@@ -83,8 +87,11 @@ public class EntityTick extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		tickMaxHealth = config.get("209 Tick", "[Max Health] Set the Hp of Tick Spawns [1+]", 40).getInt();
-		tickDmg = config.get("209 Tick", "[Attack Damage] Set the damage of Tick Spawns [1+]", 10).getInt();
+		tickMaxHealth = config.get("209 Tick", "1 [Max Health] Set the Hp of Tick Spawns [1+]", 40).getInt();
+		tickDmg = config.get("209 Tick", "2 [Attack Damage] Set the damage of Tick Spawns [1+]", 10).getInt();
+		
+		tickExpDrop = config.get("209 Tick", "3 [Attribute] Set Exp drop of Tick Spawns [1+]", 100).getInt();
+		tickLoot = config.getStringList("4 [Loot]", "209 Tick", tickLoot, "Set loot drops for Tick {% Drop Chance|Quantity|Item Name}");
 	}
 
 	@Override
@@ -139,7 +146,7 @@ public class EntityTick extends EntityMob {
 				}
 			}
 
-			this.setDead();
+			
 
 			for (i = 0; i < 20; ++i) {
 				double d2 = this.rand.nextGaussian() * 0.02D;
@@ -147,6 +154,13 @@ public class EntityTick extends EntityMob {
 				double d1 = this.rand.nextGaussian() * 0.02D;
 				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0, d1, new int[0]);
 			}
+			
+			if (!this.worldObj.isRemote) {
+				TargetUtils.dropExp(this, this.tickExpDrop);
+				TargetUtils.dropLoot(this, this.tickLoot);
+			}
+			
+			this.setDead();
 		}
 
 	}

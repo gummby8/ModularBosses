@@ -91,7 +91,10 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	public static int golemDmgMulti;
 	public static int attackCooldown;
 	
-	  private EntityAIWander entityAIWander = new EntityAIWander(this, 0.25D);
+	public static int golemExpDrop;
+	public static String[] golemLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
+	
+	private EntityAIWander entityAIWander = new EntityAIWander(this, 0.25D);
 
 	public EntityGolem(World par1World) {
 		super(par1World);
@@ -157,9 +160,12 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	}
 
 	public static void postInitConfig(Configuration config) {
-		golemMaxHealthMulti = config.get("Golem", "[Max Health] Golem Spawn Block Hardness multiplied by... [1+]", 20).getInt();
-		golemDmgMulti = config.get("Golem", "[Attack Dmg] Golem Spawn Block Hardness multiplied by... [1+]", 1).getInt();
-		attackCooldown = config.get("Golem", "[Attack Cooldown] Ammount of seconds between attacks... [1+]", 2).getInt() * 20;
+		golemMaxHealthMulti = config.get("206 Golem", "1 [Max Health] Golem Spawn Block Hardness multiplied by... [1+]", 20).getInt();
+		golemDmgMulti = config.get("206 Golem", "2 [Attack Dmg] Golem Spawn Block Hardness multiplied by... [1+]", 1).getInt();
+		attackCooldown = config.get("206 Golem", "3 [Attack Cooldown] Ammount of seconds between attacks... [1+]", 2).getInt() * 20;
+		
+		golemExpDrop = config.get("206 Golem", "4 [Attribute] Set Exp drop of Golem Spawns [1+]", 100).getInt();
+		golemLoot = config.getStringList("5 [Loot]", "206 Golem", golemLoot, "Set loot drops for Golem {% Drop Chance|Quantity|Item Name}");
 	}
 
 	public void onLivingUpdate() {
@@ -244,8 +250,14 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		         float f = (this.rand.nextFloat() - 0.5F) * 3;
 		         float f1 = (this.rand.nextFloat() - 0.5F) * 3;
 		         float f2 = (this.rand.nextFloat() - 0.5F) * 3;
-				 this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)f, this.posY + 1 + (double)f1, this.posZ + (double)f2, 0.0D, 0.0D, 0.0D);				
+		         this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) f, this.posY + 1 + (double) f1, this.posZ + (double) f2, 0.0D, 0.0D, 0.0D);
 			}
+			
+			if (!this.worldObj.isRemote) {
+				TargetUtils.dropExp(this, this.golemExpDrop);
+				TargetUtils.dropLoot(this, this.golemLoot);
+			}
+
 			this.setDead();
 		}
 		

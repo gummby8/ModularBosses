@@ -8,8 +8,10 @@ import com.Splosions.ModularBosses.blocks.BlockInvisible;
 import com.Splosions.ModularBosses.blocks.FluidWormAcid;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
+import com.Splosions.ModularBosses.client.render.items.RenderItemNote;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.items.ItemNote;
+import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -158,28 +160,21 @@ public class MBClientEventHandler {
 	public void renderHand(RenderHandEvent event){
 		AbstractClientPlayer player = Minecraft.getMinecraft().thePlayer;
 		ItemStack weapon = player.getHeldItem();
-		
 
-        
-
-		
-
-		
 		if (weapon != null && weapon.getItem() instanceof ItemNote)	{
 			event.setCanceled(true);
-	        float f1 = 1.0F;
 
+	        float f1 = 1.0F;
 	        float f2 = 0;
 	        float f3 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * event.partialTicks;
 	        float f4 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * event.partialTicks;
 	        
 	        GlStateManager.enableRescaleNormal();
 	        GlStateManager.pushMatrix();
-	        MBItemRenderer.func_178101_a(f3, f4);
-	        //MBItemRenderer.func_178109_a(player);
-	        MBItemRenderer.func_178110_a((EntityPlayerSP)player, event.partialTicks);
+	        RenderItemNote.func_178101_a(f3, f4);
+	        RenderItemNote.func_178110_a((EntityPlayerSP)player, event.partialTicks);
 			
-			MBItemRenderer.renderNote(player, f3, f1,  f2); 
+			RenderItemNote.renderNote(player, f3, f1,  f2, weapon);
 	        GlStateManager.popMatrix();
 	        GlStateManager.disableRescaleNormal();
 		}

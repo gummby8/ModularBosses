@@ -47,6 +47,9 @@ public class EntityTatters extends EntityMob {
 	public static int tattersScytheDmg;
 	public static int tattersTeleportChance;
 	
+	public static int tattersExpDrop;
+	public static String[] tattersLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
+	
 	public float SHOULDERS;
 
 	public float[] StripF1 = new float[40];
@@ -177,10 +180,12 @@ public class EntityTatters extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		/** Tatters Max HP */
-		tattersMaxHealth = config.get("205 Tatters", "[Max Health] Set the Hp of Tatters Spawns [1+]", 200).getInt();
-		tattersScytheDmg = config.get("205 Tatters", "[Attack Dmg] Thrown Scythe Attack Damage [1+]", 20).getInt();
-		tattersTeleportChance = MathHelper.clamp_int(config.get("205 Tatters", "[Attribute] Chance to Teleport on Damage [1/Chance] [1-100]", 2).getInt(), 1, 100);
+		tattersMaxHealth = config.get("205 Tatters", "1 [Max Health] Set the Hp of Tatters Spawns [1+]", 200).getInt();
+		tattersScytheDmg = config.get("205 Tatters", "2 [Attack Dmg] Thrown Scythe Attack Damage [1+]", 20).getInt();
+		tattersTeleportChance = MathHelper.clamp_int(config.get("205 Tatters", "3 [Attribute] Chance to Teleport on Damage [1/Chance] [1-100]", 2).getInt(), 1, 100);
+		
+		tattersExpDrop = config.get("205 Tatters", "4 [Attribute] Set Exp drop of Tatters Spawns [1+]", 100).getInt();
+		tattersLoot = config.getStringList("5 [Loot]", "205 Tatters", tattersLoot, "Set loot drops for Tatters {% Drop Chance|Quantity|Item Name}");
 	}
 	
 	protected void entityInit() {
@@ -189,13 +194,15 @@ public class EntityTatters extends EntityMob {
 
 	}
 
-	/**
-	 * Set mob death animations, just be sure to setDead at the end or the model
-	 * wont go away
-	 */
-	protected void onDeathUpdate() {
 
-		this.setDead();
+	protected void onDeathUpdate() {
+		super.onDeathUpdate();
+	
+		if (!this.worldObj.isRemote && this.deathTime == 20) {
+			TargetUtils.dropExp(this, this.tattersExpDrop);
+			TargetUtils.dropLoot(this, this.tattersLoot);
+		}
+		//this.setDead();
 
 	}
 

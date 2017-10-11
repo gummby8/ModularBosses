@@ -16,6 +16,7 @@ import com.Splosions.ModularBosses.client.render.items.RenderItemScythe;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomEgg;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Iterables;
@@ -50,8 +51,20 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemNote extends BaseModItem {
 
+	public int textureID;
+	
 	public ItemNote(ToolMaterial material) {
 		setCreativeTab(MBCreativeTabs.tabTools);
 		setMaxStackSize(1);
+		setMaxDamage(100);
+		
+	}
+	
+	@Override
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (!worldIn.isRemote && stack.getItemDamage() == 0){
+			stack.setItemDamage(TargetUtils.getRanNum(1, 3));
+		}
+		
 	}
 }

@@ -55,7 +55,11 @@ public class EntityBrain extends EntityMob {
 	public static int sparkTimer;
 	public static int sparkMax;
 	public static int sparkMin;
-
+	
+	public static int brainExpDrop;
+	public static String[] brainLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
+	
+	
 	public EntityBrain(World worldIn) {
 		super(worldIn);
 		//sets hitbox size
@@ -85,12 +89,14 @@ public class EntityBrain extends EntityMob {
 	}
 
 	public static void postInitConfig(Configuration config) {
-		brainMaxHealth = config.get("201 Brain", "[Max Health] Set max Hp[1+]", 200).getInt();
-		brainDmg = config.get("201 Brain", "[Attack Damage] Set the damage [1+]", 10).getInt();
-		brainAttackTImer = config.get("201 Brain", "[Attack Times] Set the attack interval[1+]", 5).getInt() * 20;
-		sparkTimer = config.get("201 Brain", "[Spark Spawn TIme] Set the spawn interval of Spark waves [1+]", 30).getInt() * 20;
-		sparkMax = config.get("201 Brain", "[Spark Wave Count Max] Set the maximum spawn count for Spark waves [1+]", 6).getInt();
-		sparkMin = config.get("201 Brain", "[Spark Wave Count Min] Set the minimum spawn count for Spark waves [1+]", 3).getInt();
+		brainMaxHealth = config.get("201 Brain", "1 [Max Health] Set max Hp[1+]", 200).getInt();
+		brainDmg = config.get("201 Brain", "2 [Attack Damage] Set the damage [1+]", 10).getInt();
+		brainAttackTImer = config.get("201 Brain", "3 [Attack Times] Set the attack interval[1+]", 5).getInt() * 20;
+		sparkTimer = config.get("201 Brain", "4 [Spark Spawn TIme] Set the spawn interval of Spark waves [1+]", 30).getInt() * 20;
+		sparkMax = config.get("201 Brain", "5 [Spark Wave Count Max] Set the maximum spawn count for Spark waves [1+]", 6).getInt();
+		sparkMin = config.get("201 Brain", "6 [Spark Wave Count Min] Set the minimum spawn count for Spark waves [1+]", 3).getInt();
+		brainExpDrop = config.get("201 Brain", "7 [Attribute] Set Exp drop of Brain Spawns [1+]", 100).getInt();
+		brainLoot = config.getStringList("8 [Loot]", "201 Brain", brainLoot, "Set loot drops for Brain {% Drop Chance|Quantity|Item Name}");
 	}
 
 	@Override
@@ -138,9 +144,9 @@ public class EntityBrain extends EntityMob {
 	public void onDeathUpdate() {
 		++this.deathTicks;
 
-		if (this.deathTicks > 30) {
+		if (this.deathTicks > 20) {
 			int i;
-			this.setDead();
+			
 			for (i = 0; i < 20; ++i) {
 				double d2 = this.rand.nextGaussian() * 0.02D;
 				double d0 = this.rand.nextGaussian() * 0.02D;
@@ -151,6 +157,12 @@ public class EntityBrain extends EntityMob {
 						this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0,
 						d1, new int[0]);
 			}
+			
+			if (!this.worldObj.isRemote){
+				TargetUtils.dropExp(this, this.brainExpDrop);
+				TargetUtils.dropLoot(this, this.brainLoot);	
+			}
+			this.setDead();
 		}
 
 	}

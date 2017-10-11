@@ -1,5 +1,6 @@
 package com.Splosions.ModularBosses.entity;
 
+import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.base.Predicate;
 
 import net.minecraft.enchantment.Enchantment;
@@ -40,6 +41,9 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 	public static int eyeballOctopusMaxHealth;
 	public static int eyeballOctopusDmg;
 	public static int attackInterval;
+	
+	public static int eyeballOctopusExpDrop;
+	public static String[] eyeballOctopusLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
 	
 	private static final int DEATH_WATCHER = 16;
 	private static final int TARGET_ID_WATCHER = 17;
@@ -100,9 +104,12 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 
 	
 	public static void postInitConfig(Configuration config) {
-		eyeballOctopusMaxHealth = config.get("209 Eyeball Octopus", "[Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
-		eyeballOctopusDmg = config.get("209 Eyeball Octopus", "[Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
-		attackInterval = config.get("209 Eyeball Octopus", "[Attack Interval] Set the Beam Interval timer [1+]", 1).getInt() * 20;
+		eyeballOctopusMaxHealth = config.get("209 Eyeball Octopus", "1 [Max Health] Set the Hp of Eyeball Octopus Spawns [1+]", 20).getInt();
+		eyeballOctopusDmg = config.get("209 Eyeball Octopus", "2 [Attack Damage] Set the Beam Damage of Eyeball Octopus Spawns [1+]", 10).getInt();
+		attackInterval = config.get("209 Eyeball Octopus", "3 [Attack Interval] Set the Beam Interval timer [1+]", 1).getInt() * 20;
+		
+		eyeballOctopusExpDrop = config.get("209 Eyeball Octopus", "4 [Attribute] Set Exp drop of Eyeball Octopus Spawns [1+]", 100).getInt();
+		eyeballOctopusLoot = config.getStringList("5 [Loot]", "209 Eyeball Octopus", eyeballOctopusLoot, "Set loot drops for Eyeball Octopus {% Drop Chance|Quantity|Item Name}");
 	}
 	
 	/**
@@ -133,6 +140,15 @@ public class EntityEyeballOctopus extends EntityMob implements IRangedAttackMob 
 		}
 
 		this.dataWatcher.updateObject(ATTACK_WATCHER, this.attackCounter);
+	}
+	
+	@Override
+	public void onDeathUpdate(){
+		super.onDeathUpdate();
+		if (!this.worldObj.isRemote && this.deathTime == 20) {
+			TargetUtils.dropExp(this, this.eyeballOctopusExpDrop);
+			TargetUtils.dropLoot(this, this.eyeballOctopusLoot);	
+		}
 	}
 
 }

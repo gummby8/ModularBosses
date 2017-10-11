@@ -137,11 +137,11 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityGolem.class, "Golem", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityGolem.class, "Golem", 0x7f7f7f, 0x262626);
 		
-		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
-		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
-		
 		EntityRegistry.registerModEntity(EntityMoldorm.class, "Moldorm", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityMoldorm.class, "Moldorm", 0x89FF01, 0xDEFF01);
+
+		EntityRegistry.registerModEntity(EntityChorpChorp.class, "ChorpChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
+		CustomEntityList.addMapping(EntityChorpChorp.class, "ChorpChorp", 0x3F5A8C, 0xFFFFFF );
 		
 		EntityRegistry.registerModEntity(EntityHeavyChorp.class, "HeavyChorp", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityHeavyChorp.class, "HeavyChorp", 0x8C713F, 0xFFFFFF);
