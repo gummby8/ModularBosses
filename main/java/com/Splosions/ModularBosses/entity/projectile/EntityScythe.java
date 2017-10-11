@@ -161,7 +161,7 @@ public class EntityScythe extends EntityMobThrowable {
 				this.throwTime = 0;
 			}
 
-			attackEntitiesInList(this.worldObj.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox()));
+			attackEntitiesInList(this.worldObj.getEntitiesWithinAABB(EntityLiving.class, this.getEntityBoundingBox()));
 			catchScythe(this.worldObj.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().expand(1, 1, 1)));
 
 		} else {
@@ -258,7 +258,7 @@ public class EntityScythe extends EntityMobThrowable {
 							part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 						}
 					}
-				} else if (entity != this.Shooter && entity != this) {
+				} else if (entity != this.Shooter && entity != this && !entity.isDead) {
 					entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 					// System.out.println(entity);
 				}

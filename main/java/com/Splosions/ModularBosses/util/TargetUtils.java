@@ -13,6 +13,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -66,12 +67,16 @@ public class TargetUtils {
 	 * @return
 	 */
 	public static int getRanNum(int min, int max) {
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
-		}
 		Random r = new Random();
-		return r.nextInt((max - min) + 1) + min;
-	}
+		if (min >= max) {
+			ModularBosses.logger.warn("Someone flipped a min and max value");
+			return r.nextInt((min - max) + 1) + max;
+		} else if (min == max){
+			return min;
+		} else {
+			return r.nextInt((max - min) + 1) + min;	
+		}
+ 	}
 
 	/**
 	 * 
@@ -166,6 +171,38 @@ public class TargetUtils {
 				}
 			}
 		return false; 
+	}
+	
+	/**
+	 * Rolls to drop loot
+	 * % Drop Chance | Quantity | Item Name
+	 * @param lootList
+	 * @param ent
+	 */
+	public static void dropLoot(String[] lootList, Entity ent){
+		//ent.dropItem(GameRegistry.findItem("mb", "itemBait"), 1);
+		
+		try{
+			for (String string : lootList) {
+				String[] split = string.split("\\|");
+				String[] item = split[2].split("\\:");
+				
+				int qty = Integer.parseInt(split[1]);
+				
+				int chance = Integer.parseInt(split[0]);
+				chance = (chance > 100)? 100 : chance;
+				int roll = getRanNum(1, 100);
+				System.out.println(roll);
+				if (roll <= chance){
+					ent.dropItem(GameRegistry.findItem(item[0], item[1]), qty);
+				}
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+
 	}
 
 }

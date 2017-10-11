@@ -1,6 +1,7 @@
 package com.Splosions.ModularBosses.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -35,8 +36,7 @@ public class EntityChorpSlimeBlob extends EntityMobThrowable
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
-		
-		if (mop.entityHit != null) {
+		if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer) {
 			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
 			((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, duration, strength));
 			
