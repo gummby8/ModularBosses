@@ -93,7 +93,7 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (this.limboTime > 0 ? 1 : 0));
 			this.player.getDataWatcher().updateObject(KNOCKDOWN_WATCHER, knockdownTime);
 		
-
+			this.limbo = this.limboTime > 0 ? 1 : 0;
 		}
 		
 		this.knockdownTime -= (this.knockdownTime > 0) ? 1 : 0;

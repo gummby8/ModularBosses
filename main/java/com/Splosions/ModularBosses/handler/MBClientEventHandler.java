@@ -9,6 +9,7 @@ import com.Splosions.ModularBosses.blocks.FluidWormAcid;
 import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.client.render.items.RenderItemNote;
+import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.items.ItemNote;
 import com.Splosions.ModularBosses.util.TargetUtils;
@@ -35,6 +36,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -149,8 +151,10 @@ public class MBClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Post event) {
-		GlStateManager.disableBlend();
-		GlStateManager.enableAlpha();
+		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
+			GlStateManager.disableBlend();
+			GlStateManager.enableAlpha();			
+		}
 	}
 	
 	
@@ -180,5 +184,24 @@ public class MBClientEventHandler {
 		}
 	}
 	
+
+	@SubscribeEvent
+	public void onRenderEntityLiving(RenderLivingEvent.Pre event) {
+		if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
+			GlStateManager.enableBlend();
+			GlStateManager.disableAlpha();
+			GlStateManager.blendFunc(1, 1);
+		}
+	}
+	
+	
+	@SubscribeEvent
+	public void onRenderEntityLiving(RenderLivingEvent.Post event) {
+		if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
+			GlStateManager.disableBlend();
+			GlStateManager.enableAlpha();
+		}
+	}
+
 	
 }

@@ -11,6 +11,7 @@ import com.Splosions.ModularBosses.blocks.FluidWormSaliva;
 import com.Splosions.ModularBosses.blocks.GasWormGas;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
+import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
 import com.Splosions.ModularBosses.entity.player.EntityRendererAlt;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
@@ -22,6 +23,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
@@ -32,6 +35,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
@@ -85,12 +89,20 @@ public class MBEventHandler {
 	
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
-		if (event.entity instanceof EntityPlayer && MBExtendedPlayer.get((EntityPlayer) event.entity) == null)
-			MBExtendedPlayer.register((EntityPlayer) event.entity);
-		if (event.entity instanceof EntityPlayer
-				&& event.entity.getExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME) == null)
-			event.entity.registerExtendedProperties(MBExtendedPlayer.EXT_PROP_NAME,
-					new MBExtendedPlayer((EntityPlayer) event.entity));
+		try {
+			if (event.entity instanceof EntityPlayer && MBExtendedPlayer.get((EntityPlayer) event.entity) == null){
+				MBExtendedPlayer.register((EntityPlayer) event.entity);
+			}
+				
+			if (event.entity instanceof EntityLivingBase && !(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity) == null){
+				MBExtendedEntityLivingBase.register((EntityLivingBase) event.entity);
+			}
+				
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 	
 	@SideOnly(Side.SERVER)
@@ -108,6 +120,11 @@ public class MBEventHandler {
 		if (event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entity;
 			MBExtendedPlayer.get(player).onUpdate();
+		}
+		
+		if (event.entity instanceof EntityLivingBase && !(event.entity instanceof EntityPlayer)){
+			EntityLivingBase entity = (EntityLivingBase) event.entity;
+			MBExtendedEntityLivingBase.get(entity).onUpdate();
 		}
 	}
 
@@ -144,7 +161,28 @@ public class MBEventHandler {
 			if (block instanceof FluidWormBlood || block instanceof FluidWormSaliva || block instanceof FluidWormAcid || block instanceof GasWormGas) {
 				event.setCanceled(true);
 			}
+		}
+	}
 
+	
+	@SubscribeEvent
+	public void LivingHurt(LivingHurtEvent event){
+		if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityLivingBase){
+			if (!(event.source.getEntity() instanceof EntityPlayer) && event.entity instanceof EntityPlayer){
+				if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.source.getEntity()).limbo != MBExtendedPlayer.get((EntityPlayer) event.entity).limbo){
+					event.setCanceled(true);
+				}					
+			}else
+			if (event.source.getEntity() instanceof EntityPlayer && !(event.entity instanceof EntityPlayer)){
+				if (MBExtendedPlayer.get((EntityPlayer) event.source.getEntity()).limbo != MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo){
+					event.setCanceled(true);
+				}					
+			}else
+			if (event.source.getEntity() instanceof EntityPlayer && event.entity instanceof EntityPlayer){
+				if (MBExtendedPlayer.get((EntityPlayer) event.source.getEntity()).limbo != MBExtendedPlayer.get((EntityPlayer) event.entity).limbo){
+					event.setCanceled(true);
+				}
+			}
 		}
 	}
 

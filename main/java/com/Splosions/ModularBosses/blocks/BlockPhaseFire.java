@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 
@@ -63,6 +64,10 @@ public class BlockPhaseFire extends Block
     {
         if (entityIn instanceof EntityPlayer && !worldIn.isRemote){
         	MBExtendedPlayer.get((EntityPlayer)entityIn).limboTime = 200;
+        }
+
+        if (entityIn instanceof EntityLivingBase && !(entityIn instanceof EntityPlayer) && !worldIn.isRemote){
+        	MBExtendedEntityLivingBase.get((EntityLivingBase)entityIn).limboTime = 200;
         }
         
         worldIn.setBlockToAir(pos);

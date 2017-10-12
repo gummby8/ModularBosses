@@ -71,7 +71,7 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		/**
+		
 		if (world.isRemote) {
 			return true;
 		} else {
@@ -89,14 +89,14 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 					entity.setCustomNameTag(stack.getDisplayName());
 				}
 
-				if (!player.capabilities.isCreativeMode) {
+				if (!player.capabilities.isCreativeMode) { 
 					--stack.stackSize;
 				}
 			}
 			return true;
 		}
-		*/
-		return true;
+		
+		//return true;
 	}
 
 
