@@ -117,7 +117,7 @@ public class MBClientEventHandler {
 		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
-			GlStateManager.blendFunc(1, 1);
+			GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
 		}
 
 		if (ModularBosses.INSTANCE.playerTarget != null && !ModularBosses.INSTANCE.playerTarget.isDead && event.entityPlayer == Minecraft.getMinecraft().thePlayer) {
@@ -190,7 +190,7 @@ public class MBClientEventHandler {
 		if (!(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
-			GlStateManager.blendFunc(1, 1);
+			GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
 		}
 	}
 	

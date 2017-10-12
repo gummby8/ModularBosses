@@ -173,16 +173,20 @@ public class MBEventHandler {
 				if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.source.getEntity()).limbo != MBExtendedPlayer.get((EntityPlayer) event.entity).limbo){
 					event.setCanceled(true);
 				}					
-			}else
-			if (event.source.getEntity() instanceof EntityPlayer && !(event.entity instanceof EntityPlayer)){
+			}else if (event.source.getEntity() instanceof EntityPlayer && !(event.entity instanceof EntityPlayer)){
 				if (MBExtendedPlayer.get((EntityPlayer) event.source.getEntity()).limbo != MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo){
 					event.setCanceled(true);
 				}					
-			}else
-			if (event.source.getEntity() instanceof EntityPlayer && event.entity instanceof EntityPlayer){
+			}else if (event.source.getEntity() instanceof EntityPlayer && event.entity instanceof EntityPlayer){
 				if (MBExtendedPlayer.get((EntityPlayer) event.source.getEntity()).limbo != MBExtendedPlayer.get((EntityPlayer) event.entity).limbo){
 					event.setCanceled(true);
 				}
+			}
+		} else if(event.source.getEntity() == null){
+			if (event.entity instanceof EntityPlayer && MBExtendedPlayer.get((EntityPlayer) event.entity).limbo == 1){
+				event.setCanceled(true);
+			} else if (event.entity instanceof EntityLivingBase && !(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1){
+				event.setCanceled(true);
 			}
 		}
 	}
