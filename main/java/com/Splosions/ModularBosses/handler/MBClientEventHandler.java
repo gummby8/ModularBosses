@@ -187,7 +187,7 @@ public class MBClientEventHandler {
 
 	@SubscribeEvent
 	public void onRenderEntityLiving(RenderLivingEvent.Pre event) {
-		if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
+		if (!(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(1, 1);
@@ -197,7 +197,7 @@ public class MBClientEventHandler {
 	
 	@SubscribeEvent
 	public void onRenderEntityLiving(RenderLivingEvent.Post event) {
-		if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
+		if (!(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
 			GlStateManager.disableBlend();
 			GlStateManager.enableAlpha();
 		}

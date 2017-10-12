@@ -95,38 +95,11 @@ public class ItemCustomEgg extends BaseModItem implements ICustomDispenserBehavi
 			}
 			return true;
 		}
-		
-		//return true;
 	}
 
 
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		/**
-		if (!world.isRemote) {
-			MovingObjectPosition mop = getMovingObjectPositionFromPlayer(world, player, true);
-			if (mop != null && mop.typeOfHit == MovingObjectType.BLOCK) {
-				BlockPos pos = mop.getBlockPos();
-				if (!world.isBlockModifiable(player, pos)) {
-					return stack;
-				}
-				if (!player.canPlayerEdit(pos, mop.sideHit, stack)) {
-					return stack;
-				}
-				if (world.getBlockState(pos).getBlock() instanceof BlockLiquid) {
-					Entity entity = spawnCreature(world, stack.getItemDamage(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D);
-					if (entity != null) {
-						if (entity instanceof EntityLivingBase && stack.hasDisplayName()) {
-							entity.setCustomNameTag(stack.getDisplayName());
-						}
-						if (!player.capabilities.isCreativeMode) {
-							--stack.stackSize;
-						}
-					}
-				}
-			}
-		}
-		*/
 		if (!player.capabilities.isCreativeMode) {
 			--stack.stackSize;
 		}

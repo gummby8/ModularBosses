@@ -34,6 +34,7 @@ import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -166,7 +167,7 @@ public class MBEventHandler {
 
 	
 	@SubscribeEvent
-	public void LivingHurt(LivingHurtEvent event){
+	public void LivingAttack(LivingAttackEvent event){
 		if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityLivingBase){
 			if (!(event.source.getEntity() instanceof EntityPlayer) && event.entity instanceof EntityPlayer){
 				if (MBExtendedEntityLivingBase.get((EntityLivingBase) event.source.getEntity()).limbo != MBExtendedPlayer.get((EntityPlayer) event.entity).limbo){
