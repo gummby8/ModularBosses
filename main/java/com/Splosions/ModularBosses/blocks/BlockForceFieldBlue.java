@@ -85,7 +85,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if ((int) state.getValue(STATE) == ON && !worldIn.isRemote) {
+		if ((int)state.getValue(STATE) == ON && !worldIn.isRemote) {
 			if ((EnumFacing) state.getValue(FACING) == EnumFacing.NORTH
 					|| (EnumFacing) state.getValue(FACING) == EnumFacing.SOUTH) {
 				if (!TargetUtils.isBlockPresentPos(worldIn, ModBlocks.force_field_gen, pos.west(10).down(10),

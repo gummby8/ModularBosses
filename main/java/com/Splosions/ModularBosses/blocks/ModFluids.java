@@ -68,7 +68,7 @@ public class ModFluids {
 				fluid -> new GasWormGas(fluid, new MaterialLiquid(MapColor.adobeColor)));
 	}
 
-	public static void registerFluidContainers() {
+	public static void registerFluidContainers() { 
 		//registerTank(FluidRegistry.WATER);
 		//registerTank(FluidRegistry.LAVA);
 

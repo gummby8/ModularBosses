@@ -45,7 +45,7 @@ public class ModModelManager {
 		Item item = Item.getItemFromBlock((Block) fluidBlock);
 		ModelBakery.addVariantName(item);
 
-		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(FLUID_MODEL_PATH, fluidBlock.getFluid().getName());
+		final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(FLUID_MODEL_PATH, fluidBlock.getFluid().getName());
 
 		ModelLoader.setCustomMeshDefinition(item, MeshDefinitionFix.create(stack -> modelResourceLocation));
 

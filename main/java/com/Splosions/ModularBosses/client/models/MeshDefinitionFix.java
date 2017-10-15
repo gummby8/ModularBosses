@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 interface MeshDefinitionFix extends ItemMeshDefinition {
 	ModelResourceLocation getLocation(ItemStack stack);
 
-	// Helper method to easily create lambda instances of this class
+	// Helper method used to easily create lambda instances of this class
 	static ItemMeshDefinition create(MeshDefinitionFix lambda) {
 		return lambda;
 	}
