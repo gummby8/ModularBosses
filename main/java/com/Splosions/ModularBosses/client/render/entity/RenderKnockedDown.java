@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
 import net.minecraft.client.renderer.entity.layers.LayerArrow;
 import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerCape;
@@ -33,8 +32,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Score;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.scoreboard.Scoreboard;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -60,7 +59,7 @@ public class RenderKnockedDown extends RenderPlayer
         this.addLayer(new LayerArrow(this));
         this.addLayer(new LayerDeadmau5Head(this));
         this.addLayer(new LayerCape(this));
-        this.addLayer(new LayerCustomHead(this.getPlayerModel().bipedHead));
+        this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
         
         this.mainModel = new ModelKnockdown(1,false);
     }
@@ -120,12 +119,12 @@ public class RenderKnockedDown extends RenderPlayer
             float f4 = f3 - f2;
             float f5;
 
-            if (entity.isRiding() && entity.ridingEntity instanceof EntityLivingBase)
+            if (entity.isRiding() && entity.getRidingEntity() instanceof EntityLivingBase)
             {
                 EntityLivingBase entitylivingbase1 = (EntityLivingBase)entity.ridingEntity;
                 f2 = this.interpolateRotation(entitylivingbase1.prevRenderYawOffset, entitylivingbase1.renderYawOffset, partialTicks);
                 f4 = f3 - f2;
-                f5 = MathHelper.wrapAngleTo180_float(f4);
+                f5 = MathHelper.wrapDegrees(f4);
 
                 if (f5 < -85.0F)
                 {
@@ -290,7 +289,7 @@ public class RenderKnockedDown extends RenderPlayer
     
     private void func_177137_d(AbstractClientPlayer p_177137_1_)
     {
-        ModelPlayer modelplayer = this.getPlayerModel();
+        ModelPlayer modelplayer = this.getMainModel();
 
         if (p_177137_1_.isSpectator())
         {

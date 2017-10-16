@@ -111,7 +111,7 @@ public class PacketDispatcher
 	 * Shortcut to {@link SimpleNetworkWrapper#sendToAllAround(IMessage, NetworkRegistry.TargetPoint)}
 	 */
 	public static final void sendToAllAround(IMessage message, Entity entity, double range) {
-		PacketDispatcher.sendToAllAround(message, entity.worldObj.provider.getDimensionId(), entity.posX, entity.posY, entity.posZ, range);
+		PacketDispatcher.sendToAllAround(message, entity.world.provider.getDimension(), entity.posX, entity.posY, entity.posZ, range);
 	}
 
 	/**
@@ -180,8 +180,8 @@ public class PacketDispatcher
 	 */
 	public static void sendToAllAround(Packet packet, Entity entity, int range) {
 		int rangeSq = (range * range);
-		if (entity.worldObj instanceof WorldServer) {
-			for (Object o : ((WorldServer) entity.worldObj).playerEntities) {
+		if (entity.world instanceof WorldServer) {
+			for (Object o : ((WorldServer) entity.world).playerEntities) {
 				if (o instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP) o;
 					if (player.getDistanceSqToEntity(entity) <= rangeSq) {

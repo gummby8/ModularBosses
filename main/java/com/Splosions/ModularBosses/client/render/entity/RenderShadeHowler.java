@@ -10,7 +10,6 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -19,8 +18,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderShadeHowler extends RenderLiving {
@@ -68,8 +68,8 @@ public class RenderShadeHowler extends RenderLiving {
 		float f4 = (float) ((double) f2 + ent.posY - 0.5D - ent.posY - (ent.prevPosY - ent.posY) * (double) (1.0F - partialTicks));
 		float f3 = (float) (shade.howlEndX - ent.posX - (ent.prevPosX - ent.posX) * (double) (1.0F - partialTicks));
 		float f5 = (float) (shade.howlEndZ - ent.posZ - (ent.prevPosZ - ent.posZ) * (double) (1.0F - partialTicks));			
-		float f6 = MathHelper.sqrt_float(f3 * f3 + f5 * f5);
-		float f7 = MathHelper.sqrt_float(f3 * f3 + f4 * f4 + f5 * f5);
+		float f6 = MathHelper.sqrt(f3 * f3 + f5 * f5);
+		float f7 = MathHelper.sqrt(f3 * f3 + f4 * f4 + f5 * f5);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate((float) x, (float) y + 1.9F, (float) z );	
 		GlStateManager.rotate((float) (-Math.atan2((double) f5, (double) f3)) * 180.0F / (float) Math.PI - 90.0F, 0.0F, 1.0F, 0.0F);
@@ -83,7 +83,7 @@ public class RenderShadeHowler extends RenderLiving {
 
 		float f8 = 0.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F;
 		//-32 set to positive to reverse beam
-		float f9 = MathHelper.sqrt_float(f3 * f3 + f4 * f4 + f5 * f5) / -32.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F; 
+		float f9 = MathHelper.sqrt(f3 * f3 + f4 * f4 + f5 * f5) / -32.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F; 
 		worldrenderer.startDrawing(5);
 		byte circleFaces = 40;
 

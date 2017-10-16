@@ -7,16 +7,14 @@ import javax.vecmath.Matrix4f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
-import net.minecraftforge.client.model.ISmartItemModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -60,14 +58,14 @@ public class RenderItemBait implements ISmartItemModel, IPerspectiveAwareModel
 		GlStateManager.pushMatrix();
 		GL11.glScalef(1F, 1F, 1F);
 		switch (cameraTransformType) {
-		case FIRST_PERSON:
+		case FIRST_PERSON_RIGHT_HAND:
 			GlStateManager.translate(0.1F, -0.5F, -0.2F);
 			GlStateManager.rotate(5.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(35.0F, 0.0F, 1.0F, 0.0F);
 			GlStateManager.rotate(35.0F, 0.0F, 0.0F, 1.0F);
 			
 			break;
-		case THIRD_PERSON:
+		case THIRD_PERSON_RIGHT_HAND:
 			GlStateManager.rotate(0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(90.0F, 0F, 1.0F, 0.0F);
 			GlStateManager.translate(0.2F, -0.4F, -0.0F);

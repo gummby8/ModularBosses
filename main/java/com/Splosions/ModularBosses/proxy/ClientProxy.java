@@ -32,10 +32,10 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -58,7 +58,7 @@ public class ClientProxy extends CommonProxy{
 	
 	/** Stores all models which need to be replaced during {@link ModelBakeEvent} */
 	@SuppressWarnings("deprecation")
-	public static final Map<ModelResourceLocation, Class<? extends net.minecraft.client.resources.model.IBakedModel>> smartModels = Maps.newHashMap();
+	public static final Map<ModelResourceLocation, Class<? extends IBakedModel>> smartModels = Maps.newHashMap();
 	/** Accessible version of EffectRenderer's IParticleFactory map */
 	public static Map<Integer, IParticleFactory> particleFactoryMap;
 	

@@ -77,8 +77,7 @@ public class RenderSpark extends RenderLiving {
             GlStateManager.pushMatrix();
             GlStateManager.translate(x, y, z);
 
-            for (int i = 0;
-            (float) i < (f7 + f7 * f7) / 2.0F * 60.0F; ++i) {
+            for (int i = 0; (float) i < (f7 + f7 * f7) / 2.0F * 60.0F; ++i) {
                     GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
                     GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
                     GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);

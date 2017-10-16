@@ -5,20 +5,22 @@ import java.util.logging.Level;
 import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+
 import org.lwjgl.opengl.GL11;
 
 public class RenderEyeballOctopus extends RenderLiving {
@@ -57,45 +59,34 @@ public class RenderEyeballOctopus extends RenderLiving {
 		float f3 = (float) (octo.target.posX - ent.posX - (ent.prevPosX - ent.posX) * (double) (1.0F - partialTicks));
 		float f4 = (float) ((double) f2 + octo.target.posY - 0.5D - ent.posY - (ent.prevPosY - ent.posY) * (double) (1.0F - partialTicks));
 		float f5 = (float) (octo.target.posZ - ent.posZ - (ent.prevPosZ - ent.posZ) * (double) (1.0F - partialTicks));
-		float f6 = MathHelper.sqrt_float(f3 * f3 + f5 * f5);
-		float f7 = MathHelper.sqrt_float(f3 * f3 + f4 * f4 + f5 * f5);
+		float f6 = MathHelper.sqrt(f3 * f3 + f5 * f5);
+		float f7 = MathHelper.sqrt(f3 * f3 + f4 * f4 + f5 * f5);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate((float) x, (float) y + 0.8F, (float) z);
 		GlStateManager.rotate((float) (-Math.atan2((double) f5, (double) f3)) * 180.0F / (float) Math.PI - 90.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate((float) (-Math.atan2((double) f6, (double) f4)) * 180.0F / (float) Math.PI - 90.0F, 1.0F, 0.0F, 0.0F);
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		RenderHelper.disableStandardItemLighting();
 		GlStateManager.disableCull();
 		this.bindTexture(enderDragonCrystalBeamTextures);
 		GlStateManager.shadeModel(GL11.GL_FLAT);
 
 		float f8 = 0.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F;
-		float f9 = MathHelper.sqrt_float(f3 * f3 + f4 * f4 + f5 * f5) / -32.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F; // set
-																																	// the
-																																	// 32
-																																	// to
-																																	// positive
-																																	// to
-																																	// reverse
+		float f9 = MathHelper.sqrt(f3 * f3 + f4 * f4 + f5 * f5) / -32.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F; // set
+																							// reverse
 																																	// beam
-		worldrenderer.startDrawing(5);
-		byte b0 = 8;
+        bufferbuilder.begin(5, DefaultVertexFormats.POSITION_TEX_COLOR);
+        int i = 8;
 
-		for (int i = 0; i <= b0; ++i) {
-			float f10 = MathHelper.sin((float) (i % b0) * (float) Math.PI * 2.0F / (float) b0) * 0.45F;
-			float f11 = MathHelper.cos((float) (i % b0) * (float) Math.PI * 2.0F / (float) b0) * 0.45F;
-			float f12 = 1;// (float) (i % b0) * 1.0F / (float) b0;
-
-			worldrenderer.setColorOpaque_I(16711680);
-			worldrenderer.addVertexWithUV((double) f10, (double) f11, (double) f7, (double) f12, (double) f8 + 0.2D); // 0.23D
-																														// is
-																														// the
-																														// beam
-																														// speed
-			worldrenderer.addVertexWithUV((double) (f10 * 0.2F), (double) (f11 * 0.2F), 0.0D, (double) f12, (double) f9);
-
-		}
+        for (int j = 0; j <= 8; ++j)
+        {
+            float f71 = MathHelper.sin((float)(j % 8) * ((float)Math.PI * 2F) / 8.0F) * 0.75F;
+            float f81 = MathHelper.cos((float)(j % 8) * ((float)Math.PI * 2F) / 8.0F) * 0.75F;
+            float f91 = (float)(j % 8) / 8.0F;
+            bufferbuilder.pos((double)(f71 * 0.2F), (double)(f81 * 0.2F), 0.0D).tex((double)f91, (double)f5).color(0, 0, 0, 255).endVertex();
+            bufferbuilder.pos((double)f71, (double)f81, (double)f4).tex((double)f91, (double)f6).color(255, 255, 255, 255).endVertex();
+        }
 
 		tessellator.draw();
 		GlStateManager.enableCull();

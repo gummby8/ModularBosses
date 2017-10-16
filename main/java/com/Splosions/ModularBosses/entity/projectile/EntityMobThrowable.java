@@ -8,8 +8,8 @@ package com.Splosions.ModularBosses.entity.projectile;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 /**
@@ -70,7 +70,7 @@ public abstract class EntityMobThrowable extends EntityThrowable
 		double d0 = target.posX - shooter.posX;
 		double d1 = target.posY - this.posY - 2;
 		double d2 = target.posZ - shooter.posZ;
-		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		if (d3 >= 1.0E-7D) {
 			float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
 			float f3 = (float)(-(Math.atan2(d1, d3) * 180.0D / Math.PI));
@@ -100,9 +100,9 @@ public abstract class EntityMobThrowable extends EntityThrowable
 		
 		this.posY = shooter.posY + (double) shooter.getEyeHeight() - 0.10000000149011612D;
 		double d0 = target.posX - shooter.posX;
-		double d1 = target.getBoundingBox().minY + 1 - this.posY;
+		double d1 = target.getCollisionBoundingBox().minY + 1 - this.posY;
 		double d2 = target.posZ - shooter.posZ;
-		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		
 		if (d3 >= 1.0E-7D) {
 			float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
@@ -129,7 +129,7 @@ public abstract class EntityMobThrowable extends EntityThrowable
 		double d0 = pos.getX() - shooter.posX;
 		double d1 = pos.getY() + 1 - this.posY;
 		double d2 = pos.getZ() - shooter.posZ;
-		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		
 		if (d3 >= 1.0E-7D) {
 			float f2 = (float)(Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;

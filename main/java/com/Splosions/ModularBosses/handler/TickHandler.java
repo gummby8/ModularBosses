@@ -7,7 +7,6 @@ import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -18,7 +17,7 @@ public class TickHandler {
 	
 	@SubscribeEvent
 	public void worldTick(TickEvent.WorldTickEvent event) {
-		if(!ModularBosses.INSTANCE.dungeonList.isEmpty() && event.phase == TickEvent.Phase.START && event.world.provider.getDimensionId() == 0) {
+		if(!ModularBosses.INSTANCE.dungeonList.isEmpty() && event.phase == TickEvent.Phase.START && event.world.provider.getDimension() == 0) {
 			int dungeonCount = ModularBosses.INSTANCE.dungeonList.size();
 			for (int x = 0; x < dungeonCount; x++) {
 				Dungeon dungeon = ModularBosses.INSTANCE.dungeonList.get(x);

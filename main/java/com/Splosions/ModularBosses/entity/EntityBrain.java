@@ -16,8 +16,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIArrowAttack;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIFleeSun;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -35,10 +33,8 @@ import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
@@ -64,23 +60,18 @@ public class EntityBrain extends EntityMob {
 		super(worldIn);
 		//sets hitbox size
 		this.setSize(4F, 3F);
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, brainDmg, false));
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, brainDmg, true));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, true));
-
 	}
 
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(brainMaxHealth);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(brainMaxHealth);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
-		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 	}
 
 	@Override
@@ -105,7 +96,7 @@ public class EntityBrain extends EntityMob {
 
 
 
-		if (this.ticksExisted % sparkTimer == (20 - 1) && !this.worldObj.isRemote && target != null) {
+		if (this.ticksExisted % sparkTimer == (20 - 1) && !this.world.isRemote && target != null) {
 			makeSparks();
 		} 
 		
@@ -113,18 +104,18 @@ public class EntityBrain extends EntityMob {
 			target = TargetUtils.findRandomVisablePlayer(this, 15, 5);
 			shieldUp = (sparkCheck()) ? false : true;
 			//Generates sparks the moment a player walks in the room
-			if (prevTarget == null && target != null && !this.worldObj.isRemote){
+			if (prevTarget == null && target != null && !this.world.isRemote){
 				makeSparks();
 				prevTarget = target;
 			}
 		}
 		
-		if (this.ticksExisted % brainAttackTImer == (20 - 1) && !this.worldObj.isRemote) {
+		if (this.ticksExisted % brainAttackTImer == (20 - 1) && !this.world.isRemote) {
 			int shots = TargetUtils.getRanNum(12, 20);
 			float direction = 360 / shots;
 			for (int i = 0; i < shots; ++i) {
-				EntityBrainEnergy energy = new EntityBrainEnergy(this.worldObj, this.posX,this.posY,this.posZ, (i * direction), brainDmg);
-				this.worldObj.spawnEntityInWorld(energy);
+				EntityBrainEnergy energy = new EntityBrainEnergy(this.world, this.posX,this.posY,this.posZ, (i * direction), brainDmg);
+				this.world.spawnEntity(energy);
 			}
 		}
 	}
@@ -133,9 +124,9 @@ public class EntityBrain extends EntityMob {
 	public void makeSparks(){
 		int count = TargetUtils.getRanNum(sparkMin, sparkMax);
 		for (int i = 1; i < count; ++i) {
-			EntitySpark spark = new EntitySpark(worldObj);
+			EntitySpark spark = new EntitySpark(world);
 			spark.setPosition(this.posX + TargetUtils.getRanNum(-5, 5), this.posY, this.posZ + TargetUtils.getRanNum(-5, 5));
-			this.worldObj.spawnEntityInWorld(spark);	
+			this.world.spawnEntity(spark);	
 		}
 	}
 	
@@ -151,14 +142,14 @@ public class EntityBrain extends EntityMob {
 				double d2 = this.rand.nextGaussian() * 0.02D;
 				double d0 = this.rand.nextGaussian() * 0.02D;
 				double d1 = this.rand.nextGaussian() * 0.02D;
-				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,
+				this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL,
 						this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width,
 						this.posY + (double) (this.rand.nextFloat() * this.height),
 						this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0,
 						d1, new int[0]);
 			}
 			
-			if (!this.worldObj.isRemote){
+			if (!this.world.isRemote){
 				TargetUtils.dropExp(this, this.brainExpDrop);
 				TargetUtils.dropLoot(this, this.brainLoot);	
 			}

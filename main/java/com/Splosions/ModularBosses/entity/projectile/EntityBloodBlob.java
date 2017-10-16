@@ -10,10 +10,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -31,11 +31,12 @@ public class EntityBloodBlob extends EntityMobThrowable implements IEntityAdditi
 	public EntityBloodBlob(World world, EntityLivingBase shooter, BlockPos pos, float velocity, float MotionY) {
 		super(world,shooter,pos,velocity,MotionY);
 	}
+	
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
+	public void onImpact(RayTraceResult result) {
 		
-		if (!worldObj.isRemote && mop.entityHit == null) {
-			this.worldObj.setBlockState(this.getPosition(), ModFluids.fluidTempWormBlood.getBlock().getDefaultState());
+		if (!world.isRemote && result.entityHit == null) {
+			this.world.setBlockState(this.getPosition(), ModFluids.fluidTempWormBlood.getBlock().getDefaultState());
 			setDead();
 		}
 	}

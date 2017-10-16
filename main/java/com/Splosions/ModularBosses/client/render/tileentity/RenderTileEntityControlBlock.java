@@ -14,13 +14,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+
 
 
 
@@ -116,7 +114,7 @@ public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
 				axisalignedbb.maxX - te.getPos().getX() + x + 0.5F - (te.xOff * 2),
 				axisalignedbb.maxY - te.getPos().getY() + y + 0.2F,
 				axisalignedbb.maxZ - te.getPos().getZ() + z + 0.5F - (te.zOff * 2));
-		RenderGlobal.drawOutlinedBoundingBox(axisalignedbb1, 16777215);
+		RenderGlobal.drawSelectionBoundingBox(axisalignedbb1,  255,  255,  255,  1);
 		Tessellator tessellator = Tessellator.getInstance();
 		
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();

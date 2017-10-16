@@ -9,7 +9,7 @@ import com.Splosions.ModularBosses.handler.GuiHandler;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import com.Splosions.ModularBosses.network.AbstractMessage.AbstractClientMessage;
 
@@ -39,6 +39,6 @@ public class OpenControlBlockEditorPacket extends AbstractClientMessage<OpenCont
 	@Override
 	protected void process(EntityPlayer player, Side side) {
 		// TileEntity checked in IGuiHandler, so no need to do so here
-		player.openGui(ModularBosses.INSTANCE, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
+		player.openGui(ModularBosses.INSTANCE, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.world, pos.getX(), pos.getY(), pos.getZ());
 	}
 }

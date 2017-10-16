@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.relauncher.Side;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
@@ -47,7 +47,7 @@ public class SetControlBlockMessagePacket extends AbstractServerMessage<SetContr
 
 	@Override
 	protected void process(EntityPlayer player, Side side) {
-		TileEntity te = player.worldObj.getTileEntity(this.pos);
+		TileEntity te = player.world.getTileEntity(this.pos);
 		if (te instanceof TileEntityControlBlock) {
 			((TileEntityControlBlock) te).setMessage(this.message);
 		} else

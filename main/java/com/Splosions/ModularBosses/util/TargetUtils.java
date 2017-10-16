@@ -19,12 +19,9 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import scala.collection.generic.Sizing;
@@ -45,7 +42,7 @@ public class TargetUtils {
 			for (int i = 0; i < list.size(); ++i) {
 				if (list.get(i) instanceof EntityPlayer){
 					EntityPlayer player = (EntityPlayer) list.get(i);
-					player.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
+					player.sendMessage(new ITextComponent(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
 				}
 			}
 		} catch (Exception e) {
@@ -55,7 +52,7 @@ public class TargetUtils {
 	}
 
 	public static void betaMsg(Entity entity) {
-		if (entity.worldObj.isRemote && entity.ticksExisted == 1) {
+		if (entity.world.isRemote && entity.ticksExisted == 1) {
 			tellPlayer("This monster is still a work in progress");
 		}
 	}
@@ -84,7 +81,7 @@ public class TargetUtils {
 	 * @return
 	 */
 	public static boolean playerColided(Entity ent) {
-		List list = ent.worldObj.getEntitiesWithinAABB(EntityPlayer.class, ent.getEntityBoundingBox());
+		List list = ent.world.getEntitiesWithinAABB(EntityPlayer.class, ent.getEntityBoundingBox());
 		return list.isEmpty();
 	}
 
@@ -123,16 +120,16 @@ public class TargetUtils {
 	 * Gets an List of entities within an AABB
 	 */
 	public static final List getList(Entity entity, int width, int height) {
-		return entity.worldObj.getEntitiesWithinAABBExcludingEntity(entity, entity.getEntityBoundingBox().expand(width, height, width));
+		return entity.world.getEntitiesWithinAABBExcludingEntity(entity, entity.getEntityBoundingBox().expand(width, height, width));
 	}
 
 	public static final List getSpecificList(Entity entity, Class targetClass, int width, int height) {
-		return entity.worldObj.getEntitiesWithinAABB(targetClass, entity.getEntityBoundingBox().expand(width, height, width));
+		return entity.world.getEntitiesWithinAABB(targetClass, entity.getEntityBoundingBox().expand(width, height, width));
 	}
 
 	public static EntityPlayer findRandomVisablePlayer(Entity entity, int width, int height) {
 		Random rn = new Random();
-		List<EntityPlayer> players = entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, entity.getEntityBoundingBox().expand(width, height, width));
+		List<EntityPlayer> players = entity.world.getEntitiesWithinAABB(EntityPlayer.class, entity.getEntityBoundingBox().expand(width, height, width));
 		if (players.size() > 0) {
 			return (((EntityLivingBase) entity).canEntityBeSeen(players.get(rn.nextInt(players.size()))) ? players.get(rn.nextInt(players.size())) : null);
 		} else {
@@ -146,7 +143,7 @@ public class TargetUtils {
 	 * PigZombies).
 	 */
 	public static EntityPlayer findNearestVisablePlayer(Entity entity, int dist) {
-		EntityPlayer entityplayer = entity.worldObj.getClosestPlayerToEntity(entity, dist);
+		EntityPlayer entityplayer = entity.world.getClosestPlayerToEntity(entity, dist);
 		return entityplayer != null && ((EntityLivingBase) entity).canEntityBeSeen(entityplayer) ? entityplayer : null;
 	}
 
@@ -211,7 +208,7 @@ public class TargetUtils {
         {
             j = EntityXPOrb.getXPSplit(ammount);
             ammount -= j;
-            ent.worldObj.spawnEntityInWorld(new EntityXPOrb(ent.worldObj, ent.posX, ent.posY, ent.posZ, j));
+            ent.world.spawnEntity(new EntityXPOrb(ent.world, ent.posX, ent.posY, ent.posZ, j));
         }
 	}
 

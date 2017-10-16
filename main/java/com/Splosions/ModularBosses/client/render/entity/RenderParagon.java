@@ -6,21 +6,22 @@ import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityDragonPart;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 
 public class RenderParagon extends RenderLiving {
 
@@ -44,7 +45,7 @@ public class RenderParagon extends RenderLiving {
 
 	}
 
-	private void renderDebugBoundingBox(EntityDragonPart part, double x, double y, double z, float yaw, float partialTicks, double xOff, double yOff, double zOff) {
+	private void renderDebugBoundingBox(MultiPartEntityPart part, double x, double y, double z, float yaw, float partialTicks, double xOff, double yOff, double zOff) {
 
 		GlStateManager.depthMask(false);
 		GlStateManager.disableTexture2D();
@@ -54,12 +55,11 @@ public class RenderParagon extends RenderLiving {
 		float f2 = part.width / 2.0F;
 		AxisAlignedBB axisalignedbb = part.getEntityBoundingBox();
 		AxisAlignedBB axisalignedbb1 = new AxisAlignedBB(axisalignedbb.minX - part.posX + x + xOff, axisalignedbb.minY - part.posY + y + yOff, axisalignedbb.minZ - part.posZ + z + zOff, axisalignedbb.maxX - part.posX + x + xOff, axisalignedbb.maxY - part.posY + y + yOff, axisalignedbb.maxZ - part.posZ + z + zOff);
-		RenderGlobal.drawOutlinedBoundingBox(axisalignedbb1, 16777215);
+		RenderGlobal.drawSelectionBoundingBox(axisalignedbb1, 255, 255, 255, 1);
 		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		Vec3 vec3 = part.getLook(partialTicks);
-		worldrenderer.startDrawing(3);
-		worldrenderer.setColorOpaque_I(255);
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		Vec3d vec3 = part.getLook(partialTicks);
+		bufferbuilder.begin(3, DefaultVertexFormats.POSITION_TEX_COLOR);
 		tessellator.draw();
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableLighting();

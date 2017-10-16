@@ -21,7 +21,6 @@ import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -29,7 +28,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
@@ -54,8 +52,8 @@ public class MBClientEventHandler {
 	@SubscribeEvent
 	public void onDrawBlockHighlight(DrawBlockHighlightEvent event) {
 		try {
-			if (event.target.entityHit == null) {
-				Block block = event.player.worldObj.getBlockState(event.target.getBlockPos()).getBlock();
+			if (event.getTarget().entityHit == null) {
+				Block block = event.getPlayer().world.getBlockState(event.getTarget().getBlockPos()).getBlock();
 				if (block instanceof BlockForceFieldBlue || block instanceof BlockInvisible) {
 					event.setCanceled(true);
 				}
@@ -69,7 +67,7 @@ public class MBClientEventHandler {
 	//custom screen overlay when submerged in worm blood
 	@SubscribeEvent
 	public void RenderBlockOverlayEvent(RenderBlockOverlayEvent event) {
-		if (event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormBlood || event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormAcid) {
+		if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() instanceof FluidWormBlood || event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() instanceof FluidWormAcid) {
 			event.setCanceled(true);
 			TextureAtlasSprite atlas = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(event.player.worldObj.getBlockState(event.blockPos));
 			Tessellator tessellator = Tessellator.getInstance();
@@ -78,11 +76,11 @@ public class MBClientEventHandler {
 			GlStateManager.pushMatrix();
 			GL11.glEnable(GL11.GL_BLEND);
 
-			if (event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormBlood){
+			if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() instanceof FluidWormBlood){
 				GlStateManager.color(0.7F, 0, 0, 0.41F);
 				GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_SRC_COLOR);// favorite so far
 			} else 
-			if(event.player.worldObj.getBlockState(event.blockPos).getBlock() instanceof FluidWormAcid){
+			if(event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() instanceof FluidWormAcid){
 				GlStateManager.color(0.5F, 0.5F, 0F, 0.41F);
 				GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);// favorite so far				
 			}
@@ -112,15 +110,15 @@ public class MBClientEventHandler {
 
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Pre event) {
-		EntityPlayer player = event.entityPlayer;
+		EntityPlayer player = event.getEntityPlayer();
 
-		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
+		if (MBExtendedPlayer.get((EntityPlayer) event.getEntity()).preLimbo > 0) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
 		}
 
-		if (ModularBosses.INSTANCE.playerTarget != null && !ModularBosses.INSTANCE.playerTarget.isDead && event.entityPlayer == Minecraft.getMinecraft().thePlayer) {
+		if (ModularBosses.INSTANCE.playerTarget != null && !ModularBosses.INSTANCE.playerTarget.isDead && event.getEntityPlayer() == Minecraft.getMinecraft().player) {
 			player.motionX = player.motionY = player.motionZ = 0;
 
 			Entity target = ModularBosses.INSTANCE.playerTarget;
@@ -141,9 +139,9 @@ public class MBClientEventHandler {
 			player.setAngles(rYaw, -(rPitch - player.rotationPitch));
 		}
 
-		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime != 0 && !(event.renderer instanceof RenderKnockedDown)) {
+		if (MBExtendedPlayer.get((EntityPlayer) event.getEntity()).knockdownTime != 0 && !(event.getRenderer() instanceof RenderKnockedDown)) {
 			event.setCanceled(true);
-			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.partialRenderTick);
+			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.getPartialRenderTick());
 		}
 
 	}
@@ -151,7 +149,7 @@ public class MBClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRenderPlayer(RenderPlayerEvent.Post event) {
-		if (MBExtendedPlayer.get((EntityPlayer) event.entity).preLimbo > 0) {
+		if (MBExtendedPlayer.get((EntityPlayer) event.getEntity()).preLimbo > 0) {
 			GlStateManager.disableBlend();
 			GlStateManager.enableAlpha();			
 		}
@@ -162,21 +160,21 @@ public class MBClientEventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent	
 	public void renderHand(RenderHandEvent event){
-		AbstractClientPlayer player = Minecraft.getMinecraft().thePlayer;
-		ItemStack weapon = player.getHeldItem();
+		AbstractClientPlayer player = Minecraft.getMinecraft().player;
+		ItemStack weapon = player.getHeldItemMainhand();
 
 		if (weapon != null && weapon.getItem() instanceof ItemNote)	{
 			event.setCanceled(true);
 
 	        float f1 = 1.0F;
 	        float f2 = 0;
-	        float f3 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * event.partialTicks;
-	        float f4 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * event.partialTicks;
+	        float f3 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * event.getPartialTicks();
+	        float f4 = player.prevRotationYaw + (player.rotationYaw - player.prevRotationYaw) * event.getPartialTicks();
 	        
 	        GlStateManager.enableRescaleNormal();
 	        GlStateManager.pushMatrix();
 	        RenderItemNote.func_178101_a(f3, f4);
-	        RenderItemNote.func_178110_a((EntityPlayerSP)player, event.partialTicks);
+	        RenderItemNote.func_178110_a((EntityPlayerSP)player, event.getPartialTicks());
 			
 			RenderItemNote.renderNote(player, f3, f1,  f2, weapon);
 	        GlStateManager.popMatrix();
@@ -187,7 +185,7 @@ public class MBClientEventHandler {
 
 	@SubscribeEvent
 	public void onRenderEntityLiving(RenderLivingEvent.Pre event) {
-		if (!(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
+		if (!(event.getEntity() instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.getEntity()).limbo == 1) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();
 			GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
@@ -197,7 +195,7 @@ public class MBClientEventHandler {
 	
 	@SubscribeEvent
 	public void onRenderEntityLiving(RenderLivingEvent.Post event) {
-		if (!(event.entity instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.entity).limbo == 1) {
+		if (!(event.getEntity() instanceof EntityPlayer) && MBExtendedEntityLivingBase.get((EntityLivingBase) event.getEntity()).limbo == 1) {
 			GlStateManager.disableBlend();
 			GlStateManager.enableAlpha();
 		}
