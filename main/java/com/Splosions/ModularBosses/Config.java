@@ -105,14 +105,7 @@ public class Config {
 		EntitySkull.postInitConfig(config);//210 
 		EntitySpark.postInitConfig(config);//211 
 
-
-
-		
-		
-		
-
-		
-		if (config.hasChanged()) {
+	if (config.hasChanged()) {
 			config.save();
 		}
 	}
