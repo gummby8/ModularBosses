@@ -169,7 +169,7 @@ public class ModelKnockdown extends ModelPlayer
 
     public void setInvisible(boolean invisible)
     {
-        super.setInvisible(invisible);
+        super.setVisible(invisible);
         this.bipedLeftArmwear.showModel = invisible;
         this.bipedRightArmwear.showModel = invisible;
         this.bipedLeftLegwear.showModel = invisible;

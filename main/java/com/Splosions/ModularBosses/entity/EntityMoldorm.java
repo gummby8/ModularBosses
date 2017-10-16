@@ -20,8 +20,8 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityMultiPart;
+import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIBreakDoor;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,8 +32,6 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.boss.EntityDragonPart;
-import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityCow;
@@ -42,25 +40,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob 
+public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob 
 {
-	public EntityDragonPart[] moldormPartArray;
-	public EntityDragonPart moldormPart1;
-	public EntityDragonPart moldormPart2;
-	public EntityDragonPart moldormPart3;
-	public EntityDragonPart moldormPart4;
-	public EntityDragonPart moldormPart5;
+	public MultiPartEntityPart[] moldormPartArray;
+	public MultiPartEntityPart moldormPart1;
+	public MultiPartEntityPart moldormPart2;
+	public MultiPartEntityPart moldormPart3;
+	public MultiPartEntityPart moldormPart4;
+	public MultiPartEntityPart moldormPart5;
 
 	public boolean debugHitboxes = false;
 	
@@ -88,12 +86,12 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		this.maxHurtResistantTime = 40;
 		//AI STUFF
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
-		this.moldormPartArray = new EntityDragonPart[] { 
-				this.moldormPart1 = new EntityDragonPart(this, "part1", 3.0F, 3.0F), 
-				this.moldormPart2 = new EntityDragonPart(this, "part2", 3.0F, 3.0F), 
-				this.moldormPart3 = new EntityDragonPart(this, "part3", 2.5F, 2.5F),
-				this.moldormPart4 = new EntityDragonPart(this, "part4", 2.0F, 2.0F),
-				this.moldormPart5 = new EntityDragonPart(this, "part5", 1.7F, 1.7F) 
+		this.moldormPartArray = new MultiPartEntityPart[] { 
+				this.moldormPart1 = new MultiPartEntityPart(this, "part1", 3.0F, 3.0F), 
+				this.moldormPart2 = new MultiPartEntityPart(this, "part2", 3.0F, 3.0F), 
+				this.moldormPart3 = new MultiPartEntityPart(this, "part3", 2.5F, 2.5F),
+				this.moldormPart4 = new MultiPartEntityPart(this, "part4", 2.0F, 2.0F),
+				this.moldormPart5 = new MultiPartEntityPart(this, "part5", 1.7F, 1.7F) 
 			};
 		
 
@@ -124,15 +122,15 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	{
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(40.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
-		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
 	}
 
 
@@ -141,7 +139,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
 	 */
 	protected void onDeathUpdate() {
-			if (!this.worldObj.isRemote) {
+			if (!this.world.isRemote) {
 				//TargetUtils.dropExp(this, this.heartExpDrop);
 				//TargetUtils.dropLoot(this, this.heartLoot);
 			}
@@ -156,7 +154,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	 * Returns the sound this mob makes when it is hurt.
 	 */
 	@Override
-	protected String getHurtSound() {
+	protected SoundEvent getHurtSound(DamageSource dmg){
 		return Sounds.CHORP_HURT;
 	}
 
@@ -213,7 +211,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 
 		
-		if ( !this.worldObj.isRemote && this.ticksExisted % this.ranTicks == (20 - 1) && flip == 0) {
+		if ( !this.world.isRemote && this.ticksExisted % this.ranTicks == (20 - 1) && flip == 0) {
 			this.ranTicks = getRandomNumberInRange(20, 40);
 			this.ranPosX = getRandomNumberInRange(-20, 20);
 			this.ranPosZ = getRandomNumberInRange(-20, 20);
@@ -221,7 +219,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 
 		
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			if (edgeDetect() || isCollidedHorizontally) {
 				while (isAir()){}
 				this.flip = 10; 
@@ -233,7 +231,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 
 
-		if (!this.worldObj.isRemote){
+		if (!this.world.isRemote){
 			this.flip -=(this.flip <= 0)? 0 : 1;
 		}
 		
@@ -251,13 +249,13 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	}
 
 	public boolean edgeDetect(){
-		Vec3 look = this.getLookVec();
+		Vec3d look = this.getLookVec();
 		float distance = 1.5F; //distance in front of entity
-		double dx = this.posX + (look.xCoord * distance);
+		double dx = this.posX + (look.x * distance);
 		double dy = this.posY; 
-		double dz = this.posZ + (look.zCoord * distance);
+		double dz = this.posZ + (look.z * distance);
 		BlockPos bp = new BlockPos(dx, dy - 1, dz);
-		Block block = this.worldObj.getBlockState(bp).getBlock();
+		Block block = this.world.getBlockState(bp).getBlock();
 		return (block instanceof BlockAir);
 	}
 	
@@ -265,7 +263,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		this.ranPosX = getRandomNumberInRange(-20, 20);
 		this.ranPosZ = getRandomNumberInRange(-20, 20);
 		BlockPos pos = new BlockPos(this.posX + ranPosX, this.posY - 1, this.posZ + ranPosZ);
-		if (this.worldObj.getBlockState(pos).getBlock() instanceof BlockAir){
+		if (this.world.getBlockState(pos).getBlock() instanceof BlockAir){
 			return true;	
 		} else {
 			return false;
@@ -283,12 +281,12 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	
 	@Override
 	public World getWorld() {
-		return this.worldObj;
+		return this.world;
 	}
 
 
 	@Override
-	public boolean attackEntityFromPart(EntityDragonPart part, DamageSource source, float dmg) {
+	public boolean attackEntityFromPart(MultiPartEntityPart part, DamageSource source, float dmg) {
 		if (part == this.moldormPart5){
 			Damage(source , dmg);
 			return true;	
@@ -360,7 +358,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	
     
     
-	public static void movePiecePos(EntityDragonPart targetPart, EntityDragonPart destinationPart, float speed, float yawSpeed){
+	public static void movePiecePos(MultiPartEntityPart targetPart, MultiPartEntityPart destinationPart, float speed, float yawSpeed){
 		targetPart.posX += ((destinationPart.posX - targetPart.posX) / speed);
 		targetPart.posY += ((destinationPart.posY - targetPart.posY) / speed);
 		targetPart.posZ += ((destinationPart.posZ - targetPart.posZ) / speed);
@@ -377,7 +375,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	/**
 	 * Called to move the hitboses of the knees when the mob turns
 	 
-	public void moveHitBoxes(EntityDragonPart part, double FrontToBack, double SideToSide, double TopToBot) {
+	public void moveHitBoxes(MultiPartEntityPart part, double FrontToBack, double SideToSide, double TopToBot) {
 
 		float f3 = this.rotationYaw * (float) Math.PI / 180.0F;
 		float f11 = MathHelper.sin(f3);

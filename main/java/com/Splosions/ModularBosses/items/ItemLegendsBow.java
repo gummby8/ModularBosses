@@ -15,8 +15,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.google.common.collect.Lists;
 
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,7 +29,8 @@ import net.minecraft.stats.StatList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 
 
 public class ItemLegendsBow extends BaseModItem implements ISwapModel {
@@ -62,11 +62,11 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
      */
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
     {
-    	stack.animationsToGo = this.aniCount = 0;
+    	stack.setAnimationsToGo(this.aniCount = 0);
         int j = this.getMaxItemUseDuration(stack) - timeLeft;
-        net.minecraftforge.event.entity.player.ArrowLooseEvent event = new net.minecraftforge.event.entity.player.ArrowLooseEvent(playerIn, stack, j);
+        net.minecraftforge.event.entity.player.ArrowLooseEvent event = new net.minecraftforge.event.entity.player.ArrowLooseEvent(playerIn, stack, worldIn, j);
         if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return;
-        j = event.charge;
+        j = event.getCharge();
 
         boolean flag = playerIn.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
 

@@ -159,7 +159,7 @@ public class ModelTeleportBiped extends ModelBiped
 
     public void setInvisible(boolean invisible)
     {
-        super.setInvisible(invisible);
+        super.setVisible(invisible);
         this.bipedLeftArmwear.showModel = invisible;
         this.bipedRightArmwear.showModel = invisible;
         this.bipedLeftLegwear.showModel = invisible;

@@ -1,5 +1,7 @@
 package com.Splosions.ModularBosses;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 
 /**
  * 
@@ -34,12 +36,11 @@ public class Sounds {
 	
 	public static final String CHORP_SLIME = Reference.MOD_ID + ":chorp_slime";
 	public static final String CHORP_DEATH = Reference.MOD_ID + ":chorp_death";
-	public static final String CHORP_HURT = Reference.MOD_ID + ":chorp_hurt";
+	public static final SoundEvent CHORP_HURT = new SoundEvent(new ResourceLocation(Reference.MOD_ID + ":chorp_hurt"));
 	
 	public static final String GOLEM_LIVING = Reference.MOD_ID + ":golem_living";
 	public static final String GOLEM_BUILD = Reference.MOD_ID + ":golem_build";
 	public static final String GOLEM_ROLL = Reference.MOD_ID + ":golem_roll";
 	public static final String BOULDER_HIT = Reference.MOD_ID + ":boulder_hit";
-	
-	
+
 }

@@ -11,18 +11,16 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.IBakedModel;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.IPerspectiveAwareModel;
-import net.minecraftforge.client.model.ISmartItemModel;
+
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -77,7 +75,7 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 		GlStateManager.pushMatrix();
 		GL11.glScalef(0.1F, 0.1F, 0.1F);
 		switch (cameraTransformType) {
-		case FIRST_PERSON:
+		case FIRST_PERSON_RIGHT_HAND:
 			GlStateManager.translate(0.5F, 1.6F, 0.5F);
 			GlStateManager.rotate(-55.0F, 0.0F, 1.0F, 0.0F);
 			GlStateManager.translate(-0.75F, 1.5F, 0.5F);
@@ -87,7 +85,7 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 			miniSun(scale * 0.1F, 1.05F, -0.3F, 2.5F);
 			//}
 			break;
-		case THIRD_PERSON:
+		case THIRD_PERSON_RIGHT_HAND:
 			GlStateManager.rotate(100.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(0.0F, 0F, 1.0F, 0.0F);
 			GlStateManager.translate(0.8F, -0.3F, -0.9F);

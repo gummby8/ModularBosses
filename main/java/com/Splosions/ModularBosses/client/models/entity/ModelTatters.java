@@ -9,8 +9,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MathHelper;
-
+import net.minecraft.util.math.MathHelper;
 /**
  * Tatters - Undefined
  * Created using Tabula 5.1.0
