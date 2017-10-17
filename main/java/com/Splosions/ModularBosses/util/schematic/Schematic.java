@@ -25,14 +25,14 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
-import net.minecraftforge.fml.common.registry.GameData;
+
 
 public class Schematic {
 
@@ -51,7 +51,6 @@ public class Schematic {
 	private static String roomPath;
 	private static NBTTagCompound nbtdata;
 
-	private static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
 
 	public static void staggeredBuild(World world, Dungeon dungeon) {
 		try {
@@ -106,7 +105,7 @@ public class Schematic {
 				final NBTTagCompound mapping = nbtdata.getCompoundTag("SchematicaMapping");
 				final Set<String> names = mapping.getKeySet();
 				for (final String name : names) {
-					oldToNew.put(mapping.getShort(name), (short) BLOCK_REGISTRY.getId(name));
+					oldToNew.put(mapping.getShort(name), (short) Block.REGISTRY.getIDForObject(Block.REGISTRY.getObject(new ResourceLocation(name))));
 				}
 			}
 
@@ -140,7 +139,7 @@ public class Schematic {
 				Block block = Block.getBlockById(blockId);
 				
 				//stores blockstates in second pass for placement after first pass
-				if (block == Blocks.redstone_torch || block == Blocks.unlit_redstone_torch || block instanceof BlockFluidBase || block instanceof BlockLiquid){
+				if (block == Blocks.REDSTONE_TORCH || block == Blocks.UNLIT_REDSTONE_TORCH || block instanceof BlockFluidBase || block instanceof BlockLiquid){
 					IBlockState state = Block.getBlockById(blockId).getStateFromMeta(metadata[dungeon.buildCount]);
 					room.secondPass.add(new BlockObject(new BlockPos(x + buildWidth, y + buildHeight, z + buildLength), state));
 				} else {
@@ -263,7 +262,7 @@ public class Schematic {
 				final NBTTagCompound mapping = nbtdata.getCompoundTag("SchematicaMapping");
 				final Set<String> names = mapping.getKeySet();
 				for (final String name : names) {
-					oldToNew.put(mapping.getShort(name), (short) BLOCK_REGISTRY.getId(name));
+					oldToNew.put(mapping.getShort(name), (short) Block.REGISTRY.getIDForObject(Block.REGISTRY.getObject(new ResourceLocation(name))));
 				}
 			}
 

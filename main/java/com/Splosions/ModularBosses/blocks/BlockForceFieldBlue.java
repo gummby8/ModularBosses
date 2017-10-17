@@ -24,7 +24,6 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -38,13 +37,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.RegistryNamespacedDefaultedByKey;
 import net.minecraft.util.StringUtils;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -65,7 +60,6 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		super(material);
 		setHardness(-1.0F);
 		setHarvestLevel("pickaxe", 2);
-		setStepSound(soundTypeStone);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(STATE,
 				Integer.valueOf(ON)));
 		// setCreativeTab(MBCreativeTabs.tabBlocks);
@@ -94,19 +88,19 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 					return;
 				}
 
-				if (worldIn.getBlockState(pos.east()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.east()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
-				if (worldIn.getBlockState(pos.west()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.west()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.west(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
-				if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
-				if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
@@ -116,19 +110,19 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 					worldIn.setBlockToAir(pos);
 					return;
 				}
-				if (worldIn.getBlockState(pos.north()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.north()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.north(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
-				if (worldIn.getBlockState(pos.south()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.south()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.south(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
-				if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.up()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
-				if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.air) {
+				if (worldIn.getBlockState(pos.down()).getBlock() == Blocks.AIR) {
 					worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
@@ -181,13 +175,15 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		return BlockRotationData.Rotation.PISTON_CONTAINER;
 	}
 
+	/**
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ,
 			int meta, EntityLivingBase placer) {
 		EnumFacing enumfacing1 = placer.getHorizontalFacing().rotateY();
 
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer)
-				.withProperty(FACING, enumfacing1).withProperty(STATE, Integer.valueOf(meta >> 2));
+		
+		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, enumfacing1).withProperty(STATE, Integer.valueOf(meta >> 2));
 	}
+	 */
 
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity,
@@ -238,13 +234,15 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
 	@Override
-	public boolean isFullCube() {
-		return false;
-	}
+    public boolean isFullBlock(IBlockState state)
+    {
+        return false;
+    }
 
 }

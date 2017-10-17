@@ -7,8 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
-import net.minecraftforge.fml.common.registry.GameData;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,10 +15,21 @@ import java.io.IOException;
 
 import com.Splosions.ModularBosses.ModularBosses;
 
+
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 public final class SchematicUtil {
-    public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.grass);
-    public static final FMLControlledNamespacedRegistry<Block> BLOCK_REGISTRY = GameData.getBlockRegistry();
-    public static final FMLControlledNamespacedRegistry<Item> ITEM_REGISTRY = GameData.getItemRegistry();
+    public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.GRASS);
 
     public static NBTTagCompound readTagCompoundFromFile(final File file) throws IOException {
         try {
@@ -49,13 +59,13 @@ public final class SchematicUtil {
             return DEFAULT_ICON.copy();
         }
 
-        final ItemStack block = new ItemStack(BLOCK_REGISTRY.getObject(rl), 1, damage);
-        if (block.getItem() != null) {
+        final ItemStack block = new ItemStack(Block.REGISTRY.getObject(rl), 1, damage);
+        if (!block.isEmpty()) {
             return block;
         }
 
-        final ItemStack item = new ItemStack(ITEM_REGISTRY.getObject(rl), 1, damage);
-        if (item.getItem() != null) {
+        final ItemStack item = new ItemStack(Item.REGISTRY.getObject(rl), 1, damage);
+        if (!item.isEmpty()) {
             return item;
         }
 
@@ -66,9 +76,9 @@ public final class SchematicUtil {
         ItemStack icon = DEFAULT_ICON.copy();
 
         if (tagCompound != null && tagCompound.hasKey("Icon")) {
-            icon.readFromNBT(tagCompound.getCompoundTag("Icon"));
+            icon.deserializeNBT(tagCompound.getCompoundTag("Icon"));
 
-            if (icon.getItem() == null) {
+            if (icon.isEmpty()) {
                 icon = DEFAULT_ICON.copy();
             }
         }
@@ -80,7 +90,7 @@ public final class SchematicUtil {
         try {
             return getIconFromNBT(readTagCompoundFromFile(file));
         } catch (final Exception e) {
-        	ModularBosses.logger.warn("Failed to read schematic icon!", e);
+        	ModularBosses.logger.error("Failed to read schematic icon!", e);
         }
 
         return DEFAULT_ICON.copy();

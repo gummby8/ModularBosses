@@ -51,39 +51,39 @@ public class ModBlocks
 		GameRegistry.registerBlock(controlBlock, ItemModBlock.class, controlBlock.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityControlBlock.class, Reference.MOD_ID + ":tileEntityControlBlock");
 		
-		portalBlock = new BlockPortalBlock(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_block");
+		portalBlock = new BlockPortalBlock(Material.BARRIER).setLightLevel(1).setUnlocalizedName("portal_block");
 		GameRegistry.registerBlock(portalBlock, ItemModBlock.class, portalBlock.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityPortalBlock.class, Reference.MOD_ID + ":tileEntityPortalBlock");
 		
-		portalReturn = new BlockReturnPortal(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_return_block");
+		portalReturn = new BlockReturnPortal(Material.BARRIER).setLightLevel(1).setUnlocalizedName("portal_return_block");
 		GameRegistry.registerBlock(portalReturn, ItemModBlock.class, portalReturn.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityReturnPortalBlock.class, Reference.MOD_ID + ":tileEntityReturnPortalBlock");
 		
-		portalLanding = new BlockPortalLanding(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_landing");
+		portalLanding = new BlockPortalLanding(Material.BARRIER).setLightLevel(1).setUnlocalizedName("portal_landing");
 		GameRegistry.registerBlock(portalLanding, ItemModBlock.class, portalLanding.getUnlocalizedName().substring(5));
 		
-		phaseFire = new BlockPhaseFire(Material.barrier).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
+		phaseFire = new BlockPhaseFire(Material.BARRIER).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
 		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
 		
-		wormGutsBlock1 = new BlockWormGuts(Material.barrier).setUnlocalizedName("worm_guts_1");
+		wormGutsBlock1 = new BlockWormGuts(Material.BARRIER).setUnlocalizedName("worm_guts_1");
 		GameRegistry.registerBlock(wormGutsBlock1, ItemModBlock.class, wormGutsBlock1.getUnlocalizedName().substring(5));
 		
-		wormGutsBlock2 = new BlockWormGuts(Material.barrier).setUnlocalizedName("worm_guts_2");
+		wormGutsBlock2 = new BlockWormGuts(Material.BARRIER).setUnlocalizedName("worm_guts_2");
 		GameRegistry.registerBlock(wormGutsBlock2, ItemModBlock.class, wormGutsBlock2.getUnlocalizedName().substring(5));
 		
-		wormTumor = new BlockWormTumor(Material.barrier).setUnlocalizedName("worm_tumor").setLightLevel(1);
+		wormTumor = new BlockWormTumor(Material.BARRIER).setUnlocalizedName("worm_tumor").setLightLevel(1);
 		GameRegistry.registerBlock(wormTumor, ItemModBlock.class, wormTumor.getUnlocalizedName().substring(5));
 				
-		force_field_gen = new BlockForceFieldGen(Material.barrier).setUnlocalizedName("force_field_gen");
+		force_field_gen = new BlockForceFieldGen(Material.BARRIER).setUnlocalizedName("force_field_gen");
 		GameRegistry.registerBlock(force_field_gen, ItemModBlock.class, force_field_gen.getUnlocalizedName().substring(5));
 		
-		force_field_blue = new BlockForceFieldBlue(Material.barrier).setUnlocalizedName("force_field_blue");
+		force_field_blue = new BlockForceFieldBlue(Material.BARRIER).setUnlocalizedName("force_field_blue");
 		GameRegistry.registerBlock(force_field_blue, ItemModBlock.class, force_field_blue.getUnlocalizedName().substring(5));
 		
-		invisibleBlock = new BlockInvisible(Material.barrier).setUnlocalizedName("invisible_block");
+		invisibleBlock = new BlockInvisible(Material.BARRIER).setUnlocalizedName("invisible_block");
 		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));
 		
-		chunkLoaderBlock = new BlockChunkLoader(Material.barrier).setUnlocalizedName("chunk_loader");
+		chunkLoaderBlock = new BlockChunkLoader(Material.BARRIER).setUnlocalizedName("chunk_loader");
 		GameRegistry.registerBlock(chunkLoaderBlock, ItemModBlock.class, chunkLoaderBlock.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityChunkLoader.class, Reference.MOD_ID + ":tileEntityChunkLoader");
 		

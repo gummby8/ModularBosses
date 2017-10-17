@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.world.WorldSavedData;
+import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.Constants;
 
 public class PortalLandingWorldData extends WorldSavedData {
@@ -32,7 +32,7 @@ public class PortalLandingWorldData extends WorldSavedData {
 		}
 
 		@Override
-		public void writeToNBT(NBTTagCompound compound) {
+		public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 			NBTTagList tagList = new NBTTagList();
 			 for(int i = 0; i < portalLandingList.size(); i++){
 			  String s = portalLandingList.get(i);
@@ -42,7 +42,7 @@ public class PortalLandingWorldData extends WorldSavedData {
 		  			}
 			 }
 			 compound.setTag("portalLandings", tagList);
-			
+			return compound;
 		}
 
 

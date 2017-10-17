@@ -3,7 +3,7 @@ package com.Splosions.ModularBosses.util.schematic;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.ForgeChunkManager;
 
 public class DungeonNurkach extends Dungeon {

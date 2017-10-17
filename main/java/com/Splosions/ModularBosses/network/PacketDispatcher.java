@@ -136,7 +136,7 @@ public class PacketDispatcher
 	 */
 	public static void sendTo(Packet packet, EntityPlayer player) {
 		if (player instanceof EntityPlayerMP) {
-			((EntityPlayerMP) player).playerNetServerHandler.sendPacket(packet);
+			((EntityPlayerMP) player).connection.sendPacket(packet);
 		}
 	}
 
@@ -146,7 +146,7 @@ public class PacketDispatcher
 	public static void sendToPlayers(Packet packet, Collection<EntityPlayer> players) {
 		for (EntityPlayer player : players) {
 			if (player instanceof EntityPlayerMP) {
-				((EntityPlayerMP) player).playerNetServerHandler.sendPacket(packet);
+				((EntityPlayerMP) player).connection.sendPacket(packet);
 			}
 		}
 	}
@@ -157,7 +157,7 @@ public class PacketDispatcher
 	public static void sendToPlayersExcept(Packet packet, EntityPlayer player, Collection<EntityPlayer> players) {
 		for (EntityPlayer p : players) {
 			if (p != player && p instanceof EntityPlayerMP) {
-				((EntityPlayerMP) p).playerNetServerHandler.sendPacket(packet);
+				((EntityPlayerMP) p).connection.sendPacket(packet);
 			}
 		}
 	}
@@ -169,7 +169,7 @@ public class PacketDispatcher
 		if (world instanceof WorldServer) {
 			for (Object o : ((WorldServer) world).playerEntities) {
 				if (o instanceof EntityPlayerMP) {
-					((EntityPlayerMP) o).playerNetServerHandler.sendPacket(packet);
+					((EntityPlayerMP) o).connection.sendPacket(packet);
 				}
 			}
 		}
@@ -185,7 +185,7 @@ public class PacketDispatcher
 				if (o instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP) o;
 					if (player.getDistanceSqToEntity(entity) <= rangeSq) {
-						((EntityPlayerMP) o).playerNetServerHandler.sendPacket(packet);
+						((EntityPlayerMP) o).connection.sendPacket(packet);
 					}
 				}
 			}
