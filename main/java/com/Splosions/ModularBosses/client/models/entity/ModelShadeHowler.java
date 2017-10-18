@@ -3,6 +3,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.MathHelper;
 import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
@@ -1850,10 +1851,22 @@ public class ModelShadeHowler extends ModelBase {
 
 	    @Override
 	    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-	        GlStateManager.pushMatrix();
+	    	EntityShadeHowler boss = (EntityShadeHowler)entity;
+	    	//System.out.println("Melt = " + boss.meltPercent);
+	    	float percent = MathHelper.clamp_float(boss.meltPercent, 0, 100);
+	    	
+	    	float tran = percent / 100 * 1.8F;
+	    	double scale = (100 - percent) / 100 * 0.2D;
+	    	float color = (100 - percent) / 100;
+	    	
+	    	GlStateManager.color(color, color, color);
+	    	//GlStateManager.translate(0, 1.9F, 0);
+	    	GlStateManager.translate(0, tran, 0);
+	    	GlStateManager.pushMatrix();
 	        GlStateManager.translate(this.BODY.offsetX, this.BODY.offsetY, this.BODY.offsetZ);
 	        GlStateManager.translate(this.BODY.rotationPointX * f5, this.BODY.rotationPointY * f5, this.BODY.rotationPointZ * f5);
-	        GlStateManager.scale(0.2D, 0.2D, 0.25D);
+	        //GlStateManager.scale(0.2D, 0.2D, 0.25D);
+	        GlStateManager.scale(0.2D, scale, 0.25D);
 	        GlStateManager.translate(-this.BODY.offsetX, -this.BODY.offsetY, -this.BODY.offsetZ);
 	        GlStateManager.translate(-this.BODY.rotationPointX * f5, -this.BODY.rotationPointY * f5, -this.BODY.rotationPointZ * f5);
 	        this.BODY.render(f5);

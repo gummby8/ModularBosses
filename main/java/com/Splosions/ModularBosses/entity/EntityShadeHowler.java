@@ -27,8 +27,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.relauncher.Side;
@@ -45,6 +47,9 @@ public class EntityShadeHowler extends EntityMob {
 	public static final int JUMP = 2;
 	public static final int HOWL = 3;
 	public static final int BITE = 4;
+	public static final int MELT_MELT = 50;
+	public static final int MELT_MOVE = 51;
+	public static final int MELT_REFORM = 52;
 	
 
 	private int lastAttackCounter = 0;
@@ -70,11 +75,14 @@ public class EntityShadeHowler extends EntityMob {
 	double X2;
 	double Z2;
 	
+	
+	
 	public int aniID;
 	public int prevaniID;
 	public int aniFrame;
-	public int aniPause;
-
+	
+	public float meltPercent;
+	public BlockPos meltDest;
 
 	
 	
@@ -93,6 +101,10 @@ public class EntityShadeHowler extends EntityMob {
 		this.setSize(1.5F, 3.0F);
 		this.isImmuneToFire = true;
 		this.experienceValue = 5;
+		this.meltPercent = 0;
+		this.aniID = STAND;
+		System.out.println("NEW");
+		
 		// AI STUFF
 		// this.getNavigator().setBreakDoors(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
@@ -107,7 +119,7 @@ public class EntityShadeHowler extends EntityMob {
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
 
-		this.ignoreFrustumCheck = true;
+		//this.ignoreFrustumCheck = true;
 	}
 	
 	@Override
@@ -137,31 +149,44 @@ public class EntityShadeHowler extends EntityMob {
 		
 		this.ignoreFrustumCheck = true;
 		
+		//setDead();
 
+		
 		
 		this.aniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.aniFrame = (this.aniID != this.prevaniID)? 0 : this.aniFrame;
 		
-		if (this.ticksExisted == 1 && !this.worldObj.isRemote){
-			aniID = JUMP;	
-		}
-		
-		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote && this.target == null) {
+		if (!this.worldObj.isRemote && this.target == null) {
 			this.target = TargetUtils.findRandomVisablePlayer(this, 20, 4);
 		}
 		
+
+		this.aniFrame++;
 		
-		try {
+		
+		//***********************STAND************************************
+
 		if (this.aniID == STAND) {
 			this.aniFrame = 0;
-		} else if (this.aniID == HOWL && this.aniFrame > 4 && this.aniFrame < 30) {
+			this.aniID = MELT_MELT;
+		}
+		
+			
+		//***********************HOWL************************************
+			
+		 else if (this.aniID == HOWL && this.aniFrame > 4 && this.aniFrame < 30) {
 			howl(TargetUtils.getList(this, 7, 4),45,1F,0.5F,5);
 			placeHowl(6);
-			this.aniFrame++;
 		} else if (this.aniID == HOWL && this.aniFrame > 43) {
 			this.aniFrame = 0;
-			aniID = STAND;
-		} else if (this.aniID == JUMP && this.aniFrame == 5) {
+			this.aniID = STAND;
+		}
+		
+		
+		//***********************JUMP************************************
+			
+			
+		 else if (this.aniID == JUMP && this.aniFrame == 5) {
 			if (this.target != null) {
 				this.targetX = target.posX;
 				this.targetZ = target.posZ;
@@ -192,8 +217,7 @@ public class EntityShadeHowler extends EntityMob {
 
 			this.X2 = (10 * Math.cos(Math.toRadians(this.rotationYaw))) + X;
 			this.Z2 = (10 * Math.sin(Math.toRadians(this.rotationYaw))) + Z;
-			
-			this.aniFrame++;
+
 			} else if (this.aniID == JUMP && this.aniFrame > 5 && this.aniFrame <= 20) {
 				if (this.target != null) {
 					double d0;
@@ -219,13 +243,11 @@ public class EntityShadeHowler extends EntityMob {
 					this.target = (Entity) list.get(0);
 					MBExtendedPlayer.get((EntityPlayer) this.target).knockdownTime = 20;
 					((EntityLivingBase) this.target).addPotionEffect(new PotionEffect(2, 20, 100));
-					System.out.println(this.target);
 					if (this.target == Minecraft.getMinecraft().thePlayer) {
 						ModularBosses.INSTANCE.playerTarget = this;
 					}
 				}
 
-				this.aniFrame++;
 			} else if (this.aniID == JUMP && this.aniFrame > 20 && this.aniFrame < 25) {
 			if (!this.isAirBorne){
 				if (this.bite){
@@ -240,26 +262,59 @@ public class EntityShadeHowler extends EntityMob {
 					if (this.jumpCount < 5) {
 						this.aniID = JUMP;
 						this.aniFrame = 4;	
-					} else {
-						this.aniFrame++;
-					}	
+					}
 				}
 			}
 		} else if (this.aniID == JUMP && this.aniFrame > 25) {
 			this.aniID = STAND;
 			this.aniFrame = 0;
-		} else if (this.aniID != STAND) {
-			this.aniFrame++;
+		} 
+		
+
+		
+		//***********************MELT************************************
+
+		else if (this.aniID == MELT_MELT || this.aniID == MELT_MOVE || this.aniID == MELT_REFORM) {
+			if (this.aniID == MELT_MELT) {
+				this.meltPercent += 5;
+				if (this.meltPercent >= 100) {
+					this.aniID = MELT_MOVE;
+					if (!this.worldObj.isRemote) {
+						if (target != null) {
+							Vec3 vec = target.getLookVec();
+							double dx = target.posX - (vec.xCoord * 2);
+							double dy = target.posY;
+							double dz = target.posZ - (vec.zCoord * 2);
+							meltDest = new BlockPos(dx,dy,dz);	
+						} else {
+							meltDest = this.getPosition();
+						}
+					}
+					
+				}
+			} else if (this.aniID == MELT_MOVE) {
+				if (!this.worldObj.isRemote) {this.moveHelper.setMoveTo(meltDest.getX(), meltDest.getY(), meltDest.getZ(), 1);
+				this.aniID = (this.getDistanceSq(meltDest) < 2)? MELT_REFORM : MELT_MOVE;
+				}
+				this.meltPercent = 100;
+			} else if (this.aniID == MELT_REFORM) {
+				if (target != null) {this.faceEntity(this.target, 500, 500);}
+				this.meltPercent -= 5;
+				if (this.meltPercent <= -100) {
+					System.out.println("Derp");
+					this.aniID = HOWL;
+					this.aniFrame = 0;
+					this.meltPercent = 0;
+				}
+				
+			}
+			
+			
+
 		}
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 		
 
-
-		
 		
 			
 		this.prevaniID = this.aniID;
@@ -326,6 +381,20 @@ public class EntityShadeHowler extends EntityMob {
 		}
 	}
 
+	/**
+	 * Called when the entity is attacked.
+	 */
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		//if (this.aniID != MELT) {
+				this.Damage(source, amount);
+		
+		//}
+		return false;
+	}
 
+	protected boolean Damage(DamageSource Source, float DMGAmmount) {
+		return super.attackEntityFrom(Source, DMGAmmount);
+	}
 
 }
