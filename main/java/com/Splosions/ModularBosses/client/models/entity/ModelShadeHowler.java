@@ -1847,6 +1847,9 @@ public class ModelShadeHowler extends ModelBase {
 	        this.tooth_34.addChild(this.shape32_170);
 	        this.lfing1.addChild(this.shape32_16);
 	        this.tooth_8.addChild(this.shape32_87);
+	        
+	        build_stand();
+	        build_howl();
 	    }
 
 	    @Override
@@ -1901,8 +1904,8 @@ public class ModelShadeHowler extends ModelBase {
    
 
     	
-    		if (boss.aniID == 0){
-				//stand();
+    		if (boss.aniID == boss.STAND){
+				stand(boss.aniFrame, PartialTick);
 			} else
 			if (boss.aniID == 1){
 				//walk();
@@ -1910,16 +1913,13 @@ public class ModelShadeHowler extends ModelBase {
 			if (boss.aniID == 2){
 				//jump();
 			} else
-			if (boss.aniID == 3){
-				//howl();
+			if (boss.aniID == boss.HOWL){
+				howl(boss.aniFrame, PartialTick);
 			} else
-			if (boss.aniID == 4){
-				
+			if (boss.aniID == boss.MELT_MELT || boss.aniID == boss.MELT_MOVE || boss.aniID == boss.MELT_REFORM){
+				stand(boss.aniFrame, PartialTick);
 			} 
-    	
-    		if (boss.aniID == 2){
-    			
-    		}
+
       }
     
     
@@ -1949,20 +1949,20 @@ public class ModelShadeHowler extends ModelBase {
     	KF_Stand_HEAD[0] = new KeyFrame(0, 0, 3, -45, -10, 0, 0);
         KF_Stand_TOPJAW[0] = new KeyFrame(0, 0, -10, 0, -2.5F, 0, 0);
         KF_Stand_BOTJAW[0] = new KeyFrame(0, 0, 0, 0, 5, 0, 0);
-        KF_Stand_BODY[0] = new KeyFrame(0, 70, 80, 80, 18, 0, 0);
-        KF_Stand_RARM[0] = new KeyFrame(0, 20, 80, 30, -20, 0, 0);
-        KF_Stand_RFOREARM[0] = new KeyFrame(0, 30, 55, 30, -33, 0, 0);
-        KF_Stand_RHAND[0] = new KeyFrame(0, 20, 20, 10, -20, 0, 0);
+        KF_Stand_BODY[0] = new KeyFrame(0, 0, -7, 10, 18, 0, 0);
+        KF_Stand_RARM[0] = new KeyFrame(0, -50,-10,-5, -20, 0, 0);
+        KF_Stand_RFOREARM[0] = new KeyFrame(0, 0, 85, 0, -33, 0, 0);
+        KF_Stand_RHAND[0] = new KeyFrame(0, -2.5F, 80, -5, -20, 0, 0);
         KF_Stand_RFINGERS[0] = new KeyFrame(0, 3, 19.5F, -2, 0, 0, 0);
-        KF_Stand_LARM[0] = new KeyFrame(0, 20, 80, 30, -20, 0, 0);
-        KF_Stand_LFOREARM[0] = new KeyFrame(0, 30, 55, 30, -33, 0, 0);
-        KF_Stand_LHAND[0] = new KeyFrame(0, 20, 20, 10, -20, 0, 0);
+        KF_Stand_LARM[0] = new KeyFrame(0, 50, -10, -5, -20, 0, 0);
+        KF_Stand_LFOREARM[0] = new KeyFrame(0, 10, 85, 0, -33, 0, 0);
+        KF_Stand_LHAND[0] = new KeyFrame(0, -7.5F, 80, -5, -20, 0, 0); 
         KF_Stand_LFINGERS[0] = new KeyFrame(0, 2, 19.5F, -2, 0, 0, 0);
         KF_Stand_LLEG[0] = new KeyFrame(0, 27, 85, 45, -30, 0, 0);
         KF_Stand_LLOWLEG[0] = new KeyFrame(0, 0, 40, 0, 0, 0, 0);
         KF_Stand_LFOOT[0] = new KeyFrame(0, 7, 20, 55, -52, 0, 0);
         KF_Stand_LTOES[0] = new KeyFrame(0, 0, 4, 14, 0, 0, 0);
-        KF_Stand_RLEG[0] = new KeyFrame(0, 5, 60, 40, -30, 0, 0);
+        KF_Stand_RLEG[0] = new KeyFrame(0, -27, 85, 45, -30, 0, 0);
         KF_Stand_RLOWLEG[0] = new KeyFrame(0, 0, 40, 0, 0, 0, 0);
         KF_Stand_RFOOT[0] = new KeyFrame(0, -3, 20, 55, -52, 0, 0);
         KF_Stand_RTOES[0] = new KeyFrame(0, 0, 4, 14, 0, 0, 0);
@@ -1992,6 +1992,119 @@ public class ModelShadeHowler extends ModelBase {
     	
     }
     
+    
+    static final KeyFrame[] KF_Howl_HEAD = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_TOPJAW = new KeyFrame[6];//
+    static final KeyFrame[] KF_Howl_BOTJAW = new KeyFrame[6];//
+    static final KeyFrame[] KF_Howl_BODY = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_RARM = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_RFOREARM = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_RHAND = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_RFINGERS = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_LARM = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_LFOREARM = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_LHAND = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_LFINGERS = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_LLEG = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_LLOWLEG = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_LFOOT = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_LTOES = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_RLEG = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_RLOWLEG = new KeyFrame[4];
+    static final KeyFrame[] KF_Howl_RFOOT = new KeyFrame[1];
+    static final KeyFrame[] KF_Howl_RTOES = new KeyFrame[1];
+    
+    public void build_howl() {
+    	KF_Howl_HEAD[0] = new KeyFrame(0, 0, 3, -45, -10, 0, 0);
+    	KF_Howl_HEAD[1] = new KeyFrame(5, 0, 3, -45, -40, 0, 0);
+    	KF_Howl_HEAD[2] = new KeyFrame(35, 0, 3, -45, -40, 0, 0);
+    	KF_Howl_HEAD[3] = new KeyFrame(45, 0, 3, -45, -10, 0, 0);
+    	
+    	KF_Howl_TOPJAW[0] = new KeyFrame(0, 0, -10, 0, -2.5F, 0, 0);
+    	KF_Howl_TOPJAW[1] = new KeyFrame(3, 0, -10, 0, -2.5F, 0, 0);
+    	KF_Howl_TOPJAW[2] = new KeyFrame(8, 0, -10, 0, -12.5F, 0, 0);
+    	KF_Howl_TOPJAW[3] = new KeyFrame(29, 0, -10, 0, -12.5F, 0, 0);
+    	KF_Howl_TOPJAW[4] = new KeyFrame(39, 0, -10, 0, -2.5F, 0, 0);
+    	KF_Howl_TOPJAW[5] = new KeyFrame(45, 0, -10, 0, -2.5F, 0, 0);
+    	
+    	KF_Howl_BOTJAW[0] = new KeyFrame(0, 0, 0, 0, 5, 0, 0); 
+    	KF_Howl_BOTJAW[1] = new KeyFrame(3, 0, 0, 0, 5, 0, 0);
+    	KF_Howl_BOTJAW[2] = new KeyFrame(8, 0, 0, 0, 60, 0, 0);
+    	KF_Howl_BOTJAW[3] = new KeyFrame(29, 0, 0, 0, 60, 0, 0);
+    	KF_Howl_BOTJAW[4] = new KeyFrame(39, 0, 0, 0, 5, 0, 0);
+    	KF_Howl_BOTJAW[5] = new KeyFrame(45, 0, 0, 0, 5, 0, 0);
+    	
+    	KF_Howl_BODY[0] = new KeyFrame(0, 0, -7, 10, 18, 0, 0);
+    	KF_Howl_BODY[1] = new KeyFrame(5, 0, -2.3F, 10, 35, 0, 0);
+    	KF_Howl_BODY[2] = new KeyFrame(35, 0, -2.3F, 10, 35, 0, 0);
+    	KF_Howl_BODY[3] = new KeyFrame(45, 0, -7, 10, 18, 0, 0);
+    	
+        KF_Howl_RARM[0] = new KeyFrame(0, -50,-10,-5, -20, 0, 0);
+        KF_Howl_RFINGERS[0] = new KeyFrame(0, 3, 19.5F, -2, 0, 0, 0);
+        KF_Howl_LARM[0] = new KeyFrame(0, 50, -10, -5, -20, 0, 0);
+        KF_Howl_LFINGERS[0] = new KeyFrame(0, 2, 19.5F, -2, 0, 0, 0);
+        KF_Howl_LLEG[0] = new KeyFrame(0, 27, 85, 45, -30, 0, 0);
+        KF_Howl_LFOOT[0] = new KeyFrame(0, 7, 20, 55, -52, 0, 0);
+        KF_Howl_LTOES[0] = new KeyFrame(0, 0, 4, 14, 0, 0, 0);
+        KF_Howl_RLEG[0] = new KeyFrame(0, -27, 85, 45, -30, 0, 0);
+        KF_Howl_RFOOT[0] = new KeyFrame(0, -3, 20, 55, -52, 0, 0);
+        KF_Howl_RTOES[0] = new KeyFrame(0, 0, 4, 14, 0, 0, 0);
+    	
+        KF_Howl_RFOREARM[0] = new KeyFrame(0, 0, 85, 0, -33, 0, 0);
+        KF_Howl_RFOREARM[1] = new KeyFrame(5, 0, 85, 0, -68, 0, 0);
+        KF_Howl_RFOREARM[2] = new KeyFrame(35, 0, 85, 0, -68, 0, 0);
+        KF_Howl_RFOREARM[3] = new KeyFrame(45, 0, 85, 0, -33, 0, 0);
+        
+        KF_Howl_RHAND[0] = new KeyFrame(0, -2.5F, 80, -5, -20, 0, 0);
+        KF_Howl_RHAND[1] = new KeyFrame(5, -2.5F, 80, -5, -10, 0, 0);
+        KF_Howl_RHAND[2] = new KeyFrame(35, -2.5F, 80, -5, -10, 0, 0);
+        KF_Howl_RHAND[3] = new KeyFrame(45, -2.5F, 80, -5, -20, 0, 0);
+        
+        KF_Howl_LFOREARM[0] = new KeyFrame(0, 10, 85, 0, -33, 0, 0);
+        KF_Howl_LFOREARM[1] = new KeyFrame(5, 10, 85, 0, -68, 0, 0);
+        KF_Howl_LFOREARM[2] = new KeyFrame(35, 10, 85, 0, -68, 0, 0);
+        KF_Howl_LFOREARM[3] = new KeyFrame(45, 10, 85, 0, -33, 0, 0);
+        
+        KF_Howl_LHAND[0] = new KeyFrame(0, -7.5F, 80, -5, -20, 0, 0);
+        KF_Howl_LHAND[1] = new KeyFrame(5, -7.5F, 80, -5, -10, 0, 0);
+        KF_Howl_LHAND[2] = new KeyFrame(35, -7.5F, 80, -5, -10, 0, 0);
+        KF_Howl_LHAND[3] = new KeyFrame(45, -7.5F, 80, -5, -20, 0, 0);
+        
+        KF_Howl_LLOWLEG[0] = new KeyFrame(0, 0, 40, 0, 0, 0, 0);
+        KF_Howl_LLOWLEG[1] = new KeyFrame(5, 0, 40, 0, -17, 0, 0);
+        KF_Howl_LLOWLEG[2] = new KeyFrame(35, 0, 40, 0, -17, 0, 0);
+        KF_Howl_LLOWLEG[3] = new KeyFrame(45, 0, 40, 0, 0, 0, 0);
+        
+        KF_Howl_RLOWLEG[0] = new KeyFrame(0, 0, 40, 0, 0, 0, 0);
+        KF_Howl_RLOWLEG[1] = new KeyFrame(5, 0, 40, 0, -17, 0, 0);
+        KF_Howl_RLOWLEG[2] = new KeyFrame(35, 0, 40, 0, -17, 0, 0);
+        KF_Howl_RLOWLEG[3] = new KeyFrame(45, 0, 40, 0, 0, 0, 0);
+    }
+    
+    public void howl(int frame, float partialTick){
+    	ModelUtils.moveParts(frame, HEAD, KF_Howl_HEAD, partialTick);
+    	ModelUtils.moveParts(frame, TOPJAW, KF_Howl_TOPJAW, partialTick);
+    	ModelUtils.moveParts(frame, BOTJAW, KF_Howl_BOTJAW, partialTick);
+    	ModelUtils.moveParts(frame, BODY, KF_Howl_BODY, partialTick);
+    	ModelUtils.moveParts(frame, RARM, KF_Howl_RARM, partialTick);
+    	ModelUtils.moveParts(frame, RFOREARM, KF_Howl_RFOREARM, partialTick);
+    	ModelUtils.moveParts(frame, RHAND, KF_Howl_RHAND, partialTick);
+    	ModelUtils.moveParts(frame, RFINGERS, KF_Howl_RFINGERS, partialTick);
+    	ModelUtils.moveParts(frame, LARM, KF_Howl_LARM, partialTick);
+    	ModelUtils.moveParts(frame, LFOREARM, KF_Howl_LFOREARM, partialTick);
+    	ModelUtils.moveParts(frame, LHAND, KF_Howl_LHAND, partialTick);
+    	ModelUtils.moveParts(frame, LFINGERS, KF_Howl_LFINGERS, partialTick);
+    	ModelUtils.moveParts(frame, LLEG, KF_Howl_LLEG, partialTick);
+    	ModelUtils.moveParts(frame, LLOWLEG, KF_Howl_LLOWLEG, partialTick);
+    	ModelUtils.moveParts(frame, LFOOT, KF_Howl_LFOOT, partialTick);
+    	ModelUtils.moveParts(frame, LTOES, KF_Howl_LTOES, partialTick);
+    	ModelUtils.moveParts(frame, RLEG, KF_Howl_RLEG, partialTick);
+    	ModelUtils.moveParts(frame, RLOWLEG, KF_Howl_RLOWLEG, partialTick);
+    	ModelUtils.moveParts(frame, RFOOT, KF_Howl_RFOOT, partialTick);
+    	ModelUtils.moveParts(frame, RTOES, KF_Howl_RTOES, partialTick);
+    }
+    
+    
     public void walk(){
     	
     }
@@ -2001,9 +2114,7 @@ public class ModelShadeHowler extends ModelBase {
     }
     
     
-    public void howl(){
 
-    }
     
     
     public void jump(){
