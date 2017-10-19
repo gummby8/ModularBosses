@@ -185,8 +185,9 @@ public class EntityShadeHowler extends EntityMob {
 		
 		//***********************JUMP************************************
 			
-			
-		 else if (this.aniID == JUMP && this.aniFrame == 5) {
+		 else if (this.aniID == JUMP && this.aniFrame == 1) {
+			 this.jumpCount = 0;
+		 }else if (this.aniID == JUMP && this.aniFrame == 5) {
 			if (this.target != null) {
 				this.targetX = target.posX;
 				this.targetZ = target.posZ;
@@ -265,7 +266,7 @@ public class EntityShadeHowler extends EntityMob {
 					}
 				}
 			}
-		} else if (this.aniID == JUMP && this.aniFrame > 25) {
+		} else if (this.aniID == JUMP && this.aniFrame > 30) {
 			this.aniID = STAND;
 			this.aniFrame = 0;
 		} 
@@ -313,8 +314,8 @@ public class EntityShadeHowler extends EntityMob {
 
 		}
 
-		
-
+		System.out.println("AniID = " + this.aniID);
+		System.out.println("Frame = " + this.aniFrame);
 		
 			
 		this.prevaniID = this.aniID;

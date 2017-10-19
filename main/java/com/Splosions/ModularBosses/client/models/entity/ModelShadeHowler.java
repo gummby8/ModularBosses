@@ -1850,6 +1850,7 @@ public class ModelShadeHowler extends ModelBase {
 	        
 	        build_stand();
 	        build_howl();
+	        build_jump();
 	    }
 
 	    @Override
@@ -1910,8 +1911,8 @@ public class ModelShadeHowler extends ModelBase {
 			if (boss.aniID == 1){
 				//walk();
 			} else
-			if (boss.aniID == 2){
-				//jump();
+			if (boss.aniID == boss.JUMP){
+				jump(boss.aniFrame, PartialTick);
 			} else
 			if (boss.aniID == boss.HOWL){
 				howl(boss.aniFrame, PartialTick);
@@ -1993,20 +1994,20 @@ public class ModelShadeHowler extends ModelBase {
     }
     
     
-    static final KeyFrame[] KF_Howl_HEAD = new KeyFrame[4];//
-    static final KeyFrame[] KF_Howl_TOPJAW = new KeyFrame[6];//
-    static final KeyFrame[] KF_Howl_BOTJAW = new KeyFrame[6];//
-    static final KeyFrame[] KF_Howl_BODY = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_HEAD = new KeyFrame[4];
+    static final KeyFrame[] KF_Howl_TOPJAW = new KeyFrame[6];
+    static final KeyFrame[] KF_Howl_BOTJAW = new KeyFrame[6];
+    static final KeyFrame[] KF_Howl_BODY = new KeyFrame[4];
     static final KeyFrame[] KF_Howl_RARM = new KeyFrame[1];
-    static final KeyFrame[] KF_Howl_RFOREARM = new KeyFrame[4];//
-    static final KeyFrame[] KF_Howl_RHAND = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_RFOREARM = new KeyFrame[4];
+    static final KeyFrame[] KF_Howl_RHAND = new KeyFrame[4];
     static final KeyFrame[] KF_Howl_RFINGERS = new KeyFrame[1];
     static final KeyFrame[] KF_Howl_LARM = new KeyFrame[1];
-    static final KeyFrame[] KF_Howl_LFOREARM = new KeyFrame[4];//
-    static final KeyFrame[] KF_Howl_LHAND = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_LFOREARM = new KeyFrame[4];
+    static final KeyFrame[] KF_Howl_LHAND = new KeyFrame[4];
     static final KeyFrame[] KF_Howl_LFINGERS = new KeyFrame[1];
     static final KeyFrame[] KF_Howl_LLEG = new KeyFrame[1];
-    static final KeyFrame[] KF_Howl_LLOWLEG = new KeyFrame[4];//
+    static final KeyFrame[] KF_Howl_LLOWLEG = new KeyFrame[4];
     static final KeyFrame[] KF_Howl_LFOOT = new KeyFrame[1];
     static final KeyFrame[] KF_Howl_LTOES = new KeyFrame[1];
     static final KeyFrame[] KF_Howl_RLEG = new KeyFrame[1];
@@ -2105,20 +2106,205 @@ public class ModelShadeHowler extends ModelBase {
     }
     
     
-    public void walk(){
+    
+    static final KeyFrame[] KF_Jump_HEAD = new KeyFrame[5];//
+    static final KeyFrame[] KF_Jump_TOPJAW = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_BOTJAW = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_BODY = new KeyFrame[8];//
+    static final KeyFrame[] KF_Jump_RARM = new KeyFrame[8];//
+    static final KeyFrame[] KF_Jump_RFOREARM = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_RHAND = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_RFINGERS = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_LARM = new KeyFrame[8];//
+    static final KeyFrame[] KF_Jump_LFOREARM = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_LHAND = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_LFINGERS = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_LLEG = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_LLOWLEG = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_LFOOT = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_LTOES = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_RLEG = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_RLOWLEG = new KeyFrame[7];//
+    static final KeyFrame[] KF_Jump_RFOOT = new KeyFrame[6];//
+    static final KeyFrame[] KF_Jump_RTOES = new KeyFrame[6];
+    
+    public void build_jump() {
+    	KF_Jump_HEAD[0] = new KeyFrame(0, 0.00F ,3.00F ,-45.00F ,-10.00F ,0.00F ,0.00F);
+    	KF_Jump_HEAD[1] = new KeyFrame(5, 0.00F ,3.00F ,-45.00F ,-10.00F ,0.00F ,0.00F);
+    	KF_Jump_HEAD[2] = new KeyFrame(15, 0.00F ,3.00F ,-45.00F ,-25.00F ,0.00F ,0.00F);
+    	KF_Jump_HEAD[3] = new KeyFrame(35, 0.00F ,3.00F ,-45.00F ,-25.00F ,0.00F ,0.00F);
+    	KF_Jump_HEAD[4] = new KeyFrame(30, 0.00F ,3.00F ,-45.00F ,-10.00F ,0.00F ,0.00F);
     	
+    	KF_Jump_TOPJAW[0] = new KeyFrame(0, 0.00F ,-10.00F ,0.00F ,-2.50F ,0.00F ,0.00F);
+    	KF_Jump_TOPJAW[1] = new KeyFrame(5, 0.00F ,-10.00F ,0.00F ,-2.50F ,0.00F ,0.00F);
+    	KF_Jump_TOPJAW[2] = new KeyFrame(10, 0.00F ,-10.00F ,0.00F ,-15.50F ,0.00F ,0.00F);
+    	KF_Jump_TOPJAW[3] = new KeyFrame(20, 0.00F ,-10.00F ,0.00F ,-15.50F ,0.00F ,0.00F);
+    	KF_Jump_TOPJAW[4] = new KeyFrame(25, 0.00F ,-10.00F ,0.00F ,-2.50F ,0.00F ,0.00F);
+    	KF_Jump_TOPJAW[5] = new KeyFrame(30, 0.00F ,-10.00F ,0.00F ,-2.50F ,0.00F ,0.00F);
+    	
+    	KF_Jump_BOTJAW[0] = new KeyFrame(0, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F);
+    	KF_Jump_BOTJAW[1] = new KeyFrame(5, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F);
+    	KF_Jump_BOTJAW[2] = new KeyFrame(10, 0.00F ,0.00F ,0.00F ,57.83F ,0.00F ,0.00F);
+    	KF_Jump_BOTJAW[3] = new KeyFrame(20, 0.00F ,0.00F ,0.00F ,57.83F ,0.00F ,0.00F);
+    	KF_Jump_BOTJAW[4] = new KeyFrame(25, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F);
+    	KF_Jump_BOTJAW[5] = new KeyFrame(30, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F);
+    	
+    	KF_Jump_BODY[0] = new KeyFrame(0, 0.00F ,-7.00F ,10.00F ,18.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[1] = new KeyFrame(5, 0.00F ,-3.00F ,10.00F ,30.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[2] = new KeyFrame(8, 0.00F ,-5.00F ,10.00F ,38.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[3] = new KeyFrame(13, 0.00F ,-7.00F ,10.00F ,47.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[4] = new KeyFrame(15, 0.00F ,-7.00F ,10.00F ,47.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[5] = new KeyFrame(20, 0.00F ,-5.50F ,10.00F ,47.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[6] = new KeyFrame(25, 0.00F ,-3.00F ,10.00F ,30.00F ,0.00F ,0.00F);
+    	KF_Jump_BODY[7] = new KeyFrame(30, 0.00F ,-7.00F ,10.00F ,18.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_RARM[0] = new KeyFrame(0, -50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[1] = new KeyFrame(5, -50.00F ,-10.00F ,-5.00F ,-5.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[2] = new KeyFrame(8, -50.00F ,-10.00F ,-5.00F ,15.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[3] = new KeyFrame(13, -50.00F ,-10.00F ,-5.00F ,-50.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[4] = new KeyFrame(15, -50.00F ,-10.00F ,-5.00F ,-50.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[5] = new KeyFrame(20, -50.00F ,-10.00F ,-5.00F ,-30.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[6] = new KeyFrame(25, -50.00F ,-10.00F ,-5.00F ,-5.00F ,0.00F ,0.00F);
+    	KF_Jump_RARM[7] = new KeyFrame(30, -50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_RFOREARM[0] = new KeyFrame(0, 0.00F ,85.00F ,0.00F ,-33.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOREARM[1] = new KeyFrame(5, 0.00F ,85.00F ,0.00F ,-68.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOREARM[2] = new KeyFrame(8, 0.00F ,85.00F ,0.00F ,-78.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOREARM[3] = new KeyFrame(20, 0.00F ,85.00F ,0.00F ,-78.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOREARM[4] = new KeyFrame(25, 0.00F ,85.00F ,0.00F ,-68.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOREARM[5] = new KeyFrame(30, 0.00F ,85.00F ,0.00F ,-33.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_RHAND[0] = new KeyFrame(0, -2.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_RHAND[1] = new KeyFrame(5, -2.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_RHAND[2] = new KeyFrame(8, -2.50F ,80.00F ,-5.00F ,-25.00F ,0.00F ,0.00F);
+    	KF_Jump_RHAND[3] = new KeyFrame(20, -2.50F ,80.00F ,-5.00F ,-25.00F ,0.00F ,0.00F);
+    	KF_Jump_RHAND[4] = new KeyFrame(25, -2.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_RHAND[5] = new KeyFrame(30, -2.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_RFINGERS[0] = new KeyFrame(0, 3.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_RFINGERS[1] = new KeyFrame(5, 3.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_RFINGERS[2] = new KeyFrame(8, 3.00F ,19.50F ,-2.00F ,-10.00F ,0.00F ,0.00F);
+    	KF_Jump_RFINGERS[3] = new KeyFrame(13, 3.00F ,19.50F ,-2.00F ,40.00F ,0.00F ,0.00F);
+    	KF_Jump_RFINGERS[4] = new KeyFrame(20, 3.00F ,19.50F ,-2.00F ,40.00F ,0.00F ,0.00F);
+    	KF_Jump_RFINGERS[5] = new KeyFrame(25, 3.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_RFINGERS[6] = new KeyFrame(30, 3.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_LARM[0] = new KeyFrame(0, 50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[1] = new KeyFrame(5, 50.00F ,-10.00F ,-5.00F ,-5.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[2] = new KeyFrame(8, 50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[3] = new KeyFrame(13, 50.00F ,-10.00F ,-5.00F ,-50.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[4] = new KeyFrame(15, 50.00F ,-10.00F ,-5.00F ,-50.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[5] = new KeyFrame(20, 50.00F ,-10.00F ,-5.00F ,-15.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[6] = new KeyFrame(25, 50.00F ,-10.00F ,-5.00F ,-5.00F ,0.00F ,0.00F);
+    	KF_Jump_LARM[7] = new KeyFrame(30, 50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_LFOREARM[0] = new KeyFrame(0, 10.00F ,85.00F ,0.00F ,-33.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOREARM[1] = new KeyFrame(5, 10.00F ,85.00F ,0.00F ,-68.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOREARM[2] = new KeyFrame(8, 10.00F ,85.00F ,0.00F ,-85.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOREARM[3] = new KeyFrame(15, 10.00F ,85.00F ,0.00F ,-85.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOREARM[4] = new KeyFrame(20, 10.00F ,85.00F ,0.00F ,-78.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOREARM[5] = new KeyFrame(25, 10.00F ,85.00F ,0.00F ,-68.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOREARM[6] = new KeyFrame(30, 10.00F ,85.00F ,0.00F ,-33.00F ,0.00F ,0.00F);
+    
+    	KF_Jump_LHAND[0] = new KeyFrame(0, -7.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_LHAND[1] = new KeyFrame(5, -7.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_LHAND[2] = new KeyFrame(8, -7.50F ,80.00F ,-5.00F ,10.00F ,0.00F ,0.00F);
+    	KF_Jump_LHAND[3] = new KeyFrame(20, -7.50F ,80.00F ,-5.00F ,10.00F ,0.00F ,0.00F);
+    	KF_Jump_LHAND[4] = new KeyFrame(25, -7.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Jump_LHAND[5] = new KeyFrame(30, -7.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    
+    	KF_Jump_LFINGERS[0] = new KeyFrame(0, 2.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_LFINGERS[1] = new KeyFrame(5, 2.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_LFINGERS[2] = new KeyFrame(8, 2.00F ,19.50F ,-2.00F ,40.00F ,0.00F ,0.00F);
+    	KF_Jump_LFINGERS[3] = new KeyFrame(20, 2.00F ,19.50F ,-2.00F ,40.00F ,0.00F ,0.00F);
+    	KF_Jump_LFINGERS[4] = new KeyFrame(25, 2.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_LFINGERS[5] = new KeyFrame(30, 2.00F ,19.50F ,-2.00F ,0.00F ,0.00F ,0.00F);
+    
+    	KF_Jump_LLEG[0] = new KeyFrame(0, 27.00F ,85.00F ,45.00F ,-30.00F ,0.00F ,0.00F);
+    	KF_Jump_LLEG[1] = new KeyFrame(5, 27.00F ,85.00F ,45.00F ,-57.00F ,0.00F ,0.00F);
+    	KF_Jump_LLEG[2] = new KeyFrame(8, 27.00F ,85.00F ,45.00F ,-47.00F ,0.00F ,0.00F);
+    	KF_Jump_LLEG[3] = new KeyFrame(13, 27.00F ,85.00F ,45.00F ,-2.00F ,0.00F ,0.00F);
+    	KF_Jump_LLEG[4] = new KeyFrame(20, 27.00F ,85.00F ,45.00F ,-2.00F ,0.00F ,0.00F);
+    	KF_Jump_LLEG[5] = new KeyFrame(25, 27.00F ,85.00F ,45.00F ,-57.00F ,0.00F ,0.00F);
+    	KF_Jump_LLEG[6] = new KeyFrame(30, 27.00F ,85.00F ,45.00F ,-30.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_LLOWLEG[0] = new KeyFrame(0, 0.00F ,40.00F ,0.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_LLOWLEG[1] = new KeyFrame(5, 0.00F ,40.00F ,0.00F ,15.00F ,0.00F ,0.00F);
+    	KF_Jump_LLOWLEG[2] = new KeyFrame(8, 0.00F ,40.00F ,0.00F ,-30.00F ,0.00F ,0.00F);
+    	KF_Jump_LLOWLEG[3] = new KeyFrame(13, 0.00F ,40.00F ,0.00F ,-43.00F ,0.00F ,0.00F);
+    	KF_Jump_LLOWLEG[4] = new KeyFrame(20, 0.00F ,40.00F ,0.00F ,-43.00F ,0.00F ,0.00F);
+    	KF_Jump_LLOWLEG[5] = new KeyFrame(25, 0.00F ,40.00F ,0.00F ,15.00F ,0.00F ,0.00F);
+    	KF_Jump_LLOWLEG[6] = new KeyFrame(30, 0.00F ,40.00F ,0.00F ,0.00F ,0.00F ,0.00F);
+    
+    	KF_Jump_LFOOT[0] = new KeyFrame(0, 7.00F ,20.00F ,55.00F ,-52.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOOT[1] = new KeyFrame(5, 7.00F ,20.00F ,55.00F ,-60.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOOT[2] = new KeyFrame(8, 7.00F ,20.00F ,55.00F ,-33.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOOT[3] = new KeyFrame(13, 7.00F ,20.00F ,55.00F ,4.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOOT[4] = new KeyFrame(20, 7.00F ,20.00F ,55.00F ,4.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOOT[5] = new KeyFrame(25, 7.00F ,20.00F ,55.00F ,-60.00F ,0.00F ,0.00F);
+    	KF_Jump_LFOOT[6] = new KeyFrame(30, 7.00F ,20.00F ,55.00F ,-52.00F ,0.00F ,0.00F);
+    
+    	KF_Jump_LTOES[0] = new KeyFrame(0, 0.00F ,4.00F ,14.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_LTOES[1] = new KeyFrame(5, 0.00F ,4.00F ,14.00F ,5.00F ,0.00F ,0.00F);
+    	KF_Jump_LTOES[2] = new KeyFrame(8, 0.00F ,4.00F ,14.00F ,10.00F ,0.00F ,0.00F);
+    	KF_Jump_LTOES[3] = new KeyFrame(13, 0.00F ,4.00F ,14.00F ,36.00F ,0.00F ,0.00F);
+    	KF_Jump_LTOES[4] = new KeyFrame(20, 0.00F ,4.00F ,14.00F ,36.00F ,0.00F ,0.00F);
+    	KF_Jump_LTOES[5] = new KeyFrame(25, 0.00F ,4.00F ,14.00F ,5.00F ,0.00F ,0.00F);
+    	KF_Jump_LTOES[6] = new KeyFrame(30, 0.00F ,4.00F ,14.00F ,0.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_RLEG[0] = new KeyFrame(0, -27.00F ,85.00F ,45.00F ,-30.00F ,0.00F ,0.00F);
+    	KF_Jump_RLEG[1] = new KeyFrame(5, -27.00F ,85.00F ,45.00F ,-57.00F ,0.00F ,0.00F);
+    	KF_Jump_RLEG[2] = new KeyFrame(8, -27.00F ,85.00F ,45.00F ,-22.00F ,0.00F ,0.00F);
+    	KF_Jump_RLEG[3] = new KeyFrame(13, -27.00F ,85.00F ,45.00F ,-2.00F ,0.00F ,0.00F);
+    	KF_Jump_RLEG[4] = new KeyFrame(20, -27.00F ,85.00F ,45.00F ,-2.00F ,0.00F ,0.00F);
+    	KF_Jump_RLEG[5] = new KeyFrame(25, -27.00F ,85.00F ,45.00F ,-57.00F ,0.00F ,0.00F);
+    	KF_Jump_RLEG[6] = new KeyFrame(30, -27.00F ,85.00F ,45.00F ,-30.00F ,0.00F ,0.00F);
+ 
+    	KF_Jump_RLOWLEG[0] = new KeyFrame(0, 0.00F ,40.00F ,0.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_RLOWLEG[1] = new KeyFrame(5, 0.00F ,40.00F ,0.00F ,15.00F ,0.00F ,0.00F);
+    	KF_Jump_RLOWLEG[2] = new KeyFrame(8, 0.00F ,40.00F ,0.00F ,-15.00F ,0.00F ,0.00F);
+    	KF_Jump_RLOWLEG[3] = new KeyFrame(13, 0.00F ,40.00F ,0.00F ,-25.00F ,0.00F ,0.00F);
+    	KF_Jump_RLOWLEG[4] = new KeyFrame(20, 0.00F ,40.00F ,0.00F ,-25.00F ,0.00F ,0.00F);
+    	KF_Jump_RLOWLEG[5] = new KeyFrame(25, 0.00F ,40.00F ,0.00F ,15.00F ,0.00F ,0.00F);
+    	KF_Jump_RLOWLEG[6] = new KeyFrame(30, 0.00F ,40.00F ,0.00F ,0.00F ,0.00F ,0.00F);
+    
+    	KF_Jump_RFOOT[0] = new KeyFrame(0, -3.00F ,20.00F ,55.00F ,-52.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOOT[1] = new KeyFrame(5, -3.00F ,20.00F ,55.00F ,-60.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOOT[2] = new KeyFrame(8, -3.00F ,20.00F ,55.00F ,-23.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOOT[3] = new KeyFrame(20, -3.00F ,20.00F ,55.00F ,-23.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOOT[4] = new KeyFrame(25, -3.00F ,20.00F ,55.00F ,-60.00F ,0.00F ,0.00F);
+    	KF_Jump_RFOOT[5] = new KeyFrame(30, -3.00F ,20.00F ,55.00F ,-52.00F ,0.00F ,0.00F);
+    	
+    	KF_Jump_RTOES[0] = new KeyFrame(0, 0.00F ,4.00F ,14.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Jump_RTOES[1] = new KeyFrame(5, 0.00F ,4.00F ,14.00F ,5.00F ,0.00F ,0.00F);
+    	KF_Jump_RTOES[2] = new KeyFrame(8, 0.00F ,4.00F ,14.00F ,55.00F ,0.00F ,0.00F);
+    	KF_Jump_RTOES[3] = new KeyFrame(20, 0.00F ,4.00F ,14.00F ,55.00F ,0.00F ,0.00F);
+    	KF_Jump_RTOES[4] = new KeyFrame(25, 0.00F ,4.00F ,14.00F ,5.00F ,0.00F ,0.00F);
+    	KF_Jump_RTOES[5] = new KeyFrame(30, 0.00F ,4.00F ,14.00F ,0.00F ,0.00F ,0.00F);
     }
     
-    public void sprint(){
-    	
-    }
     
-    
-
-    
-    
-    public void jump(){
-
+    public void jump(int frame, float partialTick){
+    	ModelUtils.moveParts(frame, HEAD, KF_Jump_HEAD, partialTick);
+    	ModelUtils.moveParts(frame, TOPJAW, KF_Jump_TOPJAW, partialTick);
+    	ModelUtils.moveParts(frame, BOTJAW, KF_Jump_BOTJAW, partialTick);
+    	ModelUtils.moveParts(frame, BODY, KF_Jump_BODY, partialTick);
+    	ModelUtils.moveParts(frame, RARM, KF_Jump_RARM, partialTick);
+    	ModelUtils.moveParts(frame, RFOREARM, KF_Jump_RFOREARM, partialTick);
+    	ModelUtils.moveParts(frame, RHAND, KF_Jump_RHAND, partialTick);
+    	ModelUtils.moveParts(frame, RFINGERS, KF_Jump_RFINGERS, partialTick);
+    	ModelUtils.moveParts(frame, LARM, KF_Jump_LARM, partialTick);
+    	ModelUtils.moveParts(frame, LFOREARM, KF_Jump_LFOREARM, partialTick);
+    	ModelUtils.moveParts(frame, LHAND, KF_Jump_LHAND, partialTick);
+    	ModelUtils.moveParts(frame, LFINGERS, KF_Jump_LFINGERS, partialTick);
+    	ModelUtils.moveParts(frame, LLEG, KF_Jump_LLEG, partialTick);
+    	ModelUtils.moveParts(frame, LLOWLEG, KF_Jump_LLOWLEG, partialTick);
+    	ModelUtils.moveParts(frame, LFOOT, KF_Jump_LFOOT, partialTick);
+    	ModelUtils.moveParts(frame, LTOES, KF_Jump_LTOES, partialTick);
+    	ModelUtils.moveParts(frame, RLEG, KF_Jump_RLEG, partialTick);
+    	ModelUtils.moveParts(frame, RLOWLEG, KF_Jump_RLOWLEG, partialTick);
+    	ModelUtils.moveParts(frame, RFOOT, KF_Jump_RFOOT, partialTick);
+    	ModelUtils.moveParts(frame, RTOES, KF_Jump_RTOES, partialTick);
     }
 
     
