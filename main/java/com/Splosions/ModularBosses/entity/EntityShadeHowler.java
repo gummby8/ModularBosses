@@ -301,7 +301,7 @@ public class EntityShadeHowler extends EntityMob {
 			} else if (this.aniID == MELT_REFORM) {
 				if (target != null) {this.faceEntity(this.target, 500, 500);}
 				this.meltPercent -= 5;
-				if (this.meltPercent <= -100) {
+				if (this.meltPercent <= -10) {
 					System.out.println("Derp");
 					this.aniID = HOWL;
 					this.aniFrame = 0;
@@ -314,9 +314,6 @@ public class EntityShadeHowler extends EntityMob {
 
 		}
 
-		System.out.println("AniID = " + this.aniID);
-		System.out.println("Frame = " + this.aniFrame);
-		
 			
 		this.prevaniID = this.aniID;
 		if (!this.worldObj.isRemote) {
