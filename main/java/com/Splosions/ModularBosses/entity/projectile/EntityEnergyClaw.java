@@ -104,11 +104,12 @@ public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAddit
 	public void onUpdate() {
 		super.onUpdate();
 
+
 		
 		
 
 		//wave will last for 5 seconds
-		if (this.ticksExisted > 1000){
+		if (this.ticksExisted > 400){
 			setDead();
 		}
 

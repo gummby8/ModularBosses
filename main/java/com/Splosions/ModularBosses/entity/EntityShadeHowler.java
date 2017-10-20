@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.client.Minecraft;
@@ -156,7 +157,7 @@ public class EntityShadeHowler extends EntityMob {
 
 		if (this.aniID == STAND) {
 			this.aniFrame = 0;
-			this.aniID = MELT_MELT;
+			this.aniID = CLAW;
 		}
 		
 			
@@ -301,7 +302,11 @@ public class EntityShadeHowler extends EntityMob {
 		//***********************CLAW************************************
 		else if (this.aniID == CLAW) {
 			if (this.aniFrame == 17) {
-			//spawn slash entity
+				if (!this.worldObj.isRemote) {
+					EntityEnergyClaw projectile = new EntityEnergyClaw(this.worldObj, this, this, 3F, 0, 0, 0, 0,1,1,1);
+					projectile.posY = this.posY + 1.5F;
+					this.worldObj.spawnEntityInWorld(projectile);	
+				}
 			} else if (this.aniFrame > 27) {
 				this.aniID = STAND;
 				this.aniFrame = 0;				

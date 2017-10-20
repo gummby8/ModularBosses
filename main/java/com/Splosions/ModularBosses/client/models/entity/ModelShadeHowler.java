@@ -1865,7 +1865,7 @@ public class ModelShadeHowler extends ModelBase {
 	    	
 	    	GlStateManager.color(color, color, color);
 	    	//GlStateManager.translate(0, 1.9F, 0);
-	    	GlStateManager.translate(0, tran, 0);
+	    	GlStateManager.translate(0, tran, -1);
 	    	GlStateManager.pushMatrix();
 	        GlStateManager.translate(this.BODY.offsetX, this.BODY.offsetY, this.BODY.offsetZ);
 	        GlStateManager.translate(this.BODY.rotationPointX * f5, this.BODY.rotationPointY * f5, this.BODY.rotationPointZ * f5);

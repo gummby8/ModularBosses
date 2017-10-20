@@ -6,6 +6,7 @@ import java.util.List;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
+import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -35,6 +36,9 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	 */
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
+		
+
+		
 		
         return itemStackIn;
 	}

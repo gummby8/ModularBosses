@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.client.models.projectiles.ModelEnergyClaw;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
+import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.entity.Render;
@@ -35,11 +36,11 @@ public class RenderEnergyClaw extends Render
 	}
 	
 	public void renderEntityModel1(Entity entity, double x, double y, double z, float yaw, float partialTick) {
-		EntityEnergyArrow ent = (EntityEnergyArrow) entity;
+		EntityEnergyClaw ent = (EntityEnergyClaw) entity;
 		GL11.glPushMatrix();
 		GL11.glEnable(GL11.GL_BLEND);
        // GL11.glDisable(GL11.GL_ALPHA_TEST);
-        GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
+        GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_DST_COLOR);
 		float scale = 1;
 		this.bindTexture(textureglow);
 		GL11.glTranslated(x, y, z);
@@ -47,7 +48,7 @@ public class RenderEnergyClaw extends Render
 		GL11.glRotatef(yaw, 0, 1F, 0);
 		GL11.glRotatef(-ent.rotationPitch, 1, 0, 0);
 		GL11.glTranslated(0F, 0.05F, 0.5F);
-		GL11.glRotatef(90, 1F, 0, 0);
+		//GL11.glRotatef(90, 1F, 0, 0);
 		model.render(ent, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
         GL11.glDisable(GL11.GL_BLEND);
         //GL11.glEnable(GL11.GL_ALPHA_TEST);

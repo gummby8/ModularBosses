@@ -19,7 +19,7 @@ public class ModelEnergyArrow extends ModelBase
 	int pixelY = 0;
 	int pixelX = 0;
 	int pixelZ = 0;
-	int fade = 0;
+
  
   
   public ModelEnergyArrow()
@@ -69,7 +69,7 @@ public class ModelEnergyArrow extends ModelBase
     setRotationAngles(f, f1, f2, f3, f4, f5, entity);
 
 
-   	this.fade = (entity.ticksExisted > 50)? (entity.ticksExisted - 50) * 6 : 0; 
+   	
 
     for (int i = 0; i < this.Energy.length; ++i) // - this.fade
     {	

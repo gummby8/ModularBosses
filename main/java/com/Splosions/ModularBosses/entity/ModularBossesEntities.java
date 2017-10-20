@@ -38,6 +38,7 @@ import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBloodB
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBoulder;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBrainEnergy;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderEnergyArrow;
+import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderEnergyClaw;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderScythe;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
@@ -48,6 +49,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomEgg;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
+import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
@@ -95,16 +97,19 @@ public class ModularBossesEntities
 		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityEnergyArrow.class, "Energy Arrow", ++modEntityIndex, ModularBosses.INSTANCE, 400, 1, true);
+		EntityRegistry.registerModEntity(EntityEnergyClaw.class, "Energy Claw", ++modEntityIndex, ModularBosses.INSTANCE, 400, 1, true);
 		EntityRegistry.registerModEntity(EntityBrainEnergy.class, "Brain Energy", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
 		EntityRegistry.registerModEntity(EntityBloodBlob.class, "Blood Blob", ++modEntityIndex, ModularBosses.INSTANCE, 300, 1, true);
 		EntityRegistry.registerModEntity(EntityScythe.class, "Scythe", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityCustomFallingBlock.class, "Falling Block", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityBait.class, "Bait", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityTeleportBiped.class, "Teleport Model", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
+		
 		//EntityRegistry.registerModEntity(EntityBlueWave.class, "Blue Wave", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntitySpiritShard.class, "Spirit Shard", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
 		//EntityRegistry.registerModEntity(EntityBlackHole.class, "Black Hole", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
-		//EntityRegistry.registerModEntity(EntityFlameShot.class, "Flame SHot", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
-		EntityRegistry.registerModEntity(EntityTeleportBiped.class, "Teleport Model", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
+		//EntityRegistry.registerModEntity(EntityFlameShot.class, "Flame Shot", ++modEntityIndex, ModularBossesMain.instance, 64, 10, true);
+		
 	
 		
 		// MOBS and egg colors
@@ -181,7 +186,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWorm.class, new RenderSandWorm(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntitySandWormTail.class, new RenderSandWormTail(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTick.class, new RenderTick(manager, new ModelTick(), 1));
-		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 1));
+		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 0));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderKnockedDown(manager));
 		
@@ -192,6 +197,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityBoulder.class, new RenderBoulder(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityFlameThrower.class, new RenderFlameThrower(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityEnergyArrow.class, new RenderEnergyArrow(manager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEnergyClaw.class, new RenderEnergyClaw(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBrainEnergy.class, new RenderBrainEnergy(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBloodBlob.class, new RenderBloodBlob(manager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBait.class, new RenderBait(manager));
