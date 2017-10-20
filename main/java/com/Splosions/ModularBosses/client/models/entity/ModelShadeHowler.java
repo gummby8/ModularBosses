@@ -1851,6 +1851,7 @@ public class ModelShadeHowler extends ModelBase {
 	        build_stand();
 	        build_howl();
 	        build_jump();
+	        build_claw();
 	    }
 
 	    @Override
@@ -2308,6 +2309,83 @@ public class ModelShadeHowler extends ModelBase {
     }
 
     
+    static final KeyFrame[] KF_Claw_HEAD = new KeyFrame[4];//
+    static final KeyFrame[] KF_Claw_TOPJAW = new KeyFrame[1];//
+    static final KeyFrame[] KF_Claw_BOTJAW = new KeyFrame[5];//
+    static final KeyFrame[] KF_Claw_BODY = new KeyFrame[7];//
+    static final KeyFrame[] KF_Claw_RARM = new KeyFrame[8];//
+    static final KeyFrame[] KF_Claw_RFOREARM = new KeyFrame[8];//
+    static final KeyFrame[] KF_Claw_RHAND = new KeyFrame[9];//
+    static final KeyFrame[] KF_Claw_RFINGERS = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_LARM = new KeyFrame[8];
+    static final KeyFrame[] KF_Claw_LFOREARM = new KeyFrame[8];
+    static final KeyFrame[] KF_Claw_LHAND = new KeyFrame[9];
+    static final KeyFrame[] KF_Claw_LFINGERS = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_LLEG = new KeyFrame[1];
+    static final KeyFrame[] KF_Claw_LLOWLEG = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_LFOOT = new KeyFrame[6];
+    static final KeyFrame[] KF_Claw_LTOES = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_RLEG = new KeyFrame[1];
+    static final KeyFrame[] KF_Claw_RLOWLEG = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_RFOOT = new KeyFrame[6];
+    static final KeyFrame[] KF_Claw_RTOES = new KeyFrame[4];
+    
+    public void build_claw() {
+    	KF_Claw_HEAD[0] = new KeyFrame(0, 0.00F ,3.00F ,-45.00F ,-10.00F ,0.00F ,0.00F);
+    	KF_Claw_HEAD[1] = new KeyFrame(13, 0.00F ,3.00F ,-45.00F ,8.00F ,0.00F ,0.00F);
+    	KF_Claw_HEAD[2] = new KeyFrame(22, 0.00F ,3.00F ,-45.00F ,8.00F ,0.00F ,0.00F);
+    	KF_Claw_HEAD[3] = new KeyFrame(27, 0.00F ,3.00F ,-45.00F ,-10.00F ,0.00F ,0.00F);
+   
+    	KF_Claw_TOPJAW[0] = new KeyFrame(0, 0.00F ,-10.00F ,0.00F ,-2.50F ,0.00F ,0.00F);
+    	
+    	KF_Claw_BOTJAW[0] = new KeyFrame(0, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F);
+    	KF_Claw_BOTJAW[1] = new KeyFrame(5, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F);
+    	KF_Claw_BOTJAW[2] = new KeyFrame(10, 0.00F ,0.00F ,0.00F ,33.83F ,0.00F ,0.00F);
+    	KF_Claw_BOTJAW[3] = new KeyFrame(22, 0.00F ,0.00F ,0.00F ,33.83F ,0.00F ,0.00F);
+    	KF_Claw_BOTJAW[4] = new KeyFrame(27, 0.00F ,0.00F ,0.00F ,7.83F ,0.00F ,0.00F); 
+    
+    	KF_Claw_BODY[0] = new KeyFrame(0, 0.00F ,-7.00F ,10.00F ,18.00F ,0.00F ,0.00F);
+    	KF_Claw_BODY[1] = new KeyFrame(5, 0.00F ,-11.18F ,17.69F ,11.08F ,0.00F ,0.00F);
+    	KF_Claw_BODY[2] = new KeyFrame(13, 0.00F ,-15.00F ,30.00F ,0.00F ,0.00F ,0.00F);
+    	KF_Claw_BODY[3] = new KeyFrame(15, 0.00F ,-15.00F ,30.00F ,-0.00F ,0.00F ,0.00F);
+    	KF_Claw_BODY[4] = new KeyFrame(20, 0.00F ,-13.00F ,23.00F ,10.00F ,0.00F ,0.00F);
+    	KF_Claw_BODY[5] = new KeyFrame(22,0.00F ,-12.89F ,21.29F ,12.29F ,0.00F ,0.00F); 
+    	KF_Claw_BODY[6] = new KeyFrame(27, 0.00F ,-7.00F ,10.00F ,18.00F ,0.00F ,0.00F);
+
+    	KF_Claw_RARM[0] = new KeyFrame(0, -50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Claw_RARM[1] = new KeyFrame(3, -50.00F ,-10.00F ,-5.00F ,-8.00F ,0.00F ,0.00F);
+    	KF_Claw_RARM[2] = new KeyFrame(8, -43.40F ,-10.00F ,-5.00F ,-3.00F ,-40.00F ,33.00F);
+    	KF_Claw_RARM[3] = new KeyFrame(13, -40.00F ,-10.00F ,-5.00F ,0.00F ,70.00F ,55.00F);
+    	KF_Claw_RARM[4] = new KeyFrame(15, -40.00F ,-10.00F ,-5.00F ,0.00F ,70.00F ,55.00F);
+    	KF_Claw_RARM[5] = new KeyFrame(18, -40.00F ,-10.00F ,-5.00F ,-30.00F ,0.00F ,0.00F);
+    	KF_Claw_RARM[6] = new KeyFrame(22, -40.00F ,-10.00F ,-5.00F ,-30.00F ,0.00F ,0.00F);
+    	KF_Claw_RARM[7] = new KeyFrame(27, -50.00F ,-10.00F ,-5.00F ,-20.00F ,0.00F ,0.00F); 
+    
+    	KF_Claw_RFOREARM[0] = new KeyFrame(0, 0.00F ,85.00F ,0.00F ,-33.00F ,0.00F ,0.00F);
+    	KF_Claw_RFOREARM[1] = new KeyFrame(3, 0.00F ,85.00F ,0.00F ,-22.20F ,0.00F ,0.00F);
+    	KF_Claw_RFOREARM[2] = new KeyFrame(8, 0.00F ,85.00F ,0.00F ,-67.00F ,0.00F ,0.00F);
+    	KF_Claw_RFOREARM[3] = new KeyFrame(15, 0.00F ,85.00F ,0.00F ,-67.00F ,0.00F ,0.00F);
+    	KF_Claw_RFOREARM[4] = new KeyFrame(17, 0.00F ,85.00F ,0.00F ,-80.00F ,23.00F ,0.00F);
+    	KF_Claw_RFOREARM[5] = new KeyFrame(20, 0.00F ,85.00F ,0.00F ,-60.00F ,-60.00F ,-3.00F);
+    	KF_Claw_RFOREARM[6] = new KeyFrame(22, 0.00F ,85.00F ,0.00F ,-60.00F ,-60.00F ,-3.00F);
+    	KF_Claw_RFOREARM[7] = new KeyFrame(27, 0.00F ,85.00F ,0.00F ,-33.00F ,0.00F ,0.00F);
+    
+    	KF_Claw_RHAND[0] = new KeyFrame(0, -2.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
+    	KF_Claw_RHAND[1] = new KeyFrame(5, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,0.00F);
+    	KF_Claw_RHAND[2] = new KeyFrame(10, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,0.00F);
+    	KF_Claw_RHAND[3] = new KeyFrame(13, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,0.00F);
+    	KF_Claw_RHAND[4] = new KeyFrame(15, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,0.00F);
+    	KF_Claw_RHAND[5] = new KeyFrame(17, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,25.00F);
+    	KF_Claw_RHAND[6] = new KeyFrame(20, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,-20.00F);
+    	KF_Claw_RHAND[7] = new KeyFrame(22, -2.50F ,80.00F ,-5.00F ,0.00F ,70.00F ,-20.00F);
+    	KF_Claw_RHAND[8] = new KeyFrame(27, -2.50F ,80.00F ,-5.00F ,-20.00F ,0.00F ,0.00F);
     
     
+    
+    }
+    
+    
+    public void claw(int frame, float partialTick){
+    	
+    }
 }
