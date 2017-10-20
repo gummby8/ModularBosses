@@ -1,9 +1,6 @@
 package com.Splosions.ModularBosses.blocks;
 
-import java.util.Random;
-
 import com.Splosions.ModularBosses.Config;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
 
 import net.minecraft.block.Block;
@@ -14,9 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 

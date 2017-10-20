@@ -2,14 +2,10 @@ package com.Splosions.ModularBosses.client.models.entity;
 
 import com.Splosions.ModularBosses.entity.EntityParagon;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.util.MathHelper;
 
 /**
  * Paragon - Splosions

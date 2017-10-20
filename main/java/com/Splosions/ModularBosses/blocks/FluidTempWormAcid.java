@@ -2,7 +2,6 @@ package com.Splosions.ModularBosses.blocks;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormAcid;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

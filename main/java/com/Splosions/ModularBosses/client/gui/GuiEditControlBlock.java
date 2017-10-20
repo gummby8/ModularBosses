@@ -1,40 +1,30 @@
 package com.Splosions.ModularBosses.client.gui;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.lwjgl.input.Keyboard;
+
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.network.PacketDispatcher;
+import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.Language;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.lwjgl.input.Keyboard;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
-import com.Splosions.ModularBosses.network.PacketDispatcher;
-import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
-import com.Splosions.ModularBosses.util.StringUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 @SideOnly(Side.CLIENT)
 public class GuiEditControlBlock extends GuiScreen {

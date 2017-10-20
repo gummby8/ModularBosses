@@ -4,7 +4,6 @@ import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.util.BlockPos;
-import net.minecraftforge.common.ForgeChunkManager;
 
 public class DungeonNurkach extends Dungeon {
 

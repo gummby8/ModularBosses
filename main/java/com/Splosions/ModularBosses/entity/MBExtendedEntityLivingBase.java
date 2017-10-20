@@ -1,13 +1,7 @@
 package com.Splosions.ModularBosses.entity;
 
-import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.proxy.ClientProxy;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;

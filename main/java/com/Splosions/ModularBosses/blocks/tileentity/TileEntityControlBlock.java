@@ -2,27 +2,15 @@ package com.Splosions.ModularBosses.blocks.tileentity;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.blocks.BlockControlBlock;
-import com.Splosions.ModularBosses.entity.CustomEntityList;
-import com.Splosions.ModularBosses.network.PacketDispatcher;
-import com.Splosions.ModularBosses.network.client.OpenControlBlockEditorPacket;
-import com.jcraft.jorbis.Block;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
@@ -31,13 +19,9 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerListBox {
 	/** Maximum number of characters that will fit on one chat line */

@@ -1,6 +1,9 @@
 
 package com.Splosions.ModularBosses.items;
 
+import com.Splosions.ModularBosses.Reference;
+import com.google.common.base.Function;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -9,10 +12,6 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-
-import com.Splosions.ModularBosses.Reference;
-import com.google.common.base.Function;
 
 /**
  * 

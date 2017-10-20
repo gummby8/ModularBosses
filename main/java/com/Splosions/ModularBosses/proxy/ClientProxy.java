@@ -1,12 +1,11 @@
 package com.Splosions.ModularBosses.proxy;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Map;
-
-import org.lwjgl.input.Mouse;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.blocks.ICustomStateMapper;
 import com.Splosions.ModularBosses.blocks.ISpecialRenderer;
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
@@ -19,34 +18,24 @@ import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPort
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
 import com.Splosions.ModularBosses.handler.MBClientEventHandler;
-import com.Splosions.ModularBosses.handler.MBEventHandler;
-import com.Splosions.ModularBosses.handler.RenderTickHandler;
 import com.Splosions.ModularBosses.items.IModItem;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.google.common.collect.Maps;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import net.minecraftforge.fml.relauncher.ReflectionHelper.UnableToFindMethodException;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy{

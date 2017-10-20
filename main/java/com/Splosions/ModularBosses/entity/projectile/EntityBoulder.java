@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 
 import io.netty.buffer.ByteBuf;
@@ -18,8 +17,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;

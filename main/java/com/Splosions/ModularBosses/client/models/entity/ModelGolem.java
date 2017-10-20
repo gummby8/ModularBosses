@@ -1,9 +1,7 @@
 package com.Splosions.ModularBosses.client.models.entity;
 
-import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.client.models.KeyFrame;
 import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.util.ModelUtils;
 
 import net.minecraft.client.model.ModelBase;

@@ -2,14 +2,11 @@ package com.Splosions.ModularBosses.client.models.projectiles;
 
 
 
-import com.Splosions.ModularBosses.entity.EntityTatters;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 
 /**
  * Scythe - Undefined

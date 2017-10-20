@@ -2,15 +2,16 @@ package com.Splosions.ModularBosses.network.server;
 
 import java.io.IOException;
 
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
+import com.Splosions.ModularBosses.network.AbstractMessage.AbstractServerMessage;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.relauncher.Side;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
-import com.Splosions.ModularBosses.network.AbstractMessage.AbstractServerMessage;
 
 public class SetControlBlockMessagePacket extends AbstractServerMessage<SetControlBlockMessagePacket>
 {

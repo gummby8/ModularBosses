@@ -1,26 +1,17 @@
 package com.Splosions.ModularBosses.client.render.tileentity;
 
-import java.util.Random;
-
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
-import com.Splosions.ModularBosses.client.models.projectiles.ModelCartographer;
 
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
 
 
 

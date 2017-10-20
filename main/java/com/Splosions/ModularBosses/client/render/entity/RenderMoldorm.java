@@ -1,28 +1,18 @@
 package com.Splosions.ModularBosses.client.render.entity;
 
-import java.util.logging.Level;
-
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldorm;
-import com.Splosions.ModularBosses.client.models.entity.ModelTeleportBiped;
 import com.Splosions.ModularBosses.entity.EntityMoldorm;
-import com.Splosions.ModularBosses.entity.EntityParagon;
-import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderEntity;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;

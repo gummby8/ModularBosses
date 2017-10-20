@@ -1,29 +1,18 @@
 package com.Splosions.ModularBosses.client.render.entity;
 
 
+import org.lwjgl.opengl.GL11;
+
+import com.Splosions.ModularBosses.client.models.entity.ModelSandWormTail;
+import com.Splosions.ModularBosses.entity.EntitySandWormTail;
+
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelSpider;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
-import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
-import com.Splosions.ModularBosses.client.models.entity.ModelSandWormBody;
-import com.Splosions.ModularBosses.client.models.entity.ModelSandWormTail;
-import com.Splosions.ModularBosses.entity.EntityChorpChorp;
-import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
-import com.Splosions.ModularBosses.entity.EntitySandWormTail;
 
 
 

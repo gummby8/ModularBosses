@@ -1,18 +1,17 @@
 package com.Splosions.ModularBosses.network;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.IOException;
 
+import com.Splosions.ModularBosses.ModularBosses;
+import com.google.common.base.Throwables;
+
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-
-import com.Splosions.ModularBosses.ModularBosses;
-import com.google.common.base.Throwables;
 
 /**
  * 

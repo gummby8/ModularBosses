@@ -1,13 +1,14 @@
 package com.Splosions.ModularBosses.client.models.entity;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.entity.EntityBrain;
 import com.Splosions.ModularBosses.util.TargetUtils;
+
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
 
 /**
  * Brain - Undefined

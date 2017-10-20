@@ -5,6 +5,12 @@ import java.util.List;
 
 import javax.vecmath.Matrix4f;
 
+import org.apache.commons.lang3.tuple.Pair;
+
+import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
+import com.Splosions.ModularBosses.client.models.projectiles.ModelScythe;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,15 +27,6 @@ import net.minecraftforge.client.model.IPerspectiveAwareModel;
 import net.minecraftforge.client.model.ISmartItemModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
-
-import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
-import com.Splosions.ModularBosses.client.models.projectiles.ModelScythe;
-import com.Splosions.ModularBosses.items.ItemScythe;
 
 
 @SuppressWarnings("deprecation")

@@ -1,6 +1,5 @@
 package com.Splosions.ModularBosses.entity.player;
 
-import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 

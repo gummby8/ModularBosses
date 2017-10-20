@@ -1,6 +1,5 @@
 package com.Splosions.ModularBosses;
 
-import java.util.Collections;
 import java.util.List;
 
 import com.Splosions.ModularBosses.blocks.ModBlocks;

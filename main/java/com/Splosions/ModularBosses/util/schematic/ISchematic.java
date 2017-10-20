@@ -1,12 +1,12 @@
 package com.Splosions.ModularBosses.util.schematic;
 
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
-
-import java.util.List;
 
 public interface ISchematic {
     /**

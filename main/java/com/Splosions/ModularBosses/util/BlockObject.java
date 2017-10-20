@@ -1,8 +1,5 @@
 package com.Splosions.ModularBosses.util;
 
-import com.Splosions.ModularBosses.blocks.BlockControlBlock;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;
 

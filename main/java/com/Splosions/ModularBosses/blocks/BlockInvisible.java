@@ -2,8 +2,6 @@
 package com.Splosions.ModularBosses.blocks;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
-import com.Splosions.ModularBosses.blocks.BlockRotationData.Rotation;
-import com.Splosions.ModularBosses.world.PortalLandingWorldData;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -11,12 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.resources.model.ModelResourceLocation;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

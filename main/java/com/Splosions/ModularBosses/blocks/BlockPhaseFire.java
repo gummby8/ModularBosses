@@ -3,10 +3,8 @@ package com.Splosions.ModularBosses.blocks;
 import java.util.Random;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
-import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
-import com.Splosions.ModularBosses.proxy.ClientProxy;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -14,10 +12,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;

@@ -1,30 +1,15 @@
 package com.Splosions.ModularBosses.client.render.entity;
 
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
+import com.Splosions.ModularBosses.entity.EntityGolem;
+
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelSpider;
-import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.layers.LayerSpiderEyes;
-import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
-import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
-import com.Splosions.ModularBosses.entity.EntityChorpChorp;
-import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.EntityParagon;
 
 
 

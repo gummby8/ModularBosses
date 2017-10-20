@@ -2,6 +2,9 @@ package com.Splosions.ModularBosses.items;
 
 import java.util.List;
 
+import com.Splosions.ModularBosses.Reference;
+import com.google.common.base.Function;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemModelMesher;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -11,9 +14,6 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.Splosions.ModularBosses.Reference;
-import com.google.common.base.Function;
 
 /**
  * 

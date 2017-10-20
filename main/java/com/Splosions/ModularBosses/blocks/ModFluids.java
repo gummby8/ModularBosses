@@ -1,23 +1,22 @@
 package com.Splosions.ModularBosses.blocks;
 
 
-import net.minecraft.block.Block;
-import net.minecraft.block.material.MapColor;
-import net.minecraft.block.material.MaterialLiquid;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.*;
-import net.minecraftforge.fml.common.registry.GameRegistry;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.MaterialLiquid;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModFluids {
 	public static Fluid fluidStatic;

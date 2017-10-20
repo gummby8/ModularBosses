@@ -7,8 +7,6 @@ import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 import com.Splosions.ModularBosses.util.schematic.Schematic;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 

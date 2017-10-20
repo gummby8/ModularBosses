@@ -1,6 +1,9 @@
 package com.Splosions.ModularBosses.util;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,9 +12,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NBTHelper {
     public static List<TileEntity> readTileEntitiesFromCompound(final NBTTagCompound compound) {

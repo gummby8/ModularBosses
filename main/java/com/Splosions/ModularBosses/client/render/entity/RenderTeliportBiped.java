@@ -1,25 +1,16 @@
 package com.Splosions.ModularBosses.client.render.entity;
 
-import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelPlayer;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.fml.relauncher.Side;
-
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
-import com.Splosions.ModularBosses.client.models.entity.ModelKnockdown;
 import com.Splosions.ModularBosses.client.models.entity.ModelTeleportBiped;
 import com.Splosions.ModularBosses.entity.EntityTeleportBiped;
-import com.google.common.base.Objects;
+
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
