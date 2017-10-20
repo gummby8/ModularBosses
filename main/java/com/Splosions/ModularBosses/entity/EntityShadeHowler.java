@@ -1,40 +1,28 @@
 package com.Splosions.ModularBosses.entity;
 
 import java.util.List;
-import java.util.Random;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
-import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityShadeHowler extends EntityMob {
 
@@ -50,7 +38,7 @@ public class EntityShadeHowler extends EntityMob {
 	public static final int MELT_MELT = 50;
 	public static final int MELT_MOVE = 51;
 	public static final int MELT_REFORM = 52;
-	
+	public static final int CLAW = 6;	
 
 	private int lastAttackCounter = 0;
 	
@@ -307,19 +295,34 @@ public class EntityShadeHowler extends EntityMob {
 					this.aniFrame = 0;
 					this.meltPercent = 0;
 				}
-				
 			}
-			
-			
-
 		}
 
+		//***********************CLAW************************************
+		else if (this.aniID == CLAW) {
+			if (this.aniFrame == 17) {
+			//spawn slash entity
+			} else if (this.aniFrame > 27) {
+				this.aniID = STAND;
+				this.aniFrame = 0;				
+			}
 			
+		}
+
+		
+		
+		
+		
+		
 		this.prevaniID = this.aniID;
 		if (!this.worldObj.isRemote) {
 			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
 		}
 	}
+	
+	
+	
+
 	
 	
 	/**
