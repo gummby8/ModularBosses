@@ -1922,6 +1922,9 @@ public class ModelShadeHowler extends ModelBase {
 			} else
 			if (boss.aniID == boss.CLAW){
 				claw(boss.aniFrame, PartialTick);
+			} else
+			if (boss.aniID == boss.BOMB){
+				howl(boss.aniFrame, PartialTick);
 			}
 
       }
@@ -2312,25 +2315,25 @@ public class ModelShadeHowler extends ModelBase {
     }
 
     
-    static final KeyFrame[] KF_Claw_HEAD = new KeyFrame[4];//
-    static final KeyFrame[] KF_Claw_TOPJAW = new KeyFrame[1];//
-    static final KeyFrame[] KF_Claw_BOTJAW = new KeyFrame[5];//
-    static final KeyFrame[] KF_Claw_BODY = new KeyFrame[7];//
-    static final KeyFrame[] KF_Claw_RARM = new KeyFrame[8];//
-    static final KeyFrame[] KF_Claw_RFOREARM = new KeyFrame[8];//
-    static final KeyFrame[] KF_Claw_RHAND = new KeyFrame[7];//
-    static final KeyFrame[] KF_Claw_RFINGERS = new KeyFrame[7];//
-    static final KeyFrame[] KF_Claw_LARM = new KeyFrame[8];//
-    static final KeyFrame[] KF_Claw_LFOREARM = new KeyFrame[8];//
-    static final KeyFrame[] KF_Claw_LHAND = new KeyFrame[7];//
-    static final KeyFrame[] KF_Claw_LFINGERS = new KeyFrame[7];//
-    static final KeyFrame[] KF_Claw_LLEG = new KeyFrame[1];//
-    static final KeyFrame[] KF_Claw_LLOWLEG = new KeyFrame[4];//
-    static final KeyFrame[] KF_Claw_LFOOT = new KeyFrame[6];//
-    static final KeyFrame[] KF_Claw_LTOES = new KeyFrame[4];//
-    static final KeyFrame[] KF_Claw_RLEG = new KeyFrame[1];//
-    static final KeyFrame[] KF_Claw_RLOWLEG = new KeyFrame[4];//
-    static final KeyFrame[] KF_Claw_RFOOT = new KeyFrame[6];//
+    static final KeyFrame[] KF_Claw_HEAD = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_TOPJAW = new KeyFrame[1];
+    static final KeyFrame[] KF_Claw_BOTJAW = new KeyFrame[5];
+    static final KeyFrame[] KF_Claw_BODY = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_RARM = new KeyFrame[8];
+    static final KeyFrame[] KF_Claw_RFOREARM = new KeyFrame[8];
+    static final KeyFrame[] KF_Claw_RHAND = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_RFINGERS = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_LARM = new KeyFrame[8];
+    static final KeyFrame[] KF_Claw_LFOREARM = new KeyFrame[8];
+    static final KeyFrame[] KF_Claw_LHAND = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_LFINGERS = new KeyFrame[7];
+    static final KeyFrame[] KF_Claw_LLEG = new KeyFrame[1];
+    static final KeyFrame[] KF_Claw_LLOWLEG = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_LFOOT = new KeyFrame[6];
+    static final KeyFrame[] KF_Claw_LTOES = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_RLEG = new KeyFrame[1];
+    static final KeyFrame[] KF_Claw_RLOWLEG = new KeyFrame[4];
+    static final KeyFrame[] KF_Claw_RFOOT = new KeyFrame[6];
     static final KeyFrame[] KF_Claw_RTOES = new KeyFrame[4];
     
     public void build_claw() {

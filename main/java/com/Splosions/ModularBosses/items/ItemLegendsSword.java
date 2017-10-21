@@ -6,7 +6,9 @@ import java.util.List;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
+import com.Splosions.ModularBosses.entity.projectile.EntityBlackBomb;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
+import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
@@ -18,6 +20,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -37,8 +40,12 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
 		
-
-		
+		if (!world.isRemote) {
+			EntityBlackBomb projectile = new EntityBlackBomb(world, playerIn, playerIn, 3F, 0, 0, 0, 0,1,1,1);
+			Vec3 vec = playerIn.getLookVec();
+			projectile.setThrowableHeading(vec.xCoord, vec.yCoord, vec.zCoord, 0.1F, 0);
+			world.spawnEntityInWorld(projectile);	
+		}
 		
         return itemStackIn;
 	}

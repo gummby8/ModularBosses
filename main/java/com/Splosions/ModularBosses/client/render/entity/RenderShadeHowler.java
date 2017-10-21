@@ -65,9 +65,12 @@ public class RenderShadeHowler extends RenderLiving {
 		float f6 = MathHelper.sqrt_float(f3 * f3 + f5 * f5);
 		float f7 = MathHelper.sqrt_float(f3 * f3 + f4 * f4 + f5 * f5);
 		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) x, (float) y + 1.9F, (float) z );	
+		GlStateManager.translate((float) x, (float) y + 1.9F, (float) z );
 		GlStateManager.rotate((float) (-Math.atan2((double) f5, (double) f3)) * 180.0F / (float) Math.PI - 90.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate((float) (-Math.atan2((double) f6, (double) f4)) * 180.0F / (float) Math.PI - 90.0F, 1.0F, 0.0F, 0.0F);
+
+		GlStateManager.translate(0, 0, 1);
+		
 		Tessellator tessellator = Tessellator.getInstance();
 		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 		RenderHelper.disableStandardItemLighting();
