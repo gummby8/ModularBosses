@@ -41,5 +41,7 @@ public class Sounds {
 	public static final String GOLEM_ROLL = Reference.MOD_ID + ":golem_roll";
 	public static final String BOULDER_HIT = Reference.MOD_ID + ":boulder_hit";
 	
+	public static final String SHADEHOWLER_HOWL = Reference.MOD_ID + ":shadehowler_howl";
+	
 	
 }

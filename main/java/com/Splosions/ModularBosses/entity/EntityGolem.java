@@ -55,9 +55,9 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 
 	private static final int ANI_ID_WATCHER = 17;
 
-	public int AniID = 0;
-	public int PrevAniID = 0;
-	public int AniFrame = 0;
+	public int aniID = 0;
+	public int prevAniID = 0;
+	public int aniFrame = 0;
 
 	public int textureBlockID = -1;
 
@@ -82,7 +82,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 
 	// stuns the mob
 	public boolean isMovementBlocked() {
-		if (this.AniID == BUILD) {
+		if (this.aniID == BUILD) {
 			return true;
 		} else {
 			return false;
@@ -99,7 +99,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	}
 
 	public boolean isEntityInvulnerable() {
-		if (this.AniID == BUILD) {
+		if (this.aniID == BUILD) {
 			return true;
 		} else {
 			return false;
@@ -152,7 +152,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			entityToAttack = TargetUtils.findRandomVisablePlayer(this, 20, 4);
 		} 
 		
-		if (this.AniID == STAND && entityToAttack != null && !this.worldObj.isRemote) {
+		if (this.aniID == STAND && entityToAttack != null && !this.worldObj.isRemote) {
 			this.moveHelper.setMoveTo(this.entityToAttack.posX, this.entityToAttack.posY, this.entityToAttack.posZ, 0.35F);
 		} 
 		
@@ -162,36 +162,36 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			this.tasks.removeTask(entityAIWander);
 		}
 		
-		if (!this.worldObj.isRemote && this.AniID == STAND && entityToAttack != null) {
+		if (!this.worldObj.isRemote && this.aniID == STAND && entityToAttack != null) {
 			attackPicker();
 		}
 		
 		
 		
-		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
-		this.AniFrame = (this.AniID != this.PrevAniID) ? 0 : this.AniFrame;
+		this.aniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
+		this.aniFrame = (this.aniID != this.prevAniID) ? 0 : this.aniFrame;
 
 
 
 
-		this.AniFrame++;
-		if (this.AniID == BUILD && this.AniFrame == 1) {
+		this.aniFrame++;
+		if (this.aniID == BUILD && this.aniFrame == 1) {
         	this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
-		} else if (this.AniID == BUILD && this.AniFrame > 90) {
-			this.AniFrame = 0;
-			this.AniID = STAND;
-		} else if (this.AniID == THROW && this.AniFrame == 15) {
+		} else if (this.aniID == BUILD && this.aniFrame > 90) {
+			this.aniFrame = 0;
+			this.aniID = STAND;
+		} else if (this.aniID == THROW && this.aniFrame == 15) {
 			if (!this.worldObj.isRemote){throwRock();}		
-		} else if (this.AniID == THROW && this.AniFrame > 29) {
+		} else if (this.aniID == THROW && this.aniFrame > 29) {
 			entityToAttack = null;
-			this.AniFrame = 0;
-			this.AniID = STAND;
-		} else if (this.AniID == ROLL && this.AniFrame > 0 && this.AniFrame < 9) {
+			this.aniFrame = 0;
+			this.aniID = STAND;
+		} else if (this.aniID == ROLL && this.aniFrame > 0 && this.aniFrame < 9) {
 			if (this.entityToAttack != null){
 				this.faceEntity(this.entityToAttack, 360, 0);
 				this.moveHelper.setMoveTo(this.entityToAttack.posX, this.posY, this.entityToAttack.posZ, 0.3F);
 			}
-		} else if (this.AniID == ROLL && this.AniFrame == 9) {
+		} else if (this.aniID == ROLL && this.aniFrame == 9) {
 			this.playSound(Sounds.GOLEM_ROLL, 4F, 1.0F);
 			count = 0;
 			Vec3 look = this.getLookVec();
@@ -200,27 +200,27 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			double dy = this.posY; 
 			double dz = this.posZ + (look.zCoord * distance);
 			this.targetPos = new BlockPos(dx, dy - 1, dz);
-		} else if (this.AniID == ROLL && this.AniFrame > 9 && this.AniFrame < 20) {
+		} else if (this.aniID == ROLL && this.aniFrame > 9 && this.aniFrame < 20) {
 			List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(1, 0, 1));
 			this.kickEntities(list, 3D, 1D, this.hardness * golemDmgMulti);	
 			this.moveHelper.setMoveTo(this.targetPos.getX(), this.posY, this.targetPos.getZ(), 1);				
-		} else if (this.AniID == ROLL && this.AniFrame == 20 && this.count < 2) {
-			this.AniFrame = 10;
+		} else if (this.aniID == ROLL && this.aniFrame == 20 && this.count < 2) {
+			this.aniFrame = 10;
 			this.count++;
-		} else if (this.AniID == ROLL && this.AniFrame > 23) {
+		} else if (this.aniID == ROLL && this.aniFrame > 23) {
 			entityToAttack = null;
-			this.AniFrame = 0;
-			this.AniID = STAND;
-		} else if (this.AniID == STOMP && this.AniFrame > 8 && this.AniFrame < 16) {
+			this.aniFrame = 0;
+			this.aniID = STAND;
+		} else if (this.aniID == STOMP && this.aniFrame > 8 && this.aniFrame < 16) {
 			stompAttack();
-		} else if (this.AniID == STOMP && this.AniFrame > 17) {
-			this.AniFrame = 0;
-			this.AniID = STAND;
+		} else if (this.aniID == STOMP && this.aniFrame > 17) {
+			this.aniFrame = 0;
+			this.aniID = STAND;
 			entityToAttack = null;			
-		} else if (this.AniID == DIE && this.AniFrame == 1) {
+		} else if (this.aniID == DIE && this.aniFrame == 1) {
 			this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
 			this.playSound(Sounds.GOLEM_LIVING, 4F, 1.0F);
-		} else if (this.AniID == DIE && this.AniFrame > 54) {
+		} else if (this.aniID == DIE && this.aniFrame > 54) {
 			for (int x = 0; x < 40; x++){
 		         float f = (this.rand.nextFloat() - 0.5F) * 3;
 		         float f1 = (this.rand.nextFloat() - 0.5F) * 3;
@@ -236,9 +236,9 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			this.setDead();
 		}
 		
-		this.PrevAniID = this.AniID;
+		this.prevAniID = this.aniID;
 		if (!this.worldObj.isRemote) {
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
 		}
 	}
 	
@@ -247,14 +247,14 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		if (this.attackCounter <= 0){
 			int pick = TargetUtils.getRanNum(0, 10);
 			if (pick < 5){
-				this.AniID = THROW;
+				this.aniID = THROW;
 			} else if (pick >= 5 && pick <= 7 ){
-				this.AniID = STOMP;
+				this.aniID = STOMP;
 			} else {
-				this.AniID = ROLL;
+				this.aniID = ROLL;
 			}
 			this.attackCounter = attackCooldown;
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
 		} else {
 			this.attackCounter--;
 		}
@@ -265,10 +265,10 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	
 	@Override
 	 protected void onDeathUpdate() {
-		 this.AniID = DIE;
+		 this.aniID = DIE;
 		 entityToAttack = null;
 			if (!this.worldObj.isRemote) {
-				this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+				this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
 			}
 	 }
 	
@@ -326,8 +326,8 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		this.playSound("mob.ghast.fireball", 4F, 1.0F);
 		 CamShake(this, 15, 40);
 		for (float i = 0.5F; i < 3; ++i) {
-			double x = ((AniFrame - 6) * Math.cos(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posX;
-			double z = ((AniFrame - 6) * Math.sin(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posZ;
+			double x = ((aniFrame - 6) * Math.cos(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posX;
+			double z = ((aniFrame - 6) * Math.sin(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posZ;
 
 			BlockPos pos = new BlockPos(x, this.posY - 1, z);
 			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * 6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
@@ -336,8 +336,8 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			}
 		}
 		for (float i = 0.5F; i < 3; ++i) {
-			double x = ((AniFrame - 6) * Math.cos(Math.toRadians((i * -6) + this.rotationYaw + 90))) + this.posX;
-			double z = ((AniFrame - 6) * Math.sin(Math.toRadians((i * -6) + this.rotationYaw + 90))) + this.posZ;
+			double x = ((aniFrame - 6) * Math.cos(Math.toRadians((i * -6) + this.rotationYaw + 90))) + this.posX;
+			double z = ((aniFrame - 6) * Math.sin(Math.toRadians((i * -6) + this.rotationYaw + 90))) + this.posZ;
 
 			BlockPos pos = new BlockPos(x, this.posY - 1, z);
 			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * -6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
@@ -354,7 +354,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		} else if (canEntityBeSeen(entityToAttack)) {
 			faceEntity(entityToAttack, 10.0F, 10.0F);
 			EntityLivingBase ent = (EntityLivingBase) entityToAttack;
-			if (this.AniID == THROW && this.AniFrame == 15) {
+			if (this.aniID == THROW && this.aniFrame == 15) {
 				float dmg = this.hardness * golemDmgMulti;
 				Entity projectile;
 				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) ent, 1.5F, 0, 2.4F, -1.6F, 0F, 1, 1).setDamage(dmg);

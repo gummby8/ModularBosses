@@ -222,8 +222,8 @@ public class ModelGolem extends ModelBase {
 	
 	
 	private void setLivingAnimations(EntityGolem golem, float moveCounter, float speed, float PartialTick) {
-		 if (golem.AniID == golem.STAND){
-			 	Stand(golem.AniFrame, PartialTick);
+		 if (golem.aniID == golem.STAND){
+			 	Stand(golem.aniFrame, PartialTick);
 				
 			 	speed /= 2;
 			 	
@@ -250,20 +250,20 @@ public class ModelGolem extends ModelBase {
 
 				this.LArm1.rotateAngleX = (idle + 1) / 10;
 				this.RArm1.rotateAngleX = (-idle - 1) / 10;
-		} else if (golem.AniID == golem.BUILD){
-			Build(golem.AniFrame, PartialTick);
+		} else if (golem.aniID == golem.BUILD){
+			Build(golem.aniFrame, PartialTick);
 		} else 
-		if (golem.AniID == golem.THROW){
-			Throw(golem.AniFrame, PartialTick);
+		if (golem.aniID == golem.THROW){
+			Throw(golem.aniFrame, PartialTick);
 		} else 
-		if (golem.AniID == golem.ROLL){
-			Roll(golem.AniFrame, PartialTick);
+		if (golem.aniID == golem.ROLL){
+			Roll(golem.aniFrame, PartialTick);
 		} else  
-		if (golem.AniID == golem.STOMP){
-			Stomp(golem.AniFrame, PartialTick);
+		if (golem.aniID == golem.STOMP){
+			Stomp(golem.aniFrame, PartialTick);
 		} else  
-		if (golem.AniID == golem.DIE){
-			Die(golem.AniFrame, PartialTick);
+		if (golem.aniID == golem.DIE){
+			Die(golem.aniFrame, PartialTick);
 		}
 
 

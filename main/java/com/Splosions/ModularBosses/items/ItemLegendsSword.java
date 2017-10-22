@@ -40,12 +40,6 @@ public class ItemLegendsSword extends BaseModSword implements ISwapModel {
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World world, EntityPlayer playerIn) {
 		System.out.println("Remember to fix the if in legends sword");
 		
-		if (!world.isRemote) {
-			EntityBlackBomb projectile = new EntityBlackBomb(world, playerIn, playerIn, 3F, 0, 0, 0, 0,1,1,1);
-			Vec3 vec = playerIn.getLookVec();
-			projectile.setThrowableHeading(vec.xCoord, vec.yCoord, vec.zCoord, 0.1F, 0);
-			world.spawnEntityInWorld(projectile);	
-		}
 		
         return itemStackIn;
 	}

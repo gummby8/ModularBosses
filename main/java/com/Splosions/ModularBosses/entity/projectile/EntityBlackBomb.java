@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
@@ -27,6 +28,9 @@ public class EntityBlackBomb extends EntityMobThrowable
 	private boolean Explode = false;
 
 	public float Scale;
+	
+	public int Dmg;
+	public int Dur;
 
 	public EntityBlackBomb(World world) {
 		super(world);
@@ -48,13 +52,14 @@ public class EntityBlackBomb extends EntityMobThrowable
 	}
 
 	
-	public EntityBlackBomb(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale) {
+	public EntityBlackBomb(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale, int dmg, int dur) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
 		setScale(scale);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
 		this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
-
+		Dmg = dmg;
+		Dur = dur;
 	}
 
 
@@ -117,7 +122,7 @@ public class EntityBlackBomb extends EntityMobThrowable
 			}
 
 		} else if (this.ticksExisted == 200) {
-			hurtEntities(this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(6, 6, 6)), 10); //set real damage here
+			hurtEntities(this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(7, 7, 7)), Dmg); //set real damage here
 			setDead();
 		}
 	}
@@ -138,6 +143,7 @@ public class EntityBlackBomb extends EntityMobThrowable
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
 				entity.addVelocity(d2 / d4 * 1, 1, d3 / d4 * 1);
+				((EntityPlayer) entity).addPotionEffect(new PotionEffect(15, Dur, 1));
                 entity.attackEntityFrom(DamageSource.causeMobDamage((EntityLivingBase) this.getShooter()), dmg);
 				
 			} 

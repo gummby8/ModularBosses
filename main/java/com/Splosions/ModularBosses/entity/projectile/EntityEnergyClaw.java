@@ -51,13 +51,13 @@ public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAddit
 		this.motionZ = 0;
 	}
 	
-	public EntityEnergyClaw(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale) {
+	public EntityEnergyClaw(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale, int dmg) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
 		setScale(scale);
 		setShooter(shooter);
 		this.Shooter = (EntityLivingBase) getShooter();
-		//this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
-		this.Dmg = 40;
+		
+		this.Dmg = dmg;
 	}
 
 
@@ -109,7 +109,7 @@ public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAddit
 		
 
 		//wave will last for 5 seconds
-		if (this.ticksExisted > 400){
+		if (this.ticksExisted > 100){
 			setDead();
 		}
 

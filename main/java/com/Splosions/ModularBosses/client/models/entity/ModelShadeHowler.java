@@ -1901,12 +1901,43 @@ public class ModelShadeHowler extends ModelBase {
      * Used for easily adding entity-dependent animations. The second and third float params here are the same second
      * and third as in the setRotationAngles method.
      */
-    private void setLivingAnimations(EntityShadeHowler boss, float par2, float par3, float PartialTick)  {
-   
-
-    	
+    private void setLivingAnimations(EntityShadeHowler boss, float moveCounter, float speed, float PartialTick) {
     		if (boss.aniID == boss.STAND){
 				stand(boss.aniFrame, PartialTick);
+				
+				
+			 	
+				//float idle = MathHelper.cos((boss.ticksExisted + PartialTick) / 20) - 2.7F;
+			 	//float angle = MathHelper.cos(moveCounter / 2) * (speed / 4);
+			 	float angle = MathHelper.cos((boss.ticksExisted + PartialTick) / 5 ) / 4 * speed;
+			 	float body = MathHelper.cos((boss.ticksExisted + PartialTick) / 2.5F ) / 4 * speed;
+				
+				this.BODY.rotationPointY = -7 - body; 
+				
+				this.RARM.rotateAngleX = (float) (angle - Math.toRadians(5));
+				this.LARM.rotateAngleX = (float) (-angle - Math.toRadians(5));
+				
+				this.RFOREARM.rotateAngleX = (float) (angle - Math.toRadians(45));
+				this.LFOREARM.rotateAngleX = (float) (-angle - Math.toRadians(45));
+				
+				this.RHAND.rotateAngleX = (float) (-angle - Math.toRadians(40));
+				this.LHAND.rotateAngleX = (float) (angle - Math.toRadians(40));
+				
+				this.RLEG.rotateAngleX = (float) (-angle - Math.toRadians(15));
+				this.LLEG.rotateAngleX = (float) (angle - Math.toRadians(15));
+				
+				this.RLOWLEG.rotateAngleX = (float) ((-angle / 60) - Math.toRadians(10));
+				this.LLOWLEG.rotateAngleX = (float) ((angle / 60) - Math.toRadians(10));
+				
+				this.RFOOT.rotateAngleX = (float) (-angle - Math.toRadians(45));
+				this.LFOOT.rotateAngleX = (float) (angle - Math.toRadians(45));
+				
+				
+				
+				
+				
+				
+				
 			} else
 			if (boss.aniID == 1){
 				//walk();

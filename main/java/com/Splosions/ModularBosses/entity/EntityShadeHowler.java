@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.entity;
 import java.util.List;
 
 import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.entity.projectile.EntityBlackBomb;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
@@ -11,10 +12,12 @@ import com.Splosions.ModularBosses.util.TargetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,7 +36,6 @@ public class EntityShadeHowler extends EntityMob {
 	private static final int ANI_FRAME_WATCHER = 18;
 
 	public static final int STAND = 0;
-	public static final int WALK = 1;
 	public static final int JUMP = 2;
 	public static final int HOWL = 3;
 	public static final int BITE = 4;
@@ -44,6 +46,7 @@ public class EntityShadeHowler extends EntityMob {
 	public static final int BOMB = 7;	
 
 	private int lastAttackCounter = 0;
+	private EntityAIWander entityAIWander = new EntityAIWander(this, 0.25F);
 	
 	Entity target;
 	double targetX;
@@ -74,7 +77,7 @@ public class EntityShadeHowler extends EntityMob {
 	
 	public float meltPercent;
 	public BlockPos meltDest;
-
+	public int meltTime;
 	
 	
 	public boolean targetLocked;
@@ -86,6 +89,19 @@ public class EntityShadeHowler extends EntityMob {
 	
 	public double howlBeginX;
 	public double howlBeginZ;
+	private int attackCounter;
+	
+	public static int shadeHowlerJumpDmg;
+	public static int shadeHowlerClawDmg;
+	public static int shadeHowlerBombDmg;
+	public static int shadeHowlerBombDur;
+	public static int shadeHowlerHowlDmg;
+	public static int shadeHowlerHowlDur;
+	
+	public static int shadeHowlerMaxHealth;
+	public static int ShadeHowlerExpDrop;
+	public static String[] ShadeHowlerLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
+	private static int attackCooldown;
 
 	public EntityShadeHowler(World worldIn) {
 		super(worldIn);
@@ -94,18 +110,12 @@ public class EntityShadeHowler extends EntityMob {
 		this.experienceValue = 5;
 		this.meltPercent = 0;
 		this.aniID = STAND;
-		System.out.println("NEW");
 		
-		// AI STUFF
-		// this.getNavigator().setBreakDoors(true);
+
 		this.tasks.addTask(0, new EntityAISwimming(this));
-		// this.tasks.addTask(1, new EntityAIBreakDoor(this));
+
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.21D, false)); 
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.21D, true));
-		//this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
-		//this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
-		//this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); // Wander speed
-		//this.tasks.addTask(7, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
 		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
@@ -121,10 +131,36 @@ public class EntityShadeHowler extends EntityMob {
 		this.dataWatcher.addObject(ANI_FRAME_WATCHER, 0);
 
 	}
+	
+	
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(shadeHowlerMaxHealth);
+		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
+		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
+		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0D);
+		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+	}
 
 	
 	public static void postInitConfig(Configuration config) {
-		// TODO Auto-generated method stub
+		shadeHowlerMaxHealth = config.get("206 Shade Howler", "01 [Max Health] Shade Howler health... [1+]", 200).getInt();
+		
+		shadeHowlerJumpDmg = config.get("206 Shade Howler", "02 [Attack Dmg] Shade Howler Pounce Damage... [1+]", 10).getInt();
+		shadeHowlerClawDmg = config.get("206 Shade Howler", "03 [Attack Dmg] Shade Howler Claw Damage... [1+]", 20).getInt();
+		shadeHowlerBombDmg = config.get("206 Shade Howler", "04 [Attack Dmg] Shade Howler Dark Bomb Damage... [1+]", 50).getInt();
+		shadeHowlerBombDur = config.get("206 Shade Howler", "05 [Attack Dmg] Shade Howler Dark Bomb Darkness Duration... [1+]", 5).getInt() * 20;
+		shadeHowlerHowlDmg = config.get("206 Shade Howler", "06 [Attack Dmg] Shade Howler Howl Damage... [1+]", 20).getInt();
+		shadeHowlerHowlDur = config.get("206 Shade Howler", "07 [Attack Dmg] Shade Howler Howl Darkness Duration... [1+]", 2).getInt() * 20;		
+		
+		attackCooldown = config.get("206 Shade Howler", "08 [Attack Cooldown] Ammount of seconds between attacks... [1+]", 2).getInt() * 20;
+		ShadeHowlerExpDrop = config.get("206 Shade Howler", "09 [Attribute] Set Exp drop of Shade Howler Spawns [1+]", 100).getInt();
+		ShadeHowlerLoot = config.getStringList("10 [Loot]", "206 Shade Howler", ShadeHowlerLoot, "Set loot drops for Shade Howler {% Drop Chance|Quantity|Item Name}");
 		
 	}
 	
@@ -139,18 +175,27 @@ public class EntityShadeHowler extends EntityMob {
 		
 		
 		this.ignoreFrustumCheck = true;
-		
-		//setDead();
 
-		
-		
 		this.aniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
 		this.aniFrame = (this.aniID != this.prevaniID)? 0 : this.aniFrame;
 		
 		if (!this.worldObj.isRemote && this.target == null) {
 			this.target = TargetUtils.findRandomVisablePlayer(this, 20, 4);
 		}
+
+		if (this.aniID == STAND && target != null && !this.worldObj.isRemote) {
+			this.moveHelper.setMoveTo(this.target.posX, this.target.posY, this.target.posZ, 0.35F);
+		} 
 		
+		if (this.target == null){
+			this.tasks.addTask(1, entityAIWander);
+		} else {
+			this.tasks.removeTask(entityAIWander);
+		}
+		
+		if (!this.worldObj.isRemote && this.aniID == STAND && target != null) {
+			attackPicker();
+		}
 
 		this.aniFrame++;
 		
@@ -159,14 +204,15 @@ public class EntityShadeHowler extends EntityMob {
 
 		if (this.aniID == STAND) {
 			this.aniFrame = 0;
-			this.aniID = BOMB;
+			this.aniID = STAND;
 		}
 		
 			
 		//***********************HOWL************************************
 			
 		 else if (this.aniID == HOWL && this.aniFrame > 4 && this.aniFrame < 30) {
-			howl(TargetUtils.getList(this, 7, 4),45,1F,0.5F,5);
+			if (this.aniFrame == 5) {this.playSound(Sounds.SHADEHOWLER_HOWL, 15F, 1);}
+			howl(TargetUtils.getList(this, 7, 4),45,1F,0.5F,shadeHowlerHowlDmg);
 			placeHowl(6);
 		} else if (this.aniID == HOWL && this.aniFrame > 43) {
 			this.aniFrame = 0;
@@ -177,7 +223,8 @@ public class EntityShadeHowler extends EntityMob {
 		//***********************BLACK BOMB************************************
 		
 		 else if (this.aniID == BOMB && this.aniFrame == 4 && !this.worldObj.isRemote) {
-				EntityBlackBomb projectile = new EntityBlackBomb(this.worldObj, this, this, 3F, 0, 0, 0, 0,1,1,1);
+				if (this.aniFrame == 4) {this.playSound(Sounds.SHADEHOWLER_HOWL, 15F, 1);}
+				EntityBlackBomb projectile = new EntityBlackBomb(this.worldObj, this, this, 3F, 0, 0, 0, 0,1,1,1, shadeHowlerBombDmg, shadeHowlerBombDur);
 				projectile.setPosition(this.posX, this.posY + 1.3F, this.posZ);
 				Vec3 vec = this.getLookVec();
 				projectile.setThrowableHeading(vec.xCoord, vec.yCoord, vec.zCoord, 0.1F, 0);
@@ -247,24 +294,19 @@ public class EntityShadeHowler extends EntityMob {
 					this.bite = true;
 					this.target = (Entity) list.get(0);
 					MBExtendedPlayer.get((EntityPlayer) this.target).knockdownTime = 20;
-					((EntityLivingBase) this.target).addPotionEffect(new PotionEffect(2, 20, 100));
-					if (this.target == Minecraft.getMinecraft().thePlayer) {
-						//ModularBosses.INSTANCE.playerTarget = this;
-					}
 				}
 
 			} else if (this.aniID == JUMP && this.aniFrame > 20 && this.aniFrame < 25) {
 			if (!this.isAirBorne){
 				if (this.bite){
-					//this.target.rotationPitch = this.rotationPitch;
-					//this.target.rotationYaw = this.rotationYaw;
+					target.attackEntityFrom(DamageSource.causeMobDamage(this), shadeHowlerJumpDmg);
 					this.target.posX = this.posX;
 					this.target.posY = this.posY;
 					this.target.posZ = this.posZ;
 					this.aniID = STAND;
 					
 				} else {
-					if (this.jumpCount < 5) {
+					if (this.jumpCount < 4) {
 						this.aniID = JUMP;
 						this.aniFrame = 4;	
 					}
@@ -281,6 +323,7 @@ public class EntityShadeHowler extends EntityMob {
 
 		else if (this.aniID == MELT_MELT || this.aniID == MELT_MOVE || this.aniID == MELT_REFORM) {
 			if (this.aniID == MELT_MELT) {
+				meltTime = 100;
 				this.meltPercent += 5;
 				if (this.meltPercent >= 100) {
 					this.aniID = MELT_MOVE;
@@ -298,17 +341,17 @@ public class EntityShadeHowler extends EntityMob {
 					
 				}
 			} else if (this.aniID == MELT_MOVE) {
-				if (!this.worldObj.isRemote) {this.moveHelper.setMoveTo(meltDest.getX(), meltDest.getY(), meltDest.getZ(), 1);
-				this.aniID = (this.getDistanceSq(meltDest) < 2)? MELT_REFORM : MELT_MOVE;
+				if (!this.worldObj.isRemote) {
+				meltTime--;
+				this.moveHelper.setMoveTo(meltDest.getX(), meltDest.getY(), meltDest.getZ(), 1);
+				this.aniID = (this.getDistanceSq(meltDest) < 2 || meltTime < 0)? MELT_REFORM : MELT_MOVE;
 				}
 				this.meltPercent = 100;
 			} else if (this.aniID == MELT_REFORM) {
 				if (target != null) {this.faceEntity(this.target, 500, 500);}
 				this.meltPercent -= 5;
 				if (this.meltPercent <= -10) {
-					System.out.println("Derp");
-					this.aniID = HOWL;
-					this.aniFrame = 0;
+					attackPicker();
 					this.meltPercent = 0;
 				}
 			}
@@ -318,7 +361,7 @@ public class EntityShadeHowler extends EntityMob {
 		else if (this.aniID == CLAW) {
 			if (this.aniFrame == 17) {
 				if (!this.worldObj.isRemote) {
-					EntityEnergyClaw projectile = new EntityEnergyClaw(this.worldObj, this, this, 3F, 0, 0, 0, 0,1,1,1);
+					EntityEnergyClaw projectile = new EntityEnergyClaw(this.worldObj, this, this, 3F, 0, 0, 0, 0,1,1,1, shadeHowlerClawDmg);
 					projectile.posY = this.posY + 1.5F;
 					this.worldObj.spawnEntityInWorld(projectile);	
 				}
@@ -341,7 +384,34 @@ public class EntityShadeHowler extends EntityMob {
 	}
 	
 	
-	
+	public void attackPicker(){
+		if (this.attackCounter <= 0 || this.prevaniID == MELT_REFORM){
+			int pick;
+			if (this.prevaniID == MELT_REFORM) {
+				pick = TargetUtils.getRanNum(4, 6);
+			} else {
+				pick = TargetUtils.getRanNum(0, 10);	
+			}
+			
+			if (pick < 4){
+				this.aniID = MELT_MELT;
+			} else if (pick == 4) {
+				this.aniID = HOWL;
+			} else if (pick == 5) {
+				this.aniID = CLAW;
+			} else if (pick == 6) {
+				this.aniID = BOMB;
+			} else if (pick > 6) {
+				this.aniID = JUMP;	
+			}
+
+			this.aniFrame = 0;
+			this.attackCounter = attackCooldown;
+			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
+		} else {
+			this.attackCounter--;
+		}
+	}
 
 	
 	
@@ -350,8 +420,14 @@ public class EntityShadeHowler extends EntityMob {
 	 * wont go away
 	 */
 	protected void onDeathUpdate() {
-		ModularBosses.INSTANCE.playerTarget = null;	
-		setDead();
+		super.onDeathUpdate();
+		this.aniID = STAND;
+		this.target = null;
+        if (this.deathTime == 20 && !this.worldObj.isRemote){
+			TargetUtils.dropExp(this, this.ShadeHowlerExpDrop);
+			TargetUtils.dropLoot(this, this.ShadeHowlerLoot);
+        }
+		
 	}
 	
 	
@@ -381,12 +457,9 @@ public class EntityShadeHowler extends EntityMob {
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
 				entity.hurtResistantTime = 10;
-				//player.addPotionEffect(new PotionEffect(15, 200, 1));
-				//entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
-				//entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
-				ModularBosses.INSTANCE.playerTarget = this;
-				//MBExtendedPlayer.get(player).knockdownTime = 60;
-				//System.out.println(entity);
+				player.addPotionEffect(new PotionEffect(15, shadeHowlerHowlDur, 1));
+				entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
+				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
 			}
 		}
 	}
@@ -407,10 +480,9 @@ public class EntityShadeHowler extends EntityMob {
 	 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		//if (this.aniID != MELT) {
+		if (this.aniID != MELT_MELT || this.aniID != MELT_MOVE || this.aniID != MELT_REFORM) {
 				this.Damage(source, amount);
-		
-		//}
+		}
 		return false;
 	}
 

@@ -28,5 +28,7 @@
 "golem_living": {"category": "hostile","sounds":["entity/Golem/golem_living_1","entity/Golem/golem_living_2","entity/Golem/golem_living_3"]},
 "golem_build": {"category": "hostile","sounds":["entity/Golem/golem_build"]},
 "golem_roll": {"category": "hostile","sounds":["entity/Golem/golem_roll"]},
-"boulder_hit": {"category": "hostile","sounds":["entity/Golem/boulder_hit"]}
+"boulder_hit": {"category": "hostile","sounds":["entity/Golem/boulder_hit"]},
+
+"shadehowler_howl": {"category": "hostile","sounds":["entity/ShadeHowler/howl"]}
 }
