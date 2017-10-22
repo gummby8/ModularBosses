@@ -94,7 +94,7 @@ public class Config {
 		
 		EntityBrain.postInitConfig(config);//201
 		EntityHeart.postInitConfig(config);//202
-		EntityShadeHowler.postInitConfig(config);//203 TO DO
+		EntityShadeHowler.postInitConfig(config);//203
 		EntityParagon.postInitConfig(config);//204 
 		EntityTatters.postInitConfig(config);//205 
 		EntityGolem.postInitConfig(config); //206

@@ -149,18 +149,18 @@ public class EntityShadeHowler extends EntityMob {
 
 	
 	public static void postInitConfig(Configuration config) {
-		shadeHowlerMaxHealth = config.get("206 Shade Howler", "01 [Max Health] Shade Howler health... [1+]", 200).getInt();
+		shadeHowlerMaxHealth = config.get("203 Shade Howler", "01 [Max Health] Shade Howler health... [1+]", 200).getInt();
 		
-		shadeHowlerJumpDmg = config.get("206 Shade Howler", "02 [Attack Dmg] Shade Howler Pounce Damage... [1+]", 10).getInt();
-		shadeHowlerClawDmg = config.get("206 Shade Howler", "03 [Attack Dmg] Shade Howler Claw Damage... [1+]", 20).getInt();
-		shadeHowlerBombDmg = config.get("206 Shade Howler", "04 [Attack Dmg] Shade Howler Dark Bomb Damage... [1+]", 50).getInt();
-		shadeHowlerBombDur = config.get("206 Shade Howler", "05 [Attack Dmg] Shade Howler Dark Bomb Darkness Duration... [1+]", 5).getInt() * 20;
-		shadeHowlerHowlDmg = config.get("206 Shade Howler", "06 [Attack Dmg] Shade Howler Howl Damage... [1+]", 20).getInt();
-		shadeHowlerHowlDur = config.get("206 Shade Howler", "07 [Attack Dmg] Shade Howler Howl Darkness Duration... [1+]", 2).getInt() * 20;		
+		shadeHowlerJumpDmg = config.get("203 Shade Howler", "02 [Attack Dmg] Shade Howler Pounce Damage... [1+]", 10).getInt();
+		shadeHowlerClawDmg = config.get("203 Shade Howler", "03 [Attack Dmg] Shade Howler Claw Damage... [1+]", 20).getInt();
+		shadeHowlerBombDmg = config.get("203 Shade Howler", "04 [Attack Dmg] Shade Howler Dark Bomb Damage... [1+]", 50).getInt();
+		shadeHowlerBombDur = config.get("203 Shade Howler", "05 [Attack Dmg] Shade Howler Dark Bomb Darkness Duration... [1+]", 5).getInt() * 20;
+		shadeHowlerHowlDmg = config.get("203 Shade Howler", "06 [Attack Dmg] Shade Howler Howl Damage... [1+]", 20).getInt();
+		shadeHowlerHowlDur = config.get("203 Shade Howler", "07 [Attack Dmg] Shade Howler Howl Darkness Duration... [1+]", 2).getInt() * 20;		
 		
-		attackCooldown = config.get("206 Shade Howler", "08 [Attack Cooldown] Ammount of seconds between attacks... [1+]", 2).getInt() * 20;
-		ShadeHowlerExpDrop = config.get("206 Shade Howler", "09 [Attribute] Set Exp drop of Shade Howler Spawns [1+]", 100).getInt();
-		ShadeHowlerLoot = config.getStringList("10 [Loot]", "206 Shade Howler", ShadeHowlerLoot, "Set loot drops for Shade Howler {% Drop Chance|Quantity|Item Name}");
+		attackCooldown = config.get("203 Shade Howler", "08 [Attack Cooldown] Ammount of seconds between attacks... [1+]", 2).getInt() * 20;
+		ShadeHowlerExpDrop = config.get("203 Shade Howler", "09 [Attribute] Set Exp drop of Shade Howler Spawns [1+]", 100).getInt();
+		ShadeHowlerLoot = config.getStringList("10 [Loot]", "203 Shade Howler", ShadeHowlerLoot, "Set loot drops for Shade Howler {% Drop Chance|Quantity|Item Name}");
 		
 	}
 	
@@ -480,7 +480,7 @@ public class EntityShadeHowler extends EntityMob {
 	 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (this.aniID != MELT_MELT || this.aniID != MELT_MOVE || this.aniID != MELT_REFORM) {
+		if (this.aniID != MELT_MELT && this.aniID != MELT_MOVE && this.aniID != MELT_REFORM) {
 				this.Damage(source, amount);
 		}
 		return false;
