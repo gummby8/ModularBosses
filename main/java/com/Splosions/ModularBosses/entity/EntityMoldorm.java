@@ -24,12 +24,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Configuration;
 
 
-public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntityMultiPart, IMob 
+public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob 
 {
 	public EntityDragonPart[] moldormPartArray;
 	public EntityDragonPart moldormPart1;
@@ -53,7 +55,10 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	public int flip;
 	public int ranTicks = 20;
 
-
+	public static int moldormAttack;
+	public static int moldormMaxHealth;
+	public static int moldormExpDrop;
+	public static String[] moldormLoot = new String[] { "100|1|mb:itemNote", "1|1|mb:itemNote" };
 
 	public EntityMoldorm(World par1World) {
 		super(par1World);
@@ -100,7 +105,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	{
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(40.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(moldormMaxHealth);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
 		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
@@ -108,7 +113,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(moldormAttack);
 	}
 
 
@@ -117,13 +122,22 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	 * Set mob death animations, just be sure to setDead at the end or the model wont go away 
 	 */
 	protected void onDeathUpdate() {
-			if (!this.worldObj.isRemote) {
-				//TargetUtils.dropExp(this, this.heartExpDrop);
-				//TargetUtils.dropLoot(this, this.heartLoot);
-			}
-			this.setDead();
-	}
+		this.deathTime++;
 
+		for (int i = 0; i < 5; ++i) {
+			float f = (this.rand.nextFloat() - 0.5F) * 5.5F;
+			float f1 = (this.rand.nextFloat() - 0.5F) * 5.5F;
+			float f2 = (this.rand.nextFloat() - 0.5F) * 5.5F;
+			this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) f,
+					this.posY + 2.0D + (double) f1, this.posZ + (double) f2, 0.0D, 0.0D, 0.0D);
+		}
+
+		if (!this.worldObj.isRemote && this.deathTime == 20) {
+			TargetUtils.dropExp(this, this.moldormExpDrop);
+			TargetUtils.dropLoot(this, this.moldormLoot);
+		}
+		this.setDead();
+	}
 
 
 
@@ -162,7 +176,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 	//stuns the mob
     @Override
     public boolean isMovementBlocked() {
-    	if (this.hurtResistantTime > 0){
+    	if (this.hurtResistantTime > 0 || this.getHealth() <= 0){
     		return true;
     	} else {
     		return false;
@@ -215,7 +229,6 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 		
 		this.moveHelper.setMoveTo(this.posX + ranPosX, this.posY, this.posZ + ranPosZ, 0.70D);
-		//moveForward(0.2F);
 		setHitBoxes();
 		
 		
@@ -249,13 +262,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 		
 	}
 	
-	public void moveForward(float speed) {
 
-		float f2 = MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F);
-		float f3 = MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F);
-		this.motionX += (double) (-1 * speed * f2);
-		this.motionZ += (double) (speed * f3);
-	}
 	
 	@Override
 	public World getWorld() {
@@ -301,8 +308,7 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
 				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
-				entity.hurtResistantTime = 10;
-				System.out.println(entity);
+				entity.attackEntityFrom(DamageSource.causeMobDamage(this), moldormAttack);
 			}
 		}
 	}
@@ -347,20 +353,15 @@ public class EntityMoldorm extends EntityMob implements IBossDisplayData, IEntit
 
 		
 	}
+
 	
 
 
-	/**
-	 * Called to move the hitboses of the knees when the mob turns
-	 
-	public void moveHitBoxes(EntityDragonPart part, double FrontToBack, double SideToSide, double TopToBot) {
-
-		float f3 = this.rotationYaw * (float) Math.PI / 180.0F;
-		float f11 = MathHelper.sin(f3);
-		float f4 = MathHelper.cos(f3);
-
-		part.setLocationAndAngles(this.posX + (double) (f11 * -FrontToBack) + (double) (f4 * SideToSide), this.posY + TopToBot, this.posZ + (double) (f4 * FrontToBack) + (double) (f11 * SideToSide), 0.0F, 0.0F);
-		part.onUpdate();
+	public static void postInitConfig(Configuration config) {
+		moldormMaxHealth = config.get("212 Moldorm", "1 [Max Health] Set the max HP [1+]", 200).getInt();
+		moldormAttack = config.get("212 Moldorm", "2 [Attack] Set the ammount of damage Moldorm does to players  [1+]", 16).getInt() * 20;
+		moldormExpDrop = config.get("212 Moldorm", "3 [Attribute] Set Exp drop of Moldorm Spawns [1+]", 100).getInt();
+		moldormLoot = config.getStringList("4 [Loot]", "212 Moldorm", moldormLoot, "Set loot drops for Moldorm {% Drop Chance|Quantity|Item Name}");
+		
 	}
-	 */
 }

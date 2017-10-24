@@ -53,6 +53,7 @@ import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
+import com.Splosions.ModularBosses.entity.projectile.EntityMBParticleEmitter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
@@ -95,6 +96,7 @@ public class ModularBossesEntities
 	private static void registerEntities() {
 		int modEntityIndex = 0;
 		//Projectile Entities
+		EntityRegistry.registerModEntity(EntityMBParticleEmitter.class, "particle emitter", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityChorpSlimeBlob.class, "slimeblob", ++modEntityIndex, ModularBosses.INSTANCE, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityBoulder.class, "boulder", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityFlameThrower.class, "Flame Thrower", ++modEntityIndex, ModularBosses.INSTANCE, 64, 10, true);

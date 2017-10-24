@@ -40,7 +40,7 @@ public class EntityHeart extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100);
+		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(heartMaxHealth);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
 		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE

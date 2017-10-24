@@ -8,6 +8,7 @@ import com.Splosions.ModularBosses.entity.EntityEyeballOctopus;
 import com.Splosions.ModularBosses.entity.EntityGolem;
 import com.Splosions.ModularBosses.entity.EntityHeart;
 import com.Splosions.ModularBosses.entity.EntityHeavyChorp;
+import com.Splosions.ModularBosses.entity.EntityMoldorm;
 import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.EntityShadeHowler;
 import com.Splosions.ModularBosses.entity.EntitySkull;
@@ -104,6 +105,8 @@ public class Config {
 		EntityTick.postInitConfig(config);//209 
 		EntitySkull.postInitConfig(config);//210 
 		EntitySpark.postInitConfig(config);//211 
+		EntityMoldorm.postInitConfig(config);//212
+		
 
 	if (config.hasChanged()) {
 			config.save();
