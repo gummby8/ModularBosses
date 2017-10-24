@@ -107,8 +107,8 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 		
 		
 
-		//wave will last for 5 seconds
-		if (this.ticksExisted > 1000){
+
+		if (this.ticksExisted > 100){
 			setDead();
 		}
 

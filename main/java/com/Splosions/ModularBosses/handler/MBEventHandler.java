@@ -173,7 +173,7 @@ public class MBEventHandler {
 		
 		//knocked down players can't do damage
 		if (event.source.getEntity() != null && event.source.getEntity() instanceof EntityPlayer) {
-			if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime > 0) {
+			if (MBExtendedPlayer.get((EntityPlayer) event.source.getEntity()).knockdownTime > 0) {
 				event.setCanceled(true);
 			}
 		}

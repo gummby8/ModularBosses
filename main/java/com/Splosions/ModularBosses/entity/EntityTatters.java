@@ -1,6 +1,7 @@
 package com.Splosions.ModularBosses.entity;
 
 import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.entity.projectile.EntityMBParticleEmitter;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
@@ -92,34 +93,21 @@ public class EntityTatters extends EntityMob {
 
 	public int lastAttackCounter;
 
-	private static final int TELEPORT = 20;
+
 	public int teleport = 0;
 
 	public EntityTatters(World par1World) {
 		super(par1World);
-		// sets hitbox size
 		this.setSize(1F, 3.7F);
 		this.experienceValue = 10;
 		this.isImmuneToFire = false;
 
 		// AI STUFF
-		// this.getNavigator().setBreakDoors(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
-		// this.tasks.addTask(1, new EntityAIBreakDoor(this));
-		// this.tasks.addTask(2, new EntityAIAttackOnCollide(this,
-		// EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the
-		// player
 		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
 		this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
 		this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
-		// this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); //Wander
-		// speed
-		// this.tasks.addTask(7, new EntityAIWatchClosest(this,
-		// EntityPlayer.class, 8.0F));
-		// this.tasks.addTask(7, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true));
-		// this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this,
-		// EntityPlayer.class, true));
 		this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityVillager.class, false));
 
 	}
@@ -171,8 +159,6 @@ public class EntityTatters extends EntityMob {
 	
 	protected void entityInit() {
 		super.entityInit();
-		this.dataWatcher.addObject(TELEPORT, 0);
-
 	}
 
 
@@ -243,7 +229,6 @@ public class EntityTatters extends EntityMob {
 						this.scythes[i].moveForward(2F);
 						this.lastAttackCounter = (countScythes() == this.scytheCountMax) ? 100 : 20;
 						if (this.lastAttackCounter == 100) {
-							this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
 							teleport();
 						}
 						break;
@@ -254,8 +239,11 @@ public class EntityTatters extends EntityMob {
 	}
 
 	public void teleport() {
-		if (this.target != null) {
-			this.dataWatcher.updateObject(TELEPORT, 1);
+		if (this.target != null && !this.worldObj.isRemote) {
+
+			Entity particleEmitter = new EntityMBParticleEmitter(this, this.posX, this.posY, this.posZ, EntityMBParticleEmitter.TATTERS_SMOKE, 0, 0);
+			this.worldObj.spawnEntityInWorld(particleEmitter);
+
 			this.setPosition(this.target.posX + TargetUtils.getRanNum(-10, 10), this.target.posY, this.target.posZ + TargetUtils.getRanNum(-10, 10));
 			this.faceEntity(this.target, 360, 1);
 		}
@@ -277,15 +265,6 @@ public class EntityTatters extends EntityMob {
 		super.onLivingUpdate();
 		TargetUtils.betaMsg(this);
 
-		if (this.dataWatcher.getWatchableObjectInt(TELEPORT) == 1) {
-			for (int i = 0; i < 300; ++i) {
-				float x = (this.rand.nextFloat() - 0.5F) * 2F;
-				float y = (this.rand.nextFloat() - 0.7F) * 4.5F;
-				float z = (this.rand.nextFloat() - 0.5F) * 2F;
-				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
-			}
-			this.dataWatcher.updateObject(TELEPORT, 0);
-		}
 
 		this.lastAttackCounter -= (this.lastAttackCounter <= 0) ? 0 : 1;
 
