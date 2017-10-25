@@ -147,7 +147,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 	 */
 	@Override
 	protected String getHurtSound() {
-		return Sounds.CHORP_HURT;
+		return Sounds.MOLDORM_HIT;
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 	 */
 	@Override
 	protected String getDeathSound() {
-		return Sounds.CHORP_DEATH;
+		return Sounds.MOLDORM_DEATH;
 	}
 
 	/**

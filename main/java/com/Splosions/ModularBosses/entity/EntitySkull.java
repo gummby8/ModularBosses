@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses.entity;
 
 import java.util.Random;
 
+import com.Splosions.ModularBosses.Sounds;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.entity.Entity;
@@ -146,14 +147,14 @@ public class EntitySkull extends EntityFlying implements IMob {
 	 * Returns the sound this mob makes when it is hurt.
 	 */
 	protected String getHurtSound() {
-		return null;
+		return Sounds.SKULL_HIT;
 	}
 
 	/**
 	 * Returns the sound this mob makes on death.
 	 */
 	protected String getDeathSound() {
-		return null;
+		return "mob.ghast.death";
 	}
 	
 	

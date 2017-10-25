@@ -42,6 +42,12 @@ public class Sounds {
 	public static final String BOULDER_HIT = Reference.MOD_ID + ":boulder_hit";
 	
 	public static final String SHADEHOWLER_HOWL = Reference.MOD_ID + ":shadehowler_howl";
+	public static final String SHADEHOWLER_LIVE = Reference.MOD_ID + ":shadehowler_live";
+	
+	public static final String SKULL_HIT = Reference.MOD_ID + ":skull_hit";
+	
+	public static final String MOLDORM_HIT = Reference.MOD_ID + ":moldorm_hit";
+	public static final String MOLDORM_DEATH = Reference.MOD_ID + ":moldorm_death";
 	
 	
 }

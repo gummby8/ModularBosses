@@ -164,6 +164,13 @@ public class EntityShadeHowler extends EntityMob {
 		
 	}
 	
+
+	@Override
+	protected String getLivingSound() {
+		return Sounds.SHADEHOWLER_LIVE;
+	}
+
+	
 	
 	/**
 	 * Called to update the entity's position/logic.

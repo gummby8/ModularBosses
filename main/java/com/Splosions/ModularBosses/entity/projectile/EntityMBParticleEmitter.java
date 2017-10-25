@@ -59,17 +59,22 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		if (this.worldObj.isRemote) {
-			if (this.variant == TATTERS_SMOKE) {
-				for (int i = 0; i < 300; ++i) {
-					float x = (this.rand.nextFloat() - 0.5F) * 2F;
-					float y = (this.rand.nextFloat() - 0.7F) * 4.5F;
-					float z = (this.rand.nextFloat() - 0.5F) * 2F;
-					this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
-				}
-				this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
-				this.setDead();
+
+		if (Shooter == null) {
+			this.setDead();
+			return;
+		}
+
+		if (this.variant == TATTERS_SMOKE) {
+			for (int i = 0; i < 300; ++i) {
+				float x = (this.rand.nextFloat() - 0.5F) * 2F;
+				float y = (this.rand.nextFloat() - 0.7F) * 4.5F;
+				float z = (this.rand.nextFloat() - 0.5F) * 2F;
+				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
 			}
+			this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
+			this.setDead();
+
 		}
 	}
 
