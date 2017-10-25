@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -204,5 +205,21 @@ public class TargetUtils {
             ent.worldObj.spawnEntityInWorld(new EntityXPOrb(ent.worldObj, ent.posX, ent.posY, ent.posZ, j));
         }
 	}
+	
+	
+	public static int distToFloor(Entity ent, double x, double y, double z){
+        BlockPos blockpos = new BlockPos(x, y, z);
+        int count = 0;
+		while (!ent.worldObj.getBlockState(blockpos).getBlock().getMaterial().blocksMovement()) {
+			blockpos = blockpos.down();
+			count++;
+		}
+		return count;
+	}
+	
+    public static boolean canPosBeSeen(Entity ent, double x, double y, double z)
+    {
+        return ent.worldObj.rayTraceBlocks(new Vec3(ent.posX, ent.posY, ent.posZ), new Vec3(x, y, z)) == null;
+    }
 
 }

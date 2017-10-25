@@ -33,7 +33,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData {
 
 	/** The Entity this EntityCreature is set to attack. */
-	public Entity entityToAttack;
+	public Entity target;
 
 
 	public int attackCounter;
@@ -148,21 +148,21 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		TargetUtils.betaMsg(this);
 		getTexture();
 		
-		if (entityToAttack == null && !this.worldObj.isRemote) {
-			entityToAttack = TargetUtils.findRandomVisablePlayer(this, 20, 4);
+		if (target == null && !this.worldObj.isRemote) {
+			target = TargetUtils.findRandomVisablePlayer(this, 20, 4);
 		} 
 		
-		if (this.aniID == STAND && entityToAttack != null && !this.worldObj.isRemote) {
-			this.moveHelper.setMoveTo(this.entityToAttack.posX, this.entityToAttack.posY, this.entityToAttack.posZ, 0.35F);
+		if (this.aniID == STAND && target != null && !this.worldObj.isRemote) {
+			this.moveHelper.setMoveTo(this.target.posX, this.target.posY, this.target.posZ, 0.35F);
 		} 
 		
-		if (this.entityToAttack == null){
+		if (this.target == null){
 			this.tasks.addTask(1, entityAIWander);
 		} else {
 			this.tasks.removeTask(entityAIWander);
 		}
 		
-		if (!this.worldObj.isRemote && this.aniID == STAND && entityToAttack != null) {
+		if (!this.worldObj.isRemote && this.aniID == STAND && target != null) {
 			attackPicker();
 		}
 		
@@ -183,13 +183,13 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		} else if (this.aniID == THROW && this.aniFrame == 15) {
 			if (!this.worldObj.isRemote){throwRock();}		
 		} else if (this.aniID == THROW && this.aniFrame > 29) {
-			entityToAttack = null;
+			target = null;
 			this.aniFrame = 0;
 			this.aniID = STAND;
 		} else if (this.aniID == ROLL && this.aniFrame > 0 && this.aniFrame < 9) {
-			if (this.entityToAttack != null){
-				this.faceEntity(this.entityToAttack, 360, 0);
-				this.moveHelper.setMoveTo(this.entityToAttack.posX, this.posY, this.entityToAttack.posZ, 0.3F);
+			if (this.target != null){
+				this.faceEntity(this.target, 360, 0);
+				this.moveHelper.setMoveTo(this.target.posX, this.posY, this.target.posZ, 0.3F);
 			}
 		} else if (this.aniID == ROLL && this.aniFrame == 9) {
 			this.playSound(Sounds.GOLEM_ROLL, 4F, 1.0F);
@@ -208,7 +208,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			this.aniFrame = 10;
 			this.count++;
 		} else if (this.aniID == ROLL && this.aniFrame > 23) {
-			entityToAttack = null;
+			target = null;
 			this.aniFrame = 0;
 			this.aniID = STAND;
 		} else if (this.aniID == STOMP && this.aniFrame > 8 && this.aniFrame < 16) {
@@ -216,7 +216,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		} else if (this.aniID == STOMP && this.aniFrame > 17) {
 			this.aniFrame = 0;
 			this.aniID = STAND;
-			entityToAttack = null;			
+			target = null;			
 		} else if (this.aniID == DIE && this.aniFrame == 1) {
 			this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
 			this.playSound(Sounds.GOLEM_LIVING, 4F, 1.0F);
@@ -266,7 +266,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	@Override
 	 protected void onDeathUpdate() {
 		 this.aniID = DIE;
-		 entityToAttack = null;
+		 target = null;
 			if (!this.worldObj.isRemote) {
 				this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
 			}
@@ -348,12 +348,12 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	}
 
 	protected void throwRock() {
-		float distance = entityToAttack.getDistanceToEntity(this);
+		float distance = target.getDistanceToEntity(this);
 		if (distance > 30.0F) {
-			entityToAttack = null;
-		} else if (canEntityBeSeen(entityToAttack)) {
-			faceEntity(entityToAttack, 10.0F, 10.0F);
-			EntityLivingBase ent = (EntityLivingBase) entityToAttack;
+			target = null;
+		} else if (canEntityBeSeen(target)) {
+			faceEntity(target, 10.0F, 10.0F);
+			EntityLivingBase ent = (EntityLivingBase) target;
 			if (this.aniID == THROW && this.aniFrame == 15) {
 				float dmg = this.hardness * golemDmgMulti;
 				Entity projectile;
