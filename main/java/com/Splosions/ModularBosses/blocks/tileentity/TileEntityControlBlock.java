@@ -94,6 +94,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		while (spawnList.size() < spawnCount) {
 			spawnCreature(this.worldObj, spawnMob, this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
 		}
+		targetTime = Instant.now().getEpochSecond() + spawnFreq;
 	}
 	
 	
@@ -195,6 +196,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 		message = compound.getString("message");
 		setMessage(message);
+		firstSpawn = compound.getBoolean("firstSpawn");
 		triggerPower = compound.getInteger("triggerPower");
 		inputPower = compound.getInteger("inputPower");
 
@@ -217,7 +219,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 		compound.setString("message", message);
 		setMessage(message);
-
+		compound.setBoolean("firstSpawn", firstSpawn);
 		compound.setInteger("triggerPower", triggerPower);
 		compound.setInteger("inputPower", inputPower);
 		markDirty();
