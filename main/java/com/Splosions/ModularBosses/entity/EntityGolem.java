@@ -145,7 +145,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		TargetUtils.betaMsg(this);
+		//TargetUtils.betaMsg(this);
 		getTexture();
 		
 		if (target == null && !this.worldObj.isRemote) {

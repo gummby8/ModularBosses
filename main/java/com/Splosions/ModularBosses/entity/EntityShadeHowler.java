@@ -167,7 +167,7 @@ public class EntityShadeHowler extends EntityMob {
 
 	@Override
 	protected String getLivingSound() {
-		return Sounds.SHADEHOWLER_LIVE;
+		return null;
 	}
 
 	
@@ -464,7 +464,9 @@ public class EntityShadeHowler extends EntityMob {
 				double d3 = entity.posZ - d1;
 				double d4 = d2 * d2 + d3 * d3;
 				entity.hurtResistantTime = 10;
-				player.addPotionEffect(new PotionEffect(15, shadeHowlerHowlDur, 1));
+				if (!player.capabilities.isCreativeMode) {
+					player.addPotionEffect(new PotionEffect(15, shadeHowlerHowlDur, 1));	
+				}
 				entity.attackEntityFrom(DamageSource.causeMobDamage(this), Damage);
 				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
 			}

@@ -82,8 +82,10 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 				this.player.setInWeb();
 				this.player.setVelocity(0, 0, 0);
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
-			} else 
-			if (this.knockdownTime == 1){
+			}
+			
+			if (this.knockdownTime == 1 && this.player == Minecraft.getMinecraft().thePlayer){
+				System.out.println("derp");
 				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;	
 			}
 			
