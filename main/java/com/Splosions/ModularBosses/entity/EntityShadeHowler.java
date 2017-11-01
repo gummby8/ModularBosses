@@ -330,7 +330,7 @@ public class EntityShadeHowler extends EntityMob {
 
 		else if (this.aniID == MELT_MELT || this.aniID == MELT_MOVE || this.aniID == MELT_REFORM) {
 			if (this.aniID == MELT_MELT) {
-				meltTime = 100;
+				meltTime = 40;
 				this.meltPercent += 5;
 				if (this.meltPercent >= 100) {
 					this.aniID = MELT_MOVE;

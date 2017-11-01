@@ -118,9 +118,9 @@ public class ModularBossesEntities
 	
 		
 		// MOBS and egg colors
-		EntityRegistry.registerModEntity(EntitySandWorm.class, "SandWorm", ++modEntityIndex, ModularBosses.INSTANCE, 400, 3, true);
-		EntityRegistry.registerModEntity(EntitySandWormTail.class, "SandWormTail", ++modEntityIndex, ModularBosses.INSTANCE, 400, 3, true);
-		CustomEntityList.addMapping(EntitySandWorm.class, "SandWorm", 0x663300, 0xFFFFFF);
+		EntityRegistry.registerModEntity(EntitySandWorm.class, "Sandworm", ++modEntityIndex, ModularBosses.INSTANCE, 400, 3, true);
+		EntityRegistry.registerModEntity(EntitySandWormTail.class, "Sandworm_Tail", ++modEntityIndex, ModularBosses.INSTANCE, 400, 3, true);
+		CustomEntityList.addMapping(EntitySandWorm.class, "Sandworm", 0x663300, 0xFFFFFF);
 		
 		EntityRegistry.registerModEntity(EntityBrain.class, "Brain", ++modEntityIndex, ModularBosses.INSTANCE, 80, 3, true);
 		CustomEntityList.addMapping(EntityBrain.class, "Brain", 0xffc1c1, 0xccbdbd);

@@ -22,6 +22,8 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	public int limbo;
 	
 	public int knockdownTime;
+	public int preKnockdown;
+	public int knockdown;
 
 	public static final int LIMBO_WATCHER = 27;
 	public static final int KNOCKDOWN_WATCHER = 28;
@@ -63,8 +65,6 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 	
 	public void onUpdate() {
 		if (this.player.getEntityWorld().isRemote) {
-			this.knockdownTime = this.player.getDataWatcher().getWatchableObjectInt(KNOCKDOWN_WATCHER);
-			
 			this.limbo = this.player.getDataWatcher().getWatchableObjectInt(LIMBO_WATCHER);
 			if (this.preLimbo != this.limbo && this.player == Minecraft.getMinecraft().thePlayer) {
 				if (this.limbo == 1) {
@@ -78,21 +78,24 @@ public class MBExtendedPlayer implements IExtendedEntityProperties {
 			this.preLimbo = this.limbo;
 			
 			
-			if (this.knockdownTime >= 2 && this.player == Minecraft.getMinecraft().thePlayer){
+			this.knockdown = this.player.getDataWatcher().getWatchableObjectInt(KNOCKDOWN_WATCHER);
+			
+			if (this.knockdown == 1 && this.player == Minecraft.getMinecraft().thePlayer) {
 				this.player.setInWeb();
 				this.player.setVelocity(0, 0, 0);
-				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;
+				Minecraft.getMinecraft().gameSettings.thirdPersonView = 1;				
+			} else 			
+			if (this.knockdown == 0 && this.preKnockdown != this.knockdown && this.player == Minecraft.getMinecraft().thePlayer) {
+					Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;
 			}
+			this.preKnockdown = this.knockdown;	
 			
-			if (this.knockdownTime == 1 && this.player == Minecraft.getMinecraft().thePlayer){
-				System.out.println("derp");
-				Minecraft.getMinecraft().gameSettings.thirdPersonView = 0;	
-			}
 			
+
 			
 		} else {
-			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (this.limboTime > 0 ? 1 : 0));
-			this.player.getDataWatcher().updateObject(KNOCKDOWN_WATCHER, knockdownTime);
+			this.player.getDataWatcher().updateObject(LIMBO_WATCHER, (limboTime > 0 ? 1 : 0));
+			this.player.getDataWatcher().updateObject(KNOCKDOWN_WATCHER, (knockdownTime > 0 ? 1 : 0));
 		
 			this.limbo = this.limboTime > 0 ? 1 : 0;
 		}

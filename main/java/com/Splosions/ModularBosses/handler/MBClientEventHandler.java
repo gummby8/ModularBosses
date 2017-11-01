@@ -132,7 +132,7 @@ public class MBClientEventHandler {
 			player.setAngles(rYaw, -(rPitch - player.rotationPitch));
 		}
 
-		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdownTime != 0 && !(event.renderer instanceof RenderKnockedDown)) {
+		if (MBExtendedPlayer.get((EntityPlayer) event.entity).knockdown == 1 && !(event.renderer instanceof RenderKnockedDown)) {
 			event.setCanceled(true);
 			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.partialRenderTick);
 		}

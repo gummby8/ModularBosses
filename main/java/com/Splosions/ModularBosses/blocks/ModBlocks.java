@@ -55,15 +55,12 @@ public class ModBlocks
 		GameRegistry.registerBlock(portalBlock, ItemModBlock.class, portalBlock.getUnlocalizedName().substring(5));
 		GameRegistry.registerTileEntity(TileEntityPortalBlock.class, Reference.MOD_ID + ":tileEntityPortalBlock");
 		
-		portalReturn = new BlockReturnPortal(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_return_block");
-		GameRegistry.registerBlock(portalReturn, ItemModBlock.class, portalReturn.getUnlocalizedName().substring(5));
-		GameRegistry.registerTileEntity(TileEntityReturnPortalBlock.class, Reference.MOD_ID + ":tileEntityReturnPortalBlock");
-		
 		portalLanding = new BlockPortalLanding(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_landing");
 		GameRegistry.registerBlock(portalLanding, ItemModBlock.class, portalLanding.getUnlocalizedName().substring(5));
 		
-		phaseFire = new BlockPhaseFire(Material.barrier).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
-		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
+		portalReturn = new BlockReturnPortal(Material.barrier).setLightLevel(1).setUnlocalizedName("portal_return_block");
+		GameRegistry.registerBlock(portalReturn, ItemModBlock.class, portalReturn.getUnlocalizedName().substring(5));
+		GameRegistry.registerTileEntity(TileEntityReturnPortalBlock.class, Reference.MOD_ID + ":tileEntityReturnPortalBlock");
 		
 		wormGutsBlock1 = new BlockWormGuts(Material.barrier).setUnlocalizedName("worm_guts_1");
 		GameRegistry.registerBlock(wormGutsBlock1, ItemModBlock.class, wormGutsBlock1.getUnlocalizedName().substring(5));
@@ -79,6 +76,9 @@ public class ModBlocks
 		
 		force_field_blue = new BlockForceFieldBlue(Material.barrier).setUnlocalizedName("force_field_blue");
 		GameRegistry.registerBlock(force_field_blue, ItemModBlock.class, force_field_blue.getUnlocalizedName().substring(5));
+
+		phaseFire = new BlockPhaseFire(Material.barrier).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
+		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
 		
 		invisibleBlock = new BlockInvisible(Material.barrier).setUnlocalizedName("invisible_block");
 		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));

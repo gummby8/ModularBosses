@@ -1,8 +1,54 @@
-item.TestItem1.name=Test Item 1
-item.TestItem2.name=Test Item 2
-item.TestFood.name=Test Food
+< en_US.lang - English localization file for the mod Modular Bosses>
 
-tile.TestBlock.name=Test Block
+itemGroup.mb.eggs=Spawn Eggs
+itemGroup.mb.tools=Tools & Weapons
+itemGroup.mb.blocks=Blocks
 
-entity.SenseiSteve.name=Sensei Steve
-entity.HeavyChorp.name=Heavy Chorp
+
+entity.mb.Sandworm.name=Sandworm
+entity.mb.Sandworm_Tail.name=Sandworm Tail
+entity.mb.Brain.name=Brain
+entity.mb.Heart.name=Heart
+entity.mb.Spark.name=Spark
+entity.mb.Skull.name=Flying Skull
+entity.mb.Golem.name=Golem
+entity.mb.ChorpChorp.name=Chorp Chorp
+entity.mb.HeavyChorp.name=Heavy Chorp
+entity.mb.Tatters.name=Tatters
+entity.mb.EyeballOctopus.name=Eyeball Octopus
+entity.mb.Tick.name=Giant Tick
+entity.mb.ShadeHowler.name=Shade Howler
+entity.mb.Paragon.name=Paragon
+entity.mb.Paragon.name=Paragon
+entity.mb.Paragon.name=Paragon
+entity.mb.Paragon.name=Paragon
+
+
+item.mb.spawn_egg.name=Spawn
+item.mb.itemScythe.name=Scythe
+item.mb.Legends_Bow.name=Legends Bow
+item.mb.Legends_Sword.name=Legends Sword
+item.mb.itemBait.name=Bait
+item.mb.itemNote.name=Note
+
+
+tile.fluid.fluid_worm_saliva.name=Worm Saliva
+tile.fluid.fluid_worm_blood.name=Worm Blood
+tile.fluid.fluid_temp_worm_blood.name=Temporary Worm Blood
+tile.fluid.fluid_worm_acid.name=Worm Acid
+tile.fluid.fluid_temp_worm_acid.name=Temporary Worm Acid
+tile.fluid.gas_worm_gas.name=Worm gas
+
+
+tile.mb.control_block.name=Control Block
+tile.mb.portal_block.name=Portal Block
+tile.mb.portal_return_block.name=Dungeon Return Home Portal
+tile.mb.portal_landing.name=Portal Block Destination
+tile.mb.worm_guts_1.name=Worm Guts
+tile.mb.worm_guts_2.name=Worm Guts
+tile.mb.worm_tumor.name=Worm Tumor
+tile.mb.force_field_gen.name=Force Field Door
+tile.mb.force_field_blue.name=Force Field
+tile.mb.phase_fire.name=Phase Fire
+tile.mb.invisible_block.name=Invisible BLock
+tile.mb.chunk_loader.name=Chunk Loader

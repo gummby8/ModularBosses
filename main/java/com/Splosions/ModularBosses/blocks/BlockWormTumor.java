@@ -36,9 +36,10 @@ public class BlockWormTumor extends Block implements IVanillaRotation
 		setHarvestLevel("pickaxe", 2);
 		setStepSound(soundTypeStone);
 		setCreativeTab(MBCreativeTabs.tabBlocks);
-		
+
 	}
 
+	
 	@Override
 	public Rotation getRotationPattern() {
 		return BlockRotationData.Rotation.PISTON_CONTAINER;
