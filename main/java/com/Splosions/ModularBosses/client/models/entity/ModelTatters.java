@@ -1,5 +1,7 @@
 package com.Splosions.ModularBosses.client.models.entity;
 
+import org.lwjgl.opengl.GL11;
+
 import com.Splosions.ModularBosses.entity.EntityTatters;
 
 import net.minecraft.client.Minecraft;
@@ -2075,54 +2077,105 @@ public class ModelTatters extends ModelBase {
     	    
     @Override
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
-    	dist = entity.getDistanceToEntity(Minecraft.getMinecraft().getRenderViewEntity());
-    	shade = 1.6F / dist;
-    	this.SPINE.render(f5);
-    	this.HEADBLOCK.render(f5);
-    	this.HOOD.render(f5);
-    	this.SHOULDERS.render(f5);
-    	GlStateManager.color(shade, shade, shade);
-    	this.HEAD.render(f5);
-    	shade = 1F;
-    	GlStateManager.color(shade, shade, shade);
+    	EntityTatters boss = (EntityTatters)entity;
+    	
+    	if (boss.deathTicks > 0) {
+    		float f6 = (float)boss.deathTicks / 100.0F;
+        	
+    		GL11.glEnable(GL11.GL_BLEND);
+    		GlStateManager.color(1,1,1, 1F - f6);
+    		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-    	
-    	
-    
-    	
+    		
+        	this.SPINE.render(f5);
+        	this.HEADBLOCK.render(f5);
+        	this.HOOD.render(f5);
+        	this.SHOULDERS.render(f5);
+    		
+            for (int i = 0; i < this.StripF5.length; ++i){this.StripF5[i].render(f5);}
+            for (int i = 0; i < this.StripF6.length; ++i){this.StripF6[i].render(f5);}
+            for (int i = 0; i < this.StripF7.length; ++i){this.StripF7[i].render(f5);}
+            for (int i = 0; i < this.StripF8.length; ++i){this.StripF8[i].render(f5);}
+            for (int i = 0; i < this.StripF9.length; ++i){this.StripF9[i].render(f5);}
+            for (int i = 0; i < this.StripF10.length; ++i){this.StripF10[i].render(f5);}        
+            for (int i = 0; i < this.StripF14.length; ++i){this.StripF14[i].render(f5);}
+            for (int i = 0; i < this.StripF15.length; ++i){this.StripF15[i].render(f5);}
+            for (int i = 0; i < this.StripF16.length; ++i){this.StripF16[i].render(f5);}
+            for (int i = 0; i < this.StripF17.length; ++i){this.StripF17[i].render(f5);}
+            for (int i = 0; i < this.StripF18.length; ++i){this.StripF18[i].render(f5);}
+            for (int i = 0; i < this.StripF19.length; ++i){this.StripF19[i].render(f5);}
+            
+            for (int i = 0; i < this.StripB1.length; ++i){this.StripB1[i].render(f5);}
+            for (int i = 0; i < this.StripB2.length; ++i){this.StripB2[i].render(f5);}
+            for (int i = 0; i < this.StripB3.length; ++i){this.StripB3[i].render(f5);}
+            for (int i = 0; i < this.StripB4.length; ++i){this.StripB4[i].render(f5);}
+            for (int i = 0; i < this.StripB5.length; ++i){this.StripB5[i].render(f5);}
+            for (int i = 0; i < this.StripB6.length; ++i){this.StripB6[i].render(f5);}
+            for (int i = 0; i < this.StripB7.length; ++i){this.StripB7[i].render(f5);}
+            for (int i = 0; i < this.StripB8.length; ++i){this.StripB8[i].render(f5);}
+            for (int i = 0; i < this.StripB9.length; ++i){this.StripB9[i].render(f5);}
+            for (int i = 0; i < this.StripB10.length; ++i){this.StripB10[i].render(f5);}        
+            for (int i = 0; i < this.StripB11.length; ++i){this.StripB11[i].render(f5);}
+            for (int i = 0; i < this.StripB12.length; ++i){this.StripB12[i].render(f5);}
+            for (int i = 0; i < this.StripB13.length; ++i){this.StripB13[i].render(f5);}
+            for (int i = 0; i < this.StripB14.length; ++i){this.StripB14[i].render(f5);}
+            for (int i = 0; i < this.StripB15.length; ++i){this.StripB15[i].render(f5);}
+            for (int i = 0; i < this.StripB16.length; ++i){this.StripB16[i].render(f5);}
+            for (int i = 0; i < this.StripB17.length; ++i){this.StripB17[i].render(f5);}
+            for (int i = 0; i < this.StripB18.length; ++i){this.StripB18[i].render(f5);}
+            for (int i = 0; i < this.StripB19.length; ++i){this.StripB19[i].render(f5);}
+    		GL11.glDisable(GL11.GL_BLEND);
+    		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);	
+    	} else {
+    		dist = entity.getDistanceToEntity(Minecraft.getMinecraft().getRenderViewEntity());
+        	shade = 1.6F / dist;
+        	this.SPINE.render(f5);
+        	this.HEADBLOCK.render(f5);
+        	this.HOOD.render(f5);
+        	this.SHOULDERS.render(f5);
+        	GlStateManager.color(shade, shade, shade);
+        	this.HEAD.render(f5);
+        	shade = 1F;
+        	GlStateManager.color(shade, shade, shade);
 
-        for (int i = 0; i < this.StripF5.length; ++i){this.StripF5[i].render(f5);}
-        for (int i = 0; i < this.StripF6.length; ++i){this.StripF6[i].render(f5);}
-        for (int i = 0; i < this.StripF7.length; ++i){this.StripF7[i].render(f5);}
-        for (int i = 0; i < this.StripF8.length; ++i){this.StripF8[i].render(f5);}
-        for (int i = 0; i < this.StripF9.length; ++i){this.StripF9[i].render(f5);}
-        for (int i = 0; i < this.StripF10.length; ++i){this.StripF10[i].render(f5);}        
-        for (int i = 0; i < this.StripF14.length; ++i){this.StripF14[i].render(f5);}
-        for (int i = 0; i < this.StripF15.length; ++i){this.StripF15[i].render(f5);}
-        for (int i = 0; i < this.StripF16.length; ++i){this.StripF16[i].render(f5);}
-        for (int i = 0; i < this.StripF17.length; ++i){this.StripF17[i].render(f5);}
-        for (int i = 0; i < this.StripF18.length; ++i){this.StripF18[i].render(f5);}
-        for (int i = 0; i < this.StripF19.length; ++i){this.StripF19[i].render(f5);}
-        
-        for (int i = 0; i < this.StripB1.length; ++i){this.StripB1[i].render(f5);}
-        for (int i = 0; i < this.StripB2.length; ++i){this.StripB2[i].render(f5);}
-        for (int i = 0; i < this.StripB3.length; ++i){this.StripB3[i].render(f5);}
-        for (int i = 0; i < this.StripB4.length; ++i){this.StripB4[i].render(f5);}
-        for (int i = 0; i < this.StripB5.length; ++i){this.StripB5[i].render(f5);}
-        for (int i = 0; i < this.StripB6.length; ++i){this.StripB6[i].render(f5);}
-        for (int i = 0; i < this.StripB7.length; ++i){this.StripB7[i].render(f5);}
-        for (int i = 0; i < this.StripB8.length; ++i){this.StripB8[i].render(f5);}
-        for (int i = 0; i < this.StripB9.length; ++i){this.StripB9[i].render(f5);}
-        for (int i = 0; i < this.StripB10.length; ++i){this.StripB10[i].render(f5);}        
-        for (int i = 0; i < this.StripB11.length; ++i){this.StripB11[i].render(f5);}
-        for (int i = 0; i < this.StripB12.length; ++i){this.StripB12[i].render(f5);}
-        for (int i = 0; i < this.StripB13.length; ++i){this.StripB13[i].render(f5);}
-        for (int i = 0; i < this.StripB14.length; ++i){this.StripB14[i].render(f5);}
-        for (int i = 0; i < this.StripB15.length; ++i){this.StripB15[i].render(f5);}
-        for (int i = 0; i < this.StripB16.length; ++i){this.StripB16[i].render(f5);}
-        for (int i = 0; i < this.StripB17.length; ++i){this.StripB17[i].render(f5);}
-        for (int i = 0; i < this.StripB18.length; ++i){this.StripB18[i].render(f5);}
-        for (int i = 0; i < this.StripB19.length; ++i){this.StripB19[i].render(f5);}
+            for (int i = 0; i < this.StripF5.length; ++i){this.StripF5[i].render(f5);}
+            for (int i = 0; i < this.StripF6.length; ++i){this.StripF6[i].render(f5);}
+            for (int i = 0; i < this.StripF7.length; ++i){this.StripF7[i].render(f5);}
+            for (int i = 0; i < this.StripF8.length; ++i){this.StripF8[i].render(f5);}
+            for (int i = 0; i < this.StripF9.length; ++i){this.StripF9[i].render(f5);}
+            for (int i = 0; i < this.StripF10.length; ++i){this.StripF10[i].render(f5);}        
+            for (int i = 0; i < this.StripF14.length; ++i){this.StripF14[i].render(f5);}
+            for (int i = 0; i < this.StripF15.length; ++i){this.StripF15[i].render(f5);}
+            for (int i = 0; i < this.StripF16.length; ++i){this.StripF16[i].render(f5);}
+            for (int i = 0; i < this.StripF17.length; ++i){this.StripF17[i].render(f5);}
+            for (int i = 0; i < this.StripF18.length; ++i){this.StripF18[i].render(f5);}
+            for (int i = 0; i < this.StripF19.length; ++i){this.StripF19[i].render(f5);}
+            
+            for (int i = 0; i < this.StripB1.length; ++i){this.StripB1[i].render(f5);}
+            for (int i = 0; i < this.StripB2.length; ++i){this.StripB2[i].render(f5);}
+            for (int i = 0; i < this.StripB3.length; ++i){this.StripB3[i].render(f5);}
+            for (int i = 0; i < this.StripB4.length; ++i){this.StripB4[i].render(f5);}
+            for (int i = 0; i < this.StripB5.length; ++i){this.StripB5[i].render(f5);}
+            for (int i = 0; i < this.StripB6.length; ++i){this.StripB6[i].render(f5);}
+            for (int i = 0; i < this.StripB7.length; ++i){this.StripB7[i].render(f5);}
+            for (int i = 0; i < this.StripB8.length; ++i){this.StripB8[i].render(f5);}
+            for (int i = 0; i < this.StripB9.length; ++i){this.StripB9[i].render(f5);}
+            for (int i = 0; i < this.StripB10.length; ++i){this.StripB10[i].render(f5);}        
+            for (int i = 0; i < this.StripB11.length; ++i){this.StripB11[i].render(f5);}
+            for (int i = 0; i < this.StripB12.length; ++i){this.StripB12[i].render(f5);}
+            for (int i = 0; i < this.StripB13.length; ++i){this.StripB13[i].render(f5);}
+            for (int i = 0; i < this.StripB14.length; ++i){this.StripB14[i].render(f5);}
+            for (int i = 0; i < this.StripB15.length; ++i){this.StripB15[i].render(f5);}
+            for (int i = 0; i < this.StripB16.length; ++i){this.StripB16[i].render(f5);}
+            for (int i = 0; i < this.StripB17.length; ++i){this.StripB17[i].render(f5);}
+            for (int i = 0; i < this.StripB18.length; ++i){this.StripB18[i].render(f5);}
+            for (int i = 0; i < this.StripB19.length; ++i){this.StripB19[i].render(f5);}
+    	}
+    	
+		
+		
+		
+    	
     	
       
     }

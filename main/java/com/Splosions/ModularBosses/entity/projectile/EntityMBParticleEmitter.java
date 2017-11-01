@@ -73,6 +73,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
 			}
 			this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
+			System.out.println("Derp");
 			this.setDead();
 
 		}
@@ -106,6 +107,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
+		ByteBufUtils.writeVarInt(buffer, Shooter.getEntityId(), 4);
 		ByteBufUtils.writeVarInt(buffer, variant, 2);
 		ByteBufUtils.writeVarInt(buffer, arg1, 2);
 		ByteBufUtils.writeVarInt(buffer, arg2, 2);
@@ -114,6 +116,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
+		Shooter = worldObj.getEntityByID(ByteBufUtils.readVarInt(additionalData, 4));
 		variant = ByteBufUtils.readVarInt(additionalData, 2);
 		arg1 = ByteBufUtils.readVarInt(additionalData, 2);
 		arg2 = ByteBufUtils.readVarInt(additionalData, 2);

@@ -114,6 +114,10 @@ public class EntityTatters extends EntityMob {
 
 	// stuns the mob
 	public boolean isMovementBlocked() {
+		if (this.deathTicks > 0) {
+			this.target = null;
+			return true;
+		}
 		return false;
 	}
 
@@ -160,16 +164,18 @@ public class EntityTatters extends EntityMob {
 	protected void entityInit() {
 		super.entityInit();
 	}
+	
+	
 
 
 	protected void onDeathUpdate() {
-		super.onDeathUpdate();
-	
-		if (!this.worldObj.isRemote && this.deathTime == 20) {
+		deathTicks++;
+		if (this.deathTicks == 100 && !this.worldObj.isRemote) {
 			TargetUtils.dropExp(this, this.tattersExpDrop);
 			TargetUtils.dropLoot(this, this.tattersLoot);
+			this.setDead();
 		}
-		//this.setDead();
+
 
 	}
 
@@ -263,7 +269,7 @@ public class EntityTatters extends EntityMob {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		TargetUtils.betaMsg(this);
+		if (deathTicks == 0) {
 
 
 		this.lastAttackCounter -= (this.lastAttackCounter <= 0) ? 0 : 1;
@@ -281,7 +287,7 @@ public class EntityTatters extends EntityMob {
 		}
 
 		throwScythe();
-
+		}
 	}
 
 }
