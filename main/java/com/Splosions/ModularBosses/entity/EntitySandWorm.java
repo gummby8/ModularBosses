@@ -163,7 +163,6 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		
 		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
 			TargetUtils.betaMsg(this);
-			this.worldObj.setBlockState(this.getPosition(), Blocks.obsidian.getDefaultState());
 			
 			spawnPosX = (int) this.posX;
 			spawnPosY = (int) this.posY; 

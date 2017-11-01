@@ -49,11 +49,11 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	int spawnCount = 0;
 
 	long targetTime = 0;
-	boolean startTime = false;
 
 	public boolean firstSpawn = false;
 
 	public TileEntityControlBlock() {
+
 	}
 
 	@Override
@@ -67,7 +67,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 					spawnAndFind();
 				} else if (foundList.size() < spawnCount && ticksExisted > 100 && !firstSpawn) {
 					spawnAndFind();
-					firstSpawn = true;
 				} else if (foundList.size() < spawnCount && inputPower == 1) {
 					if (Instant.now().getEpochSecond() >= targetTime) {
 						spawnAndFind();
@@ -81,7 +80,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			// searches for mobs every 1 second
 			if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
 				findMobs();
-				//System.out.println(targetTime - Instant.now().getEpochSecond());
 			}
 
 		}
@@ -95,6 +93,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			spawnCreature(this.worldObj, spawnMob, this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
 		}
 		targetTime = Instant.now().getEpochSecond() + spawnFreq;
+		firstSpawn = true;
 	}
 	
 	
@@ -197,6 +196,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		message = compound.getString("message");
 		setMessage(message);
 		firstSpawn = compound.getBoolean("firstSpawn");
+		targetTime = compound.getLong("targetTime");
 		triggerPower = compound.getInteger("triggerPower");
 		inputPower = compound.getInteger("inputPower");
 
@@ -220,6 +220,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		compound.setString("message", message);
 		setMessage(message);
 		compound.setBoolean("firstSpawn", firstSpawn);
+		compound.setLong("targetTime", targetTime);
 		compound.setInteger("triggerPower", triggerPower);
 		compound.setInteger("inputPower", inputPower);
 		markDirty();
