@@ -1,7 +1,9 @@
 package com.Splosions.ModularBosses.items;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.client.ISwapModel;

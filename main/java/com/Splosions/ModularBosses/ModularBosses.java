@@ -79,6 +79,7 @@ public class ModularBosses {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		Config.postInit();
+		Dungeon.postInit();
 	}
 
 	@Mod.EventHandler

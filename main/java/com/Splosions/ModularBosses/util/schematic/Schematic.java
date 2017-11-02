@@ -3,6 +3,7 @@ package com.Splosions.ModularBosses.util.schematic;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.Splosions.ModularBosses.ModularBosses;
@@ -68,8 +69,15 @@ public class Schematic {
 			}
 			
 			
-			fileName = "./schematics/Worm/" + roomPath + "/1.schematic";
+			fileName = "./schematics/Worm/" + roomPath;
 			file = new File(fileName);
+			
+			File[] files = file.listFiles();
+			if (files.length > 0) {
+				Random rand = new Random();
+				file = files[rand.nextInt(files.length)];	
+			}
+			
 
 			if (file.exists()) {
 				nbtdata = SchematicUtil.readTagCompoundFromFile(file);

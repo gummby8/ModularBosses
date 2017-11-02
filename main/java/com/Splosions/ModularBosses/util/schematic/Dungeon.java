@@ -1,5 +1,7 @@
 package com.Splosions.ModularBosses.util.schematic;
 
+import java.io.File;
+
 public class Dungeon {
 	public int originX = 0;
 	public int originY = 0;
@@ -51,4 +53,36 @@ public class Dungeon {
 		 RoomPosX = originX + (roomWidth * dgnRoomsWidth);
 		 RoomPosZ = originZ - (roomLength * dgnRoomsLength);
 	}
+	
+	public static void postInit() {
+		String[] pathArray = {
+		"./schematics",
+		"./schematics/Worm",
+		"./schematics/Worm/DDDD", 
+		"./schematics/Worm/DDDW",
+		"./schematics/Worm/DDWD",
+		"./schematics/Worm/DDWW",
+		"./schematics/Worm/DWDD",
+		"./schematics/Worm/DWDW",
+		"./schematics/Worm/DWWD",
+		"./schematics/Worm/DWWW",
+		"./schematics/Worm/WDDD",
+		"./schematics/Worm/WDDW",
+		"./schematics/Worm/WDWD",
+		"./schematics/Worm/WDWW",
+		"./schematics/Worm/WWDD",
+		"./schematics/Worm/WWDW",
+		"./schematics/Worm/WWWD",
+		"./schematics/Worm/WWWW"
+		};
+		
+		for (String path : pathArray) {
+			File directory = new File(path);
+			if (!directory.exists()) {
+				directory.mkdir();
+			}
+		}
+	}
+	
+	
 }
