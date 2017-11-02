@@ -52,7 +52,6 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 					for (int x = 0; x < dungeonCount; x++) {
 						Dungeon dungeon = ModularBosses.INSTANCE.dungeonList.get(x);
 						if(dungeon.dungeonID.equals(dungeonID)){
-							System.out.println("Removed ID = " + dungeonID);
 							ModularBosses.INSTANCE.dungeonList.remove(x);
 							break;
 						}

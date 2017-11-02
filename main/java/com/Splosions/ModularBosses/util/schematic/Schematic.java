@@ -197,7 +197,6 @@ public class Schematic {
 
 							world.setTileEntity(bPos, tileEntity);
 							world.markChunkDirty(bPos, tileEntity);
-							//System.out.println(tileEntity);
 						}
 					} catch (Exception e) {
 						ModularBosses.logger.warn("TileEntity failed to load properly!", e);
@@ -291,7 +290,6 @@ public class Schematic {
 						BlockPos bPos = new BlockPos(x + Xx, y + Yy, z + Zz);
 						world.removeTileEntity(bPos);
 						world.setTileEntity(bPos, tileEntity);
-						System.out.println(tileEntity);
 					}
 				} catch (Exception e) {
 					ModularBosses.logger.warn("TileEntity failed to load properly!", e);

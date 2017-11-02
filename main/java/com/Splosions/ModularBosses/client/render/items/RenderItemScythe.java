@@ -135,7 +135,6 @@ public class RenderItemScythe implements ISmartItemModel, IPerspectiveAwareModel
 
 	@Override
 	public IBakedModel handleItemState(ItemStack stack) {
-		//System.out.println(stack.getRepairCost());
 		this.modelNum = stack.getRepairCost();
 		return this;
 	}

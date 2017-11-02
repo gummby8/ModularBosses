@@ -64,7 +64,6 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 			PortalLandingWorldData roomData = (PortalLandingWorldData) this.worldObj.getPerWorldStorage()
 					.loadData(PortalLandingWorldData.class, "lobbyPortals");
 			if (roomData == null) {
-				System.out.println("No LobbyPortals Tag found, creating one");
 				roomData = new PortalLandingWorldData("lobbyPortals");
 				this.worldObj.getPerWorldStorage().setData("lobbyPortals", roomData);
 			}
@@ -98,7 +97,6 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 					}
 
 				} catch (Throwable e) {
-					System.out.println("Tried to teleport but no portal landings exist");
 					TargetUtils.tellPlayersInList(players, "Tried to teleport but no portal landings exist");
 
 				}

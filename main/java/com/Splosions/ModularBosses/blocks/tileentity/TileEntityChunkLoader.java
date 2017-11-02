@@ -27,7 +27,6 @@ public class TileEntityChunkLoader extends TileEntity
 	@Override
 	public void validate() {
 		super.validate();
-		System.out.println("DERP");
 		if ((!this.worldObj.isRemote) && (this.chunkTicket == null)) 
 		{
 			ForgeChunkManager.Ticket ticket = ForgeChunkManager.requestTicket(ModularBosses.INSTANCE, this.worldObj, ForgeChunkManager.Type.NORMAL);

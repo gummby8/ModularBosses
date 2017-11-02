@@ -177,16 +177,12 @@ public class EntityScythe extends EntityMobThrowable {
 
 				if (x <= 0 && z <= 0) {
 					this.rotationYaw = -angle;
-					// System.out.println("-x -z = " + this.rotationYaw);
 				} else if (x >= 0 && z >= 0) {
 					this.rotationYaw = -(angle - 180);
-					// System.out.println("+x +z = " + this.rotationYaw);
 				} else if (x >= 0 && z <= 0) {
 					this.rotationYaw = -angle;
-					// System.out.println("+x -z = " + this.rotationYaw);
 				} else if (x <= 0 && z >= 0) {
 					this.rotationYaw = -(angle + 180);
-					// System.out.println("-x +z = " + this.rotationYaw);
 				}
 			} else {
 				this.rotationYaw = this.Shooter.rotationYaw;
@@ -251,7 +247,6 @@ public class EntityScythe extends EntityMobThrowable {
 					}
 				} else if (entity != this.Shooter && entity != this && !entity.isDead) {
 					entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-					// System.out.println(entity);
 				}
 			} else {
 				if (this.Shooter instanceof EntityTatters && entity instanceof EntityPlayer) {

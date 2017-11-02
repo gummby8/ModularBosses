@@ -73,7 +73,6 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
 			}
 			this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
-			System.out.println("Derp");
 			this.setDead();
 
 		}

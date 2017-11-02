@@ -111,7 +111,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 			if (spawnList.contains(entity.getUniqueID().toString())) {
 				foundList.add(entity.getUniqueID().toString());
-				// System.out.println(entity.getUniqueID().toString());
 			}
 		}
 		this.worldObj.notifyNeighborsOfStateChange(pos, blockType);
@@ -123,9 +122,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	 */
 	public Entity spawnCreature(World world, String entityName, double x, double y, double z) {
 		Entity entity = null;
-		// System.out.println(EntityList.getEntityNameList());
 		entity = EntityList.createEntityByName(entityName, world);
-		// System.out.println("Entity = " + entity);
 		if (entity instanceof EntityLiving && entity != null) {
 			EntityLiving entityliving = (EntityLiving) entity;
 			entityliving.enablePersistence();
@@ -142,9 +139,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			entityliving.renderYawOffset = entityliving.rotationYaw;
 			spawnList.add(entity.getUniqueID().toString());
 			world.spawnEntityInWorld(entityliving);
-			//entityliving.playLivingSound();
-			// System.out.println("Spawning");
-
 		} else if (entity == null) {
 			ModularBosses.logger.warn("Monster Name: " + entityName + " Given to ControlBlock in World: " + world + " at loc: " + x + ", " + y + ", " + z + " is not a valid name");
 		} else {
@@ -164,7 +158,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 
 	public void setMessage(String message) {
 		this.message = message;
-		//System.out.println(message);
 		String[] mesArray = message.split("\\|");
 		if (mesArray.length >= 8) {
 			spawnMob = mesArray[0];
@@ -177,19 +170,16 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			showBorder = (Integer.parseInt(mesArray[7]) == 1)?true:false;
 		}
 		markDirty();
-		// System.out.println(this.message);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		NBTTagList tagList = compound.getTagList("MyStringList", Constants.NBT.TAG_COMPOUND);
-		// System.out.println("TagCount = " + tagList.tagCount());
 
 		for (int i = 0; i < tagList.tagCount(); i++) {
 			NBTTagCompound tag = tagList.getCompoundTagAt(i);
 			String s = tag.getString("MyString" + i);
-			// System.out.println("ReadNBT = " + s);
 			spawnList.add(i, s);
 		}
 
@@ -209,7 +199,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		for (int i = 0; i < spawnList.size(); i++) {
 			String s = spawnList.get(i);
 			if (s != null) {
-				// System.out.println("WriteNBT = " + s);
 				NBTTagCompound tag = new NBTTagCompound();
 				tag.setString("MyString" + i, s);
 				tagList.appendTag(tag);

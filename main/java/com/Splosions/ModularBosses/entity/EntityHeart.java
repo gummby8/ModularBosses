@@ -84,11 +84,9 @@ public class EntityHeart extends EntityMob {
 
 		if (pump != prevPump) {
 			if (pump) {
-				// System.out.println("UP");
 				this.playSound(Sounds.HEART_UP, 10F, 1.0F);
 			} else {
 				this.playSound(Sounds.HEART_DOWN, 10F, 1.0F);
-				// System.out.println("DOWN");
 			}
 			prevPump = pump;
 		}

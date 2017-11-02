@@ -21,7 +21,6 @@ public class RenderTileEntityPortalBlock extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f, int number) {
 		TileEntityPortalBlock te = (TileEntityPortalBlock) tileEntity;
 
-		// System.out.println(te.red);
 		GL11.glColor3f(te.red * 0.004f, te.green * 0.004f, te.blue * 0.004f);
 		this.bindTexture(image);
 		Tessellator tessellator = Tessellator.getInstance();

@@ -26,7 +26,6 @@ public class RenderTileEntityReturnPortalBlock extends TileEntitySpecialRenderer
 	public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f, int number) {
 		TileEntityReturnPortalBlock te = (TileEntityReturnPortalBlock) tileEntity;
 
-		// System.out.println(te.red);
 
 		this.bindTexture(image);
 		Tessellator tessellator = Tessellator.getInstance();

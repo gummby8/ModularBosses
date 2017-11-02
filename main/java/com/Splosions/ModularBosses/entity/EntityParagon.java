@@ -572,7 +572,6 @@ public class EntityParagon extends EntityMob implements IBossDisplayData, IEntit
 					entity.hurtResistantTime = 0;
 				}
 				entity.addVelocity(d2 / d4 * force, height, d3 / d4 * force);
-				System.out.println(entity);
 			}
 
 		}

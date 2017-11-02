@@ -90,7 +90,6 @@ public class MBEventHandler {
 	@SideOnly(Side.SERVER)
 	@SubscribeEvent
 	public void dimensionLoad(Load event){
-		System.out.println("Loading Dimension");
 		if (event.world.provider.getDimensionId() == Config.bossDimension){
 			MinecraftServer.getServer().worldServerForDimension(Config.bossDimension).setBlockState(new BlockPos(1,1,1), ModBlocks.chunkLoaderBlock.getDefaultState());
 		}

@@ -127,11 +127,7 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 
 			if (entity instanceof EntityLivingBase && entity != this.Shooter)
 			{
-
-
 				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-
-				System.out.println(entity);
 			} 
 		}
 	}

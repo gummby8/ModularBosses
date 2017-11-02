@@ -7882,7 +7882,7 @@ public float[] aLFOOT;										public float[] aRFOOT;
 		
 		
 		this.RFOREARM.rotateAngleX = (Robot.AniID == 10)? -70 * 0.0174533F : (this.aRFOREARM[Robot.AniFrame] + (PartialTick * (this.aRFOREARM[Robot.AniFrame + this.Add] - this.aRFOREARM[Robot.AniFrame]))) * 0.0174533F;
-		//System.out.println(Robot.flamethrower);
+
 		this.RFOREARM.rotateAngleY = (this.aRFOREARMy[Robot.AniFrame] + (PartialTick * (this.aRFOREARMy[Robot.AniFrame + this.Add] - this.aRFOREARMy[Robot.AniFrame]))) * 0.0174533F;
 		this.RFOREARM.rotateAngleZ = (this.aRFOREARMz[Robot.AniFrame] + (PartialTick * (this.aRFOREARMz[Robot.AniFrame + this.Add] - this.aRFOREARMz[Robot.AniFrame]))) * 0.0174533F;
 		

@@ -70,8 +70,6 @@ public class GuiEditControlBlock extends GuiScreen {
 	public void initGui() {
 		buttonList.clear();
 		Keyboard.enableRepeatEvents(true);
-		System.out.println(this.te.getMessage());
-		System.out.println("DDDDDDDDDDDDDDERP");
 		String[] mesArray = this.te.getMessage().split("\\|");
 		if (mesArray.length >= 8) {
 			inttxtXCoord = Integer.parseInt(mesArray[1]);
@@ -133,38 +131,32 @@ public class GuiEditControlBlock extends GuiScreen {
 		StringtxtXCoord = txtXCoord.getText().replaceAll("[^0-9]", "");
 		if (StringtxtXCoord != null && !StringtxtXCoord.isEmpty() && StringtxtXCoord != "") {
 			inttxtXCoord = Integer.parseInt(StringtxtXCoord);
-			// System.out.println(inttxtXCoord);
 		}
 
 		StringtxtYCoord = txtYCoord.getText().replaceAll("[^0-9]", "");
 		if (StringtxtYCoord != null && !StringtxtYCoord.isEmpty() && StringtxtYCoord != "") {
 			inttxtYCoord = Integer.parseInt(StringtxtYCoord);
-			// System.out.println(inttxtYCoord);
 		}
 
 		StringtxtZCoord = txtZCoord.getText().replaceAll("[^0-9]", "");
 		if (StringtxtZCoord != null && !StringtxtZCoord.isEmpty() && StringtxtZCoord != "") {
 			inttxtZCoord = Integer.parseInt(StringtxtZCoord);
-			// System.out.println(inttxtZCoord);
 		}
 
 		StringtxtSpnFreq = txtSpnFreq.getText().replaceAll("[^0-9]", "");
 		if (StringtxtSpnFreq != null && !StringtxtSpnFreq.isEmpty() && StringtxtSpnFreq != "") {
 			inttxtSpnFreq = Integer.parseInt(StringtxtSpnFreq);
-			// System.out.println(inttxtSpnFreq);
 		}
 
 		StringtxtSpnCount = txtSpnCount.getText().replaceAll("[^0-9]", "");
 		if (StringtxtSpnCount != null && !StringtxtSpnCount.isEmpty() && StringtxtSpnCount != "") {
 			inttxtSpnCount = Integer.parseInt(StringtxtSpnCount);
-			// System.out.println(inttxtSpnCount);
 		}
 
 		ranspwn = (btnRandomSpnLoc.enabled) ? 0 : 1;
 		border = (btnBorder.enabled) ? 0 : 1;
 
 		message = this.list.selectedName + "|" + inttxtXCoord + "|" + inttxtYCoord + "|" + inttxtZCoord + "|" + inttxtSpnFreq + "|" + inttxtSpnCount + "|" + ranspwn + "|" + border;
-		System.out.println("GUI closed message = " + message);
 		if (message != null && message != "") {
 			te.setMessage(message);
 			PacketDispatcher.sendToServer(new SetControlBlockMessagePacket(te));
@@ -317,7 +309,6 @@ public class GuiEditControlBlock extends GuiScreen {
 				String name = (String) iterator.next();
 				if (name != "ThrownEnderpearl") {
 					Entity entity = EntityList.createEntityByName(name, te.getWorld());
-					// System.out.println(entity);
 					if (entity != null && entity instanceof EntityLiving) {
 						this.nameMap.put(name, name);
 						this.nameArray.add(name);

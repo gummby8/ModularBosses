@@ -373,7 +373,6 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 				}
 				IBlockState iblockstate = this.worldObj.getBlockState(blockPos);
 				textureBlockID = Block.getStateId(iblockstate);
-				System.out.println("" + textureBlockID);
 				this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, blockPos);
 				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.golemMaxHealthMulti * this.hardness);
 				this.heal((float) (this.golemMaxHealthMulti * this.hardness));
@@ -391,7 +390,6 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
 			IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
 			String string = ibakedmodel.getTexture().getIconName() + ".png";
-			System.out.println(string);
 			String[] parts = string.split(":");
 			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);	
 	}
@@ -419,7 +417,6 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			String string = ibakedmodel.getTexture().getIconName() + ".png";
 			String[] parts = string.split(":");
 			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
-			System.out.println(textureLoc);
 	}
 
 }

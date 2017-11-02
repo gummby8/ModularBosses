@@ -128,11 +128,7 @@ public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAddit
 
 			if (entity instanceof EntityLivingBase && entity != this.Shooter)
 			{
-
-
 				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-
-				System.out.println(entity);
 			} 
 		}
 	}

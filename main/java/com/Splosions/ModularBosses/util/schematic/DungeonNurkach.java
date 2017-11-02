@@ -49,7 +49,6 @@ public class DungeonNurkach extends Dungeon {
 
 		roomGen = false;
 		while (!roomGen) {
-			//System.out.println("Making Doors");
 			roomGen = true;
 
 			roomArray[0][0].type = ENTRANCE;
@@ -74,7 +73,6 @@ public class DungeonNurkach extends Dungeon {
 					} catch (Throwable e) {
 						roomArray[y][x].north = WALL;
 						roomArray[y][x].roomCode[0] = "W";
-						// System.out.println("Room (" + y + " - " + x + ") =
 						// North Wall");
 					}
 
@@ -87,7 +85,6 @@ public class DungeonNurkach extends Dungeon {
 					} catch (Throwable e) {
 						roomArray[y][x].east = WALL;
 						roomArray[y][x].roomCode[1] = "W";
-						// System.out.println("Room (" + y + " - " + x + ") =
 						// East Wall");
 					}
 
@@ -100,7 +97,6 @@ public class DungeonNurkach extends Dungeon {
 					} catch (Throwable e) {
 						roomArray[y][x].south = WALL;
 						roomArray[y][x].roomCode[2] = "W";
-						// System.out.println("Room (" + y + " - " + x + ") =
 						// South Wall");
 					}
 
@@ -113,7 +109,6 @@ public class DungeonNurkach extends Dungeon {
 					} catch (Throwable e) {
 						roomArray[y][x].west = WALL;
 						roomArray[y][x].roomCode[3] = "W";
-						// System.out.println("Room (" + y + " - " + x + ") =
 						// West Wall");
 					}
 				}
@@ -203,27 +198,21 @@ public class DungeonNurkach extends Dungeon {
 				if (roomArray[0][0].roomCode[0] == "W" && roomArray[0][1].roomCode[0] == "W" && roomArray[0][2].roomCode[0] == "W") {
 					roomGen = false;
 					newRoomArray();
-					System.out.println("Level 0 Failed North");
 				} else if (roomArray[1][0].roomCode[0] == "W" && roomArray[1][1].roomCode[0] == "W"	&& roomArray[1][2].roomCode[0] == "W") {
 					roomGen = false;
 					newRoomArray();
-					System.out.println("Level 1 Failed North");
-				} else if (roomArray[2][0].roomCode[0] == "W" && roomArray[2][1].roomCode[0] == "W"	&& roomArray[2][2].roomCode[0] == "W") {
+					} else if (roomArray[2][0].roomCode[0] == "W" && roomArray[2][1].roomCode[0] == "W"	&& roomArray[2][2].roomCode[0] == "W") {
 					roomGen = false;
 					newRoomArray();
-					System.out.println("Level 2 Failed North");
-				} else if (roomArray[3][0].roomCode[0] == "W" && roomArray[3][1].roomCode[0] == "W"	&& roomArray[3][2].roomCode[0] == "W") {
+					} else if (roomArray[3][0].roomCode[0] == "W" && roomArray[3][1].roomCode[0] == "W"	&& roomArray[3][2].roomCode[0] == "W") {
 					roomGen = false;
 					newRoomArray();
-					System.out.println("Level 3 Failed North");
 				} else if (roomArray[4][0].roomCode[0] == "W" && roomArray[4][1].roomCode[0] == "W"	&& roomArray[4][2].roomCode[0] == "W") {
 					roomGen = false;
 					newRoomArray();
-					System.out.println("Level 4 Failed North");
 				} else if (roomArray[5][0].roomCode[0] == "W" && roomArray[5][1].roomCode[0] == "W" && roomArray[5][2].roomCode[0] == "W") {
 					roomGen = false;
 					newRoomArray();
-					System.out.println("Level 5 Failed North");
 				}
 			}
 		}

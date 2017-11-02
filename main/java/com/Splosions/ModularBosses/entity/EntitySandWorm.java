@@ -110,7 +110,6 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	
 	public boolean withinRange(double x, double posY, double z){
 		if (this.getDistance(x, posY, z) >= 100 && this.getDistance(x, posY, z) <= 150) {
-			//System.out.println("Distance to target = " + this.getDistance(x, posY, z));
 			return true;
 		} else {
 			return false;
@@ -177,7 +176,6 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		
 		if (!this.worldObj.isRemote){
 			if (dungeonCompleted()){
-				System.out.println("Worm Dead");
 				this.setDead();
 			}			
 
@@ -206,12 +204,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
         
 		if (!this.worldObj.isRemote && this.getDistance(faceX, faceY, faceZ) < 20) {
 			if (faceY == 90){
-				//System.out.println("DIVE DIVE DIVE");
 				this.dataWatcher.updateObject(RANDOM_X_WATCHER, this.ranPosX);
 				this.dataWatcher.updateObject(RANDOM_Y_WATCHER, 5);
 				this.dataWatcher.updateObject(RANDOM_Z_WATCHER, this.ranPosZ);	
 			} else {
-				//System.out.println("Surface!");
 				nextPosition();
 			}
 		}
@@ -221,17 +217,13 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x].setPosition(this.posX, this.posY, this.posZ);
 				this.worldObj.spawnEntityInWorld(bodySegments[x]);
-				//System.out.println("Spawning ID " + bodySegments[x].getEntityId() + " on client");
-				//entIDs[x] = bodySegments[x].getEntityId();
 			}
 		}
 
 		if (this.ticksExisted > 10) {
 			try {
 				if (this.worldObj.isRemote && bodySegments == null) {
-					//bodySegments = new EntitySandWormTail[10];
 					for (int x = 0; x < bodySegments.length; x++) {
-						//bodySegments[x] = (EntitySandWormTail) this.worldObj.getEntityByID(entIDs[x]);
 					}
 				}
 
@@ -253,21 +245,16 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			} catch (Throwable e) {}
 
 		}
-		//setDead();
 	}
 	/**
 	 *checks if there is a dungeon with and ID that matches the worms UUID. 
 	 */
 	public boolean dungeonCompleted(){
 		if(!ModularBosses.INSTANCE.dungeonList.isEmpty()) {
-			//System.out.println("not empty");
 			int dungeonCount = ModularBosses.INSTANCE.dungeonList.size();
 			for (int x = 0; x < dungeonCount; x++) {
 				Dungeon dungeon = ModularBosses.INSTANCE.dungeonList.get(x);
-				//System.out.println("Dungeon ID = " + dungeon.dungeonID);
-				//System.out.println("Monster ID = " + this.getUniqueID().toString());
-				if(dungeon.dungeonID.equals(this.getUniqueID().toString())){ //remember to use .equals() to compare strings you dipstick
-					//System.out.println("Found it");
+				if(dungeon.dungeonID.equals(this.getUniqueID().toString())){ 
 					return false;
 				}
 			}

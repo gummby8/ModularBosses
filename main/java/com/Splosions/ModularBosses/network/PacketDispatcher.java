@@ -127,7 +127,6 @@ public class PacketDispatcher
 	 * See {@link SimpleNetworkWrapper#sendToServer(IMessage)}
 	 */
 	public static final void sendToServer(IMessage message) {
-		//System.out.println("sendToServer? " + message);
 		PacketDispatcher.dispatcher.sendToServer(message);
 	}
 

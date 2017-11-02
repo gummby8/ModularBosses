@@ -62,14 +62,10 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing face, float hitX, float hitY, float hitZ) {
 		TileEntity te = world.getTileEntity(pos);
 			if (world.isRemote && te instanceof TileEntityControlBlock && player.getHeldItem() == null) {
-			
-					//System.out.println("GUI?");
 					player.openGui(ModularBosses.INSTANCE, GuiHandler.GUI_EDIT_CONTROL_BLOCK, player.worldObj, pos.getX(), pos.getY(), pos.getZ());
-
 			}
 			
 			String msg = ((TileEntityControlBlock) te).getMessage();
-			//System.out.println(msg);
 		return true;
 	}
 	
@@ -168,8 +164,6 @@ public class BlockControlBlock extends Block implements IVanillaRotation
         EnumFacing enumfacing1 = enumfacing.rotateY();
         te.triggerPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1) != 0 ? 1 : 0;
         te.inputPower = this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing) != 0 ? 1 : 0;
-        //System.out.println("Trigger = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing1), enumfacing1));
-        //System.out.println("Input = " + this.getPowerOnSide(worldIn, pos.offset(enumfacing), enumfacing));
     }
     
     protected int getPowerOnSide(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
@@ -177,8 +171,6 @@ public class BlockControlBlock extends Block implements IVanillaRotation
     	
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
-        //System.out.println(block.isProvidingWeakPower(worldIn, pos, iblockstate, side));
-        //System.out.println(this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0);
         return this.canPowerSide(block) ? block.isProvidingWeakPower(worldIn, pos, iblockstate, side) : 0;
     }
     

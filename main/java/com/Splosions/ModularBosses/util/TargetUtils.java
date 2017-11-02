@@ -172,8 +172,6 @@ public class TargetUtils {
 	 * @param ent
 	 */
 	public static void dropLoot(Entity ent, String[] lootList) {
-		// ent.dropItem(GameRegistry.findItem("mb", "itemBait"), 1);
-
 		try {
 			if (lootList.length > 0) {
 				for (String string : lootList) {
@@ -185,7 +183,6 @@ public class TargetUtils {
 					int chance = Integer.parseInt(split[0]);
 					chance = (chance > 100) ? 100 : chance;
 					int roll = getRanNum(1, 100);
-					System.out.println(roll);
 					if (roll <= chance) {
 						ent.dropItem(GameRegistry.findItem(item[0], item[1]), qty);
 					}

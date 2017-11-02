@@ -184,7 +184,6 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		byte b0 = 0;
 		int i = b0 | ((EnumFacing) state.getValue(FACING)).getHorizontalIndex();
 		i |= ((Integer) state.getValue(STATE)).intValue() << 2;
-		// System.out.println("Meta = " + i);
 		return i;
 	}
 

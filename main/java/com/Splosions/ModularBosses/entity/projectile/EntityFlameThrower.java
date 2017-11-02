@@ -133,11 +133,7 @@ public class EntityFlameThrower extends EntityMobThrowable implements IEntityAdd
 
 			if (entity instanceof EntityLivingBase && entity != this.Shooter)
 			{
-
-
 				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
-
-				System.out.println(entity);
 			} 
 		}
 	}

@@ -32,7 +32,6 @@ public class Dungeon {
 	public String fileName;
 
 	public void nextRoom() {
-		//System.out.println("Building New Room");
 		 dgnRoomsLength = 0;
 		 dgnRoomsWidth = 0;
 		for(int c = 0; c < roomCount; c++) {
