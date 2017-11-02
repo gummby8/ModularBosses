@@ -476,7 +476,7 @@ public class ModelMoldorm extends ModelBase {
     	/**
     	 * Eyes spin around when damaged
     	 */
-    	if (worm.hurtResistantTime > 0){
+    	if (worm.hurtResistantTime > 0 || worm.getHealth() <= 0){
     		this.pupilR.rotateAngleZ = ((worm.ticksExisted * 50) + (PartialTick * 50)) * 0.0174F; 
     		this.pupilL.rotateAngleZ = ((worm.ticksExisted * 50) + (PartialTick * 50)) * 0.0174F;
     	} else {

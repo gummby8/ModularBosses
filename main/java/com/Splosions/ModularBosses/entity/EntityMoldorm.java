@@ -132,11 +132,12 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 					this.posY + 2.0D + (double) f1, this.posZ + (double) f2, 0.0D, 0.0D, 0.0D);
 		}
 
-		if (!this.worldObj.isRemote && this.deathTime == 20) {
+		if (!this.worldObj.isRemote && this.deathTime == 100) {
 			TargetUtils.dropExp(this, this.moldormExpDrop);
 			TargetUtils.dropLoot(this, this.moldormLoot);
+			this.setDead();
 		}
-		this.setDead();
+		
 	}
 
 
@@ -240,6 +241,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 	}
 
 	public boolean edgeDetect(){
+		
 		Vec3 look = this.getLookVec();
 		float distance = 1.5F; //distance in front of entity
 		double dx = this.posX + (look.xCoord * distance);
