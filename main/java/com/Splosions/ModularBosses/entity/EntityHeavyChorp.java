@@ -208,14 +208,14 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
      * Returns the sound this mob makes when it is hurt.
      */
     protected String getHurtSound() {
-        return "modularbosses:chorp_hurt";
+        return Sounds.CHORP_HURT;
     }
 
     /**
      * Returns the sound this mob makes on death.
      */
     protected String getDeathSound() {
-        return "modularbosses:chorp_death";
+        return Sounds.CHORP_DEATH;
     }
 
     /**
