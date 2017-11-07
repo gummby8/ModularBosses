@@ -272,74 +272,10 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	
-	public void moveParts(int frame, ModelRenderer part, KeyFrame[] keyArray, float partialTick){
-		int keyId = getKeyFrameNum(frame, keyArray);
-		KeyFrame curKey = keyArray[keyId];
 
-		//if it is the very first frame OR if it is the last frame in an animation
-		if (keyArray.length == 1 || frame == 0 || frame == keyArray[keyArray.length - 1].frame){
-			part.rotationPointX = curKey.posX;
-			part.rotationPointY = curKey.posY;
-			part.rotationPointZ = curKey.posZ;
-			part.rotateAngleX = curKey.rotX * 0.0174533F; //Remember kids, always convert to radians;
-			part.rotateAngleY = curKey.rotY * 0.0174533F; //Remember kids, always convert to radians;
-			part.rotateAngleZ = curKey.rotZ * 0.0174533F; //Remember kids, always convert to radians;
-		}else{
-			KeyFrame nextKey = keyArray[keyId + 1];
-			float step;
-			float position;
-			float nextPosition;
-			//float total = nextKey.posX - curKey.posX
-			//int dur = nextKey.frame - curKey.frame;
-			
-			step = (nextKey.posX - curKey.posX) / (nextKey.frame - curKey.frame); //total / duration   this is how much movement there is between each tick
-			position = (frame - curKey.frame) * step;
-			nextPosition = (frame + 1 - curKey.frame) * step;
-			part.rotationPointX = curKey.posX + position + (partialTick * (nextPosition - position));
-			
-			step = (nextKey.posY - curKey.posY) / (nextKey.frame - curKey.frame);
-			position = (frame - curKey.frame) * step;
-			nextPosition = (frame + 1 - curKey.frame) * step;
-			part.rotationPointY = curKey.posY + position + (partialTick * (nextPosition - position));
-			
-			step = (nextKey.posZ - curKey.posZ) / (nextKey.frame - curKey.frame);
-			position = (frame - curKey.frame) * step;
-			nextPosition = (frame + 1 - curKey.frame) * step;
-			part.rotationPointZ = curKey.posZ + position + (partialTick * (nextPosition - position));
-			
-			step = (nextKey.rotX - curKey.rotX) / (nextKey.frame - curKey.frame);
-			position = (frame - curKey.frame) * step;
-			nextPosition = (frame + 1 - curKey.frame) * step;
-			part.rotateAngleX = (curKey.rotX + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians;
-			
-			step = (nextKey.rotY - curKey.rotY) / (nextKey.frame - curKey.frame);
-			position = (frame - curKey.frame) * step;
-			nextPosition = (frame + 1 - curKey.frame) * step;
-			part.rotateAngleY = (curKey.rotY + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians
-			
-			step = (nextKey.rotZ - curKey.rotZ) / (nextKey.frame - curKey.frame);
-			position = (frame - curKey.frame) * step;
-			nextPosition = (frame + 1 - curKey.frame) * step;
-			part.rotateAngleZ = (curKey.rotZ + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians
-		}
-	}
 	
 	
-	public int getKeyFrameNum(int frame, KeyFrame[] keyArray){
-		if (keyArray.length == 1){
-		return 0;	
-		}
-		
-		for (int x = 0; x < keyArray.length; x++){
-			if (frame == keyArray[x].frame ){
-				return x;
-			} else 
-			if(frame > keyArray[x].frame && frame < keyArray[x + 1].frame){
-				return x;
-			}
-		}
-		return 0;
-	}
+
 	
 	/*
 	 * Die
@@ -510,35 +446,35 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	public void Die(int frame, float partialTick){
-		moveParts(frame, HIP, KF_Die_HIP, partialTick);
-		moveParts(frame, WAIST, KF_Die_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_Die_LFHip, partialTick);
-		moveParts(frame, RChest, KF_Die_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_Die_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_Die_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_Die_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_Die_LArm2, partialTick);
-		moveParts(frame, LARM, KF_Die_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_Die_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_Die_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_Die_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_Die_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_Die_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_Die_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_Die_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_Die_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_Die_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_Die_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_Die_RArm2, partialTick);
-		moveParts(frame, LChest, KF_Die_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_Die_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_Die_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_Die_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_Die_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_Die_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_Die_RARM, partialTick);
-		moveParts(frame, RLEG, KF_Die_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_Die_LRHip, partialTick);
+		ModelUtils.moveParts(frame, HIP, KF_Die_HIP, partialTick);
+		ModelUtils.moveParts(frame, WAIST, KF_Die_WAIST, partialTick);
+		ModelUtils.moveParts(frame, LFHip, KF_Die_LFHip, partialTick);
+		ModelUtils.moveParts(frame, RChest, KF_Die_RChest, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder2, KF_Die_LRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RArm1, KF_Die_RArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder1, KF_Die_LFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, LArm2, KF_Die_LArm2, partialTick);
+		ModelUtils.moveParts(frame, LARM, KF_Die_LARM, partialTick);
+		ModelUtils.moveParts(frame, RLeg2, KF_Die_RLeg2, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder2, KF_Die_RRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder1, KF_Die_RFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RRHip, KF_Die_RRHip, partialTick);
+		ModelUtils.moveParts(frame, LLEG, KF_Die_LLEG, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder1, KF_Die_LRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RLeg1, KF_Die_RLeg1, partialTick);
+		ModelUtils.moveParts(frame, LArm1, KF_Die_LArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder2, KF_Die_LFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg2, KF_Die_LLeg2, partialTick);
+		ModelUtils.moveParts(frame, RArm2, KF_Die_RArm2, partialTick);
+		ModelUtils.moveParts(frame, LChest, KF_Die_LChest, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder2, KF_Die_RFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg1, KF_Die_LLeg1, partialTick);
+		ModelUtils.moveParts(frame, RFHip, KF_Die_RFHip, partialTick);
+		ModelUtils.moveParts(frame, HEAD, KF_Die_HEAD, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder1, KF_Die_RRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RARM, KF_Die_RARM, partialTick);
+		ModelUtils.moveParts(frame, RLEG, KF_Die_RLEG, partialTick);
+		ModelUtils.moveParts(frame, LRHip, KF_Die_LRHip, partialTick);
 	}
 	
 	/**
@@ -658,35 +594,35 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	public void Stomp(int frame, float partialTick){
-		moveParts(frame, HIP, KF_Stomp_HIP, partialTick);
-		moveParts(frame, WAIST, KF_Stomp_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_Stomp_LFHip, partialTick);
-		moveParts(frame, RChest, KF_Stomp_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_Stomp_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_Stomp_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_Stomp_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_Stomp_LArm2, partialTick);
-		moveParts(frame, LARM, KF_Stomp_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_Stomp_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_Stomp_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_Stomp_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_Stomp_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_Stomp_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_Stomp_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_Stomp_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_Stomp_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_Stomp_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_Stomp_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_Stomp_RArm2, partialTick);
-		moveParts(frame, LChest, KF_Stomp_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_Stomp_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_Stomp_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_Stomp_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_Stomp_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_Stomp_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_Stomp_RARM, partialTick);
-		moveParts(frame, RLEG, KF_Stomp_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_Stomp_LRHip, partialTick);
+		ModelUtils.moveParts(frame, HIP, KF_Stomp_HIP, partialTick);
+		ModelUtils.moveParts(frame, WAIST, KF_Stomp_WAIST, partialTick);
+		ModelUtils.moveParts(frame, LFHip, KF_Stomp_LFHip, partialTick);
+		ModelUtils.moveParts(frame, RChest, KF_Stomp_RChest, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder2, KF_Stomp_LRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RArm1, KF_Stomp_RArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder1, KF_Stomp_LFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, LArm2, KF_Stomp_LArm2, partialTick);
+		ModelUtils.moveParts(frame, LARM, KF_Stomp_LARM, partialTick);
+		ModelUtils.moveParts(frame, RLeg2, KF_Stomp_RLeg2, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder2, KF_Stomp_RRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder1, KF_Stomp_RFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RRHip, KF_Stomp_RRHip, partialTick);
+		ModelUtils.moveParts(frame, LLEG, KF_Stomp_LLEG, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder1, KF_Stomp_LRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RLeg1, KF_Stomp_RLeg1, partialTick);
+		ModelUtils.moveParts(frame, LArm1, KF_Stomp_LArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder2, KF_Stomp_LFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg2, KF_Stomp_LLeg2, partialTick);
+		ModelUtils.moveParts(frame, RArm2, KF_Stomp_RArm2, partialTick);
+		ModelUtils.moveParts(frame, LChest, KF_Stomp_LChest, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder2, KF_Stomp_RFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg1, KF_Stomp_LLeg1, partialTick);
+		ModelUtils.moveParts(frame, RFHip, KF_Stomp_RFHip, partialTick);
+		ModelUtils.moveParts(frame, HEAD, KF_Stomp_HEAD, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder1, KF_Stomp_RRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RARM, KF_Stomp_RARM, partialTick);
+		ModelUtils.moveParts(frame, RLEG, KF_Stomp_RLEG, partialTick);
+		ModelUtils.moveParts(frame, LRHip, KF_Stomp_LRHip, partialTick);
 	}
 	
 	/**
@@ -872,35 +808,35 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	public void Roll(int frame, float partialTick){
-		moveParts(frame, HIP, KF_Roll_HIP, partialTick);
-		moveParts(frame, WAIST, KF_Roll_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_Roll_LFHip, partialTick);
-		moveParts(frame, RChest, KF_Roll_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_Roll_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_Roll_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_Roll_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_Roll_LArm2, partialTick);
-		moveParts(frame, LARM, KF_Roll_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_Roll_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_Roll_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_Roll_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_Roll_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_Roll_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_Roll_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_Roll_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_Roll_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_Roll_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_Roll_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_Roll_RArm2, partialTick);
-		moveParts(frame, LChest, KF_Roll_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_Roll_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_Roll_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_Roll_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_Roll_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_Roll_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_Roll_RARM, partialTick);
-		moveParts(frame, RLEG, KF_Roll_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_Roll_LRHip, partialTick);
+		ModelUtils.moveParts(frame, HIP, KF_Roll_HIP, partialTick);
+		ModelUtils.moveParts(frame, WAIST, KF_Roll_WAIST, partialTick);
+		ModelUtils.moveParts(frame, LFHip, KF_Roll_LFHip, partialTick);
+		ModelUtils.moveParts(frame, RChest, KF_Roll_RChest, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder2, KF_Roll_LRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RArm1, KF_Roll_RArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder1, KF_Roll_LFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, LArm2, KF_Roll_LArm2, partialTick);
+		ModelUtils.moveParts(frame, LARM, KF_Roll_LARM, partialTick);
+		ModelUtils.moveParts(frame, RLeg2, KF_Roll_RLeg2, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder2, KF_Roll_RRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder1, KF_Roll_RFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RRHip, KF_Roll_RRHip, partialTick);
+		ModelUtils.moveParts(frame, LLEG, KF_Roll_LLEG, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder1, KF_Roll_LRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RLeg1, KF_Roll_RLeg1, partialTick);
+		ModelUtils.moveParts(frame, LArm1, KF_Roll_LArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder2, KF_Roll_LFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg2, KF_Roll_LLeg2, partialTick);
+		ModelUtils.moveParts(frame, RArm2, KF_Roll_RArm2, partialTick);
+		ModelUtils.moveParts(frame, LChest, KF_Roll_LChest, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder2, KF_Roll_RFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg1, KF_Roll_LLeg1, partialTick);
+		ModelUtils.moveParts(frame, RFHip, KF_Roll_RFHip, partialTick);
+		ModelUtils.moveParts(frame, HEAD, KF_Roll_HEAD, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder1, KF_Roll_RRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RARM, KF_Roll_RARM, partialTick);
+		ModelUtils.moveParts(frame, RLEG, KF_Roll_RLEG, partialTick);
+		ModelUtils.moveParts(frame, LRHip, KF_Roll_LRHip, partialTick);
 	}
 	/**
 	 * Stand
@@ -968,35 +904,35 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	public void Stand(int frame, float partialTick){
-		moveParts(frame, HIP, KF_Stand_HIP, partialTick);
-		moveParts(frame, WAIST, KF_Stand_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_Stand_LFHip, partialTick);
-		moveParts(frame, RChest, KF_Stand_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_Stand_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_Stand_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_Stand_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_Stand_LArm2, partialTick);
-		moveParts(frame, LARM, KF_Stand_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_Stand_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_Stand_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_Stand_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_Stand_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_Stand_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_Stand_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_Stand_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_Stand_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_Stand_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_Stand_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_Stand_RArm2, partialTick);
-		moveParts(frame, LChest, KF_Stand_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_Stand_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_Stand_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_Stand_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_Stand_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_Stand_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_Stand_RARM, partialTick);
-		moveParts(frame, RLEG, KF_Stand_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_Stand_LRHip, partialTick);
+		ModelUtils.moveParts(frame, HIP, KF_Stand_HIP, partialTick);
+		ModelUtils.moveParts(frame, WAIST, KF_Stand_WAIST, partialTick);
+		ModelUtils.moveParts(frame, LFHip, KF_Stand_LFHip, partialTick);
+		ModelUtils.moveParts(frame, RChest, KF_Stand_RChest, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder2, KF_Stand_LRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RArm1, KF_Stand_RArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder1, KF_Stand_LFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, LArm2, KF_Stand_LArm2, partialTick);
+		ModelUtils.moveParts(frame, LARM, KF_Stand_LARM, partialTick);
+		ModelUtils.moveParts(frame, RLeg2, KF_Stand_RLeg2, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder2, KF_Stand_RRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder1, KF_Stand_RFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RRHip, KF_Stand_RRHip, partialTick);
+		ModelUtils.moveParts(frame, LLEG, KF_Stand_LLEG, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder1, KF_Stand_LRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RLeg1, KF_Stand_RLeg1, partialTick);
+		ModelUtils.moveParts(frame, LArm1, KF_Stand_LArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder2, KF_Stand_LFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg2, KF_Stand_LLeg2, partialTick);
+		ModelUtils.moveParts(frame, RArm2, KF_Stand_RArm2, partialTick);
+		ModelUtils.moveParts(frame, LChest, KF_Stand_LChest, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder2, KF_Stand_RFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg1, KF_Stand_LLeg1, partialTick);
+		ModelUtils.moveParts(frame, RFHip, KF_Stand_RFHip, partialTick);
+		ModelUtils.moveParts(frame, HEAD, KF_Stand_HEAD, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder1, KF_Stand_RRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RARM, KF_Stand_RARM, partialTick);
+		ModelUtils.moveParts(frame, RLEG, KF_Stand_RLEG, partialTick);
+		ModelUtils.moveParts(frame, LRHip, KF_Stand_LRHip, partialTick);
 	}
 	
 	
@@ -1158,35 +1094,35 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	public void Throw(int frame, float partialTick){
-		moveParts(frame, HIP, KF_Throw_HIP, partialTick);
-		moveParts(frame, WAIST, KF_Throw_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_Throw_LFHip, partialTick);
-		moveParts(frame, RChest, KF_Throw_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_Throw_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_Throw_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_Throw_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_Throw_LArm2, partialTick);
-		moveParts(frame, LARM, KF_Throw_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_Throw_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_Throw_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_Throw_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_Throw_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_Throw_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_Throw_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_Throw_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_Throw_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_Throw_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_Throw_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_Throw_RArm2, partialTick);
-		moveParts(frame, LChest, KF_Throw_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_Throw_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_Throw_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_Throw_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_Throw_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_Throw_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_Throw_RARM, partialTick);
-		moveParts(frame, RLEG, KF_Throw_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_Throw_LRHip, partialTick);
+		ModelUtils.moveParts(frame, HIP, KF_Throw_HIP, partialTick);
+		ModelUtils.moveParts(frame, WAIST, KF_Throw_WAIST, partialTick);
+		ModelUtils.moveParts(frame, LFHip, KF_Throw_LFHip, partialTick);
+		ModelUtils.moveParts(frame, RChest, KF_Throw_RChest, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder2, KF_Throw_LRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RArm1, KF_Throw_RArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder1, KF_Throw_LFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, LArm2, KF_Throw_LArm2, partialTick);
+		ModelUtils.moveParts(frame, LARM, KF_Throw_LARM, partialTick);
+		ModelUtils.moveParts(frame, RLeg2, KF_Throw_RLeg2, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder2, KF_Throw_RRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder1, KF_Throw_RFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RRHip, KF_Throw_RRHip, partialTick);
+		ModelUtils.moveParts(frame, LLEG, KF_Throw_LLEG, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder1, KF_Throw_LRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RLeg1, KF_Throw_RLeg1, partialTick);
+		ModelUtils.moveParts(frame, LArm1, KF_Throw_LArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder2, KF_Throw_LFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg2, KF_Throw_LLeg2, partialTick);
+		ModelUtils.moveParts(frame, RArm2, KF_Throw_RArm2, partialTick);
+		ModelUtils.moveParts(frame, LChest, KF_Throw_LChest, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder2, KF_Throw_RFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg1, KF_Throw_LLeg1, partialTick);
+		ModelUtils.moveParts(frame, RFHip, KF_Throw_RFHip, partialTick);
+		ModelUtils.moveParts(frame, HEAD, KF_Throw_HEAD, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder1, KF_Throw_RRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RARM, KF_Throw_RARM, partialTick);
+		ModelUtils.moveParts(frame, RLEG, KF_Throw_RLEG, partialTick);
+		ModelUtils.moveParts(frame, LRHip, KF_Throw_LRHip, partialTick);
 	}
 
 	/**
@@ -1360,35 +1296,35 @@ public class ModelGolem extends ModelBase {
 	}
 	
 	public void Build(int frame, float partialTick){
-		moveParts(frame, HIP, KF_Build_HIP, partialTick);
-		moveParts(frame, WAIST, KF_Build_WAIST, partialTick);
-		moveParts(frame, LFHip, KF_Build_LFHip, partialTick);
-		moveParts(frame, RChest, KF_Build_RChest, partialTick);
-		moveParts(frame, LRShoulder2, KF_Build_LRShoulder2, partialTick);
-		moveParts(frame, RArm1, KF_Build_RArm1, partialTick);
-		moveParts(frame, LFShoulder1, KF_Build_LFShoulder1, partialTick);
-		moveParts(frame, LArm2, KF_Build_LArm2, partialTick);
-		moveParts(frame, LARM, KF_Build_LARM, partialTick);
-		moveParts(frame, RLeg2, KF_Build_RLeg2, partialTick);
-		moveParts(frame, RRShoulder2, KF_Build_RRShoulder2, partialTick);
-		moveParts(frame, RFShoulder1, KF_Build_RFShoulder1, partialTick);
-		moveParts(frame, RRHip, KF_Build_RRHip, partialTick);
-		moveParts(frame, LLEG, KF_Build_LLEG, partialTick);
-		moveParts(frame, LRShoulder1, KF_Build_LRShoulder1, partialTick);
-		moveParts(frame, RLeg1, KF_Build_RLeg1, partialTick);
-		moveParts(frame, LArm1, KF_Build_LArm1, partialTick);
-		moveParts(frame, LFShoulder2, KF_Build_LFShoulder2, partialTick);
-		moveParts(frame, LLeg2, KF_Build_LLeg2, partialTick);
-		moveParts(frame, RArm2, KF_Build_RArm2, partialTick);
-		moveParts(frame, LChest, KF_Build_LChest, partialTick);
-		moveParts(frame, RFShoulder2, KF_Build_RFShoulder2, partialTick);
-		moveParts(frame, LLeg1, KF_Build_LLeg1, partialTick);
-		moveParts(frame, RFHip, KF_Build_RFHip, partialTick);
-		moveParts(frame, HEAD, KF_Build_HEAD, partialTick);
-		moveParts(frame, RRShoulder1, KF_Build_RRShoulder1, partialTick);
-		moveParts(frame, RARM, KF_Build_RARM, partialTick);
-		moveParts(frame, RLEG, KF_Build_RLEG, partialTick);
-		moveParts(frame, LRHip, KF_Build_LRHip, partialTick);
+		ModelUtils.moveParts(frame, HIP, KF_Build_HIP, partialTick);
+		ModelUtils.moveParts(frame, WAIST, KF_Build_WAIST, partialTick);
+		ModelUtils.moveParts(frame, LFHip, KF_Build_LFHip, partialTick);
+		ModelUtils.moveParts(frame, RChest, KF_Build_RChest, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder2, KF_Build_LRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RArm1, KF_Build_RArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder1, KF_Build_LFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, LArm2, KF_Build_LArm2, partialTick);
+		ModelUtils.moveParts(frame, LARM, KF_Build_LARM, partialTick);
+		ModelUtils.moveParts(frame, RLeg2, KF_Build_RLeg2, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder2, KF_Build_RRShoulder2, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder1, KF_Build_RFShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RRHip, KF_Build_RRHip, partialTick);
+		ModelUtils.moveParts(frame, LLEG, KF_Build_LLEG, partialTick);
+		ModelUtils.moveParts(frame, LRShoulder1, KF_Build_LRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RLeg1, KF_Build_RLeg1, partialTick);
+		ModelUtils.moveParts(frame, LArm1, KF_Build_LArm1, partialTick);
+		ModelUtils.moveParts(frame, LFShoulder2, KF_Build_LFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg2, KF_Build_LLeg2, partialTick);
+		ModelUtils.moveParts(frame, RArm2, KF_Build_RArm2, partialTick);
+		ModelUtils.moveParts(frame, LChest, KF_Build_LChest, partialTick);
+		ModelUtils.moveParts(frame, RFShoulder2, KF_Build_RFShoulder2, partialTick);
+		ModelUtils.moveParts(frame, LLeg1, KF_Build_LLeg1, partialTick);
+		ModelUtils.moveParts(frame, RFHip, KF_Build_RFHip, partialTick);
+		ModelUtils.moveParts(frame, HEAD, KF_Build_HEAD, partialTick);
+		ModelUtils.moveParts(frame, RRShoulder1, KF_Build_RRShoulder1, partialTick);
+		ModelUtils.moveParts(frame, RARM, KF_Build_RARM, partialTick);
+		ModelUtils.moveParts(frame, RLEG, KF_Build_RLEG, partialTick);
+		ModelUtils.moveParts(frame, LRHip, KF_Build_LRHip, partialTick);
 		
 	}	
 }

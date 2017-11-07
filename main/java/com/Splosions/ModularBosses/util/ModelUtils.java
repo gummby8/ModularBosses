@@ -1,6 +1,7 @@
 package com.Splosions.ModularBosses.util;
 
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
+import com.Splosions.ModularBosses.client.models.KeyFrame;
 
 import net.minecraft.client.model.ModelRenderer;
 
@@ -77,6 +78,75 @@ public class ModelUtils {
 	
 	public float toRadians(float degrees){
 		return degrees * 0.0174533F;
+	}
+	
+	
+	public static void moveParts(int frame, ModelRenderer part, KeyFrame[] keyArray, float partialTick){
+		int keyId = getKeyFrameNum(frame, keyArray);
+		KeyFrame curKey = keyArray[keyId];
+
+		//if it is the very first frame OR if it is the last frame in an animation
+		if (keyArray.length == 1 || frame == 0 || frame == keyArray[keyArray.length - 1].frame){
+			part.rotationPointX = curKey.posX;
+			part.rotationPointY = curKey.posY;
+			part.rotationPointZ = curKey.posZ;
+			part.rotateAngleX = curKey.rotX * 0.0174533F; //Remember kids, always convert to radians;
+			part.rotateAngleY = curKey.rotY * 0.0174533F; //Remember kids, always convert to radians;
+			part.rotateAngleZ = curKey.rotZ * 0.0174533F; //Remember kids, always convert to radians;
+		}else{
+			KeyFrame nextKey = keyArray[keyId + 1];
+			float step;
+			float position;
+			float nextPosition;
+			//float total = nextKey.posX - curKey.posX
+			//int dur = nextKey.frame - curKey.frame;
+			
+			step = (nextKey.posX - curKey.posX) / (nextKey.frame - curKey.frame); //total / duration   this is how much movement there is between each tick
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotationPointX = curKey.posX + position + (partialTick * (nextPosition - position));
+			
+			step = (nextKey.posY - curKey.posY) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotationPointY = curKey.posY + position + (partialTick * (nextPosition - position));
+			
+			step = (nextKey.posZ - curKey.posZ) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotationPointZ = curKey.posZ + position + (partialTick * (nextPosition - position));
+			
+			step = (nextKey.rotX - curKey.rotX) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotateAngleX = (curKey.rotX + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians;
+			
+			step = (nextKey.rotY - curKey.rotY) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotateAngleY = (curKey.rotY + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians
+			
+			step = (nextKey.rotZ - curKey.rotZ) / (nextKey.frame - curKey.frame);
+			position = (frame - curKey.frame) * step;
+			nextPosition = (frame + 1 - curKey.frame) * step;
+			part.rotateAngleZ = (curKey.rotZ + position + (partialTick * (nextPosition - position))) * 0.0174533F; //Remember kids, always conver to radians
+		}
+	}
+	
+	public static int getKeyFrameNum(int frame, KeyFrame[] keyArray){
+		if (keyArray.length == 1){
+		return 0;	
+		}
+		
+		for (int x = 0; x < keyArray.length; x++){
+			if (frame == keyArray[x].frame ){
+				return x;
+			} else 
+			if(frame > keyArray[x].frame && frame < keyArray[x + 1].frame){
+				return x;
+			}
+		}
+		return 0;
 	}
 
 }
