@@ -4,27 +4,22 @@ import java.util.List;
 import java.util.Random;
 
 import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.network.PacketDispatcher;
-import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import scala.collection.generic.Sizing;
 
 public class TargetUtils {
 
@@ -153,7 +148,7 @@ public class TargetUtils {
 	 */
 	public static void addItemToInventory(EntityPlayer player, ItemStack stack) {
 		if (!player.inventory.addItemStackToInventory(stack)) {
-			player.dropPlayerItemWithRandomChoice(stack, false);
+			player.dropItem(stack, false);
 		}
 	}
 
@@ -184,7 +179,7 @@ public class TargetUtils {
 			if (lootList.length > 0) {
 				for (String string : lootList) {
 					String[] split = string.split("\\|");
-					String[] item = split[2].split("\\:");
+					//String[] item = split[2].split("\\:");
 
 					int qty = Integer.parseInt(split[1]);
 
@@ -193,7 +188,8 @@ public class TargetUtils {
 					int roll = getRanNum(1, 100);
 					System.out.println(roll);
 					if (roll <= chance) {
-						ent.dropItem(GameRegistry.findItem(item[0], item[1]), qty);
+						Item dropItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(split[2]));
+						ent.dropItem(dropItem, qty);
 					}
 				}
 			}

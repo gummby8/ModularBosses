@@ -5,41 +5,20 @@ package com.Splosions.ModularBosses.entity;
 import java.util.List;
 import java.util.Random;
 
-import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.MBSounds;
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
-import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
-import com.Splosions.ModularBosses.util.ModelUtils;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityCow;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityPotion;
-import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
@@ -47,8 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob 
@@ -155,7 +132,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 	 */
 	@Override
 	protected SoundEvent getHurtSound(DamageSource dmg){
-		return Sounds.CHORP_HURT;
+		return MBSounds.CHORP_HURT;
 	}
 
 	/**
@@ -163,7 +140,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 	 */
 	@Override
 	protected String getDeathSound() {
-		return Sounds.CHORP_DEATH;
+		return MBSounds.CHORP_DEATH;
 	}
 
 	/**

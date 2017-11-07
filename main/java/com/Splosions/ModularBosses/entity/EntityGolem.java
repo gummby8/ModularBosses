@@ -2,10 +2,8 @@ package com.Splosions.ModularBosses.entity;
 
 import java.util.List;
 
-import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.MBSounds;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
-import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
@@ -13,47 +11,24 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityPotion;
-import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData {
 
@@ -133,7 +108,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	
 	@Override
 	protected String getLivingSound() {
-		return Sounds.GOLEM_LIVING;
+		return MBSounds.GOLEM_LIVING;
 	}
 
 	protected boolean isAIEnabled() {
@@ -201,7 +176,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 
 		this.AniFrame++;
 		if (this.AniID == BUILD && this.AniFrame == 1) {
-        	this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
+        	this.playSound(MBSounds.GOLEM_BUILD, 4F, 1.0F);
 		} else if (this.AniID == BUILD && this.AniFrame > 90) {
 			this.AniFrame = 0;
 			this.AniID = STAND;
@@ -217,7 +192,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 				this.moveHelper.setMoveTo(this.entityToAttack.posX, this.posY, this.entityToAttack.posZ, 0.3F);
 			}
 		} else if (this.AniID == ROLL && this.AniFrame == 9) {
-			this.playSound(Sounds.GOLEM_ROLL, 4F, 1.0F);
+			this.playSound(MBSounds.GOLEM_ROLL, 4F, 1.0F);
 			count = 0;
 			Vec3 look = this.getLookVec();
 			float distance = 20F; //distance in front of entity
@@ -243,8 +218,8 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			this.AniID = STAND;
 			entityToAttack = null;			
 		} else if (this.AniID == DIE && this.AniFrame == 1) {
-			this.playSound(Sounds.GOLEM_BUILD, 4F, 1.0F);
-			this.playSound(Sounds.GOLEM_LIVING, 4F, 1.0F);
+			this.playSound(MBSounds.GOLEM_BUILD, 4F, 1.0F);
+			this.playSound(MBSounds.GOLEM_LIVING, 4F, 1.0F);
 		} else if (this.AniID == DIE && this.AniFrame > 54) {
 			for (int x = 0; x < 40; x++){
 		         float f = (this.rand.nextFloat() - 0.5F) * 3;

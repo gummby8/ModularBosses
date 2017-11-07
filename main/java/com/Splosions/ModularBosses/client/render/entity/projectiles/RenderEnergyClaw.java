@@ -3,7 +3,6 @@ package com.Splosions.ModularBosses.client.render.entity.projectiles;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.client.models.projectiles.ModelEnergyClaw;
-import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyClaw;
 
 import net.minecraft.client.model.ModelBase;

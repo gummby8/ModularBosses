@@ -1,15 +1,14 @@
 package com.Splosions.ModularBosses.client.models.entity;
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MathHelper;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.opengl.GL11;
-
 import com.Splosions.ModularBosses.client.models.KeyFrame;
 import com.Splosions.ModularBosses.entity.EntityShadeHowler;
 import com.Splosions.ModularBosses.util.ModelUtils;
+
+import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.math.MathHelper;
 
 /**
  * Attack the Block - Undefined
@@ -1853,7 +1852,7 @@ public class ModelShadeHowler extends ModelBase {
 	    public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) { 
 	    	EntityShadeHowler boss = (EntityShadeHowler)entity;
 	    	//System.out.println("Melt = " + boss.meltPercent);
-	    	float percent = MathHelper.clamp_float(boss.meltPercent, 0, 100);
+	    	float percent = MathHelper.clamp(boss.meltPercent, 0, 100);
 	    	
 	    	float tran = percent / 100 * 1.8F;
 	    	double scale = (100 - percent) / 100 * 0.2D;

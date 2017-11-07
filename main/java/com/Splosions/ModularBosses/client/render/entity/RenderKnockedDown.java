@@ -2,13 +2,11 @@ package com.Splosions.ModularBosses.client.render.entity;
 
 import org.lwjgl.opengl.GL11;
 
-import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.models.entity.ModelKnockdown;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -20,22 +18,14 @@ import net.minecraft.client.renderer.entity.layers.LayerCape;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
 import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
-import net.minecraft.client.renderer.texture.ITextureObject;
-import net.minecraft.client.renderer.texture.SimpleTexture;
-import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.scoreboard.Score;
-import net.minecraft.scoreboard.ScoreObjective;
-import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class RenderKnockedDown extends RenderPlayer
@@ -70,7 +60,7 @@ public class RenderKnockedDown extends RenderPlayer
 
 		
 		try {
-			func_180596_a((AbstractClientPlayer)entity, x, y, z, yaw, partialTicks);
+			doRender((AbstractClientPlayer)entity, x, y, z, yaw, partialTicks);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -80,26 +70,26 @@ public class RenderKnockedDown extends RenderPlayer
     
     
     
-    public void func_180596_a(AbstractClientPlayer p_180596_1_, double p_180596_2_, double p_180596_4_, double p_180596_6_, float p_180596_8_, float p_180596_9_)
+    public void doRender(AbstractClientPlayer ent, double x, double y, double z, float entYaw, float partTicks)
     {
     	
-        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(p_180596_1_, this, p_180596_9_, p_180596_2_, p_180596_4_, p_180596_6_))) return;
+        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(ent, this, partTicks, x, y, z))) return;
 
-        if (!p_180596_1_.isUser() || Minecraft.getMinecraft().getRenderManager().livingPlayer == p_180596_1_)
+        if (!ent.isUser() || this.renderManager.renderViewEntity == ent)
         {
-            double d3 = p_180596_4_;
+            double d3 = y;
 
-            if (p_180596_1_.isSneaking() && !(p_180596_1_ instanceof EntityPlayerSP))
+            if (ent.isSneaking() && !(ent instanceof EntityPlayerSP))
             {
-                d3 = p_180596_4_ - 0.125D;
+                d3 = y - 0.125D;
             }
 
-            this.func_177137_d(p_180596_1_);
+            this.func_177137_d(ent);
 
-            mDoRender((EntityLivingBase)p_180596_1_, p_180596_2_, d3, p_180596_6_, p_180596_8_, p_180596_9_);
+            mDoRender((EntityLivingBase)ent, x, d3, z, entYaw, partTicks);
             
         }
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(p_180596_1_, this, p_180596_9_, p_180596_2_, p_180596_4_, p_180596_6_));
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(ent, this, partTicks, x, y, z));
     }
     
     

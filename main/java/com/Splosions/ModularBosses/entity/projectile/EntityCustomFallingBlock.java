@@ -1,37 +1,24 @@
 package com.Splosions.ModularBosses.entity.projectile;
 
-import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.EntityParagon;
-import com.google.common.collect.Lists;
-
-import io.netty.buffer.ByteBuf;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockAnvil;
-import net.minecraft.block.BlockFalling;
+import com.Splosions.ModularBosses.entity.EntityGolem;
+import com.Splosions.ModularBosses.entity.EntityParagon;
+
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.item.EntityFallingBlock;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -50,6 +37,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     public BlockPos bPos;
 	public int damage;
 	public Entity shooter;
+	protected static final DataParameter<BlockPos> ORIGIN = EntityDataManager.<BlockPos>createKey(EntityFallingBlock.class, DataSerializers.BLOCK_POS);
 
     public EntityCustomFallingBlock(World worldIn)
     {
@@ -60,7 +48,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     {
         super(worldIn);
         this.bPos = pos;
-        this.fallTile = this.worldObj.getBlockState(pos);
+        this.fallTile = this.world.getBlockState(pos);
         this.preventEntitySpawning = true;
         this.setSize(1F, 1F);
         this.setPositionAndRotation(x, y, z, yaw, 0);
@@ -90,20 +78,27 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
             this.prevPosZ = this.posZ;
 
             this.motionY -= 0.03999999910593033D;
-            this.moveEntity(this.motionX, this.motionY, this.motionZ);
+            this.move(MoverType.SELF,this.motionX, this.motionY, this.motionZ);
             this.motionX *= 0.9800000190734863D;
             this.motionY *= 0.9800000190734863D;
             this.motionZ *= 0.9800000190734863D;
             
             if (this.ticksExisted > 20){this.setDead();}
            
-            this.collideWithEntities(this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
+            this.collideWithEntities(this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox()));
     }
     
     
+    @SideOnly(Side.CLIENT)
+    public BlockPos getOrigin()
+    {
+        return (BlockPos)this.dataManager.get(ORIGIN);
+    }
     
-    
-    
+    public void setOrigin(BlockPos p_184530_1_)
+    {
+        this.dataManager.set(ORIGIN, p_184530_1_);
+    }
     
     
     /**
@@ -127,7 +122,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
                 
                 if (entity.hurtResistantTime == 0 && !(entity instanceof EntityCustomFallingBlock) && !(entity instanceof EntityParagon) && !(entity instanceof EntityGolem)){
                 entity.addVelocity(d2 / d4 * 0.2D, 1.2D, d3 / d4 * 0.2D);
-                entity.attackEntityFrom(DamageSource.fall, damage);
+                entity.attackEntityFrom(DamageSource.FALL, damage);
                 entity.hurtResistantTime = 10;
                 }
             
@@ -149,7 +144,7 @@ public class EntityCustomFallingBlock extends Entity implements IEntityAdditiona
     @SideOnly(Side.CLIENT)
     public World getWorldObj()
     {
-        return this.worldObj;
+        return this.world;
     }
 
 

@@ -1,57 +1,29 @@
 package com.Splosions.ModularBosses.entity;
 
-import java.sql.Array;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import com.Splosions.ModularBosses.Config;
-import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.MBSounds;
 import com.Splosions.ModularBosses.entity.projectile.EntityCustomFallingBlock;
 import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityPotion;
-import net.minecraft.item.Item;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	
@@ -252,7 +224,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 
 	@Override
 	protected String getLivingSound() {
-		return Sounds.PARAGON_LIVING;
+		return MBSounds.PARAGON_LIVING;
 	}
 
 	/**
@@ -265,7 +237,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	 */
 	@Override
 	protected String getDeathSound() {
-		return Sounds.CHORP_DEATH;
+		return MBSounds.CHORP_DEATH;
 	}
 
 	public EnumCreatureAttribute getCreatureAttribute() {
@@ -542,30 +514,30 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	private void playSoundEffects() {
 		if (this.AniID == WALK) {
 			if (this.AniFrame == 0) {
-				this.playSound(Sounds.PARAGON_LFOOT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_LFOOT, 1F, 1.0F);
 			} else if (this.AniFrame == 30) {
-				this.playSound(Sounds.PARAGON_RFOOT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_RFOOT, 1F, 1.0F);
 			}
 		} else if (this.AniID == SPRINT) {
 			if (this.AniFrame == 0) {
-				this.playSound(Sounds.PARAGON_LFOOT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_LFOOT, 1F, 1.0F);
 			} else if (this.AniFrame == 15) {
-				this.playSound(Sounds.PARAGON_RFOOT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_RFOOT, 1F, 1.0F);
 			}
 		} else if (this.AniID == COLLAPSE) {
 			if (this.AniFrame == 1) {
-				this.playSound(Sounds.PARAGON_COLLAPSE, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_COLLAPSE, 1F, 1.0F);
 			} else if (this.AniFrame == 20 && this.AniPause > 70) {
 				CamShake(this, 10, 40);
 			} else if (this.AniFrame == 65 || this.AniFrame == 75) {
-				this.playSound(Sounds.PARAGON_CHEST_DOOR_CLOSE, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_CHEST_DOOR_CLOSE, 1F, 1.0F);
 			} else if (this.AniFrame == 80) {
-				this.playSound(Sounds.PARAGON_STAND_UP, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_STAND_UP, 1F, 1.0F);
 			}
 		} else if (this.AniID == FLAMETHROWER && this.AniFrame == 1) {
-			this.playSound(Sounds.PARAGON_FLAME_THROWER, 1F, 1.0F);
+			this.playSound(MBSounds.PARAGON_FLAME_THROWER, 1F, 1.0F);
 		} else if (this.AniID == JUMP && this.AniFrame == 13) {
-			this.playSound(Sounds.PARAGON_JUMP_JETS, 1F, 1.0F);
+			this.playSound(MBSounds.PARAGON_JUMP_JETS, 1F, 1.0F);
 		}
 
 	}
@@ -623,17 +595,17 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 			}
 
 			if (DMGAmmount > 0 && !this.world.isRemote && this.AniID != SLAP && this.AniID != DOUBLEFISTSLAM && this.AniID != COLLAPSE) {
-				this.playSound(Sounds.PARAGON_KNEE_HURT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_KNEE_HURT, 1F, 1.0F);
 				KneeHP--;
 			}
 		} else
 		if (Part == this.paragonPartFurnace){
 			if (this.AniID == COLLAPSE && this.AniFrame > 19 && this.AniFrame < 41) {
 				this.Damage(Source, DMGAmmount);
-				this.playSound(Sounds.PARAGON_FURNACE_HURT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_FURNACE_HURT, 1F, 1.0F);
 				return true;
 			} else {
-				this.playSound(Sounds.PARAGON_FURNACE_DEFLECT, 1F, 1.0F);
+				this.playSound(MBSounds.PARAGON_FURNACE_DEFLECT, 1F, 1.0F);
 				return false;
 			}
 		}

@@ -5,7 +5,6 @@ import java.util.Random;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.entity.projectile.EntityBlackBomb;
-import com.Splosions.ModularBosses.entity.projectile.EntityBrainEnergy;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;

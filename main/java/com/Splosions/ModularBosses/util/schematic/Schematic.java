@@ -1,10 +1,7 @@
 package com.Splosions.ModularBosses.util.schematic;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,21 +9,17 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.util.BlockObject;
 import com.Splosions.ModularBosses.util.NBTHelper;
-import com.Splosions.ModularBosses.util.TargetUtils;
 import com.google.common.primitives.UnsignedBytes;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

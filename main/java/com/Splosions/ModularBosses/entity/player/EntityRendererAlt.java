@@ -2,7 +2,6 @@ package com.Splosions.ModularBosses.entity.player;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.EntityRenderer;
-import net.minecraft.client.resources.IResourceManager;
 
 public class EntityRendererAlt extends EntityRenderer
 {

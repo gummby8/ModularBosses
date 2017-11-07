@@ -2,15 +2,13 @@ package com.Splosions.ModularBosses.dimensions;
 
 
 
-import com.Splosions.ModularBosses.ModularBosses;
+import static net.minecraftforge.common.BiomeDictionary.Type.WET;
+
 import com.Splosions.ModularBosses.dimensions.BossDimension.BossBiomeBase;
 
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.BiomeManager;
-
-import static net.minecraftforge.common.BiomeDictionary.Type.*;
 
 public class TestBiomesRegistry
 {

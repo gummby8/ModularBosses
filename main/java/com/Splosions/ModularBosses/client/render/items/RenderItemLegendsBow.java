@@ -6,31 +6,27 @@ import java.util.Random;
 
 import javax.vecmath.Matrix4f;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.opengl.GL11;
+
+import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.client.models.item.ModelLegendsBow;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
-
-import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.models.item.ModelLegendsBow;
-import com.Splosions.ModularBosses.client.models.item.ModelLegendsSword;
 
 
 @SuppressWarnings("deprecation")

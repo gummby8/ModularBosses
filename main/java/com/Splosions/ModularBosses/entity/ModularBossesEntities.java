@@ -1,8 +1,6 @@
 package com.Splosions.ModularBosses.entity;
 
 
-import java.util.logging.Level;
-
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.models.entity.ModelBrain;
 import com.Splosions.ModularBosses.client.models.entity.ModelChorpChorp;
@@ -12,14 +10,10 @@ import com.Splosions.ModularBosses.client.models.entity.ModelHeart;
 import com.Splosions.ModularBosses.client.models.entity.ModelHeavyChorp;
 import com.Splosions.ModularBosses.client.models.entity.ModelMoldorm;
 import com.Splosions.ModularBosses.client.models.entity.ModelParagon;
-import com.Splosions.ModularBosses.client.models.entity.ModelSandWormBody;
-import com.Splosions.ModularBosses.client.models.entity.ModelSandWormHead;
-import com.Splosions.ModularBosses.client.models.entity.ModelSandWormTail;
 import com.Splosions.ModularBosses.client.models.entity.ModelShadeHowler;
 import com.Splosions.ModularBosses.client.models.entity.ModelSkull;
 import com.Splosions.ModularBosses.client.models.entity.ModelSpark;
 import com.Splosions.ModularBosses.client.models.entity.ModelTatters;
-import com.Splosions.ModularBosses.client.models.entity.ModelTattersHead;
 import com.Splosions.ModularBosses.client.models.entity.ModelTick;
 import com.Splosions.ModularBosses.client.render.entity.RenderBrain;
 import com.Splosions.ModularBosses.client.render.entity.RenderChorpChorp;
@@ -37,7 +31,6 @@ import com.Splosions.ModularBosses.client.render.entity.RenderShadeHowler;
 import com.Splosions.ModularBosses.client.render.entity.RenderSkull;
 import com.Splosions.ModularBosses.client.render.entity.RenderSpark;
 import com.Splosions.ModularBosses.client.render.entity.RenderTatters;
-import com.Splosions.ModularBosses.client.render.entity.RenderTattersHead;
 import com.Splosions.ModularBosses.client.render.entity.RenderTeliportBiped;
 import com.Splosions.ModularBosses.client.render.entity.RenderTick;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBait;
@@ -47,7 +40,6 @@ import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderBrainE
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderEnergyArrow;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderFlameThrower;
 import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderScythe;
-import com.Splosions.ModularBosses.client.render.items.RenderItemBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityBloodBlob;
 import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
@@ -61,13 +53,11 @@ import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;

@@ -1,7 +1,7 @@
 package com.Splosions.ModularBosses.entity;
 
 
-import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.MBSounds;
 import com.Splosions.ModularBosses.entity.projectile.EntityChorpSlimeBlob;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
@@ -10,9 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
@@ -22,17 +20,10 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityPotion;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
@@ -284,7 +275,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 		if (!this.worldObj.isRemote){
 		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
 			if (this.attackCounter == 40) {
-				this.worldObj.playSoundAtEntity(this, Sounds.CHORP_SLIME, 1.0F, 1.0F);
+				this.worldObj.playSoundAtEntity(this, MBSounds.CHORP_SLIME, 1.0F, 1.0F);
 			}
 			if (this.attackCounter >= 40) {
 				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();

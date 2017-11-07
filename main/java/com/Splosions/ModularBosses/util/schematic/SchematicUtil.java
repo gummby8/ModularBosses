@@ -1,21 +1,11 @@
 package com.Splosions.ModularBosses.util.schematic;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
-
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 import com.Splosions.ModularBosses.ModularBosses;
 
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -23,10 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public final class SchematicUtil {
     public static final ItemStack DEFAULT_ICON = new ItemStack(Blocks.GRASS);

@@ -6,12 +6,12 @@ import java.io.IOException;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.handler.GuiHandler;
+import com.Splosions.ModularBosses.network.AbstractMessage.AbstractClientMessage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
-import com.Splosions.ModularBosses.network.AbstractMessage.AbstractClientMessage;
 
 public class OpenControlBlockEditorPacket extends AbstractClientMessage<OpenControlBlockEditorPacket>
 {

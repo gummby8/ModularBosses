@@ -1,21 +1,11 @@
 package com.Splosions.ModularBosses.entity.projectile;
 
-import java.util.List;
-
-import com.Splosions.ModularBosses.Sounds;
-import com.Splosions.ModularBosses.entity.EntitySandWorm;
-import com.Splosions.ModularBosses.items.ModularBossesItems;
-import com.Splosions.ModularBosses.util.TargetUtils;
+import com.Splosions.ModularBosses.MBSounds;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -72,7 +62,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 				float z = (this.rand.nextFloat() - 0.5F) * 2F;
 				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
 			}
-			this.playSound(Sounds.TATTERS_TELEPORT, 1F, 1.0F);
+			this.playSound(MBSounds.TATTERS_TELEPORT, 1F, 1.0F);
 			this.setDead();
 
 		}

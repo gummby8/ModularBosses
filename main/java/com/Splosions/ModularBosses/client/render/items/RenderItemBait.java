@@ -5,6 +5,12 @@ import java.util.List;
 
 import javax.vecmath.Matrix4f;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.lwjgl.opengl.GL11;
+
+import com.Splosions.ModularBosses.ModularBosses;
+import com.Splosions.ModularBosses.client.models.item.ModelBait;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
@@ -17,13 +23,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.apache.commons.lang3.tuple.Pair;
-import org.lwjgl.opengl.GL11;
-
-import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.client.models.item.ModelBait;
 
 
 @SuppressWarnings("deprecation")

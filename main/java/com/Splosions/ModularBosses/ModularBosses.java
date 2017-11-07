@@ -5,26 +5,9 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.ForgeChunkManager;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
-import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
 import com.Splosions.ModularBosses.dimensions.TestDimensions;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
@@ -35,9 +18,27 @@ import com.Splosions.ModularBosses.handler.TickHandler;
 import com.Splosions.ModularBosses.handler.commands.CommandItemInfo;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.network.PacketDispatcher;
-import com.Splosions.ModularBosses.proxy.ClientProxy;
 import com.Splosions.ModularBosses.proxy.CommonProxy;
 import com.Splosions.ModularBosses.util.schematic.Dungeon;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeChunkManager;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION)
 public class ModularBosses {
@@ -91,4 +92,34 @@ public class ModularBosses {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 		MinecraftForge.EVENT_BUS.register(new MBEventHandler());
 	}
+	
+	
+	
+	public static CreativeTabs tabBlocks = new CreativeTabs("mb.blocks") {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public ItemStack getTabIconItem() {
+			ItemStack stack = new ItemStack(ModBlocks.controlBlock);
+			return stack;
+		}
+	};
+
+	public static CreativeTabs tabTools = new CreativeTabs("mb.tools") {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public ItemStack getTabIconItem() {
+			ItemStack stack = new ItemStack(ModularBossesItems.itemLegendsSword);
+			return  stack;
+
+		}
+	};
+
+	public static CreativeTabs tabEggs = new CreativeTabs("mb.eggs") {
+		@Override
+		@SideOnly(Side.CLIENT)
+		public ItemStack getTabIconItem() {
+			ItemStack stack = new ItemStack(ModularBossesItems.spawn_egg);
+			return stack;
+		}
+	};
 }

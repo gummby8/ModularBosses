@@ -1,7 +1,5 @@
 package com.Splosions.ModularBosses.client.models;
 
-import net.minecraft.client.model.ModelRenderer;
-
 public class KeyFrame {
 	
 	public int frame;

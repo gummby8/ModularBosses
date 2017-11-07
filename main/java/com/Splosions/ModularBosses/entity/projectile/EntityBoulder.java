@@ -3,9 +3,8 @@ package com.Splosions.ModularBosses.entity.projectile;
 import java.util.Iterator;
 import java.util.List;
 
-import com.Splosions.ModularBosses.Sounds;
+import com.Splosions.ModularBosses.MBSounds;
 import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.EntityParagon;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 
 import io.netty.buffer.ByteBuf;
@@ -13,18 +12,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
-import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -63,11 +60,11 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 	public void onUpdate() {
 		super.onUpdate();
 
-		this.collideWithEntities(this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox()));
+		this.collideWithEntities(this.world.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox()));
 
-		if (this.worldObj.isRemote) {
+		if (this.world.isRemote) {
 			for (int x = 0; x < 15; x++) {
-				this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random() / 5, Math.random() / 5, Math.random() / 5, textureBlockID);
+				this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random() / 5, Math.random() / 5, Math.random() / 5, textureBlockID);
 			}
 		}
 	}
@@ -85,9 +82,9 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 
 		if (!list.isEmpty()) {
 			for (int x = 0; x < 40; x++) {
-				this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random(), Math.random(), Math.random(), textureBlockID);
+				this.world.spawnParticle(EnumParticleTypes.BLOCK_DUST, this.posX, this.posY, this.posZ, Math.random(), Math.random(), Math.random(), textureBlockID);
 			}
-			this.playSound(Sounds.BOULDER_HIT, 1F, 1.0F);
+			this.playSound(MBSounds.BOULDER_HIT, 1F, 1.0F);
 			this.setDead();
 		}
 	}
@@ -102,8 +99,8 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		textureBlockID = ByteBufUtils.readVarInt(additionalData, 4);
 		IBlockState iblockstate = Block.getStateById(textureBlockID);
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-		IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
-		String string = ibakedmodel.getTexture().getIconName() + ".png";
+		IBakedModel ibakedmodel = blockrendererdispatcher.getModelForState(iblockstate);
+		String string = ibakedmodel.getParticleTexture().getIconName() + ".png";
 		String[] parts = string.split(":");
 		textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
 	}
@@ -114,23 +111,26 @@ public class EntityBoulder extends EntityMobThrowable implements IEntityAddition
 		textureBlockID = compound.getInteger("blockID");
 		IBlockState iblockstate = Block.getStateById(textureBlockID);
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-		IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
-		String string = ibakedmodel.getTexture().getIconName() + ".png";
+		IBakedModel ibakedmodel = blockrendererdispatcher.getModelForState(iblockstate);
+		String string = ibakedmodel.getParticleTexture().getIconName() + ".png";
 		String[] parts = string.split(":");
 		textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
 	}
-
+		
+	
 	@Override
-	public void writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger("blockID", textureBlockID);
-
+		return compound;
 	}
 
 	@Override
-	protected void onImpact(MovingObjectPosition p_70184_1_) {
+	protected void onImpact(RayTraceResult result) {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+
 
 }

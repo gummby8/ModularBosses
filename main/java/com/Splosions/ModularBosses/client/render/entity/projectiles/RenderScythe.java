@@ -1,19 +1,16 @@
 package com.Splosions.ModularBosses.client.render.entity.projectiles;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.OpenGlHelper;
+import org.lwjgl.opengl.GL11;
+
+import com.Splosions.ModularBosses.client.models.projectiles.ModelScythe;
+import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
+
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.relauncher.Side;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import com.Splosions.ModularBosses.client.models.projectiles.ModelScythe;
-import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderScythe extends Render {

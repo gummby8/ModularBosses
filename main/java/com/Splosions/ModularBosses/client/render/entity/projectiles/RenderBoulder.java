@@ -1,22 +1,17 @@
 package com.Splosions.ModularBosses.client.render.entity.projectiles;
 
+import org.lwjgl.opengl.GL11;
+
+import com.Splosions.ModularBosses.client.models.projectiles.ModelBoulder;
+import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
+
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.fml.relauncher.Side;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
-import com.Splosions.ModularBosses.client.models.projectiles.ModelBoulder;
-import com.Splosions.ModularBosses.client.models.projectiles.ModelFlameThrower;
-import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.projectile.EntityBoulder;
-import com.Splosions.ModularBosses.entity.projectile.EntityFlameThrower;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 

@@ -4,7 +4,6 @@ package com.Splosions.ModularBosses.client.models.entity;
 
 import com.Splosions.ModularBosses.client.models.FakeModelRenderer;
 import com.Splosions.ModularBosses.entity.EntityMoldorm;
-import com.Splosions.ModularBosses.util.ModelUtils;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;

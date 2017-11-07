@@ -3,10 +3,7 @@ package com.Splosions.ModularBosses.client.render.tileentity;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
-import com.Splosions.ModularBosses.client.models.projectiles.ModelCartographer;
 
-import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;

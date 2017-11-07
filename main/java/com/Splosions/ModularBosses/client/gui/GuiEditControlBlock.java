@@ -1,40 +1,31 @@
 package com.Splosions.ModularBosses.client.gui;
 
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.lwjgl.input.Keyboard;
+
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.network.PacketDispatcher;
+import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiOptionButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.resources.Language;
-import net.minecraft.client.settings.GameSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import java.io.IOException;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
-
-import org.lwjgl.input.Keyboard;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
-import com.Splosions.ModularBosses.network.PacketDispatcher;
-import com.Splosions.ModularBosses.network.server.SetControlBlockMessagePacket;
-import com.Splosions.ModularBosses.util.StringUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 @SideOnly(Side.CLIENT)
 public class GuiEditControlBlock extends GuiScreen {
@@ -95,23 +86,23 @@ public class GuiEditControlBlock extends GuiScreen {
 
 		}
 
-		txtXCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 50, height / 4 - 30, 30, 14);
+		txtXCoord = new GuiTextField(0, this.fontRenderer, width / 2 + 50, height / 4 - 30, 30, 14);
 		txtXCoord.setCanLoseFocus(true);
 		txtXCoord.setText(inttxtXCoord + "");
 
-		txtYCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 90, height / 4 - 30, 30, 14);
+		txtYCoord = new GuiTextField(0, this.fontRenderer, width / 2 + 90, height / 4 - 30, 30, 14);
 		txtYCoord.setCanLoseFocus(true);
 		txtYCoord.setText(inttxtYCoord + "");
 
-		txtZCoord = new GuiTextField(0, this.fontRendererObj, width / 2 + 130, height / 4 - 30, 30, 14);
+		txtZCoord = new GuiTextField(0, this.fontRenderer, width / 2 + 130, height / 4 - 30, 30, 14);
 		txtZCoord.setCanLoseFocus(true);
 		txtZCoord.setText(inttxtZCoord + "");
 
-		txtSpnFreq = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 10, 60, 14);
+		txtSpnFreq = new GuiTextField(0, this.fontRenderer, width / 2 + 75, height / 4 + 10, 60, 14);
 		txtSpnFreq.setCanLoseFocus(true);
 		txtSpnFreq.setText(inttxtSpnFreq + "");
 
-		txtSpnCount = new GuiTextField(0, this.fontRendererObj, width / 2 + 75, height / 4 + 50, 60, 14);
+		txtSpnCount = new GuiTextField(0, this.fontRenderer, width / 2 + 75, height / 4 + 50, 60, 14);
 		txtSpnCount.setCanLoseFocus(true);
 		txtSpnCount.setText(inttxtSpnCount + "");
 
@@ -188,36 +179,36 @@ public class GuiEditControlBlock extends GuiScreen {
 	protected void mouseClicked(int x, int y, int button) throws IOException {
 		super.mouseClicked(x, y, button);
 		txtXCoord.mouseClicked(x, y, button);
-		if (button == 1 && x >= txtXCoord.xPosition && x < txtXCoord.xPosition + txtXCoord.width && y >= txtXCoord.yPosition && y < txtXCoord.yPosition + txtXCoord.height) {
+		if (button == 1 && x >= txtXCoord.x && x < txtXCoord.x + txtXCoord.width && y >= txtXCoord.y && y < txtXCoord.y + txtXCoord.height) {
 			txtXCoord.setText("");
 		}
 
 		txtYCoord.mouseClicked(x, y, button);
-		if (button == 1 && x >= txtYCoord.xPosition && x < txtYCoord.xPosition + txtYCoord.width && y >= txtYCoord.yPosition && y < txtYCoord.yPosition + txtYCoord.height) {
+		if (button == 1 && x >= txtYCoord.x && x < txtYCoord.x + txtYCoord.width && y >= txtYCoord.y && y < txtYCoord.y + txtYCoord.height) {
 			txtYCoord.setText("");
 		}
 
 		txtZCoord.mouseClicked(x, y, button);
-		if (button == 1 && x >= txtZCoord.xPosition && x < txtZCoord.xPosition + txtZCoord.width && y >= txtZCoord.yPosition && y < txtZCoord.yPosition + txtZCoord.height) {
+		if (button == 1 && x >= txtZCoord.x && x < txtZCoord.x + txtZCoord.width && y >= txtZCoord.y && y < txtZCoord.y + txtZCoord.height) {
 			txtZCoord.setText("");
 		}
 
 		txtSpnCount.mouseClicked(x, y, button);
-		if (button == 1 && x >= txtSpnCount.xPosition && x < txtSpnCount.xPosition + txtSpnCount.width && y >= txtSpnCount.yPosition && y < txtSpnCount.yPosition + txtSpnCount.height) {
+		if (button == 1 && x >= txtSpnCount.x && x < txtSpnCount.x + txtSpnCount.width && y >= txtSpnCount.y && y < txtSpnCount.y + txtSpnCount.height) {
 			txtSpnCount.setText("");
 		}
 
 		txtSpnFreq.mouseClicked(x, y, button);
-		if (button == 1 && x >= txtSpnFreq.xPosition && x < txtSpnFreq.xPosition + txtSpnFreq.width && y >= txtSpnFreq.yPosition && y < txtSpnFreq.yPosition + txtSpnFreq.height) {
+		if (button == 1 && x >= txtSpnFreq.x && x < txtSpnFreq.x + txtSpnFreq.width && y >= txtSpnFreq.y && y < txtSpnFreq.y + txtSpnFreq.height) {
 			txtSpnFreq.setText("");
 		}
 
-		if (button == 0 && x >= btnRandomSpnLoc.xPosition && x < btnRandomSpnLoc.xPosition + btnRandomSpnLoc.width && y >= btnRandomSpnLoc.yPosition && y < btnRandomSpnLoc.yPosition + btnRandomSpnLoc.height) {
+		if (button == 0 && x >= btnRandomSpnLoc.x && x < btnRandomSpnLoc.x + btnRandomSpnLoc.width && y >= btnRandomSpnLoc.y && y < btnRandomSpnLoc.y + btnRandomSpnLoc.height) {
 			btnRandomSpnLoc.enabled = (btnRandomSpnLoc.enabled == true) ? false : true;
 			btnRandomSpnLoc.displayString = (btnRandomSpnLoc.enabled == true) ? "Ran Spawn Loc" : "On";
 		}
 
-		if (button == 0 && x >= btnBorder.xPosition && x < btnBorder.xPosition + btnBorder.width && y >= btnBorder.yPosition && y < btnBorder.yPosition + btnBorder.height) {
+		if (button == 0 && x >= btnBorder.x && x < btnBorder.x + btnBorder.width && y >= btnBorder.y && y < btnBorder.y + btnBorder.height) {
 			btnBorder.enabled = (btnBorder.enabled == true) ? false : true;
 			btnBorder.displayString = (btnBorder.enabled == true) ? "Border" : "On";
 		}
@@ -252,7 +243,7 @@ public class GuiEditControlBlock extends GuiScreen {
 					// 1);
 					// button.displayString =
 					// this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT);
-					ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+					ScaledResolution scaledresolution = new ScaledResolution(this.mc);
 					int i = scaledresolution.getScaledWidth();
 					int j = scaledresolution.getScaledHeight();
 					this.setWorldAndResolution(this.mc, i, j);
@@ -285,14 +276,14 @@ public class GuiEditControlBlock extends GuiScreen {
 
 		this.list.drawScreen(mouseX, mouseY, partialTicks);
 
-		this.fontRendererObj.drawString("X Off", width / 2 + 50, height / 4 - 40, 0xFFFFFF);
-		this.fontRendererObj.drawString("Y Off", width / 2 + 90, height / 4 - 40, 0xFFFFFF);
-		this.fontRendererObj.drawString("Z Off", width / 2 + 130, height / 4 - 40, 0xFFFFFF);
+		this.fontRenderer.drawString("X Off", width / 2 + 50, height / 4 - 40, 0xFFFFFF);
+		this.fontRenderer.drawString("Y Off", width / 2 + 90, height / 4 - 40, 0xFFFFFF);
+		this.fontRenderer.drawString("Z Off", width / 2 + 130, height / 4 - 40, 0xFFFFFF);
 
 		// this.fontRendererObj.drawString("Spawn Delay", width / 2 + 75, height
 		// / 4 + 0, 0xFFFFFF);
-		this.fontRendererObj.drawString("Spawn Frequency", width / 2 + 60, height / 4 + 0, 0xFFFFFF);
-		this.fontRendererObj.drawString("Spawn Count", width / 2 + 75, height / 4 + 40, 0xFFFFFF);
+		this.fontRenderer.drawString("Spawn Frequency", width / 2 + 60, height / 4 + 0, 0xFFFFFF);
+		this.fontRenderer.drawString("Spawn Count", width / 2 + 75, height / 4 + 40, 0xFFFFFF);
 
 		txtXCoord.drawTextBox();
 		txtYCoord.drawTextBox();
@@ -326,7 +317,7 @@ public class GuiEditControlBlock extends GuiScreen {
 			while (iterator.hasNext()) {
 				String name = (String) iterator.next();
 				if (name != "ThrownEnderpearl") {
-					Entity entity = EntityList.createEntityByName(name, te.getWorld());
+					Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation(name), te.getWorld());
 					// System.out.println(entity);
 					if (entity != null && entity instanceof EntityLiving) {
 						this.nameMap.put(name, name);
@@ -386,8 +377,15 @@ public class GuiEditControlBlock extends GuiScreen {
 
 		protected void drawSlot(int entryID, int p_180791_2_, int p_180791_3_, int p_180791_4_, int p_180791_5_, int p_180791_6_) {
 			// GuiEditControlBlock.this.fontRendererObj.setBidiFlag(true);
-			GuiEditControlBlock.this.drawCenteredString(GuiEditControlBlock.this.fontRendererObj, (this.nameMap.get(this.nameArray.get(entryID))).toString(), this.width / 2, p_180791_3_ + 3, 16777215);
+			GuiEditControlBlock.this.drawCenteredString(GuiEditControlBlock.this.fontRenderer, (this.nameMap.get(this.nameArray.get(entryID))).toString(), this.width / 2, p_180791_3_ + 3, 16777215);
 			// GuiEditControlBlock.this.fontRendererObj.setBidiFlag(GuiEditControlBlock.this.languageManager.getCurrentLanguage().isBidirectional());
+		}
+
+		@Override
+		protected void drawSlot(int p_192637_1_, int p_192637_2_, int p_192637_3_, int p_192637_4_, int p_192637_5_,
+				int p_192637_6_, float p_192637_7_) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 

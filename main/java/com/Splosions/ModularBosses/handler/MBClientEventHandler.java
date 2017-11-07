@@ -12,31 +12,23 @@ import com.Splosions.ModularBosses.client.render.items.RenderItemNote;
 import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.items.ItemNote;
-import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.DrawBlockHighlightEvent;
-import net.minecraftforge.client.event.GuiScreenEvent.KeyboardInputEvent;
-import net.minecraftforge.client.event.GuiScreenEvent.MouseInputEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -65,6 +57,7 @@ public class MBClientEventHandler {
 	}
 
 	//custom screen overlay when submerged in worm blood
+	/**
 	@SubscribeEvent
 	public void RenderBlockOverlayEvent(RenderBlockOverlayEvent event) {
 		if (event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() instanceof FluidWormBlood || event.getPlayer().world.getBlockState(event.getBlockPos()).getBlock() instanceof FluidWormAcid) {
@@ -105,7 +98,7 @@ public class MBClientEventHandler {
 			GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 		}
 	}
-
+	 */
 
 
 	@SubscribeEvent
@@ -118,6 +111,7 @@ public class MBClientEventHandler {
 			GlStateManager.blendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
 		}
 
+		//force player to look at target
 		if (ModularBosses.INSTANCE.playerTarget != null && !ModularBosses.INSTANCE.playerTarget.isDead && event.getEntityPlayer() == Minecraft.getMinecraft().player) {
 			player.motionX = player.motionY = player.motionZ = 0;
 
@@ -136,12 +130,13 @@ public class MBClientEventHandler {
 			}
 			rYaw += 90F;
 			float rPitch = (float) pitch - (float) (10.0F / Math.sqrt(distance)) + (float) (distance * Math.PI / 90);
-			player.setAngles(rYaw, -(rPitch - player.rotationPitch));
+			player.rotationYaw = rYaw;
+			player.rotationPitch = -(rPitch - player.rotationPitch);
 		}
 
 		if (MBExtendedPlayer.get((EntityPlayer) event.getEntity()).knockdownTime != 0 && !(event.getRenderer() instanceof RenderKnockedDown)) {
 			event.setCanceled(true);
-			knockedDown.doRender(player, event.x, event.y, event.z, 0.0625F, event.getPartialRenderTick());
+			knockedDown.doRender(player, event.getX(), event.getY(), event.getZ(), 0.0625F, event.getPartialRenderTick());
 		}
 
 	}

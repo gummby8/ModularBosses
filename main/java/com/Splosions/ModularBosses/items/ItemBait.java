@@ -1,33 +1,19 @@
 package com.Splosions.ModularBosses.items;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.MBCreativeTabs;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemBait;
-import com.Splosions.ModularBosses.client.render.items.RenderItemScythe;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
-import com.Splosions.ModularBosses.entity.projectile.EntityCustomEgg;
-import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimap;
 
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
