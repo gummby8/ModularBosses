@@ -205,7 +205,6 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			}
 		}
 		compound.setTag("MyStringList", tagList);
-
 		compound.setString("message", message);
 		setMessage(message);
 		compound.setBoolean("firstSpawn", firstSpawn);
