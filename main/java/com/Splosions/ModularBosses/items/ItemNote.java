@@ -1,6 +1,6 @@
 package com.Splosions.ModularBosses.items;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.entity.Entity;
@@ -12,7 +12,7 @@ public class ItemNote extends BaseModItem {
 	public int textureID;
 	
 	public ItemNote(ToolMaterial material) {
-		setCreativeTab(MBCreativeTabs.tabTools);
+		setCreativeTab(ModularBosses.tabTools);
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		

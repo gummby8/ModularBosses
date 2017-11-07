@@ -49,10 +49,7 @@ public class BaseModItem extends Item implements IModItem
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerVariants() {
-		String[] variants = getVariants();
-		if (variants != null) {
-			ModelBakery.addVariantName(this, variants);
-		}
+		System.out.println("Variants?");
 	}
 
 	/**

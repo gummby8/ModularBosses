@@ -3,7 +3,7 @@ package com.Splosions.ModularBosses.blocks;
 
 import java.util.Random;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockRotationData.Rotation;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
@@ -12,7 +12,6 @@ import com.Splosions.ModularBosses.handler.GuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,10 +33,9 @@ public class BlockControlBlock extends Block implements IVanillaRotation
 	
 	public BlockControlBlock(Material material) {
 		super(material);
-		setHardness(10.0F);
+		setHardness(-1.0F);
 		setHarvestLevel("pickaxe", 2);
-		setStepSound(soundTypeStone);
-		setCreativeTab(MBCreativeTabs.tabBlocks);
+		setCreativeTab(ModularBosses.tabBlocks);
 		
 	}
 

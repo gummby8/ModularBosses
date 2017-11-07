@@ -1,7 +1,7 @@
 package com.Splosions.ModularBosses.blocks;
 
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityChunkLoader;
 
 import net.minecraft.block.BlockContainer;
@@ -17,8 +17,8 @@ public class BlockChunkLoader extends BlockContainer implements ITileEntityProvi
 
 	public BlockChunkLoader(Material materialIn) 
 	{
-		super(Material.iron);
-		setCreativeTab(MBCreativeTabs.tabBlocks);
+		super(Material.IRON);
+		setCreativeTab(ModularBosses.tabBlocks);
 	}
 
 	@Override
