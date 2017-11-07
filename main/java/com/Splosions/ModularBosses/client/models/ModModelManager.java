@@ -43,7 +43,7 @@ public class ModModelManager {
 
 	private void registerFluidModel(IFluidBlock fluidBlock) {
 		Item item = Item.getItemFromBlock((Block) fluidBlock);
-		ModelBakery.addVariantName(item);
+		ModelBakery.registerItemVariants(item, names);
 
 		final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(FLUID_MODEL_PATH, fluidBlock.getFluid().getName());
 
