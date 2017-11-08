@@ -33,6 +33,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -41,16 +42,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy{
 	
-	private final Minecraft mc = Minecraft.getMinecraft();
 
-
-	
-	/** Stores all models which need to be replaced during {@link ModelBakeEvent} */
-	@SuppressWarnings("deprecation")
-	public static final Map<ModelResourceLocation, Class<? extends IBakedModel>> smartModels = Maps.newHashMap();
-	/** Accessible version of EffectRenderer's IParticleFactory map */
-	public static Map<Integer, IParticleFactory> particleFactoryMap;
-	
 	
 	
 	public static void sobelShader(){
@@ -72,98 +64,20 @@ public class ClientProxy extends CommonProxy{
 		}
 	}
 	
-	public static boolean getShader(){
-		boolean result = false;
-		try{
-			result = ReflectionHelper.getPrivateValue(EntityRenderer.class, Minecraft.getMinecraft().entityRenderer, new String[]{"field_175083_ad", "useShader"});
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
+
 	
 	
 	@Override
 	public void registerRenders() {
-		
-		ModularBossesEntities.registerRenderers();
-		ModularBossesItems.registerRenders();
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityPortalBlock.class, new RenderTileEntityPortalBlock());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityReturnPortalBlock.class, new RenderTileEntityReturnPortalBlock());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityControlBlock.class, new RenderTileEntityControlBlock());
-		
-		try {
-			for (Field f: ModularBossesItems.class.getFields()) {
-				if (Item.class.isAssignableFrom(f.getType())) {
-					Item item = (Item) f.get(null);
-					if (item instanceof IModItem) {
-						((IModItem) item).registerRenderers(mc.getRenderItem().getItemModelMesher());
-					}
-					if (item instanceof ISwapModel) {
-						addModelToSwap((ISwapModel) item);
-					}
-				}
-			}
-		} catch(Exception e) {
-			ModularBosses.logger.warn("Caught exception while registering item renderers: " + e.toString());
-			e.printStackTrace();
-		}
-	
-	
-	
-	try {
-		for (Field f: ModBlocks.class.getFields()) {
-			if (Block.class.isAssignableFrom(f.getType())) {
-				Block block = (Block) f.get(null);
-				if (block != null) {
-					if (block instanceof ISpecialRenderer) {
-						((ISpecialRenderer) block).registerSpecialRenderer();
-					}
-					if (block instanceof ISwapModel) {
-						addModelToSwap((ISwapModel) block);
-					}
-					String name = block.getUnlocalizedName();
-					Item item = GameRegistry.findItem(Reference.MOD_ID, name.substring(name.lastIndexOf(".") + 1));
-					if (item instanceof IModItem) {
-						((IModItem) item).registerRenderers(mc.getRenderItem().getItemModelMesher());
-					}
-					if (item instanceof ISwapModel) {
-						addModelToSwap((ISwapModel) item);
-					}
-				}
-			}
-		}
-	} catch(Exception e) {
-		ModularBosses.logger.warn("Caught exception while registering block renderers: " + e.toString());
-		e.printStackTrace();
+
 	}
 	
-	}
-	
-	/**
-	 * Adds the model swap information to the map
-	 */
-	private void addModelToSwap(ISwapModel swap) {
-		for (ModelResourceLocation resource : swap.getDefaultResources()) {
-			if (smartModels.containsKey(resource)) {
-				if (smartModels.get(resource) != swap.getNewModel()) {
-					ModularBosses.logger.warn("Conflicting models for resource " + resource.toString() + ": models=[old: " + smartModels.get(resource).getSimpleName() + ", new: " + swap.getNewModel().getSimpleName());
-				}
-			} else {
-				ModularBosses.logger.warn("Swapping model for " + resource.toString() + " to class " + swap.getNewModel().getSimpleName());
-				smartModels.put(resource, swap.getNewModel());
-			}
-		}
-	}
 
 	
 	@Override
 	public void preInit() {
 		super.preInit();
-		//FMLCommonHandler.instance().bus().register(new RenderTickHandler());
-		ModModelManager.INSTANCE.registerAllModels();
-		MinecraftForge.EVENT_BUS.register(new MBClientEventHandler());
+
 	}
 	
 }

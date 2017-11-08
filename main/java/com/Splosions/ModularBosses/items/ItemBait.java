@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBait extends BaseModItem implements ISwapModel {
+public class ItemBait extends BaseModItem {
 
 	public ItemBait(ToolMaterial material) {
 		setCreativeTab(ModularBosses.tabTools);
@@ -51,21 +51,7 @@ public class ItemBait extends BaseModItem implements ISwapModel {
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Collection<ModelResourceLocation> getDefaultResources() {
-		List<ModelResourceLocation> resources = Lists.newArrayList();
-		resources.add(new ModelResourceLocation("mb:itemBait", "inventory"));
-		return resources;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Class<? extends IBakedModel> getNewModel() {
-		return RenderItemBait.class;
-	}
-	
-	
+		
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
     super.addInformation(stack, worldIn, tooltip, flagIn);

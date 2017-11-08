@@ -3,7 +3,8 @@ package com.Splosions.ModularBosses.items;
 import java.util.Collection;
 import java.util.List;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsBow;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
@@ -16,8 +17,10 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -28,7 +31,7 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
 	public int aniCount = 0;
 	
 	public ItemLegendsBow(ToolMaterial material) {
-		setCreativeTab(MBCreativeTabs.tabTools);
+		setCreativeTab(ModularBosses.tabTools);
 		setMaxStackSize(1);
 	}
 
@@ -75,50 +78,13 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
                 f = 1.0F;
             }
 
-            EntityArrow entityarrow = new EntityArrow(worldIn, playerIn, f * 2.0F);
+           
 
-            entityarrow.setIsCritical(true);
-
-            int k = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, stack);
-
-            if (k > 0)
+            if (!worldIn.isRemote && f == 1.0F)
             {
-                entityarrow.setDamage(entityarrow.getDamage() + (double)k * 0.5D + 0.5D);
-            }
-
-            int l = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, stack);
-
-            if (l > 0)
-            {
-                entityarrow.setKnockbackStrength(l);
-            }
-
-            if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, stack) > 0)
-            {
-                entityarrow.setFire(100);
-            }
-
-
-            if (flag)
-            {
-                entityarrow.canBePickedUp = 2;
-            }
-            else
-            {
-                playerIn.inventory.consumeInventoryItem(Items.arrow);
-            }
-
-            if (!worldIn.isRemote)
-            {
-            	if (f == 1.0F){
             		EntityEnergyArrow entityEnergyArrow = new EntityEnergyArrow(worldIn, playerIn, playerIn, 3F, 0, 0, 0, 0,1,1,1);
-            		worldIn.spawnEntityInWorld(entityEnergyArrow);
-            		worldIn.playSoundAtEntity(playerIn,"random.fizz",1,1);
-            	} else {
-            	worldIn.playSoundAtEntity(playerIn, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-                worldIn.spawnEntityInWorld(entityarrow);
-                
-            	}
+            		worldIn.spawnEntity(entityEnergyArrow);
+             		worldIn.playSound((EntityPlayer)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.BLOCK_REDSTONE_TORCH_BURNOUT, SoundCategory.PLAYERS, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
             }
         }
     }
@@ -142,19 +108,6 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
         return EnumAction.BOW;
     }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Collection<ModelResourceLocation> getDefaultResources() {
-		List<ModelResourceLocation> resources = Lists.newArrayList();
-		resources.add(new ModelResourceLocation("mb:Legends_Bow", "inventory"));
 
-		return resources;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Class<? extends IBakedModel> getNewModel() {
-		return RenderItemLegendsBow.class;
-	}
 
 }

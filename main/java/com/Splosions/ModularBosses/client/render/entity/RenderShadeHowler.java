@@ -5,11 +5,13 @@ import org.lwjgl.opengl.GL11;
 import com.Splosions.ModularBosses.entity.EntityShadeHowler;
 
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityMob;
@@ -39,7 +41,13 @@ public class RenderShadeHowler extends RenderLiving {
 
 		
 			if (shade.aniID == shade.HOWL && shade.aniFrame > 4 && shade.aniFrame < 30 ){
-				this.drawRay(shade, x, y - 0.7F, z, partialTicks);
+				//this.drawRay(shade, x, y - 0.7F, z, partialTicks);
+				/**
+				this.bindTexture(ENDERCRYSTAL_BEAM_TEXTURES);
+	            float f = MathHelper.sin(((float)entity.healingEnderCrystal.ticksExisted + partialTicks) * 0.2F) / 2.0F + 0.5F;
+	            f = (f * f + f) * 0.2F;
+	            renderCrystalBeams(x, y, z, partialTicks, entity.posX + (entity.prevPosX - entity.posX) * (double)(1.0F - partialTicks), entity.posY + (entity.prevPosY - entity.posY) * (double)(1.0F - partialTicks), entity.posZ + (entity.prevPosZ - entity.posZ) * (double)(1.0F - partialTicks), entity.ticksExisted, entity.healingEnderCrystal.posX, (double)f + entity.healingEnderCrystal.posY, entity.healingEnderCrystal.posZ);
+				*/
 			}
 		
 	}
@@ -50,56 +58,42 @@ public class RenderShadeHowler extends RenderLiving {
 	/**
 	 * Draws the ray from the dragon to it's crystal
 	 */
-	protected void drawRay(EntityMob ent, double x, double y, double z, float partialTicks) {
-		EntityShadeHowler shade = (EntityShadeHowler) ent;
-		
-		
-		
-		float f1 = (float) 10 + partialTicks;
-		float f2 = MathHelper.sin(f1 * 0F) / 2.0F + 0.9F;
-		f2 = (f2 * f2 + f2) * 0.4F;
-		float f4 = (float) ((double) f2 + ent.posY - 0.5D - ent.posY - (ent.prevPosY - ent.posY) * (double) (1.0F - partialTicks));
-		float f3 = (float) (shade.howlEndX - ent.posX - (ent.prevPosX - ent.posX) * (double) (1.0F - partialTicks));
-		float f5 = (float) (shade.howlEndZ - ent.posZ - (ent.prevPosZ - ent.posZ) * (double) (1.0F - partialTicks));			
-		float f6 = MathHelper.sqrt(f3 * f3 + f5 * f5);
-		float f7 = MathHelper.sqrt(f3 * f3 + f4 * f4 + f5 * f5);
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float) x, (float) y + 1.9F, (float) z );	
-		GlStateManager.rotate((float) (-Math.atan2((double) f5, (double) f3)) * 180.0F / (float) Math.PI - 90.0F, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate((float) (-Math.atan2((double) f6, (double) f4)) * 180.0F / (float) Math.PI - 90.0F, 1.0F, 0.0F, 0.0F);
-		Tessellator tessellator = Tessellator.getInstance();
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		RenderHelper.disableStandardItemLighting();
-		GlStateManager.disableCull();
-		this.bindTexture(enderDragonCrystalBeamTextures);
-		GlStateManager.shadeModel(GL11.GL_FLAT);
+	 public static void renderCrystalBeams(double p_188325_0_, double p_188325_2_, double p_188325_4_, float p_188325_6_, double p_188325_7_, double p_188325_9_, double p_188325_11_, int p_188325_13_, double p_188325_14_, double p_188325_16_, double p_188325_18_)
+	    {
+	        float f = (float)(p_188325_14_ - p_188325_7_);
+	        float f1 = (float)(p_188325_16_ - 1.0D - p_188325_9_);
+	        float f2 = (float)(p_188325_18_ - p_188325_11_);
+	        float f3 = MathHelper.sqrt(f * f + f2 * f2);
+	        float f4 = MathHelper.sqrt(f * f + f1 * f1 + f2 * f2);
+	        GlStateManager.pushMatrix();
+	        GlStateManager.translate((float)p_188325_0_, (float)p_188325_2_ + 2.0F, (float)p_188325_4_);
+	        GlStateManager.rotate((float)(-Math.atan2((double)f2, (double)f)) * (180F / (float)Math.PI) - 90.0F, 0.0F, 1.0F, 0.0F);
+	        GlStateManager.rotate((float)(-Math.atan2((double)f3, (double)f1)) * (180F / (float)Math.PI) - 90.0F, 1.0F, 0.0F, 0.0F);
+	        Tessellator tessellator = Tessellator.getInstance();
+	        BufferBuilder bufferbuilder = tessellator.getBuffer();
+	        RenderHelper.disableStandardItemLighting();
+	        GlStateManager.disableCull();
+	        GlStateManager.shadeModel(7425);
+	        float f5 = 0.0F - ((float)p_188325_13_ + p_188325_6_) * 0.01F;
+	        float f6 = MathHelper.sqrt(f * f + f1 * f1 + f2 * f2) / 32.0F - ((float)p_188325_13_ + p_188325_6_) * 0.01F;
+	        bufferbuilder.begin(5, DefaultVertexFormats.POSITION_TEX_COLOR);
+	        int i = 8;
 
-		float f8 = 0.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F;
-		//-32 set to positive to reverse beam
-		float f9 = MathHelper.sqrt(f3 * f3 + f4 * f4 + f5 * f5) / -32.0F - ((float) ent.ticksExisted + partialTicks) * 0.01F; 
-		worldrenderer.startDrawing(5);
-		byte circleFaces = 40;
+	        for (int j = 0; j <= 8; ++j)
+	        {
+	            float f7 = MathHelper.sin((float)(j % 8) * ((float)Math.PI * 2F) / 8.0F) * 0.75F;
+	            float f8 = MathHelper.cos((float)(j % 8) * ((float)Math.PI * 2F) / 8.0F) * 0.75F;
+	            float f9 = (float)(j % 8) / 8.0F;
+	            bufferbuilder.pos((double)(f7 * 0.2F), (double)(f8 * 0.2F), 0.0D).tex((double)f9, (double)f5).color(0, 0, 0, 255).endVertex();
+	            bufferbuilder.pos((double)f7, (double)f8, (double)f4).tex((double)f9, (double)f6).color(255, 255, 255, 255).endVertex();
+	        }
 
-		for (int i = 0; i <= circleFaces; ++i) {
-			float beginSize = 0.01F;
-			float endSize = 5F;
-			float speed = 0.2F;
-			float f10 = MathHelper.sin((float) (i % circleFaces) * (float) Math.PI * 2.0F / (float) circleFaces) * endSize;
-			float f11 = MathHelper.cos((float) (i % circleFaces) * (float) Math.PI * 2.0F / (float) circleFaces) * endSize;
-			float f12 = 1;// (float) (i % circleFaces) * 1.0F / (float) b0;
+	        tessellator.draw();
+	        GlStateManager.enableCull();
+	        GlStateManager.shadeModel(7424);
+	        RenderHelper.enableStandardItemLighting();
+	        GlStateManager.popMatrix();
+	    }
 
-			//worldrenderer.setColorOpaque_I(16711680);
-			worldrenderer.setColorOpaque_I(11111111);
-			worldrenderer.addVertexWithUV((double) f10, (double) f11, (double) f7, (double) f12, (double) f8 + speed); 
-			worldrenderer.addVertexWithUV((double) (f10 * beginSize), (double) (f11 * beginSize), 0.4D, (double) f12, (double) f9);
-
-		}
-
-		tessellator.draw();
-		GlStateManager.enableCull();
-		GlStateManager.shadeModel(7424);
-		RenderHelper.enableStandardItemLighting();
-		GlStateManager.popMatrix();
-	}
 
 }

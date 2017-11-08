@@ -28,22 +28,7 @@ public class ModularBossesItems {
 	
 	
 	
-	/** Map Item to internal ID index for Creative Tab comparator sorting to force even old saves to have correct order */
-	private static final Map<Item, Integer> itemList = new HashMap<Item, Integer>(256);
-	private static int sortId = 0;
-	/** List of items added by other mods that are scheduled to have comparator mappings added */
-	private static final List<Item> addonItems = new ArrayList<Item>();
-	private static Comparator<Item> itemComparator = new Comparator<Item>() {
-		@Override
-		public int compare(Item a, Item b) {
-			if (itemList.containsKey(a) && itemList.containsKey(b)) {
-				return itemList.get(a) - itemList.get(b);
-			} else {
-				ModularBosses.logger.warn("A mod item " + a.getUnlocalizedName() + " or " + b.getUnlocalizedName() + " is missing a comparator mapping");
-				return GameData.getItemRegistry().getId(a) - GameData.getItemRegistry().getId(b);
-			}
-		}
-	};
+
 
 	
 	
@@ -79,74 +64,24 @@ public class ModularBossesItems {
 	
 	public static void init() {
 		
-		itemScythe = new ItemScythe(ToolMaterial.EMERALD).setUnlocalizedName("itemScythe");
-		itemLegendsBow = new ItemLegendsBow(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Bow");
-		itemLegendsSword = new ItemLegendsSword(ToolMaterial.EMERALD).setUnlocalizedName("Legends_Sword");
+		itemScythe = new ItemScythe(ToolMaterial.DIAMOND).setUnlocalizedName("itemScythe");
+		itemLegendsBow = new ItemLegendsBow(ToolMaterial.DIAMOND).setUnlocalizedName("Legends_Bow");
+		itemLegendsSword = new ItemLegendsSword(ToolMaterial.DIAMOND).setUnlocalizedName("Legends_Sword");
 		itemBait = new ItemBait(ToolMaterial.WOOD).setUnlocalizedName("itemBait");
-		itemNote = new ItemNote(ToolMaterial.EMERALD).setUnlocalizedName("itemNote");
+		itemNote = new ItemNote(ToolMaterial.DIAMOND).setUnlocalizedName("itemNote");
 	
 		slimeblob = new Item().setUnlocalizedName("slimeblob").setMaxStackSize(16); //.setTextureName("ModularBosses:SlimeBlob")
 		spawn_egg = new ItemCustomEgg().setUnlocalizedName("spawn_egg");
 	}
 
-	
-	/**
-	 * Actually adds the item comparator mapping
-	 */
-	private static void registerItemComparatorMapping(Item item) {
-		if (itemList.containsKey(item)) {
-			ModularBosses.logger.warn("Item already has a comparator mapping: " + (item == null ? "NULL" : item.getUnlocalizedName()));
-		} else {
-			itemList.put(item, sortId++);
-		}
-	}
 
 	public static void registerItems() {
-		try {
-			for (Field f: ModularBossesItems.class.getFields()) {
-				if (Item.class.isAssignableFrom(f.getType())) {
-					Item item = (Item) f.get(null);
-					if (item != null) {
-						
-						ModularBossesItems.registerItemComparatorMapping(item);
-						String name = item.getUnlocalizedName();
-						GameRegistry.registerItem(item, name.substring(name.lastIndexOf(".") + 1));
-						if (item instanceof ICustomDispenserBehavior) {
-							BlockDispenser.dispenseBehaviorRegistry.putObject(item, ((ICustomDispenserBehavior) item).getNewDispenserBehavior());
-						}
-					}
-				}
-			}
-		} catch(Exception e) {
-			ModularBosses.logger.warn("Caught exception while registering items: " + e.toString());
-			e.printStackTrace();
-		}
-	}
-	
-	
-	@SideOnly(Side.CLIENT)
-	public static void registerRenders(){
-		registerRender(slimeblob);
-	}
-	
-	
-	public static void registerRender(Item item) {
+		// TODO Auto-generated method stub
 		
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(Reference.MOD_ID + ":" + item.getUnlocalizedName().substring(5), "inventory"));
+	}
 
-	}
 	
-	/**
-	 * Registers an ItemBlock to the item sorter for creative tabs sorting
-	 */
-	public static void registerItemBlock(Item block) {
-		if (block instanceof ItemBlock) {
-			ModularBossesItems.registerItemComparatorMapping(block);
-			
-		} else {
-			ModularBosses.logger.warn("Tried to register a non-ItemBlock item for " + (block == null ? "NULL" : block.getUnlocalizedName()));
-		}
-	}
+
 	
 	
 }
