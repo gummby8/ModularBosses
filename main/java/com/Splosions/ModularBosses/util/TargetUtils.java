@@ -17,6 +17,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -25,7 +28,11 @@ public class TargetUtils {
 
 	public static void tellPlayer(String msg) {
 		try {
-			Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
+			TextComponentString modID = new TextComponentString("MB: ");
+			modID.getStyle().setColor(TextFormatting.AQUA).setBold(true);
+			TextComponentString message = new TextComponentString(msg);
+			message.getStyle().setColor(TextFormatting.GOLD);
+			Minecraft.getMinecraft().player.sendMessage(modID.appendSibling(message));
 		} catch (Exception e) {
 			ModularBosses.logger.debug("Tried to send a chat to player before there was a player");
 		}
@@ -33,11 +40,15 @@ public class TargetUtils {
 	}
 	
 	public static void tellPlayersInList(List list, String msg) {
+		TextComponentString modID = new TextComponentString("MB: ");
+		modID.getStyle().setColor(TextFormatting.AQUA).setBold(true);
+		TextComponentString message = new TextComponentString(msg);
+		message.getStyle().setColor(TextFormatting.GOLD);
 		try {
 			for (int i = 0; i < list.size(); ++i) {
 				if (list.get(i) instanceof EntityPlayer){
 					EntityPlayer player = (EntityPlayer) list.get(i);
-					player.sendMessage(new ITextComponent(EnumChatFormatting.AQUA + "MB: " + EnumChatFormatting.GOLD + msg));
+					Minecraft.getMinecraft().player.sendMessage(modID.appendSibling(message));
 				}
 			}
 		} catch (Exception e) {

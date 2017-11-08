@@ -20,7 +20,7 @@ import net.minecraft.util.EnumFacing;
 public class BehaviorDispenseCustomMobEgg extends BehaviorDefaultDispenseItem {
 	@Override
 	public ItemStack dispenseStack(IBlockSource block, ItemStack stack) {
-		EnumFacing facing = BlockDispenser.getFacing(block.getBlockMetadata());
+		EnumFacing facing = block.getBlockState().getValue(BlockDispenser.FACING);
 		double dx = block.getX() + facing.getFrontOffsetX();
         double dy = ((float) block.getBlockPos().getY() + 0.2F);
         double dz= block.getZ() + facing.getFrontOffsetZ();

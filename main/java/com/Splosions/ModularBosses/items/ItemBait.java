@@ -3,7 +3,9 @@ package com.Splosions.ModularBosses.items;
 import java.util.Collection;
 import java.util.List;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import javax.annotation.Nullable;
+
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.render.items.RenderItemBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
@@ -11,9 +13,13 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBait extends BaseModItem implements ISwapModel {
 
 	public ItemBait(ToolMaterial material) {
-		setCreativeTab(MBCreativeTabs.tabTools);
+		setCreativeTab(ModularBosses.tabTools);
 		setMaxStackSize(1);
 	}
 
@@ -30,16 +36,19 @@ public class ItemBait extends BaseModItem implements ISwapModel {
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
 	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!world.isRemote) {
-			Entity projectile = new EntityBait(world, player);
-			world.spawnEntityInWorld(projectile);
-			if (!player.capabilities.isCreativeMode) {
-				--stack.stackSize;
-			}
+	  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn){
+		ItemStack stack = playerIn.getHeldItem(handIn);
+	
+		if (!playerIn.capabilities.isCreativeMode) {
+			stack.shrink(1);
+		}
+		
+		if (!worldIn.isRemote) {
+			Entity projectile = new EntityBait(worldIn, playerIn);
+			worldIn.spawnEntity(projectile);
 		}
 
-		return stack;
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
 	@Override
@@ -57,9 +66,10 @@ public class ItemBait extends BaseModItem implements ISwapModel {
 	}
 	
 	
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4)	{
-	list.add("Smelly bait to lure out Sand Worms");
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    super.addInformation(stack, worldIn, tooltip, flagIn);
+	tooltip.add("Smelly bait to lure out Sand Worms");
 	}
 	
 }

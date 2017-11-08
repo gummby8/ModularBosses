@@ -1,6 +1,6 @@
 package com.Splosions.ModularBosses.items;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 
 import net.minecraft.client.renderer.ItemModelMesher;
@@ -21,7 +21,7 @@ public class BaseModSword extends ItemSword implements IModItem {
 
 	public BaseModSword(ToolMaterial material) {
 		super(material);
-		setCreativeTab(MBCreativeTabs.tabTools);
+		setCreativeTab(ModularBosses.tabTools);
 	}
 
 	/**
