@@ -178,7 +178,6 @@ public class EntityShadeHowler extends EntityMob {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		TargetUtils.betaMsg(this);
 		
 		
 		this.ignoreFrustumCheck = true;

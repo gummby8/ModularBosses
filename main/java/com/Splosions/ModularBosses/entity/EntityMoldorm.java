@@ -198,7 +198,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
     
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		TargetUtils.betaMsg(this);
+
 		
 		this.ignoreFrustumCheck = true;
 		
