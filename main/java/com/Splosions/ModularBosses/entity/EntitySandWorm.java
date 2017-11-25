@@ -12,10 +12,15 @@ import com.Splosions.ModularBosses.util.schematic.DungeonNurkach;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -25,13 +30,10 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
 public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnData {
 
-	private static final int RANDOM_X_WATCHER = 16;
-	private static final int RANDOM_Y_WATCHER = 17;
-	private static final int RANDOM_Z_WATCHER = 18;
-	
-	private static final int YAW_WATCHER = 19;
-	private static final int PITCH_WATCHER = 20;
-	
+	private static final DataParameter<Integer> RANDOM_X_WATCHER = EntityDataManager.<Integer>createKey(EntitySandWorm.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> RANDOM_Y_WATCHER = EntityDataManager.<Integer>createKey(EntitySandWorm.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> RANDOM_Z_WATCHER = EntityDataManager.<Integer>createKey(EntitySandWorm.class, DataSerializers.VARINT);
+
 	public float yaw;
 	public float pitch;
 
@@ -63,7 +65,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		this.ignoreFrustumCheck = true;
 		this.noClip = true;
 		this.pitch = -90; 
-		if (this.worldObj.isRemote) {
+		if (this.world.isRemote) {
 			bodySegments = new EntitySandWormTail[10];
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x] = new EntitySandWormTail(worldIn, this.posX, this.posY, this.posZ, this.yaw, this.pitch, x, this);
@@ -72,15 +74,12 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	}
 
 
-	
 	@Override
 	protected void entityInit() {
-		this.dataWatcher.addObject(RANDOM_X_WATCHER, 0);
-		this.dataWatcher.addObject(RANDOM_Y_WATCHER, 0);
-		this.dataWatcher.addObject(RANDOM_Z_WATCHER, 0);
 		
-		this.dataWatcher.addObject(YAW_WATCHER, 0.0F);
-		this.dataWatcher.addObject(PITCH_WATCHER, 0.0F);
+		this.dataManager.register(RANDOM_X_WATCHER, 0);
+		this.dataManager.register(RANDOM_Y_WATCHER, 0);
+		this.dataManager.register(RANDOM_Z_WATCHER, 0);
 	}
 
 	
@@ -101,9 +100,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 
 
 		
-		this.dataWatcher.updateObject(RANDOM_X_WATCHER, this.ranMidPosX);
-		this.dataWatcher.updateObject(RANDOM_Y_WATCHER, 90);
-		this.dataWatcher.updateObject(RANDOM_Z_WATCHER, this.ranMidPosZ);
+		this.dataManager.set(RANDOM_X_WATCHER, ranMidPosX);
+		this.dataManager.set(RANDOM_Y_WATCHER, 90);
+		this.dataManager.set(RANDOM_Z_WATCHER, this.ranMidPosZ);
 	}
 	
 	
@@ -125,7 +124,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
         double d3 = this.posX - x;
         double d4 = this.posY - y;
         double d5 = this.posZ - z;
-        return (double)MathHelper.sqrt_double(d3 * d3 + d4 * d4 + d5 * d5);
+        return (double)MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5);
     }
     
     
@@ -139,10 +138,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 			if (entity instanceof EntityPlayer){
 				EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
 				player.setPosition(spawnPosX + (Config.WormRoomSizeX / 2), spawnPosY + (Config.WormRoomSizeY / 2) + 2, spawnPosZ + (Config.WormRoomSizeZ / 2));
-				BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-				WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
-				MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
-				this.worldObj.theProfiler.endSection();	
+				//BossTeleporter teleporter = new BossTeleporter(player.getServerWorld());
+				//WorldServer ws = MinecraftServer.getServer().worldServerForDimension(Config.bossDimension);
+				player.changeDimension(Config.bossDimension);
+				//this.world.theProfiler.endSection();	
 			} else if (entity instanceof EntityBait){
 				entity.setDead();
 			}
@@ -161,9 +160,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		
 
 		
-		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.worldObj.isRemote){
+		if(spawnPosX == 0 && spawnPosY == 0 && spawnPosZ == 0 && !this.world.isRemote){
 			TargetUtils.betaMsg(this);
-			this.worldObj.setBlockState(this.getPosition(), Blocks.obsidian.getDefaultState());
+			//this.world.setBlockState(this.getPosition(), Blocks.OBSIDIAN.getDefaultState());
 			
 			spawnPosX = (int) this.posX;
 			spawnPosY = (int) this.posY; 
@@ -176,7 +175,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		
 
 		
-		if (!this.worldObj.isRemote){
+		if (!this.world.isRemote){
 			if (dungeonCompleted()){
 				System.out.println("Worm Dead");
 				this.setDead();
@@ -184,15 +183,15 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 
 			
 		AxisAlignedBB bb = new AxisAlignedBB(this.getPosition().down(),this.getPosition()).expand(15, 15, 15);
-		List teleList = this.worldObj.getEntitiesWithinAABB(Entity.class, bb);
+		List teleList = this.world.getEntitiesWithinAABB(Entity.class, bb);
 		teleEntitiesInList(teleList);
 
 		}
 		
 		
-		double faceX = this.dataWatcher.getWatchableObjectInt(RANDOM_X_WATCHER);
-		double faceY = this.dataWatcher.getWatchableObjectInt(RANDOM_Y_WATCHER);
-		double faceZ = this.dataWatcher.getWatchableObjectInt(RANDOM_Z_WATCHER);
+		double faceX = this.dataManager.get(RANDOM_X_WATCHER);
+		double faceY = this.dataManager.get(RANDOM_Y_WATCHER);
+		double faceZ = this.dataManager.get(RANDOM_Z_WATCHER);
 
 		if (faceX == 0 && faceY == 0 && faceZ == 0){
 			nextPosition();
@@ -205,12 +204,12 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
         this.posZ += this.motionZ;
 
         
-		if (!this.worldObj.isRemote && this.getDistance(faceX, faceY, faceZ) < 20) {
+		if (!this.world.isRemote && this.getDistance(faceX, faceY, faceZ) < 20) {
 			if (faceY == 90){
 				//System.out.println("DIVE DIVE DIVE");
-				this.dataWatcher.updateObject(RANDOM_X_WATCHER, this.ranPosX);
-				this.dataWatcher.updateObject(RANDOM_Y_WATCHER, 5);
-				this.dataWatcher.updateObject(RANDOM_Z_WATCHER, this.ranPosZ);	
+				this.dataManager.set(RANDOM_X_WATCHER, this.ranPosX);
+				this.dataManager.set(RANDOM_Y_WATCHER, 5);
+				this.dataManager.set(RANDOM_Z_WATCHER, this.ranPosZ);	
 			} else {
 				//System.out.println("Surface!");
 				nextPosition();
@@ -218,10 +217,10 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		}
         
 
-		if (this.ticksExisted == 1 && this.worldObj.isRemote) {
+		if (this.ticksExisted == 1 && this.world.isRemote) {
 			for (int x = 0; x < bodySegments.length; x++) {
 				bodySegments[x].setPosition(this.posX, this.posY, this.posZ);
-				this.worldObj.spawnEntityInWorld(bodySegments[x]);
+				this.world.spawnEntity(bodySegments[x]);
 				//System.out.println("Spawning ID " + bodySegments[x].getEntityId() + " on client");
 				//entIDs[x] = bodySegments[x].getEntityId();
 			}
@@ -229,14 +228,14 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 
 		if (this.ticksExisted > 10) {
 			try {
-				if (this.worldObj.isRemote && bodySegments == null) {
+				if (this.world.isRemote && bodySegments == null) {
 					//bodySegments = new EntitySandWormTail[10];
 					for (int x = 0; x < bodySegments.length; x++) {
 						//bodySegments[x] = (EntitySandWormTail) this.worldObj.getEntityByID(entIDs[x]);
 					}
 				}
 
-				if (this.worldObj.isRemote){
+				if (this.world.isRemote){
 				float spacing = 21;
 				PseudoChild(this, spacing, bodySegments[0]);
 				PseudoChild(bodySegments[0], spacing, bodySegments[1]);
@@ -281,7 +280,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 * creates a new dungeon assigns the return location and dungeon ID
 	 */
 	private void createDungeon() {
-		if (!this.worldObj.isRemote){
+		if (!this.world.isRemote){
 			DungeonNurkach dungeon = new DungeonNurkach(this.getUniqueID().toString() ,this.getPosition(), this.dimension);
 			ModularBosses.INSTANCE.dungeonList.add(dungeon);
 		}
@@ -290,9 +289,9 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 
 
 	public void baitAction(double posX, double posY, double posZ){
-		this.dataWatcher.updateObject(RANDOM_X_WATCHER, (int)posX);
-		this.dataWatcher.updateObject(RANDOM_Y_WATCHER, (int)posY);
-		this.dataWatcher.updateObject(RANDOM_Z_WATCHER, (int)posZ);	
+		this.dataManager.set(RANDOM_X_WATCHER, (int)posX);
+		this.dataManager.set(RANDOM_Y_WATCHER, (int)posY);
+		this.dataManager.set(RANDOM_Z_WATCHER, (int)posZ);	
 	}
 	
 	
@@ -326,7 +325,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 		double d2 = z - this.posZ;
 		double d1 = y - this.posY;
 
-		double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+		double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 		float f2 = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) + 90.0F;
 		float f3 = (float) (-(Math.atan2(d1, d3) * 180.0D / Math.PI));
 		this.pitch = this.updateRotation(this.pitch, f3, pitchSpeed);
@@ -337,7 +336,7 @@ public class EntitySandWorm extends Entity  implements IEntityAdditionalSpawnDat
 	 * Arguments: current rotation, intended rotation, max increment.
 	 */
 	private float updateRotation(float rot, float dest, float speed) {
-		float f3 = MathHelper.wrapAngleTo180_float(dest - rot);
+		float f3 = MathHelper.wrapDegrees(dest - rot);
 
 		if (f3 > speed) {
 			f3 = speed;

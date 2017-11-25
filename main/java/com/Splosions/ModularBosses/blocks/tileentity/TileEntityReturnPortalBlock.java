@@ -13,11 +13,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 
-public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePlayerListBox {
+public class TileEntityReturnPortalBlock extends TileEntity implements ITickable {
 
 	public int ticksExisted;
 	public int countDown;
@@ -30,11 +30,11 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 		
 	@Override
 	public void update() {
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			ticksExisted++;
-			if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isBlockPowered(pos)) {
+			if (this.ticksExisted % 20 == (20 - 1) && this.world.isBlockPowered(pos)) {
 				AxisAlignedBB bb = new AxisAlignedBB(this.getPos().down().south().east(), this.getPos().up());
-				List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, bb.expand(0, 1, 0));
+				List teleList = this.world.getEntitiesWithinAABB(EntityPlayer.class, bb.expand(0, 1, 0));
 				if (!teleList.isEmpty()) {
 					countDown--;
 					TargetUtils.tellPlayersInList(teleList, "Returning to world in " + countDown);
@@ -77,11 +77,11 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 			if (entity instanceof EntityPlayer) {
 				EntityPlayerMP player = (EntityPlayerMP) par1List.get(i);
 				player.setPosition(returnX, returnY + 2, returnZ);
-				BossTeleporter teleporter = new BossTeleporter(player.getServerForPlayer());
-				if (this.worldObj.provider.getDimensionId() == Config.bossDimension) {
-					MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, returnDimension, teleporter);
+				BossTeleporter teleporter = new BossTeleporter(player.getServerWorld());
+				if (this.world.provider.getDimension() == Config.bossDimension) {
+					player.changeDimension(returnDimension);
 				} else {
-					MinecraftServer.getServer().getConfigurationManager().transferPlayerToDimension(player, Config.bossDimension, teleporter);
+					player.changeDimension(Config.bossDimension);
 				}
 			}
 		}
@@ -106,12 +106,13 @@ public class TileEntityReturnPortalBlock extends TileEntity implements IUpdatePl
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setInteger("returnX", returnX);
 		compound.setInteger("returnY", returnY);
 		compound.setInteger("returnZ", returnZ);
 		compound.setInteger("dimension", returnDimension);
 		compound.setString("dungeonID", dungeonID);
+		return compound;
 	}
 }

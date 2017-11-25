@@ -15,14 +15,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerListBox {
+public class TileEntityPortalBlock extends TileEntity implements ITickable {
 
 	public int ticksExisted;
 	public float red = 0;
@@ -41,10 +41,10 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 	@Override
 	public void update() {
 
-		if (this.ticksExisted % 20 == (20 - 1) && this.worldObj.isRemote) {
+		if (this.ticksExisted % 20 == (20 - 1) && this.world.isRemote) {
 			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(),
 					(this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
-			List<AbstractClientPlayer> players = this.worldObj.getEntitiesWithinAABB(AbstractClientPlayer.class,
+			List<AbstractClientPlayer> players = this.world.getEntitiesWithinAABB(AbstractClientPlayer.class,
 					axisalignedbb.expand(3, 2, 3));
 			for (AbstractClientPlayer player : players) {
 				message = player.getLocationSkin().toString();
@@ -53,27 +53,26 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 			}
 		}
 
-		if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
+		if (this.ticksExisted % 20 == (20 - 1) && !this.world.isRemote) {
 			countDown--;
 			AxisAlignedBB axisalignedbb = new AxisAlignedBB(this.pos.getX(), this.pos.getY(), this.pos.getZ(),
 					(this.pos.getX() + 1), (this.pos.getY() + 1), (this.pos.getZ() + 1));
-			List<EntityPlayer> players = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class,
+			List<EntityPlayer> players = this.world.getEntitiesWithinAABB(EntityPlayer.class,
 					axisalignedbb.expand(3, 2, 3));
 			TargetUtils.tellPlayersInList(players, "Teleporting in " + countDown);
 			
-			PortalLandingWorldData roomData = (PortalLandingWorldData) this.worldObj.getPerWorldStorage()
-					.loadData(PortalLandingWorldData.class, "lobbyPortals");
+			PortalLandingWorldData roomData = (PortalLandingWorldData) this.world.getPerWorldStorage().getOrLoadData(PortalLandingWorldData.class, "lobbyPortals");
 			if (roomData == null) {
 				System.out.println("No LobbyPortals Tag found, creating one");
 				roomData = new PortalLandingWorldData("lobbyPortals");
-				this.worldObj.getPerWorldStorage().setData("lobbyPortals", roomData);
+				this.world.getPerWorldStorage().setData("lobbyPortals", roomData);
 			}
 			if (countDown <= 0) {
 				red = getRandomNumberInRange(50, 255);
 				green = getRandomNumberInRange(50, 255);
 				blue = getRandomNumberInRange(50, 255);
 
-				worldObj.markBlockForUpdate(this.pos);
+				world.notifyBlockUpdate(pos, this.blockType.getDefaultState(), this.blockType.getDefaultState(), 0);
 				try {
 					int num = (roomData.portalLandingList.size() > 1)? getRandomNumberInRange(0, roomData.portalLandingList.size() - 1) : 0;
 					String locRaw = roomData.portalLandingList.get(num);
@@ -88,10 +87,10 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 					for (EntityPlayer player : players) {
 						if (playerNames.contains(player.getDisplayNameString())) {
 
-							EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.worldObj, player, player.posX,
+							EntityTeleportBiped teleBiped = new EntityTeleportBiped(this.world, player, player.posX,
 									player.posY + 1, player.posZ, player.rotationYaw,
 									playerSkins.get(playerNames.indexOf(player.getDisplayNameString())));
-							this.worldObj.spawnEntityInWorld(teleBiped);
+							this.world.spawnEntity(teleBiped);
 							player.setPositionAndUpdate(pX + 0.5, pY + 1, pZ + 0.5);
 
 						}
@@ -113,7 +112,7 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.AxisAlignedBB getRenderBoundingBox() {
+	public AxisAlignedBB getRenderBoundingBox() {
 		AxisAlignedBB bb = new AxisAlignedBB(getPos(), getPos().add(3, 1, 3));
 		return bb;
 	}
@@ -128,11 +127,12 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setFloat("red", red);
 		compound.setFloat("green", green);
 		compound.setFloat("blue", blue);
+		return compound;
 	}
 
 	public String getMessage() {
@@ -148,17 +148,17 @@ public class TileEntityPortalBlock extends TileEntity implements IUpdatePlayerLi
 	}
 
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound syncData = new NBTTagCompound();
 		syncData.setFloat("red", red);
 		syncData.setFloat("green", green);
 		syncData.setFloat("blue", blue);
 		this.writeToNBT(syncData);
-		return new S35PacketUpdateTileEntity(this.pos, 1, syncData);
+		return new SPacketUpdateTileEntity(this.pos, 1, syncData);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 
 	}

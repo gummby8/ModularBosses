@@ -35,8 +35,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		super(material);
 		setHardness(-1.0F);
 		setHarvestLevel("pickaxe", 2);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(STATE,
-				Integer.valueOf(ON)));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(STATE, Integer.valueOf(ON)));
 		// setCreativeTab(MBCreativeTabs.tabBlocks);
 
 	}

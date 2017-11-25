@@ -15,15 +15,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 
-public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerListBox {
+public class TileEntityControlBlock extends TileEntity implements ITickable {
 	/** Maximum number of characters that will fit on one chat line */
 	public static final int LINE_LENGTH = 100;
 	public static final int MAX_MESSAGE_LENGTH = LINE_LENGTH * 3;
@@ -54,15 +55,16 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	public boolean firstSpawn = false;
 
 	public TileEntityControlBlock() {
+
 	}
 
 	@Override
 	public void update() {
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			ticksExisted++;
 			// called each tick just like onUpdate
 
-			if (!this.worldObj.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
+			if (!this.world.isRemote && spawnMob != "" && spawnMob != null && !spawnMob.isEmpty()) {
 				if (triggerPower == 1) {
 					spawnAndFind();
 				} else if (foundList.size() < spawnCount && ticksExisted > 100 && !firstSpawn) {
@@ -79,7 +81,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			}
 
 			// searches for mobs every 1 second
-			if (this.ticksExisted % 20 == (20 - 1) && !this.worldObj.isRemote) {
+			if (this.ticksExisted % 20 == (20 - 1) && !this.world.isRemote) {
 				findMobs();
 				//System.out.println(targetTime - Instant.now().getEpochSecond());
 			}
@@ -91,8 +93,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	public void spawnAndFind(){
 		findMobs();
 		spawnList = new ArrayList<String>(foundList);
-		while (spawnList.size() < spawnCount) {
-			spawnCreature(this.worldObj, spawnMob, this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
+		while (spawnList.size() < spawnCount) {spawnCreature(this.world, new ResourceLocation(spawnMob), this.pos.getX(), this.pos.getY() + 2, this.pos.getZ());
 		}
 	}
 	
@@ -104,7 +105,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		int k = this.pos.getZ();
 		AxisAlignedBB axisalignedbb = (new AxisAlignedBB((double) i, (double) j, (double) k, (double) (i + 1), (double) (j + 1 + yOff), (double) (k + 1)));
 
-		List list = this.worldObj.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, 0, zOff));
+		List list = this.world.getEntitiesWithinAABB(EntityLiving.class, axisalignedbb.expand(xOff, 0, zOff));
 		Iterator iterator = list.iterator();
 		while (iterator.hasNext()) {
 			Entity entity = (Entity) iterator.next();
@@ -114,17 +115,17 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 				// System.out.println(entity.getUniqueID().toString());
 			}
 		}
-		this.worldObj.notifyNeighborsOfStateChange(pos, blockType);
+		this.world.neighborChanged(pos, blockType, pos);
 	}
 
 	/**
 	 * Spawns the creature specified by the egg's type in the location specified
 	 * by the last three parameters.
 	 */
-	public Entity spawnCreature(World world, String entityName, double x, double y, double z) {
+	public Entity spawnCreature(World world, ResourceLocation entityName, double x, double y, double z) {
 		Entity entity = null;
 		// System.out.println(EntityList.getEntityNameList());
-		entity = EntityList.createEntityByName(entityName, world);
+		entity = EntityList.createEntityByIDFromName(entityName, world);
 		// System.out.println("Entity = " + entity);
 		if (entity instanceof EntityLiving && entity != null) {
 			EntityLiving entityliving = (EntityLiving) entity;
@@ -137,11 +138,11 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 			 * BlockPos pos = new BlockPos(x, y, z); IBlockState block =
 			 * this.worldObj.getBlockState(pos); block.getBlock().getMaterial();
 			 */
-			entityliving.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+			entityliving.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
 			entityliving.rotationYawHead = entityliving.rotationYaw;
 			entityliving.renderYawOffset = entityliving.rotationYaw;
 			spawnList.add(entity.getUniqueID().toString());
-			world.spawnEntityInWorld(entityliving);
+			world.spawnEntity(entityliving);
 			//entityliving.playLivingSound();
 			// System.out.println("Spawning");
 
@@ -201,7 +202,7 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		NBTTagList tagList = new NBTTagList();
 		for (int i = 0; i < spawnList.size(); i++) {
@@ -221,17 +222,19 @@ public class TileEntityControlBlock extends TileEntity implements IUpdatePlayerL
 		compound.setInteger("triggerPower", triggerPower);
 		compound.setInteger("inputPower", inputPower);
 		markDirty();
+	
+		return compound;
 	}
 
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound nbtTag = new NBTTagCompound();
 		writeToNBT(nbtTag);
-		return new S35PacketUpdateTileEntity(pos, 1, nbtTag);
+		return new SPacketUpdateTileEntity(pos, 1, nbtTag);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity packet) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		readFromNBT(packet.getNbtCompound());
 	}
 

@@ -1,10 +1,11 @@
 
 package com.Splosions.ModularBosses.blocks;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -19,9 +20,8 @@ public class BlockReturnPortal extends Block
 		super(material);
 		setHardness(10.0F);
 		setBlockUnbreakable();
-		setStepSound(soundTypeStone);
-		setCreativeTab(MBCreativeTabs.tabBlocks);
-		
+		setSoundType(SoundType.STONE);
+		setCreativeTab(ModularBosses.tabBlocks);
 	}
 	
 	

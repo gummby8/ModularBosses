@@ -18,9 +18,9 @@ public class BossTeleporter extends Teleporter {
 	public void placeInPortal(Entity entityIn, float rotationYaw) {
 		//this.makePortal(entityIn);
 
-		int i = MathHelper.floor_double(entityIn.posX);
-		int j = MathHelper.floor_double(entityIn.posY) - 1;
-		int k = MathHelper.floor_double(entityIn.posZ);
+		int i = MathHelper.floor(entityIn.posX);
+		int j = MathHelper.floor(entityIn.posY) - 1;
+		int k = MathHelper.floor(entityIn.posZ);
 		byte b0 = 1;
 		byte b1 = 0;
 
@@ -32,7 +32,7 @@ public class BossTeleporter extends Teleporter {
 	}
 
 	public boolean makePortal(Entity ent) {
-		this.worldServerInstance.setBlockState(ent.getPosition().down(), Blocks.obsidian.getDefaultState());
+		//this.worldServerInstance.setBlockState(ent.getPosition().down(), Blocks.obsidian.getDefaultState());
 
 		return true;
 	}
