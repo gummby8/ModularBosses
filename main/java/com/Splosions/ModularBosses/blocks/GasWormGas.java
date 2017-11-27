@@ -26,7 +26,7 @@ public class GasWormGas extends BlockFluidClassic{
 	@Override
     public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.generic, Config.WormGasDmg);
+			entityIn.attackEntityFrom(DamageSource.GENERIC, Config.WormGasDmg);
 
 		}
     }

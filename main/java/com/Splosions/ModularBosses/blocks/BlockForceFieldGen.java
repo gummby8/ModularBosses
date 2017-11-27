@@ -3,15 +3,17 @@ package com.Splosions.ModularBosses.blocks;
 
 import java.util.Random;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import javax.annotation.Nullable;
+
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.BlockRotationData.Rotation;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -29,10 +31,9 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 		super(material);
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
-		setStepSound(soundTypeStone);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED,
-				Boolean.valueOf(false)));
-		setCreativeTab(MBCreativeTabs.tabBlocks);
+		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, Boolean.valueOf(false)));
+		setSoundType(SoundType.STONE);
+		setCreativeTab(ModularBosses.tabBlocks);
 	}
 
 	@Override
@@ -40,17 +41,16 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 		return BlockRotationData.Rotation.PISTON_CONTAINER;
 	}
 
+	/**
 	@Override
-	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ,
-			int meta, EntityLivingBase entity) {
+	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase entity) {
 		EnumFacing enumfacing = entity.getHorizontalFacing();
-		return super.onBlockPlaced(world, pos, face, hitX, hitY, hitZ, meta, entity).withProperty(FACING, enumfacing)
-				.withProperty(POWERED, false);
+		return super.onBlockPlaced(world, pos, face, hitX, hitY, hitZ, meta, entity).withProperty(FACING, enumfacing).withProperty(POWERED, false);
 	}
+	*/
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity,
-			ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
 		world.setBlockState(pos, state.withProperty(FACING, face.getOpposite()).withProperty(POWERED, false));
 	}
@@ -79,24 +79,40 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 		return i;
 	}
 
-	@Override
-	protected BlockState createBlockState() {
-		return new BlockState(this, new IProperty[] { FACING, POWERED });
-	}
 
-	@Override
-	public boolean canProvidePower() {
-		return true;
-	}
+
+    /**
+     * Determine if this block can make a redstone connection on the side provided,
+     * Useful to control which sides are inputs and outputs for redstone wires.
+     *
+     * @param state The current state
+     * @param world The current world
+     * @param pos Block position in world
+     * @param side The side that is trying to make the connection, CAN BE NULL
+     * @return True to make the connection
+     */
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable EnumFacing side)
+    {
+        return state.canProvidePower() && side != null;
+    }
+    
+    /**
+     * Can this block provide power. Only wire currently seems to have this change based on its state.
+     */
+
+    @Override
+    public boolean canProvidePower(IBlockState state)
+    {
+        return true;
+    }
 
 	protected boolean canPowerSide(Block blockIn) {
 		return true;
 	}
 
 	@Override
-	public int isProvidingWeakPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
+	public int getWeakPower(IBlockState state, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
 		EnumFacing enumfacing = (EnumFacing) state.getValue(FACING);
-
 		if (enumfacing == side && !((Boolean) state.getValue(POWERED)).booleanValue()) {
 			return 15;
 		} else {
@@ -104,16 +120,12 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 		}
 	}
 
-	@Override
-	public int isProvidingStrongPower(IBlockAccess worldIn, BlockPos pos, IBlockState state, EnumFacing side) {
-		return 0;
-	}
 
 	/**
 	 * Called when a neighboring block changes.
 	 */
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
-		if (neighborBlock.canProvidePower()) {
+		if (neighborBlock.canProvidePower(state)) {
 			worldIn.scheduleUpdate(pos, this, 40);
 		}
 	}

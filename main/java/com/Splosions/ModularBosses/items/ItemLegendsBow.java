@@ -16,9 +16,11 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -39,18 +41,30 @@ public class ItemLegendsBow extends BaseModItem{
 	}
 
 	
-	/**
-	 * Called whenever this item is equipped and the right mouse button is
-	 * pressed. Args: itemStack, world, entityPlayer
-	 */
-	@Override
-	  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn){
-		ItemStack stack = playerIn.getHeldItem(handIn);
-        playerIn.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+
+	
+    /**
+     * Called when the equipped item is right clicked.
+     */
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+    {
+        ItemStack itemstack = playerIn.getHeldItem(handIn);
+        boolean flag = !this.findAmmo(playerIn).isEmpty();
         this.aniCount = 1000;
-        stack.setAnimationsToGo(aniCount); 
-        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-	}
+        itemstack.setAnimationsToGo(aniCount); 
+        ActionResult<ItemStack> ret = net.minecraftforge.event.ForgeEventFactory.onArrowNock(itemstack, worldIn, playerIn, handIn, flag);
+        if (ret != null) return ret;
+
+        if (!playerIn.capabilities.isCreativeMode && !flag)
+        {
+            return flag ? new ActionResult(EnumActionResult.PASS, itemstack) : new ActionResult(EnumActionResult.FAIL, itemstack);
+        }
+        else
+        {
+            playerIn.setActiveHand(handIn);
+            return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
+        }
+    }
 	
 	 /**
      * Called when the player stops using an Item (stops holding the right mouse button).
@@ -60,16 +74,18 @@ public class ItemLegendsBow extends BaseModItem{
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityPlayer playerIn, int timeLeft)
     {
     	stack.setAnimationsToGo(this.aniCount = 0);
-        int j = this.getMaxItemUseDuration(stack) - timeLeft;
-        net.minecraftforge.event.entity.player.ArrowLooseEvent event = new net.minecraftforge.event.entity.player.ArrowLooseEvent(playerIn, stack, worldIn, j);
-        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return;
-        j = event.getCharge();
 
-        boolean flag = playerIn.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, stack) > 0;
+        boolean flag = playerIn.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, stack) > 0;
+        ItemStack itemstack = this.findAmmo(playerIn);
+        
+        int i = this.getMaxItemUseDuration(stack) - timeLeft;
+        i = net.minecraftforge.event.ForgeEventFactory.onArrowLoose(stack, worldIn, playerIn, i, !itemstack.isEmpty() || flag);
+        if (i < 0) return;
 
-        if (flag || playerIn.inventory.hasItem(Items.arrow))
+        
+        if (flag || !itemstack.isEmpty())
         {
-            float f = (float)j / 20.0F;
+            float f = (float)i / 20.0F;
             f = (f * f + f * 2.0F) / 3.0F;
 
             if ((double)f < 0.1D)
@@ -93,6 +109,37 @@ public class ItemLegendsBow extends BaseModItem{
         }
     }
 	
+    private ItemStack findAmmo(EntityPlayer player)
+    {
+        if (this.isArrow(player.getHeldItem(EnumHand.OFF_HAND)))
+        {
+            return player.getHeldItem(EnumHand.OFF_HAND);
+        }
+        else if (this.isArrow(player.getHeldItem(EnumHand.MAIN_HAND)))
+        {
+            return player.getHeldItem(EnumHand.MAIN_HAND);
+        }
+        else
+        {
+            for (int i = 0; i < player.inventory.getSizeInventory(); ++i)
+            {
+                ItemStack itemstack = player.inventory.getStackInSlot(i);
+
+                if (this.isArrow(itemstack))
+                {
+                    return itemstack;
+                }
+            }
+
+            return ItemStack.EMPTY;
+        }
+    }
+
+    protected boolean isArrow(ItemStack stack)
+    {
+        return stack.getItem() instanceof ItemArrow;
+    }
+    
     /**
      * How long it takes to use or consume an item
      */

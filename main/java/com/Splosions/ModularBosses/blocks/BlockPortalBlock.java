@@ -1,10 +1,11 @@
 
 package com.Splosions.ModularBosses.blocks;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -19,8 +20,8 @@ public class BlockPortalBlock extends Block
 		super(material);
 		setHardness(10.0F);
 		setHarvestLevel("pickaxe", 2);
-		setStepSound(soundTypeStone);
-		setCreativeTab(MBCreativeTabs.tabBlocks);
+		setSoundType(SoundType.STONE);
+		setCreativeTab(ModularBosses.tabBlocks);
 		
 	}
 	
@@ -40,8 +41,9 @@ public class BlockPortalBlock extends Block
 		return new TileEntityPortalBlock();
 	}
 	
-    @Override
-    public boolean isOpaqueCube(){
+	@Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
         return false;
     }
 

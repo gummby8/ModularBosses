@@ -13,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -46,10 +47,11 @@ public class BlockWormTumor extends Block implements IVanillaRotation
 
 
 	@Override
-	public IBlockState onBlockPlaced(World world, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase entity) {
+    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing face, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return getStateFromMeta(meta).withProperty(FACING, face);
 	}
 
+	
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
@@ -73,10 +75,6 @@ public class BlockWormTumor extends Block implements IVanillaRotation
 		return ((EnumFacing) state.getValue(FACING)).getIndex();
 	}
 
-	@Override
-	protected BlockState createBlockState() {
-		return new BlockState(this, FACING);
-	}
 
 	
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state)
@@ -92,20 +90,23 @@ public class BlockWormTumor extends Block implements IVanillaRotation
         return new AxisAlignedBB((double)((float)pos.getX() + f), (double)pos.getY(), (double)((float)pos.getZ() + f), (double)((float)(pos.getX() + 1) - f), (double)(pos.getY() + 1), (double)((float)(pos.getZ() + 1) - f));
     }
 
-    public boolean isFullCube()
+	@Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
+
+	@Override
+    public boolean isOpaqueCube(IBlockState state)
     {
         return false;
     }
 
-    public boolean isOpaqueCube()
+	@Override
+    public boolean isFullBlock(IBlockState state)
     {
         return false;
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.CUTOUT;
     }
     
     /**

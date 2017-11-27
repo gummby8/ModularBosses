@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class FluidTempWormAcid extends BlockFluidClassic{
 
 	public FluidTempWormAcid(Fluid fluid, Material material) {
-		super(fluid, Material.water);
+		super(fluid, Material.WATER);
 		this.lightOpacity = 0;
 		this.lightValue = 15;
 		this.setMaxScaledLight(0);
@@ -35,22 +36,24 @@ public class FluidTempWormAcid extends BlockFluidClassic{
         entityIn.motionX *= 0.4D;
         entityIn.motionZ *= 0.4D;
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, Config.WormAcidDmg);
+			entityIn.attackEntityFrom(DamageSource.GENERIC, Config.WormAcidDmg);
 
 		}
 		
     }
 	
-	@SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.CUTOUT;
-    }
-	
 	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+	@Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 	
 	@Override
 	public boolean hasTileEntity(IBlockState state) {

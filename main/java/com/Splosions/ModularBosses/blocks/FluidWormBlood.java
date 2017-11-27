@@ -15,7 +15,7 @@ import net.minecraftforge.fluids.Fluid;
 public class FluidWormBlood extends BlockFluidClassic{
 
 	public FluidWormBlood(Fluid fluid, Material material) {
-		super(fluid, Material.water);		
+		super(fluid, Material.WATER);		
 	}
  
 
@@ -27,7 +27,7 @@ public class FluidWormBlood extends BlockFluidClassic{
         entityIn.motionX *= 0.4D;
         entityIn.motionZ *= 0.4D;
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.generic, Config.WormBloodDmg);
+			entityIn.attackEntityFrom(DamageSource.GENERIC, Config.WormBloodDmg);
 
 		}
 		

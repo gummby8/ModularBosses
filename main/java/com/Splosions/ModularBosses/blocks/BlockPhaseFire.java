@@ -2,7 +2,7 @@ package com.Splosions.ModularBosses.blocks;
 
 import java.util.Random;
 
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
 import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 
@@ -12,8 +12,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -33,8 +33,7 @@ public class BlockPhaseFire extends Block
 		super(material);
 		disableStats();
 		setBlockUnbreakable();
-		setStepSound(soundTypeStone);
-		setCreativeTab(MBCreativeTabs.tabBlocks);
+		setCreativeTab(ModularBosses.tabBlocks);
 		this.setTickRandomly(true);
 
 	}
@@ -48,7 +47,6 @@ public class BlockPhaseFire extends Block
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		worldIn.setBlockToAir(pos);
-		//worldIn.scheduleUpdate(pos, this, 100);
 	}
 		
 	
@@ -78,45 +76,26 @@ public class BlockPhaseFire extends Block
 
 
 	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
-
-
-
-	@Override
-	public boolean isFullCube() {
-		return false;
-	}
-
-
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.CUTOUT;
-	}
-
-
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(World world, BlockPos pos, IBlockState state) {
-		return null;
-	}
+    public boolean isFullBlock(IBlockState state)
+    {
+        return false;
+    }
 
 
 
-	@Override
-	public boolean canEntityDestroy(IBlockAccess world, BlockPos pos, Entity entity) {
-		return false;
-	}
-
-
-
-
-
-
-	
 	/**
 
 	 * Extinguishes the flames at this location, setting the block to air if flames are not renewable

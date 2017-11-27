@@ -18,7 +18,7 @@ import net.minecraftforge.fluids.Fluid;
 public class FluidTempWormBlood extends BlockFluidClassic{
 
 	public FluidTempWormBlood(Fluid fluid, Material material) {
-		super(fluid, Material.water);
+		super(fluid, Material.WATER);
 		// limits fluid spread to 4 blocks
 		quantaPerBlock = 4;
 		
@@ -47,7 +47,7 @@ public class FluidTempWormBlood extends BlockFluidClassic{
         entityIn.motionX *= 0.4D;
         entityIn.motionZ *= 0.4D;
 		if (entityIn instanceof EntityPlayer && entityIn.ticksExisted % 20 == (20 - 1)){
-			entityIn.attackEntityFrom(DamageSource.wither, Config.WormBloodDmg);
+			entityIn.attackEntityFrom(DamageSource.GENERIC, Config.WormBloodDmg);
 
 		}
 		

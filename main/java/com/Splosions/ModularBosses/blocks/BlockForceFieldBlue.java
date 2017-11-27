@@ -7,6 +7,7 @@ import com.Splosions.ModularBosses.blocks.BlockRotationData.Rotation;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -15,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
@@ -24,7 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyInteger STATE = PropertyInteger.create("state", 0, 2);
 
 	public static final int STANDBY = 2;
@@ -149,22 +151,11 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		return BlockRotationData.Rotation.PISTON_CONTAINER;
 	}
 
-	/**
-	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ,
-			int meta, EntityLivingBase placer) {
-		EnumFacing enumfacing1 = placer.getHorizontalFacing().rotateY();
-
-		
-		return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, enumfacing1).withProperty(STATE, Integer.valueOf(meta >> 2));
-	}
-	 */
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity,
-			ItemStack stack) {
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity, ItemStack stack) {
 		EnumFacing face = EnumFacing.fromAngle(entity.rotationYaw);
 		world.setBlockState(pos, state.withProperty(FACING, face), 3);
-
 	}
 
 	/**
@@ -186,9 +177,11 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		return i;
 	}
 
+	/**
 	protected BlockState createBlockState() {
 		return new BlockState(this, new IProperty[] { FACING, STATE });
 	}
+	*/
 
 	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
 
@@ -202,10 +195,13 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 
 	}
 
-	@SideOnly(Side.CLIENT)
-	public EnumWorldBlockLayer getBlockLayer() {
-		return EnumWorldBlockLayer.TRANSLUCENT;
-	}
+
+	@Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.TRANSLUCENT;
+    }
 
 	@Override
     public boolean isOpaqueCube(IBlockState state)

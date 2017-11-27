@@ -2,7 +2,7 @@ package com.Splosions.ModularBosses.blocks;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class FluidWormSaliva extends BlockFluidClassic{
 
 	public FluidWormSaliva(Fluid fluid, Material material) {
-		super(fluid, Material.water);
+		super(fluid, Material.WATER);
 		// limits fluid spread to 4 blocks
 		//quantaPerBlock = 4;
 		this.lightOpacity = 0;
@@ -19,16 +19,18 @@ public class FluidWormSaliva extends BlockFluidClassic{
 		this.setMaxScaledLight(0);
 	}
 	
-	@SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.CUTOUT;
-    }
-	
 	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT;
+    }
+
+	@Override
+    public boolean isOpaqueCube(IBlockState state)
+    {
+        return false;
+    }
 	
 	
     /**
