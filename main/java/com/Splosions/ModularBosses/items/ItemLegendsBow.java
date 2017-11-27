@@ -20,13 +20,16 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class ItemLegendsBow extends BaseModItem implements ISwapModel {
+public class ItemLegendsBow extends BaseModItem{
 
 	public int aniCount = 0;
 	
@@ -41,11 +44,12 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
 	 * pressed. Args: itemStack, world, entityPlayer
 	 */
 	@Override
-	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-        playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
+	  public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn){
+		ItemStack stack = playerIn.getHeldItem(handIn);
+        playerIn.setItemInUse(stack, this.getMaxItemUseDuration(stack));
         this.aniCount = 1000;
-        itemStackIn.animationsToGo = this.aniCount; 
-        return itemStackIn;
+        stack.setAnimationsToGo(aniCount); 
+        return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 	
 	 /**
@@ -107,7 +111,4 @@ public class ItemLegendsBow extends BaseModItem implements ISwapModel {
     {
         return EnumAction.BOW;
     }
-
-
-
 }
