@@ -29,12 +29,12 @@ public class ModModelManager {
 	}
 
 	private void registerFluidModels() {
-		ModFluids.modFluidBlocks.forEach(this::registerFluidModel);
+		ModFluids.MOD_FLUID_BLOCKS.forEach(this::registerFluidModel);
 	}
 
 	private void registerFluidModel(IFluidBlock fluidBlock) {
 		Item item = Item.getItemFromBlock((Block) fluidBlock);
-		ModelBakery.registerItemVariants(item, names);
+		ModelBakery.registerItemVariants(item);
 
 		final ModelResourceLocation modelResourceLocation = new ModelResourceLocation(FLUID_MODEL_PATH, fluidBlock.getFluid().getName());
 
