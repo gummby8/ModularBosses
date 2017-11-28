@@ -136,11 +136,11 @@ public class BlockForceFieldGen extends Block implements IVanillaRotation {
 		if (!worldIn.isRemote) {
 			if (worldIn.getStrongPower(pos.offset(enumfacing)) == 0) {
 				worldIn.setBlockState(pos,state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, true), 3);
-				worldIn.setBlockState(pos.up(2),ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 1),3);
+				worldIn.setBlockState(pos.up(2),ModBlocks.FORCE_FIELD.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 1),3);
 			} else if (worldIn.getStrongPower(pos.offset(enumfacing)) > 0) {
 				worldIn.setBlockState(pos,state.withProperty(FACING, (EnumFacing) state.getValue(FACING)).withProperty(POWERED, false),3);
 				worldIn.setBlockToAir(pos.up(2));
-				worldIn.setBlockState(pos.up(2),ModBlocks.force_field_blue.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 0),3);
+				worldIn.setBlockState(pos.up(2),ModBlocks.FORCE_FIELD.getDefaultState().withProperty(BlockForceFieldBlue.FACING, (EnumFacing) state.getValue(FACING)).withProperty(BlockForceFieldBlue.STATE, 0),3);
 			}
 		}
 	}

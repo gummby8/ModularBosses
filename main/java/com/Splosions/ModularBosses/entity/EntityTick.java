@@ -88,7 +88,7 @@ public class EntityTick extends EntityMob {
 		this.growth = this.dataWatcher.getWatchableObjectInt(GROW_WATCHER);
 
 		if (!this.worldObj.isRemote) {
-			if (this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.fluidWormBlood.getBlock() || this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.fluidTempWormBlood.getBlock() ) {
+			if (this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.FLUID_WORM_BLOOD.getBlock() || this.worldObj.getBlockState(this.getPosition()).getBlock() == ModFluids.FLUID_TEMP_WORM_BLOOD.getBlock() ) {
 				this.grow();
 			}
 		}
@@ -108,7 +108,7 @@ public class EntityTick extends EntityMob {
 	public void onDeathUpdate() {
 
 		if (this.growth == 5 && !this.worldObj.isRemote && !this.fullgrown) {
-			this.worldObj.setBlockState(this.getPosition(), ModFluids.fluidTempWormBlood.getBlock().getDefaultState());
+			this.worldObj.setBlockState(this.getPosition(), ModFluids.FLUID_TEMP_WORM_BLOOD.getBlock().getDefaultState());
 			this.fullgrown = true;
 		}
 		++this.deathTicks;

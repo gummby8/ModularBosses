@@ -29,7 +29,7 @@ public class EntityBloodBlob extends EntityMobThrowable implements IEntityAdditi
 	public void onImpact(RayTraceResult result) {
 		
 		if (!world.isRemote && result.entityHit == null) {
-			this.world.setBlockState(this.getPosition(), ModFluids.fluidTempWormBlood.getBlock().getDefaultState());
+			this.world.setBlockState(this.getPosition(), ModFluids.FLUID_TEMP_WORM_BLOOD.getBlock().getDefaultState());
 			setDead();
 		}
 	}

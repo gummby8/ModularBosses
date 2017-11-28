@@ -99,7 +99,7 @@ public class ModularBosses {
 		@Override
 		@SideOnly(Side.CLIENT)
 		public ItemStack getTabIconItem() {
-			ItemStack stack = new ItemStack(ModBlocks.controlBlock);
+			ItemStack stack = new ItemStack(ModBlocks.CONTROL_BLOCK);
 			return stack;
 		}
 	};

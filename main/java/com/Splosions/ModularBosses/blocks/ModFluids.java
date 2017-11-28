@@ -1,136 +1,139 @@
 package com.Splosions.ModularBosses.blocks;
 
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Function;
-
-import com.Splosions.ModularBosses.MBCreativeTabs;
+import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.MaterialLiquid;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.*;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 
 public class ModFluids {
-	public static Fluid fluidStatic;
-	public static Fluid fluidStaticGas;
-	public static Fluid fluidWormBlood;
-	public static Fluid fluidTempWormBlood;
-	public static Fluid fluidWormAcid;
-	public static Fluid fluidTempWormAcid;
-	public static Fluid fluidWormSaliva;
-	public static Fluid gasWormGas;
+
+
 
 	/**
 	 * The fluids registered by this mod. Includes fluids that were already registered by another mod.
 	 */
-	public static Set<Fluid> fluids = new HashSet<>();
+	public static final Set<Fluid> FLUIDS = new HashSet<>();
 
 	/**
 	 * The fluid blocks from this mod only. Doesn't include blocks for fluids that were already registered by another mod.
 	 */
-	public static Set<IFluidBlock> modFluidBlocks = new HashSet<>();
+	public static final Set<IFluidBlock> MOD_FLUID_BLOCKS = new HashSet<>();
+	
+	public static final Fluid FLUID_WORM_BLOOD = createFluid("fluid_worm_blood", true,
+			fluid -> fluid.setLuminosity(10).setDensity(1500).setViscosity(1),
+			fluid -> new FluidWormBlood(fluid, new MaterialLiquid(MapColor.ADOBE)));
 
-	public static void registerFluids() {
-		/**
-		fluidStatic = createFluid("static", "mb:blocks/fluid_static", false, 10, 1000, 1000, false,
-				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
+	public static final Fluid FLUID_TEMP_WORM_BLOOD = createFluid("fluid_temp_worm_blood", true,
+			fluid -> fluid.setLuminosity(10).setDensity(1500).setViscosity(1),
+			fluid -> new FluidTempWormBlood(fluid, new MaterialLiquid(MapColor.ADOBE)));
 
-		fluidStaticGas = createFluid("staticgas", "mb:blocks/fluid_staticGas", false, 10, -800, 1500, true,
-				fluid -> new BlockFluidNoFlow(fluid, new MaterialLiquid(MapColor.brownColor)));
-		*/
-		fluidWormSaliva = createFluid("fluid_worm_saliva", "mb:blocks/fluid_worm_saliva", true, 10, 1, 1500, false,
-				fluid -> new FluidWormSaliva(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);
-		
-		fluidWormBlood = createFluid("fluid_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1500, false,
-				fluid -> new FluidWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
-		
-		fluidTempWormBlood = createFluid("fluid_temp_worm_blood", "mb:blocks/fluid_worm_blood", true, 10, 1, 1500, false,
-				fluid -> new FluidTempWormBlood(fluid, new MaterialLiquid(MapColor.adobeColor)));
-		GameRegistry.registerTileEntity(TileEntityTempWormBlood.class, Reference.MOD_ID + ":tileEntityTempWormBlood");
+	public static final Fluid FLUID_WORM_ACID = createFluid("fluid_worm_acid", true,
+			fluid -> fluid.setLuminosity(10).setDensity(1500).setViscosity(1),
+			fluid -> new FluidWormAcid(fluid, new MaterialLiquid(MapColor.ADOBE)));
 
-		
-		fluidWormAcid = createFluid("fluid_worm_acid", "mb:blocks/fluid_worm_acid", true, 10, 1, 1500, false,
-				fluid -> new FluidWormAcid(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);
+	public static final Fluid FLUID_TEMP_WORM_ACID = createFluid("fluid_temp_worm_acid", true,
+			fluid -> fluid.setLuminosity(10).setDensity(1500).setViscosity(1),
+			fluid -> new FluidTempWormAcid(fluid, new MaterialLiquid(MapColor.ADOBE)));
 
-		fluidTempWormAcid = createFluid("fluid_temp_worm_acid", "mb:blocks/fluid_worm_acid", true, 10, 1, 1500, false,
-				fluid -> new FluidTempWormAcid(fluid, new MaterialLiquid(MapColor.adobeColor))).setLuminosity(200);
+	public static final Fluid FLUID_WORM_SALIVA = createFluid("fluid_worm_saliva", true,
+			fluid -> fluid.setLuminosity(200).setDensity(1500).setViscosity(1),
+			fluid -> new FluidWormSaliva(fluid, new MaterialLiquid(MapColor.ADOBE)));
+	
+	public static final Fluid GAS_WORM_GAS = createFluid("gas_worm_gas", true,
+			fluid -> fluid.setLuminosity(10).setDensity(-10000).setViscosity(100).setGaseous(true),
+			fluid -> new GasWormGas(fluid, new MaterialLiquid(MapColor.ADOBE)));
+	
 
-		gasWormGas = createFluid("gas_worm_gas", "mb:blocks/gas_worm_gas", true, 10, -10000, 100, true,
-				fluid -> new GasWormGas(fluid, new MaterialLiquid(MapColor.adobeColor)));
-	}
 
-	public static void registerFluidContainers() { 
-		//registerTank(FluidRegistry.WATER);
-		//registerTank(FluidRegistry.LAVA);
-
-		for (Fluid fluid : fluids) {
-			//registerBucket(fluid);
-			//registerTank(fluid);
-		}
-	}
 
 	/**
 	 * Create a {@link Fluid} and its {@link IFluidBlock}, or use the existing ones if a fluid has already been registered with the same name.
 	 *
-	 * @param name         The name of the fluid
-	 * @param textureName  The base name of the fluid's texture
-	 * @param hasFlowIcon  Does the fluid have a flow icon?
-	 * @param luminosity   The fluid's luminosity
-	 * @param density      The fluid's density
-	 * @param viscosity    The fluid's viscosity
-	 * @param gaseous      Is the fluid gaseous?
-	 * @param blockFactory A function to call to create the {@link IFluidBlock}
+	 * @param name                 The name of the fluid
+	 * @param hasFlowIcon          Does the fluid have a flow icon?
+	 * @param fluidPropertyApplier A function that sets the properties of the {@link Fluid}
+	 * @param blockFactory         A function that creates the {@link IFluidBlock}
 	 * @return The fluid and block
 	 */
-	private static <T extends Block & IFluidBlock> Fluid createFluid(String name, String textureName, boolean hasFlowIcon, int luminosity, int density, int viscosity, boolean gaseous, Function<Fluid, T> blockFactory) {
-		ResourceLocation still = new ResourceLocation(textureName + "_still");
-		ResourceLocation flowing = hasFlowIcon ? new ResourceLocation(textureName + "_flow") : still;
+	private static <T extends Block & IFluidBlock> Fluid createFluid(final String name, final boolean hasFlowIcon, final Consumer<Fluid> fluidPropertyApplier, final Function<Fluid, T> blockFactory) {
+		final String texturePrefix = Reference.MOD_ID + ":" + "blocks/fluid_";
 
-		Fluid fluid = new Fluid(name, still, flowing).setLuminosity(luminosity).setDensity(density).setViscosity(viscosity).setGaseous(gaseous);
-		boolean useOwnFluid = FluidRegistry.registerFluid(fluid);
+		final ResourceLocation still = new ResourceLocation(texturePrefix + name + "_still");
+		final ResourceLocation flowing = hasFlowIcon ? new ResourceLocation(texturePrefix + name + "_flow") : still;
+
+		Fluid fluid = new Fluid(name, still, flowing);
+		final boolean useOwnFluid = FluidRegistry.registerFluid(fluid);
 
 		if (useOwnFluid) {
-			registerFluidBlock(blockFactory.apply(fluid));
+			fluidPropertyApplier.accept(fluid);
+			MOD_FLUID_BLOCKS.add(blockFactory.apply(fluid));
 		} else {
 			fluid = FluidRegistry.getFluid(name);
 		}
 
-		fluids.add(fluid);
+		FLUIDS.add(fluid);
 
 		return fluid;
 	}
 
-	private static <T extends Block & IFluidBlock> T registerFluidBlock(T block) {
-		String fluidName = block.getFluid().getUnlocalizedName();
-		block.setUnlocalizedName(fluidName);
-		block.setCreativeTab(MBCreativeTabs.tabBlocks);
-		GameRegistry.registerBlock(block, fluidName);
+	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+	public static class RegistrationHandler {
 
-		modFluidBlocks.add(block);
+		/**
+		 * Register this mod's fluid {@link Block}s.
+		 *
+		 * @param event The event
+		 */
+		@SubscribeEvent
+		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
+			final IForgeRegistry<Block> registry = event.getRegistry();
 
-		return block;
-	}
+			for (final IFluidBlock fluidBlock : MOD_FLUID_BLOCKS) {
+				final Block block = (Block) fluidBlock;
+				block.setRegistryName(Reference.MOD_ID, "fluid." + fluidBlock.getFluid().getName());
+				block.setUnlocalizedName(Reference.MOD_ID + ":" + fluidBlock.getFluid().getUnlocalizedName());
+				block.setCreativeTab(ModularBosses.tabBlocks);
+				registry.register(block);
+			}
+		}
 
-	/**
-	private static void registerBucket(Fluid fluid) {
-		ItemStack filledBucket = ModItems.bucket.registerBucketForFluid(fluid);
+		/**
+		 * Register this mod's fluid {@link ItemBlock}s.
+		 *
+		 * @param event The event
+		 */
+		// Use EventPriority.LOWEST so this is called after the RegistryEvent.Register<Item> handler in ModBlocks where
+		// the ItemBlock for ModBlocks.FLUID_TANK is registered.
+		@SubscribeEvent(priority = EventPriority.LOWEST)
+		public static void registerItems(final RegistryEvent.Register<Item> event) {
+			final IForgeRegistry<Item> registry = event.getRegistry();
 
-		if (!FluidContainerRegistry.registerFluidContainer(fluid, filledBucket, FluidContainerRegistry.EMPTY_BUCKET)) {
-			Logger.error("Unable to register bucket of %s as fluid container", fluid.getName());
+			for (final IFluidBlock fluidBlock : MOD_FLUID_BLOCKS) {
+				final Block block = (Block) fluidBlock;
+				final ItemBlock itemBlock = new ItemBlock(block);
+				final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName());
+				itemBlock.setRegistryName(registryName);
+				registry.register(itemBlock);
+			}
 		}
 	}
-
-	private static void registerTank(Fluid fluid) {
-		FluidStack fluidStack = new FluidStack(fluid, 10 * FluidContainerRegistry.BUCKET_VOLUME);
-		((ItemFluidTank) Item.getItemFromBlock(ModBlocks.fluidTank)).addFluid(fluidStack);
-	}
-	*/
 }

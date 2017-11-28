@@ -22,7 +22,7 @@ public class TileEntityTempWormAcid extends TileEntity implements ITickable {
 		
 		if (this.ticksExisted > 100 && !this.world.isRemote) {
 			//System.out.println("Killing it - " + ticksExisted);	
-			IBlockState state = ModFluids.fluidTempWormAcid.getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, 0);
+			IBlockState state = ModFluids.FLUID_TEMP_WORM_ACID.getBlock().getDefaultState().withProperty(BlockFluidBase.LEVEL, 0);
 			this.world.setBlockState(this.pos, state.withProperty(BlockFluidBase.LEVEL, 1),2);
 			this.world.scheduleUpdate(this.pos, this.world.getBlockState(this.pos).getBlock(), 2);		
 

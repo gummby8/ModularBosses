@@ -58,7 +58,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		if ((int)state.getValue(STATE) == ON && !worldIn.isRemote) {
 			if ((EnumFacing) state.getValue(FACING) == EnumFacing.NORTH
 					|| (EnumFacing) state.getValue(FACING) == EnumFacing.SOUTH) {
-				if (!TargetUtils.isBlockPresentPos(worldIn, ModBlocks.force_field_gen, pos.west(10).down(10),
+				if (!TargetUtils.isBlockPresentPos(worldIn, ModBlocks.FORCE_FIELD_GENERATOR, pos.west(10).down(10),
 						pos.east(10).up(10))) {
 					worldIn.setBlockToAir(pos);
 					return;
@@ -81,7 +81,7 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 							.withProperty(STATE, Integer.valueOf(ON)), 3);
 				}
 			} else { // must be facing EAST or WEST
-				if (!TargetUtils.isBlockPresentPos(worldIn, ModBlocks.force_field_gen, pos.north(10).down(10),
+				if (!TargetUtils.isBlockPresentPos(worldIn, ModBlocks.FORCE_FIELD_GENERATOR, pos.north(10).down(10),
 						pos.south(10).up(10))) {
 					worldIn.setBlockToAir(pos);
 					return;
@@ -109,34 +109,34 @@ public class BlockForceFieldBlue extends Block implements IVanillaRotation {
 		} else if ((int) state.getValue(STATE) == OFF && !worldIn.isRemote) {
 			if ((EnumFacing) state.getValue(FACING) == EnumFacing.NORTH
 					|| (EnumFacing) state.getValue(FACING) == EnumFacing.SOUTH) {
-				if (worldIn.getBlockState(pos.east()).getBlock() == ModBlocks.force_field_blue) {
+				if (worldIn.getBlockState(pos.east()).getBlock() == ModBlocks.FORCE_FIELD) {
 					worldIn.setBlockState(pos.east(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.east(), this, 1);
 				}
-				if (worldIn.getBlockState(pos.west()).getBlock() == ModBlocks.force_field_blue) {
+				if (worldIn.getBlockState(pos.west()).getBlock() == ModBlocks.FORCE_FIELD) {
 					worldIn.setBlockState(pos.west(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.west(), this, 1);
 				}
 			} else { // must be facing EAST or WEST
-				if (worldIn.getBlockState(pos.north()).getBlock() == ModBlocks.force_field_blue) {
+				if (worldIn.getBlockState(pos.north()).getBlock() == ModBlocks.FORCE_FIELD) {
 					worldIn.setBlockState(pos.north(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.north(), this, 1);
 				}
-				if (worldIn.getBlockState(pos.south()).getBlock() == ModBlocks.force_field_blue) {
+				if (worldIn.getBlockState(pos.south()).getBlock() == ModBlocks.FORCE_FIELD) {
 					worldIn.setBlockState(pos.south(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 							.withProperty(STATE, Integer.valueOf(OFF)), 3);
 					worldIn.scheduleUpdate(pos.south(), this, 1);
 				}
 			}
-			if (worldIn.getBlockState(pos.up()).getBlock() == ModBlocks.force_field_blue) {
+			if (worldIn.getBlockState(pos.up()).getBlock() == ModBlocks.FORCE_FIELD) {
 				worldIn.setBlockState(pos.up(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 						.withProperty(STATE, Integer.valueOf(OFF)), 3);
 				worldIn.scheduleUpdate(pos.up(), this, 1);
 			}
-			if (worldIn.getBlockState(pos.down()).getBlock() == ModBlocks.force_field_blue) {
+			if (worldIn.getBlockState(pos.down()).getBlock() == ModBlocks.FORCE_FIELD) {
 				worldIn.setBlockState(pos.down(), state.withProperty(FACING, (EnumFacing) state.getValue(FACING))
 						.withProperty(STATE, Integer.valueOf(OFF)), 3);
 				worldIn.scheduleUpdate(pos.down(), this, 1);

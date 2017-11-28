@@ -1,112 +1,128 @@
 package com.Splosions.ModularBosses.blocks;
 
 import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.Reference;
-import com.Splosions.ModularBosses.blocks.tileentity.TileEntityChunkLoader;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormAcid;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
 import com.Splosions.ModularBosses.items.ItemModBlock;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
+import com.google.common.base.Preconditions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.registries.IForgeRegistry;
 
-
+//@SuppressWarnings("WeakerAccess")
+@ObjectHolder(Reference.MOD_ID)
 public class ModBlocks
 {
-	public static Block
-	invisibleBlock,
-	chunkLoaderBlock,
-	
-	controlBlock,
-	portalBlock,
-	portalLanding,
-	portalReturn,
-	phaseFire,
-	force_field_gen,
-	force_field_blue,
-	
-	
-	wormGutsBlock1,
-	wormGutsBlock2,
-	wormTumor
-	;
-	
-	/**
-	 * Call during FMLPreInitializationEvent to initialize and register all blocks
-	 */
-	public static void preInit() {
-		
-		// NOTE: pass getUnlocalizedString WITHOUT 'tile.' or blockstate=>model will get confused
-		// NOTE: new Object[]{args...} is required for vararg constructor invocation via Reflection
 
+	public static final BlockInvisible INVISIBLE_BLOCK = new BlockInvisible(Material.BARRIER);
 		
+	public static final BlockControlBlock CONTROL_BLOCK = new BlockControlBlock(Material.BARRIER);
+	public static final BlockPortalBlock PORTAL_BLOCK = new BlockPortalBlock(Material.BARRIER);//.setLightLevel(1)
+	public static final BlockPortalLanding PORTAL_LANDING = new BlockPortalLanding(Material.BARRIER);//.setLightLevel(1)
+	public static final BlockReturnPortal DUNGEON_EXIT_PORTAL = new BlockReturnPortal(Material.BARRIER);//.setLightLevel(1)
+	public static final BlockPhaseFire PHASE_FIRE = new BlockPhaseFire(Material.BARRIER);//.setLightLevel(0.3F)
+	public static final BlockForceFieldGen FORCE_FIELD_GENERATOR = new BlockForceFieldGen(Material.BARRIER);
+	public static final BlockForceFieldBlue FORCE_FIELD = new BlockForceFieldBlue(Material.BARRIER);
+	
+	
+	public static final BlockWormGuts WORM_GUTS_1 = new BlockWormGuts(Material.BARRIER);
+	public static final BlockWormGuts WORM_GUTS_2 = new BlockWormGuts(Material.BARRIER);
+	public static final BlockWormTumor WORM_TUMOR = new BlockWormTumor(Material.BARRIER);//.setLightLevel(1)
+
+	
+	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
+	public static class RegistrationHandler {
+		public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
 		
-		controlBlock = new BlockControlBlock(Material.rock).setUnlocalizedName("control_block");
-		GameRegistry.registerBlock(controlBlock, ItemModBlock.class, controlBlock.getUnlocalizedName().substring(5));
-		GameRegistry.registerTileEntity(TileEntityControlBlock.class, Reference.MOD_ID + ":tileEntityControlBlock");
-		
-		portalBlock = new BlockPortalBlock(Material.BARRIER).setLightLevel(1).setUnlocalizedName("portal_block");
-		GameRegistry.registerBlock(portalBlock, ItemModBlock.class, portalBlock.getUnlocalizedName().substring(5));
-		GameRegistry.registerTileEntity(TileEntityPortalBlock.class, Reference.MOD_ID + ":tileEntityPortalBlock");
-		
-		portalReturn = new BlockReturnPortal(Material.BARRIER).setLightLevel(1).setUnlocalizedName("portal_return_block");
-		GameRegistry.registerBlock(portalReturn, ItemModBlock.class, portalReturn.getUnlocalizedName().substring(5));
-		GameRegistry.registerTileEntity(TileEntityReturnPortalBlock.class, Reference.MOD_ID + ":tileEntityReturnPortalBlock");
-		
-		portalLanding = new BlockPortalLanding(Material.BARRIER).setLightLevel(1).setUnlocalizedName("portal_landing");
-		GameRegistry.registerBlock(portalLanding, ItemModBlock.class, portalLanding.getUnlocalizedName().substring(5));
-		
-		phaseFire = new BlockPhaseFire(Material.BARRIER).setLightLevel(0.3F).setUnlocalizedName("phase_fire");
-		GameRegistry.registerBlock(phaseFire, ItemModBlock.class, phaseFire.getUnlocalizedName().substring(5));
-		
-		wormGutsBlock1 = new BlockWormGuts(Material.BARRIER).setUnlocalizedName("worm_guts_1");
-		GameRegistry.registerBlock(wormGutsBlock1, ItemModBlock.class, wormGutsBlock1.getUnlocalizedName().substring(5));
-		
-		wormGutsBlock2 = new BlockWormGuts(Material.BARRIER).setUnlocalizedName("worm_guts_2");
-		GameRegistry.registerBlock(wormGutsBlock2, ItemModBlock.class, wormGutsBlock2.getUnlocalizedName().substring(5));
-		
-		wormTumor = new BlockWormTumor(Material.BARRIER).setUnlocalizedName("worm_tumor").setLightLevel(1);
-		GameRegistry.registerBlock(wormTumor, ItemModBlock.class, wormTumor.getUnlocalizedName().substring(5));
-				
-		force_field_gen = new BlockForceFieldGen(Material.BARRIER).setUnlocalizedName("force_field_gen");
-		GameRegistry.registerBlock(force_field_gen, ItemModBlock.class, force_field_gen.getUnlocalizedName().substring(5));
-		
-		force_field_blue = new BlockForceFieldBlue(Material.BARRIER).setUnlocalizedName("force_field_blue");
-		GameRegistry.registerBlock(force_field_blue, ItemModBlock.class, force_field_blue.getUnlocalizedName().substring(5));
-		
-		invisibleBlock = new BlockInvisible(Material.BARRIER).setUnlocalizedName("invisible_block");
-		GameRegistry.registerBlock(invisibleBlock, ItemModBlock.class, invisibleBlock.getUnlocalizedName().substring(5));
-		
-		chunkLoaderBlock = new BlockChunkLoader(Material.BARRIER).setUnlocalizedName("chunk_loader");
-		GameRegistry.registerBlock(chunkLoaderBlock, ItemModBlock.class, chunkLoaderBlock.getUnlocalizedName().substring(5));
-		GameRegistry.registerTileEntity(TileEntityChunkLoader.class, Reference.MOD_ID + ":tileEntityChunkLoader");
-		
-		// register block items for creative tab comparator sorting:
-		try {
-			for (Field f: ModBlocks.class.getFields()) {
-				if (Block.class.isAssignableFrom(f.getType())) {
-					Block block = (Block) f.get(null);
-					if (block != null) {
-						ItemStack stack = new ItemStack(block);
-						if (stack != null && stack.getItem() != null) {
-							ModularBossesItems.registerItemBlock(stack.getItem());
-						}
-						if (block instanceof IVanillaRotation) {
-							ModularBosses.logger.warn("Registering custom rotation for " + block.getUnlocalizedName());
-							BlockRotationData.registerCustomBlockRotation(block, ((IVanillaRotation) block).getRotationPattern());
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			ModularBosses.logger.warn("Caught exception while registering block ItemBlocks: " + e.toString());
-			e.printStackTrace();
+		/**
+		 * Register this mod's {@link Block}s.
+		 * @param event The event
+		 */
+		@SubscribeEvent
+		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
+			final IForgeRegistry<Block> registry = event.getRegistry();
+
+			final Block[] blocks = {
+					CONTROL_BLOCK,
+					PORTAL_LANDING,
+					PORTAL_BLOCK,
+					PORTAL_LANDING,
+					FORCE_FIELD_GENERATOR,
+					FORCE_FIELD,
+					WORM_GUTS_1,
+					WORM_GUTS_2,
+					WORM_TUMOR,
+					PHASE_FIRE,
+					INVISIBLE_BLOCK,
+				};
+			registry.registerAll(blocks);
 		}
+		
+		
+		/**
+		 * Register this mod's {@link ItemBlock}s.
+		 * @param event The event
+		 */
+		
+		@SubscribeEvent
+		public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
+			final ItemBlock[] items = {
+					new ItemBlock(CONTROL_BLOCK),
+					new ItemBlock(PORTAL_LANDING),
+					new ItemBlock(PORTAL_BLOCK),
+					new ItemBlock(PORTAL_LANDING),
+					new ItemBlock(FORCE_FIELD_GENERATOR),
+					new ItemBlock(FORCE_FIELD),
+					new ItemBlock(WORM_GUTS_1),
+					new ItemBlock(WORM_GUTS_2),
+					new ItemBlock(WORM_TUMOR),
+					new ItemBlock(PHASE_FIRE),
+					new ItemBlock(INVISIBLE_BLOCK),
+			};
+
+			final IForgeRegistry<Item> registry = event.getRegistry();
+
+			for (final ItemBlock item : items) {
+				final Block block = item.getBlock();
+				final ResourceLocation registryName = Preconditions.checkNotNull(block.getRegistryName(), "Block %s has null registry name", block);
+				registry.register(item.setRegistryName(registryName));
+				ITEM_BLOCKS.add(item);
+			}
+
+			registerTileEntities();
+		}
+	}
+
+	private static void registerTileEntities() {
+		registerTileEntity(TileEntityControlBlock.class, "tileEntityControlBlock");
+		registerTileEntity(TileEntityPortalBlock.class, "tileEntityPortalBlock");
+		registerTileEntity(TileEntityReturnPortalBlock.class, "tileEntityReturnPortalBlock");
+		
+		registerTileEntity(TileEntityTempWormBlood.class, "tileEntityTempWormBlood");
+		registerTileEntity(TileEntityTempWormAcid.class, "tileEntityTempWormAcid");
+	}
+
+	private static void registerTileEntity(final Class<? extends TileEntity> tileEntityClass, final String name) {
+		GameRegistry.registerTileEntity(tileEntityClass, Reference.MOD_ID + ":" + name);
 	}
 }
