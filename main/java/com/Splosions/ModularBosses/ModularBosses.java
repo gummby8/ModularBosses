@@ -62,14 +62,8 @@ public class ModularBosses {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
- 		ForgeChunkManager.setForcedChunkLoadingCallback(INSTANCE, new ChunkLoadingHandler());
 		FMLCommonHandler.instance().bus().register(new TickHandler());
 		TestBiomesRegistry.registerBiomes();
-		ModFluids.registerFluids();
-		ModBlocks.preInit();
-		ModularBossesItems.init();
-		ModularBossesItems.registerItems();
-		ModularBossesEntities.init();
 		PacketDispatcher.preInit();
 		Config.preInit(event);
 		proxy.preInit();

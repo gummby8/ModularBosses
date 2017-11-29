@@ -2,6 +2,7 @@ package com.Splosions.ModularBosses;
 
 public class Reference {
 public static final String MOD_ID = "mb";
+public static final String RESOURCE_PREFIX = "mb:";
 public static final String MOD_NAME = "Modular Bosses";
 public static final String VERSION = "1.0";
 public static final String CHANNEL = "mb_channel";

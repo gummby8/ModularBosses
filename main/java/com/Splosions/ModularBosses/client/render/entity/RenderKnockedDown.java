@@ -7,6 +7,7 @@ import com.Splosions.ModularBosses.client.models.entity.ModelKnockdown;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -17,6 +18,8 @@ import net.minecraft.client.renderer.entity.layers.LayerBipedArmor;
 import net.minecraft.client.renderer.entity.layers.LayerCape;
 import net.minecraft.client.renderer.entity.layers.LayerCustomHead;
 import net.minecraft.client.renderer.entity.layers.LayerDeadmau5Head;
+import net.minecraft.client.renderer.entity.layers.LayerElytra;
+import net.minecraft.client.renderer.entity.layers.LayerEntityOnShoulder;
 import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,8 +27,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumPlayerModelParts;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import scala.reflect.internal.Trees.Super;
 
 
 public class RenderKnockedDown extends RenderPlayer
@@ -50,46 +55,29 @@ public class RenderKnockedDown extends RenderPlayer
         this.addLayer(new LayerDeadmau5Head(this));
         this.addLayer(new LayerCape(this));
         this.addLayer(new LayerCustomHead(this.getMainModel().bipedHead));
-        
-        this.mainModel = new ModelKnockdown(1,false);
+        this.addLayer(new LayerElytra(this));
+        this.addLayer(new LayerEntityOnShoulder(renderManager));
     }
 
     @Override
-    public void doRender(EntityLivingBase entity, double x, double y, double z, float yaw, float partialTicks)
+    public void doRender(AbstractClientPlayer entity, double x, double y, double z, float entYaw, float partTicks)
     {
-
-		
-		try {
-			doRender((AbstractClientPlayer)entity, x, y, z, yaw, partialTicks);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-
-        
-    }
-    
-    
-    
-    public void doRender(AbstractClientPlayer ent, double x, double y, double z, float entYaw, float partTicks)
-    {
-    	
-        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(ent, this, partTicks, x, y, z))) return;
-
-        if (!ent.isUser() || this.renderManager.renderViewEntity == ent)
+        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Pre(entity, this, partTicks, x, y, z))) return;
+        if (!entity.isUser() || this.renderManager.renderViewEntity == entity)
         {
-            double d3 = y;
+            double d0 = y;
 
-            if (ent.isSneaking() && !(ent instanceof EntityPlayerSP))
+            if (entity.isSneaking())
             {
-                d3 = y - 0.125D;
+                d0 = y - 0.125D;
             }
 
-            this.func_177137_d(ent);
-
-            mDoRender((EntityLivingBase)ent, x, d3, z, entYaw, partTicks);
-            
+            setModelVisibilities(entity);
+            GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+            mDoRender(entity, x, d0, z, entYaw, partTicks);
+            GlStateManager.disableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
         }
-        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(ent, this, partTicks, x, y, z));
+        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderPlayerEvent.Post(entity, this, partTicks, x, y, z));
     }
     
     
@@ -98,8 +86,9 @@ public class RenderKnockedDown extends RenderPlayer
         if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre(entity, this, x, y, z))) return;
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
-        this.mainModel.swingProgress = this.getSwingProgress(entity, partialTicks);
-        this.mainModel.isRiding = entity.isRiding();
+        this.mainModel.swingProgress = this.getSwingProgress((AbstractClientPlayer) entity, partialTicks);
+        boolean shouldSit = entity.isRiding() && (entity.getRidingEntity() != null && entity.getRidingEntity().shouldRiderSit());
+        this.mainModel.isRiding = shouldSit;
         this.mainModel.isChild = entity.isChild();
 
         try
@@ -109,9 +98,9 @@ public class RenderKnockedDown extends RenderPlayer
             float f4 = f3 - f2;
             float f5;
 
-            if (entity.isRiding() && entity.getRidingEntity() instanceof EntityLivingBase)
+            if (shouldSit && entity.getRidingEntity() instanceof EntityLivingBase)
             {
-                EntityLivingBase entitylivingbase1 = (EntityLivingBase)entity.ridingEntity;
+            	EntityLivingBase entitylivingbase1 = (EntityLivingBase)entity.getRidingEntity();
                 f2 = this.interpolateRotation(entitylivingbase1.prevRenderYawOffset, entitylivingbase1.renderYawOffset, partialTicks);
                 f4 = f3 - f2;
                 f5 = MathHelper.wrapDegrees(f4);
@@ -135,12 +124,12 @@ public class RenderKnockedDown extends RenderPlayer
             }
 
             float f9 = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-            this.renderLivingAt(entity, x, y, z);
-            f5 = this.handleRotationFloat(entity, partialTicks);
-            this.rotateCorpse(entity, f5, f2, partialTicks);
+            this.renderLivingAt((AbstractClientPlayer) entity, x, y, z);
+            f5 = this.handleRotationFloat((AbstractClientPlayer) entity, partialTicks);
+            this.applyRotations((AbstractClientPlayer) entity, f5, f2, partialTicks);
             GlStateManager.enableRescaleNormal();
             GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-            this.preRenderCallback(entity, partialTicks);
+            this.preRenderCallback((AbstractClientPlayer) entity, partialTicks);
             float f6 = 0.0625F;
             GlStateManager.translate(0.0F, -1.5078125F, 0.0F);
             float f7 = entity.prevLimbSwingAmount + (entity.limbSwingAmount - entity.prevLimbSwingAmount) * partialTicks;
@@ -163,7 +152,7 @@ public class RenderKnockedDown extends RenderPlayer
 
             if (this.renderOutlines)
             {
-                flag = this.func_177088_c(entity);
+                flag = this.setScoreTeamColor((AbstractClientPlayer) entity);
               //  this.renderModel(entity, f8, f7, f5, f4, f9, 0.0625F);
 
                 if (flag)
@@ -173,12 +162,12 @@ public class RenderKnockedDown extends RenderPlayer
             }
             else
             {
-                flag = this.func_177090_c(entity, partialTicks);
-                this.renderModel(entity, f8, f7, f5, f4, f9, 0.0625F);
+                flag = this.setDoRenderBrightness((AbstractClientPlayer) entity, partialTicks);
+                mRenderModel(entity, f8, f7, f5, f4, f9, 0.0625F);
 
                 if (flag)
                 {
-                    this.func_177091_f();
+                    this.unsetBrightness();
                 }
 
                 GlStateManager.depthMask(true);
@@ -189,7 +178,7 @@ public class RenderKnockedDown extends RenderPlayer
                 	GL11.glPushMatrix();
             		GL11.glTranslatef(0, 1.25f, 0);
             		GL11.glRotatef(-90, 1, 0, 0);
-                    this.func_177093_a(entity, f8, f7, partialTicks, f5, f4, f9, 0.0625F);
+                    this.renderLayers((AbstractClientPlayer) entity, f8, f7, partialTicks, f5, f4, f9, 0.0625F);
                     GL11.glPopMatrix();
                 }
             }
@@ -215,14 +204,14 @@ public class RenderKnockedDown extends RenderPlayer
     
     
     
-    protected void renderModel(EntityLivingBase p_77036_1_, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_)
+    protected void mRenderModel(EntityLivingBase p_77036_1_, float p_77036_2_, float p_77036_3_, float p_77036_4_, float p_77036_5_, float p_77036_6_, float p_77036_7_)
     {
         boolean flag = !p_77036_1_.isInvisible();
-        boolean flag1 = !flag && !p_77036_1_.isInvisibleToPlayer(Minecraft.getMinecraft().thePlayer);
+        boolean flag1 = !flag && !p_77036_1_.isInvisibleToPlayer(Minecraft.getMinecraft().player);
 
         if (flag || flag1)
         {
-            if (!this.bindEntityTexture(p_77036_1_))
+            if (!this.mBindEntityTexture(p_77036_1_))
             {
                 return;
             }
@@ -249,9 +238,9 @@ public class RenderKnockedDown extends RenderPlayer
         }
     }
     
-    protected boolean bindEntityTexture(Entity entity)
+    protected boolean mBindEntityTexture(Entity entity)
     {
-        ResourceLocation resourcelocation = this.getEntityTexture((EntityPlayer)entity);
+        ResourceLocation resourcelocation = this.getEntityTexture((AbstractClientPlayer)entity);
         
         if (resourcelocation == null)
         {
@@ -277,51 +266,79 @@ public class RenderKnockedDown extends RenderPlayer
     
     
     
-    private void func_177137_d(AbstractClientPlayer p_177137_1_)
+    private void setModelVisibilities(AbstractClientPlayer clientPlayer)
     {
         ModelPlayer modelplayer = this.getMainModel();
 
-        if (p_177137_1_.isSpectator())
+        if (clientPlayer.isSpectator())
         {
-            modelplayer.setInvisible(false);
+            modelplayer.setVisible(false);
             modelplayer.bipedHead.showModel = true;
             modelplayer.bipedHeadwear.showModel = true;
         }
         else
         {
-            ItemStack itemstack = p_177137_1_.inventory.getCurrentItem();
-            modelplayer.setInvisible(true);
-            modelplayer.bipedHeadwear.showModel = p_177137_1_.func_175148_a(EnumPlayerModelParts.HAT);
-            modelplayer.bipedBodyWear.showModel = p_177137_1_.func_175148_a(EnumPlayerModelParts.JACKET);
-            modelplayer.bipedLeftLegwear.showModel = p_177137_1_.func_175148_a(EnumPlayerModelParts.LEFT_PANTS_LEG);
-            modelplayer.bipedRightLegwear.showModel = p_177137_1_.func_175148_a(EnumPlayerModelParts.RIGHT_PANTS_LEG);
-            modelplayer.bipedLeftArmwear.showModel = p_177137_1_.func_175148_a(EnumPlayerModelParts.LEFT_SLEEVE);
-            modelplayer.bipedRightArmwear.showModel = p_177137_1_.func_175148_a(EnumPlayerModelParts.RIGHT_SLEEVE);
-            modelplayer.heldItemLeft = 0;
-            modelplayer.aimedBow = false;
-            modelplayer.isSneak = p_177137_1_.isSneaking();
+            ItemStack itemstack = clientPlayer.getHeldItemMainhand();
+            ItemStack itemstack1 = clientPlayer.getHeldItemOffhand();
+            modelplayer.setVisible(true);
+            modelplayer.bipedHeadwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.HAT);
+            modelplayer.bipedBodyWear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.JACKET);
+            modelplayer.bipedLeftLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_PANTS_LEG);
+            modelplayer.bipedRightLegwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_PANTS_LEG);
+            modelplayer.bipedLeftArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.LEFT_SLEEVE);
+            modelplayer.bipedRightArmwear.showModel = clientPlayer.isWearing(EnumPlayerModelParts.RIGHT_SLEEVE);
+            modelplayer.isSneak = clientPlayer.isSneaking();
+            ModelBiped.ArmPose modelbiped$armpose = ModelBiped.ArmPose.EMPTY;
+            ModelBiped.ArmPose modelbiped$armpose1 = ModelBiped.ArmPose.EMPTY;
 
-            if (itemstack == null)
+            if (!itemstack.isEmpty())
             {
-                modelplayer.heldItemRight = 0;
-            }
-            else
-            {
-                modelplayer.heldItemRight = 1;
+                modelbiped$armpose = ModelBiped.ArmPose.ITEM;
 
-                if (p_177137_1_.getItemInUseCount() > 0)
+                if (clientPlayer.getItemInUseCount() > 0)
                 {
                     EnumAction enumaction = itemstack.getItemUseAction();
 
                     if (enumaction == EnumAction.BLOCK)
                     {
-                        modelplayer.heldItemRight = 3;
+                        modelbiped$armpose = ModelBiped.ArmPose.BLOCK;
                     }
                     else if (enumaction == EnumAction.BOW)
                     {
-                        modelplayer.aimedBow = true;
+                        modelbiped$armpose = ModelBiped.ArmPose.BOW_AND_ARROW;
                     }
                 }
+            }
+
+            if (!itemstack1.isEmpty())
+            {
+                modelbiped$armpose1 = ModelBiped.ArmPose.ITEM;
+
+                if (clientPlayer.getItemInUseCount() > 0)
+                {
+                    EnumAction enumaction1 = itemstack1.getItemUseAction();
+
+                    if (enumaction1 == EnumAction.BLOCK)
+                    {
+                        modelbiped$armpose1 = ModelBiped.ArmPose.BLOCK;
+                    }
+                    // FORGE: fix MC-88356 allow offhand to use bow and arrow animation
+                    else if (enumaction1 == EnumAction.BOW)
+                    {
+                        modelbiped$armpose1 = ModelBiped.ArmPose.BOW_AND_ARROW;
+                    }
+                }
+            }
+
+            if (clientPlayer.getPrimaryHand() == EnumHandSide.RIGHT)
+            {
+                modelplayer.rightArmPose = modelbiped$armpose;
+                modelplayer.leftArmPose = modelbiped$armpose1;
+            }
+            else
+            {
+                modelplayer.rightArmPose = modelbiped$armpose1;
+                modelplayer.leftArmPose = modelbiped$armpose;
             }
         }
     }
