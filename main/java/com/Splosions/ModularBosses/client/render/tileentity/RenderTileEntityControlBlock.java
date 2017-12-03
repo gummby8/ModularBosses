@@ -3,11 +3,14 @@ package com.Splosions.ModularBosses.client.render.tileentity;
 import org.lwjgl.opengl.GL11;
 
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityControlBlock;
+import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -15,7 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 
 
 
-public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
+public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer<TileEntityControlBlock> {
 	
 	 ResourceLocation image = new ResourceLocation("mb:textures/blocks/portal_block.png");
 	
@@ -25,57 +28,57 @@ public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
     }
 
     @Override
-    public void renderTileEntityAt(TileEntity tileEntity, double x, double y, double z, float f, int number){
+    public void render(TileEntityControlBlock tileEntity, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
     	
     	TileEntityControlBlock te = (TileEntityControlBlock) tileEntity;
        
        
-        this.bindTexture(image);
-        Tessellator tessellator = Tessellator.getInstance();
-        GL11.glPushMatrix();
-        GL11.glTranslated(x + 0.005F,y,z + 0.005F);
-        GL11.glScalef(0.99f, 0.99f, 0.99f);
-        
-        tessellator.getWorldRenderer().startDrawingQuads();
+		this.bindTexture(image);
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		GL11.glPushMatrix();
+		GL11.glTranslated(x - 0.005F, y, z - 0.005F);
+		GL11.glScalef(1.01f, 1.01f, 1.01f);
 
-        tessellator.getWorldRenderer().setNormal(0, 0, -1);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 0.0, 0.0, 0.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 0.0, 0.0, 1.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 1.0, 0.0, 1.0, 0.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 1.0, 0.0, 0.0, 0.0);
-        // +Z
-        tessellator.getWorldRenderer().setNormal(0, 0, 1);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 0.0, 1.0, 0.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 0.0, 1.0, 1.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 1.0, 1.0, 1.0, 0.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 1.0, 1.0, 0.0, 0.0);
-        // -X
-        tessellator.getWorldRenderer().setNormal(-1, 0, 0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 0.0, 0.0, 0.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 0.0, 1.0, 1.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 1.0, 1.0, 1.0, 0.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 1.0, 0.0, 0.0, 0.0);
-        // +X
-        tessellator.getWorldRenderer().setNormal(1, 0, 0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 0.0, 1.0, 0.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 0.0, 0.0, 1.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 1.0, 0.0, 1.0, 0.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 1.0, 1.0, 0.0, 0.0);
-        // -Y
-        tessellator.getWorldRenderer().setNormal(0, -1, 0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 0.0, 1.0, 0.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 0.0, 0.0, 1.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 0.0, 0.0, 1.0, 0.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 0.0, 1.0, 0.0, 0.0);
-        // +Y
-        tessellator.getWorldRenderer().setNormal(0, 1, 0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 1.0, 1.0, 0.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(1.0, 1.0, 0.0, 1.0, 1.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 1.0, 0.0, 1.0, 0.0);
-        tessellator.getWorldRenderer().addVertexWithUV(0.0, 1.0, 1.0, 0.0, 0.0);
-        
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
 
-        tessellator.draw();
+		bufferbuilder.normal(0, 0, -1);
+		bufferbuilder.pos(1.0, 0.0, 0.0).tex( 0.0, 1.0);
+		bufferbuilder.pos(0.0, 0.0, 0.0).tex( 1.0, 1.0);
+		bufferbuilder.pos(0.0, 1.0, 0.0).tex(1.0, 0.0);
+		bufferbuilder.pos(1.0, 1.0, 0.0).tex(0.0, 0.0);
+		// +Z
+		bufferbuilder.normal(0, 0, 1);
+		bufferbuilder.pos(0.0, 0.0, 1.0).tex(0.0, 1.0);
+		bufferbuilder.pos(1.0, 0.0, 1.0).tex(1.0, 1.0);
+		bufferbuilder.pos(1.0, 1.0, 1.0).tex(1.0, 0.0);
+		bufferbuilder.pos(0.0, 1.0, 1.0).tex(0.0, 0.0);
+		// -X
+		bufferbuilder.normal(-1, 0, 0);
+		bufferbuilder.pos(0.0, 0.0, 0.0).tex(0.0, 1.0);
+		bufferbuilder.pos(0.0, 0.0, 1.0).tex(1.0, 1.0);
+		bufferbuilder.pos(0.0, 1.0, 1.0).tex(1.0, 0.0);
+		bufferbuilder.pos(0.0, 1.0, 0.0).tex(0.0, 0.0);
+		// +X
+		bufferbuilder.normal(1, 0, 0);
+		bufferbuilder.pos(1.0, 0.0, 1.0).tex(0.0, 1.0);
+		bufferbuilder.pos(1.0, 0.0, 0.0).tex(1.0, 1.0);
+		bufferbuilder.pos(1.0, 1.0, 0.0).tex(1.0, 0.0);
+		bufferbuilder.pos(1.0, 1.0, 1.0).tex(0.0, 0.0);
+		// -Y
+		bufferbuilder.normal(0, -1, 0);
+		bufferbuilder.pos(0.0, 0.0, 1.0).tex(0.0, 1.0);
+		bufferbuilder.pos(0.0, 0.0, 0.0).tex(1.0, 1.0);
+		bufferbuilder.pos(1.0, 0.0, 0.0).tex(1.0, 0.0);
+		bufferbuilder.pos(1.0, 0.0, 1.0).tex(0.0, 0.0);
+		// +Y
+		bufferbuilder.normal(0, 1, 0);
+		bufferbuilder.pos(1.0, 1.0, 1.0).tex(0.0, 1.0);
+		bufferbuilder.pos(1.0, 1.0, 0.0).tex(1.0, 1.0);
+		bufferbuilder.pos(0.0, 1.0, 0.0).tex(1.0, 0.0);
+		bufferbuilder.pos(0.0, 1.0, 1.0).tex(0.0, 0.0);
+
+		tessellator.draw();
         
 
         if(te.showBorder){
@@ -109,11 +112,11 @@ public class RenderTileEntityControlBlock extends TileEntitySpecialRenderer{
 				axisalignedbb.maxZ - te.getPos().getZ() + z + 0.5F - (te.zOff * 2));
 		RenderGlobal.drawSelectionBoundingBox(axisalignedbb1,  255,  255,  255,  1);
 		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-	
-		worldrenderer.startDrawing(3);
-		worldrenderer.setColorOpaque_I(255);
+		bufferbuilder.begin(3, DefaultVertexFormats.POSITION_TEX_COLOR);
+		
+		bufferbuilder.color(255, 255, 255, 255);
 	
 		tessellator.draw();
 		GlStateManager.enableTexture2D();

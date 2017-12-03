@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 @SideOnly(Side.CLIENT)
-public class RenderItemBait implements ISmartItemModel, IPerspectiveAwareModel
+public class RenderItemBait
 {
 	protected final ModelBait baitModel;
 	private final IBakedModel baseModel;
@@ -45,84 +45,4 @@ public class RenderItemBait implements ISmartItemModel, IPerspectiveAwareModel
 		}
 	}
 
-
-	@Override
-	public Pair<IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-		// gui renders as 2D sprite; this is apparently also what renders when the item is dropped
-		if (cameraTransformType == ItemCameraTransforms.TransformType.GUI) {
-			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
-			return Pair.of(baseModel, null);
-		}
-
-		GlStateManager.pushMatrix();
-		GL11.glScalef(1F, 1F, 1F);
-		switch (cameraTransformType) {
-		case FIRST_PERSON_RIGHT_HAND:
-			GlStateManager.translate(0.1F, -0.5F, -0.2F);
-			GlStateManager.rotate(5.0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(35.0F, 0.0F, 1.0F, 0.0F);
-			GlStateManager.rotate(35.0F, 0.0F, 0.0F, 1.0F);
-			
-			break;
-		case THIRD_PERSON_RIGHT_HAND:
-			GlStateManager.rotate(0F, 1.0F, 0.0F, 0.0F);
-			GlStateManager.rotate(90.0F, 0F, 1.0F, 0.0F);
-			GlStateManager.translate(0.2F, -0.4F, -0.0F);
-			GlStateManager.scale(0.5F, 0.5F, 0.5F);
-			break;
-		default:
-			break;
-		}
-		Minecraft.getMinecraft().getTextureManager().bindTexture(getTexture1());
-		// first Entity parameter not used for anything in ModelLegendsSword, so null is safe
-		baitModel.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
-		GlStateManager.popMatrix();
-		// return empty model to render nothing - bomb model already rendered
-		return Pair.of(emptyModel, null);
-	}
-
-	@Override
-	public List getFaceQuads(EnumFacing face) {
-		return baseModel.getFaceQuads(face);
-	}
-
-	@Override
-	public List getGeneralQuads() {
-		return baseModel.getGeneralQuads();
-	}
-
-	@Override
-	public boolean isAmbientOcclusion() {
-		return baseModel.isAmbientOcclusion();
-	}
-
-	@Override
-	public boolean isGui3d() {
-		return baseModel.isGui3d();
-	}
-
-	@Override
-	public boolean isBuiltInRenderer() {
-		return false;
-	}
-
-	@Override
-	public TextureAtlasSprite getTexture() {
-		return baseModel.getTexture();
-	}
-
-	@Override
-	public ItemCameraTransforms getItemCameraTransforms() {
-		return baseModel.getItemCameraTransforms();
-	}
-
-	private ResourceLocation getTexture1() {
-		return loc;
-	}
-
-
-	@Override
-	public IBakedModel handleItemState(ItemStack stack) {
-		return this;
-	}
 }

@@ -14,6 +14,7 @@ import com.Splosions.ModularBosses.client.models.item.ModelLegendsBow;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
@@ -22,6 +23,7 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +33,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SuppressWarnings("deprecation")
 @SideOnly(Side.CLIENT)
-public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareModel
+public class RenderItemLegendsBow
 {
 	protected  ModelBase bowModel;
 	public  IBakedModel baseModel;
@@ -55,22 +57,7 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 	}
 
 
-	@Override
-	public Pair<IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-		
-		float scale = ((aniCount < 960 && aniCount > 980)? 20 : 980 - aniCount);
-		scale = (aniCount == 0 || scale < 0)? 0 : scale / 20;
-		scale = (scale >= 1)? 1 : scale;
-		
-		
-		// gui renders as 2D sprite; this is apparently also what renders when the item is dropped
-		if (cameraTransformType == ItemCameraTransforms.TransformType.GUI) {
-			RenderItem.applyVanillaTransform(baseModel.getItemCameraTransforms().gui);
-			return Pair.of(baseModel, null);
-		}
-		GlStateManager.pushMatrix();
-		GL11.glScalef(0.1F, 0.1F, 0.1F);
-		switch (cameraTransformType) {
+/**
 		case FIRST_PERSON_RIGHT_HAND:
 			GlStateManager.translate(0.5F, 1.6F, 0.5F);
 			GlStateManager.rotate(-55.0F, 0.0F, 1.0F, 0.0F);
@@ -92,19 +79,9 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 			break;
 		default:
 			break;
-		}
+*/
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(getTexture1());
-		// first Entity parameter not used for anything in ModelLegendsSword, so null is safe
-		bowModel.render(null, this.aniCount, 0.0F, 0.0F, 0.0F, 0.0F, 0.0475F);
 
-		GlStateManager.popMatrix();
-		// return empty model to render nothing - bomb model already rendered
-		
-		
-		
-		return Pair.of(emptyModel, null);
-	}
 	
 	
 	
@@ -124,101 +101,58 @@ public class RenderItemLegendsBow implements ISmartItemModel, IPerspectiveAwareM
 
     private void renderDragonDeath(float density, float x, float y, float z) {
             Tessellator tessellator = Tessellator.getInstance();
-            WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-            RenderHelper.disableStandardItemLighting();
-            float f7 = density / 200.0F;
-            float f8 = 0.0F;
+    		BufferBuilder bufferbuilder = tessellator.getBuffer();
+    		RenderHelper.disableStandardItemLighting();
+    		//float f = ((float) spark.ticksExisted ) / 200.0F;
+    		float f = 0;
+    		float f1 = 0.0F;
 
-            if (f7 > 0.8F) f8 = (f7 - 0.8F) / 0.2F;
+    		if (f > 0.8F) {
+    			f1 = (f - 0.8F) / 0.2F;
+    		}
 
-            Random random = new Random(432L);
-            GlStateManager.disableTexture2D();
-            GlStateManager.shadeModel(7425);
-            GlStateManager.enableBlend();
-            GlStateManager.blendFunc(770, 1);
-            GlStateManager.disableAlpha();
-            GlStateManager.enableCull();
-            GlStateManager.depthMask(false);
-            GlStateManager.pushMatrix();
-            GlStateManager.translate(x, y, z);
+    		Random random = new Random(432L);
+    		GlStateManager.disableTexture2D();
+    		GlStateManager.shadeModel(7425);
+    		GlStateManager.enableBlend();
+    		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
+    		GlStateManager.disableAlpha();
+    		GlStateManager.enableCull();
+    		GlStateManager.depthMask(false);
+    		GlStateManager.pushMatrix();
+    		GlStateManager.translate(0.0F, -1.0F, -2.0F);
 
-            for (int i = 0;
-            (float) i < (f7 + f7 * f7) / 2.0F * 60.0F; ++i) {
-                    GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-                    GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-                    GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
-                    GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-                    GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-                    GlStateManager.rotate(random.nextFloat() * 360.0F + f7 * 90.0F, 0.0F, 0.0F, 1.0F);
-                    worldrenderer.startDrawing(6);
-                    float f9 = random.nextFloat() * 20.0F + 5.0F + f8 * 10.0F;
-                    float f10 = random.nextFloat() * 2.0F + 1.0F + f8 * 2.0F;
-                    //density.worldrenderer.setColorRGBA_I(16760576, (int)(255.0F * (1.0F - f8)));
-                    worldrenderer.setColorRGBA(0,255,255, (int)(255.0F * (1.0F - f8)));
-                    worldrenderer.addVertex(0.0D, 0.0D, 0.0D);
-                    //worldrenderer.setColorRGBA_I(16711680, 0);
-                    worldrenderer.setColorRGBA(0,0,255,0);
-                    worldrenderer.addVertex(-0.866D * (double) f10, (double) f9, (double)(-0.5F * f10));
-                    worldrenderer.addVertex(0.866D * (double) f10, (double) f9, (double)(-0.5F * f10));
-                    worldrenderer.addVertex(0.0D, (double) f9, (double)(1.0F * f10));
-                    worldrenderer.addVertex(-0.866D * (double) f10, (double) f9, (double)(-0.5F * f10));
-                    tessellator.draw();
-            }
+    		for (int i = 0; (float) i < (f + f * f) / 2.0F * 60.0F; ++i) {
+    			GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+    			GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+    			GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
+    			GlStateManager.rotate(random.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+    			GlStateManager.rotate(random.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+    			GlStateManager.rotate(random.nextFloat() * 360.0F + f * 90.0F, 0.0F, 0.0F, 1.0F);
+    			float f2 = random.nextFloat() * 20.0F + 5.0F + f1 * 10.0F;
+    			float f3 = random.nextFloat() * 2.0F + 1.0F + f1 * 2.0F;
+    			bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
 
-            GlStateManager.popMatrix();
-            GlStateManager.depthMask(true);
-            GlStateManager.disableCull();
-            GlStateManager.disableBlend();
-            GlStateManager.shadeModel(7424);
-            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            GlStateManager.enableTexture2D();
-            GlStateManager.enableAlpha();
-            RenderHelper.enableStandardItemLighting();
+   				bufferbuilder.pos(0.0D, 0.0D, 0.0D).color(0,255,255, (int) (255.0F * (1.0F - f1))).endVertex();
+
+    			bufferbuilder.pos(-0.866D * (double) f3, (double) f2, (double) (-0.5F * f3)).color(255, 0, 255, 0).endVertex();
+    			bufferbuilder.pos(0.866D * (double) f3, (double) f2, (double) (-0.5F * f3)).color(255, 0, 255, 0).endVertex();
+    			bufferbuilder.pos(0.0D, (double) f2, (double) (1.0F * f3)).color(255, 0, 255, 0).endVertex();
+    			bufferbuilder.pos(-0.866D * (double) f3, (double) f2, (double) (-0.5F * f3)).color(255, 0, 255, 0).endVertex();
+    			tessellator.draw();
+    		}
+
+    		GlStateManager.popMatrix();
+    		GlStateManager.depthMask(true);
+    		GlStateManager.disableCull();
+    		GlStateManager.disableBlend();
+    		GlStateManager.shadeModel(7424);
+    		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    		GlStateManager.enableTexture2D();
+    		GlStateManager.enableAlpha();
+    		RenderHelper.enableStandardItemLighting();
+            
     }
 
-	@Override
-	public List getFaceQuads(EnumFacing face) {
-		return baseModel.getFaceQuads(face);
-	}
-
-	@Override
-	public List getGeneralQuads() {
-		return baseModel.getGeneralQuads();
-	}
-
-	@Override
-	public boolean isAmbientOcclusion() {
-		return baseModel.isAmbientOcclusion();
-	}
-
-	@Override
-	public boolean isGui3d() {
-		return baseModel.isGui3d();
-	}
-
-	@Override
-	public boolean isBuiltInRenderer() {
-		return false;
-	}
-
-	@Override
-	public TextureAtlasSprite getTexture() {
-		return baseModel.getTexture();
-	}
-
-	@Override
-	public ItemCameraTransforms getItemCameraTransforms() {
-		return baseModel.getItemCameraTransforms();
-	}
-
-	private ResourceLocation getTexture1() {
-		return loc;
-	}
-
-
-	@Override
-	public IBakedModel handleItemState(ItemStack stack) {
-		this.aniCount = stack.animationsToGo;
-		return this;
-	}
+	
 }
