@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.util.BlockObject;
@@ -79,7 +80,7 @@ public class Schematic {
 			}
 			
 
-			if (file.exists()) {
+			if (Config.CustomRooms) {
 				nbtdata = SchematicUtil.readTagCompoundFromFile(file);
 			} else {
 				//TargetUtils.tellPlayer("No Schematics found in schematics folder");

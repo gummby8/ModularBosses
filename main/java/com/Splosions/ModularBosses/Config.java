@@ -37,6 +37,8 @@ public class Config {
 	public static int WormBloodDmg;
 	public static int WormGasDmg;
 	
+	public static boolean CustomRooms;
+	
 	public static boolean debugHitboxes;
 	
 	
@@ -58,6 +60,8 @@ public class Config {
 		config = new Configuration(new File(event.getModConfigurationDirectory().getAbsolutePath() + Reference.CONFIG_PATH));
 		config.load();
 		
+		
+		
 		bossDimension = config.get("000 Dimension Config", "[Config] The Custom Dimension ID [1+]", -3).getInt();
 		buildsPerTick = config.get("000 Dimension Config", "[Config] How many blocks per tick for a dungeon to build [1+]", 5000).getInt();
 		
@@ -72,6 +76,8 @@ public class Config {
 		WormAcidDmg = config.get("001 Worm Dungeon", "[Worm Acid Dmg] [1+]", 10).getInt();
 		WormBloodDmg = config.get("001 Worm Dungeon", "[Worm Blood Dmg] [1+]", 10).getInt();
 		WormGasDmg = config.get("001 Worm Dungeon", "[Worm Gas Dmg] [1+]", 10).getInt();
+		
+		CustomRooms = config.get("001 Worm Dungeon", "[Config] Use Custom Room Schematics", false).getBoolean(false);
 		
 		debugHitboxes = config.get("002 Config", "[Config] Show Multi-part monster hitboxes", false).getBoolean(false);
 		
