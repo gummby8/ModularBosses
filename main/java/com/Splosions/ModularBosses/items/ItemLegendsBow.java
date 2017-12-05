@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
+import com.Splosions.ModularBosses.client.render.items.IItemMBRenderer;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsBow;
 import com.Splosions.ModularBosses.entity.projectile.EntityEnergyArrow;
 import com.google.common.collect.Lists;
@@ -31,7 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class ItemLegendsBow extends BaseModItem{
+public class ItemLegendsBow extends BaseModItem  implements IItemMBRenderer {
 
 	public int aniCount = 0;
 	

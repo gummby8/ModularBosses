@@ -1,7 +1,7 @@
 package com.Splosions.ModularBosses.dimensions.BossDimension;
 
-import com.Splosions.ModularBosses.dimensions.TestBiomesRegistry;
-import com.Splosions.ModularBosses.dimensions.TestDimensions;
+import com.Splosions.ModularBosses.dimensions.EmptyBiomeRegistry;
+import com.Splosions.ModularBosses.dimensions.BossDimension;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldProvider;
@@ -20,10 +20,10 @@ public class BossWorldProvider extends WorldProvider
 	@Override
 	protected void registerWorldChunkManager()
 	{
-		this.worldChunkMgr = new WorldChunkManagerHell(TestBiomesRegistry.BossBiome, 0.0f);
+		this.worldChunkMgr = new WorldChunkManagerHell(EmptyBiomeRegistry.BossBiome, 0.0f);
 		this.setAllowedSpawnTypes(false, false);
-		this.dimensionId = TestDimensions.BossDimensionID;
-		this.setDimension(TestDimensions.BossDimensionID);
+		this.dimensionId = BossDimension.BossDimensionID;
+		this.setDimension(BossDimension.BossDimensionID);
 		this.hasNoSky = false;
 	}
 	

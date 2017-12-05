@@ -7,7 +7,7 @@ import com.Splosions.ModularBosses.dimensions.BossDimension.BossWorldProvider;
 
 import net.minecraftforge.common.DimensionManager;
 
-public class TestDimensions
+public class BossDimension
 {
 	public static int BossDimensionID = Config.bossDimension;
 	

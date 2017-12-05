@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
+import com.Splosions.ModularBosses.client.render.items.IItemMBRenderer;
 import com.Splosions.ModularBosses.client.render.items.RenderItemBait;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.google.common.collect.Lists;
@@ -24,7 +25,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBait extends BaseModItem {
+public class ItemBait extends BaseModItem implements IItemMBRenderer {
 
 	public ItemBait(ToolMaterial material) {
 		setCreativeTab(ModularBosses.tabTools);

@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.client.ISwapModel;
+import com.Splosions.ModularBosses.client.render.items.IItemMBRenderer;
 import com.Splosions.ModularBosses.client.render.items.RenderItemScythe;
 import com.Splosions.ModularBosses.entity.projectile.EntityScythe;
 import com.google.common.collect.HashMultimap;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemScythe extends BaseModItem {
+public class ItemScythe extends BaseModItem implements IItemMBRenderer {
 	
 	
 

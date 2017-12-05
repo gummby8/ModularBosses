@@ -11,15 +11,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class CommonProxy {
-	public void preInit() {
-	}
+	public void preInit() {}
+	
+	public void registerItemRenderers(){};
+	
+	protected void registerEntityRenderers(){};
 
-	public void registerRenders() {
-	}
+	public void init(FMLInitializationEvent event) {}
 
-	public void init(FMLInitializationEvent event) {
-
-	}
 
 	/**
 	 * Returns a side-appropriate EntityPlayer for use during message handling

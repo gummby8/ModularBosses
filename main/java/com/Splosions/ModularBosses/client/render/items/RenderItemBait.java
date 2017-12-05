@@ -25,24 +25,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-@SuppressWarnings("deprecation")
-@SideOnly(Side.CLIENT)
-public class RenderItemBait
-{
-	protected final ModelBait baitModel;
-	private final IBakedModel baseModel;
-	private final IBakedModel emptyModel;
-	
-	private final ResourceLocation loc = new ResourceLocation("mb:textures/items/Bait.png");
 
-	public RenderItemBait(IBakedModel baseModel) {
-		baitModel = new ModelBait();
-		this.baseModel = baseModel;
-		ModelResourceLocation resource = new ModelResourceLocation("mb:invisible_block", "inventory");
-		this.emptyModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getModelManager().getModel(resource);
-		if (emptyModel == null) {
-			ModularBosses.logger.warn("Failed to retrieve model for resource location: " + resource);
-		}
+@SideOnly(Side.CLIENT)
+public class RenderItemBait extends RenderItemBase
+{
+	private final static ResourceLocation TEXTURE = new ResourceLocation("mb:textures/items/Bait.png");
+
+	public RenderItemBait() {
+		super(new ModelBait(), TEXTURE);
+		this.scale_ground=this.scale_thirdp;
 	}
 
 }

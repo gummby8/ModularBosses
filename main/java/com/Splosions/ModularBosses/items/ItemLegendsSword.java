@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.client.ISwapModel;
+import com.Splosions.ModularBosses.client.render.items.IItemMBRenderer;
 import com.Splosions.ModularBosses.client.render.items.RenderItemLegendsSword;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
@@ -25,7 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemLegendsSword extends BaseModSword {
+public class ItemLegendsSword extends BaseModSword  implements IItemMBRenderer {
 
 	public ItemLegendsSword(ToolMaterial material) {
 		super(material);

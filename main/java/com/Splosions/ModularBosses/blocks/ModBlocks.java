@@ -11,7 +11,6 @@ import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormAcid;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityTempWormBlood;
-import com.Splosions.ModularBosses.items.ItemModBlock;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.google.common.base.Preconditions;
 
