@@ -6,6 +6,9 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
@@ -16,8 +19,8 @@ public class EntitySandWormTail  extends Entity implements IEntityAdditionalSpaw
     public int segmentNum;
     public Entity parent;
     
-	private static final int YAW_WATCHER = 17;
-	private static final int PITCH_WATCHER = 18;
+	private static final DataParameter<Float> YAW_WATCHER = EntityDataManager.<Float>createKey(EntitySandWormTail.class, DataSerializers.FLOAT);
+	private static final DataParameter<Float> PITCH_WATCHER = EntityDataManager.<Float>createKey(EntitySandWormTail.class, DataSerializers.FLOAT);
 	
 	public float yaw;
 	public float pitch;
@@ -73,14 +76,14 @@ public class EntitySandWormTail  extends Entity implements IEntityAdditionalSpaw
     public void onUpdate()
     {
     	
-		List teleList = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(10, 10, 10));
+		List teleList = this.world.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(10, 10, 10));
 		kickEntitiesInList(teleList, 3, 3, 20);
 		
         //super.onUpdate();
     	this.noClip = true;
         this.ignoreFrustumCheck = true;
 
-        if (this.worldObj.isRemote){
+        if (this.world.isRemote){
         	if (this.parent == null){
         		setDead();
         	} else if (this.parent.isDead) {
@@ -99,8 +102,8 @@ public class EntitySandWormTail  extends Entity implements IEntityAdditionalSpaw
 
 	@Override
 	protected void entityInit() {
-		this.dataWatcher.addObject(YAW_WATCHER, 0.0F);
-		this.dataWatcher.addObject(PITCH_WATCHER, 0.0F);
+		this.dataManager.register(YAW_WATCHER, 0.0F);
+		this.dataManager.register(PITCH_WATCHER, 0.0F);
 	}
 
 

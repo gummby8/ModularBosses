@@ -9,7 +9,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveThroughVillage;
@@ -18,17 +17,20 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.Potion;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 
-public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
+public class EntityHeavyChorp extends EntityMob
 {
 	
 	public static int heavychorpMaxHealth;
@@ -50,7 +52,6 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	private float randomMotionVecY;
 	private float randomMotionVecZ;
 	
-	byte b0 = this.dataWatcher.getWatchableObjectByte(16);
 	private float DeadRot;
 
 	public EntityHeavyChorp(World par1World) {
@@ -64,8 +65,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 		//this.getNavigator().setBreakDoors(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         //this.tasks.addTask(1, new EntityAIBreakDoor(this));
-        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
-        this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.25D, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
         this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
         this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
         this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); //Wander speed
@@ -78,7 +78,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	
 	//stuns the mob
     public boolean isMovementBlocked() {
-    	if (b0 == 1){
+    	if (this.getHealth() <= 0){
     		return true;
     	} else {
     		return false;
@@ -108,15 +108,15 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	{
 	  super.applyEntityAttributes();
 	  // Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-	  this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(heavychorpMaxHealth);
+	  this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(heavychorpMaxHealth);
 	  // Follow Range - default 32.0D - min 0.0D - max 2048.0D
-	  this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+	  this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20.0D);
 	  // Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
-	  this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0D);
+	  this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
 	  // Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-	  this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+	  this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.699D);
 	  // Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-	  this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(heavychorpTouchDmg);
+	  this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(heavychorpTouchDmg);
 	}
 	
 	public static void postInitConfig(Configuration config) {
@@ -133,8 +133,6 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(16, Byte.valueOf((byte)0));
-        
     }
     
 
@@ -151,18 +149,14 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
          float f = (this.rand.nextFloat() - 0.5F) * 4.0F;
          float f1 = (this.rand.nextFloat() - 0.5F) * 4.0F;
          float f2 = (this.rand.nextFloat() - 0.5F) * 4.0F;
-		 this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)f, this.posY + 2.0D + (double)f1, this.posZ + (double)f2, 0.0D, 0.0D, 0.0D);
+		 this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double)f, this.posY + 2.0D + (double)f1, this.posZ + (double)f2, 0.0D, 0.0D, 0.0D);
 		 
 		 
 		 entityToAttack = null;
-		 byte b1 = 1;
-			this.dataWatcher.updateObject(16, Byte.valueOf(b1));
-	    	b0 = this.dataWatcher.getWatchableObjectByte(16);
-		 
 		 ++this.deathTicks;
 		 
 		 
-	        if (this.deathTicks >= 100 && !this.worldObj.isRemote){
+	        if (this.deathTicks >= 100 && !this.world.isRemote){
 					TargetUtils.dropExp(this, this.heavyChorpExpDrop);
 					TargetUtils.dropLoot(this, this.heavyChorpLoot);
 	        	this.setDead();   	
@@ -175,7 +169,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	   // @SideOnly(Side.CLIENT)
 	    public int DeathWatcher()
 	    {
-	        if (this.dataWatcher.getWatchableObjectByte(16) == 1) {
+	        if (this.getHealth() <= 0) {
 	        	return this.deathTicks;
 	        } else {
 	        	return -1;
@@ -185,7 +179,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	    //@SideOnly(Side.CLIENT)
 	    public float DeathRotation()
 	    {
-	        if (this.dataWatcher.getWatchableObjectByte(16) == 1) {
+	        if (this.getHealth() <= 0) {
 	  		  	this.DeadRot += 0.0003F;
 			  if (this.DeadRot > 0.209F) {
 				this.DeadRot = 0.209F;
@@ -204,26 +198,31 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
     }
     */
     
-    /**
-     * Returns the sound this mob makes when it is hurt.
-     */
-    protected String getHurtSound() {
-        return "modularbosses:chorp_hurt";
-    }
+		/**
+		 * Returns the sound this mob makes when it is hurt.
+		 */
+		@Override
+	    protected SoundEvent getHurtSound(DamageSource p_184601_1_)
+	    {
+	    	return MBSounds.CHORP_HURT;
+	    }
 
-    /**
-     * Returns the sound this mob makes on death.
-     */
-    protected String getDeathSound() {
-        return "modularbosses:chorp_death";
-    }
+		/**
+		 * Returns the sound this mob makes on death.
+		 */
+		@Override
+		protected SoundEvent getDeathSound() {
+			return MBSounds.CHORP_DEATH;
+		}
 
-    /**
-     * Plays step sound at given x, y, z for the entity
-     */
-    protected void playStepSound(int par1, int par2, int par3, int par4) {
-        this.playSound("mob.zombie.step", 0.15F, 1.0F);
-    }
+		/**
+		 * Plays step sound
+		 */
+	    protected SoundEvent getStepSound()
+	    {
+	        return SoundEvents.ENTITY_ZOMBIE_STEP;
+	    }
+
 
 
     
@@ -240,7 +239,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
      */
     protected Entity findPlayerToAttack()
     {
-        EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 25.0D);
+        EntityPlayer entityplayer = this.world.getClosestPlayerToEntity(this, 25.0D);
         return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
     }
     
@@ -254,7 +253,7 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 		if (entityToAttack == null) {
 			entityToAttack = findPlayerToAttack();
 			
-		} else if (entityToAttack.isEntityAlive() && canAttackClass(entityToAttack.getClass())) {
+		} else if (entityToAttack.isEntityAlive() && entityToAttack instanceof EntityPlayer) {
 			distance = entityToAttack.getDistanceToEntity(this);
 			if (distance > 25.0F) {
 				entityToAttack = null;
@@ -272,17 +271,17 @@ public class EntityHeavyChorp extends EntityMob implements IBossDisplayData
 	
 	protected void attackEntity(Entity entity, float distance) {
 		EntityLivingBase ent = (EntityLivingBase) entity;
-		if (!this.worldObj.isRemote){
-		if (!ent.isPotionActive(Potion.moveSlowdown) && b0 != 1) {
+		if (!this.world.isRemote){
+		if (!ent.isPotionActive(MobEffects.SLOWNESS) && this.getHealth() > 0) {
 			if (this.attackCounter == 40) {
-				this.worldObj.playSoundAtEntity(this, MBSounds.CHORP_SLIME, 1.0F, 1.0F);
+				this.playSound(MBSounds.CHORP_SLIME, 1.0F, 1.0F);
 			}
 			if (this.attackCounter >= 40) {
-				float f = (float) getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue();
+				float f = (float) getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
 				Entity projectile;
 				for (int i = 0; i < 4; i++){
-						projectile = new EntityChorpSlimeBlob(worldObj, this, (EntityLivingBase) entity, 1.1F, 14,0,0,0,0,0, heavychorpSlimeDmg, heavychorpSlimeSlowDuration, heavychorpSlimeSlow);
-						worldObj.spawnEntityInWorld(projectile);
+						projectile = new EntityChorpSlimeBlob(world, this, (EntityLivingBase) entity, 1.1F, 14,0,0,0,0,0, heavychorpSlimeDmg, heavychorpSlimeSlowDuration, heavychorpSlimeSlow);
+						world.spawnEntity(projectile);
 					}	
 			}
 			if (this.attackCounter >= 60) {

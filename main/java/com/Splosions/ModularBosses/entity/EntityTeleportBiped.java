@@ -45,7 +45,7 @@ public class EntityTeleportBiped extends Entity implements IEntityAdditionalSpaw
 
 		if (this.ticksExisted > 80){
 			for (int l = 0; l < 20; ++l){
-				this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY + 1, this.posZ, rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F, 5);
+				this.world.spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY + 1, this.posZ, rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F,rand.nextFloat() - 0.5F, 5);
 			}
 			
 			setDead();

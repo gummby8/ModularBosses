@@ -7,6 +7,7 @@ import com.Splosions.ModularBosses.ModularBosses;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -218,5 +220,23 @@ public class TargetUtils {
             ent.world.spawnEntity(new EntityXPOrb(ent.world, ent.posX, ent.posY, ent.posZ, j));
         }
 	}
+	
+	
+	public static int distToFloor(Entity ent, double x, double y, double z){
+        BlockPos blockpos = new BlockPos(x, y, z);
+        IBlockState iblockstate = ent.world.getBlockState(blockpos);
+        int count = 0;
+		while (!ent.world.getBlockState(blockpos).getBlock().getMaterial(iblockstate).blocksMovement()) {
+			iblockstate = ent.world.getBlockState(blockpos);
+			blockpos = blockpos.down();
+			count++;
+		}
+		return count;
+	}
+	
+    public static boolean canPosBeSeen(Entity ent, double x, double y, double z)
+    {
+        return ent.world.rayTraceBlocks(new Vec3d(ent.posX, ent.posY, ent.posZ), new Vec3d(x, y, z)) == null;
+    }
 
 }

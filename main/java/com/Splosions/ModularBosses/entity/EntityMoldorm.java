@@ -16,9 +16,11 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.SoundEvent;
@@ -62,7 +64,7 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 		this.isImmuneToFire = true;
 		this.maxHurtResistantTime = 40;
 		//AI STUFF
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.25D, false)); //How fast mob moves towards the player
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.moldormPartArray = new MultiPartEntityPart[] { 
 				this.moldormPart1 = new MultiPartEntityPart(this, "part1", 3.0F, 3.0F), 
 				this.moldormPart2 = new MultiPartEntityPart(this, "part2", 3.0F, 3.0F), 
@@ -131,24 +133,26 @@ public class EntityMoldorm extends EntityMob implements IEntityMultiPart, IMob
 	 * Returns the sound this mob makes when it is hurt.
 	 */
 	@Override
-	protected SoundEvent getHurtSound(DamageSource dmg){
-		return MBSounds.CHORP_HURT;
-	}
+    protected SoundEvent getHurtSound(DamageSource p_184601_1_)
+    {
+    	return MBSounds.MOLDORM_HIT;
+    }
 
 	/**
 	 * Returns the sound this mob makes on death.
 	 */
 	@Override
-	protected String getDeathSound() {
-		return MBSounds.CHORP_DEATH;
+	protected SoundEvent getDeathSound() {
+		return MBSounds.MOLDORM_DEATH;
 	}
 
 	/**
-	 * Plays step sound at given x, y, z for the entity
+	 * Plays step sound
 	 */
-	protected void playStepSound(int par1, int par2, int par3, int par4) {
-		this.playSound("mob.zombie.step", 0.15F, 1.0F);
-	}
+    protected SoundEvent getStepSound()
+    {
+        return SoundEvents.ENTITY_ZOMBIE_STEP;
+    }
 
 
 

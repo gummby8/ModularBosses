@@ -1,10 +1,12 @@
 package com.Splosions.ModularBosses.dimensions;
 
+import com.Splosions.ModularBosses.Config;
+
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
-import net.minecraft.world.biome.WorldChunkManager;
-import net.minecraft.world.biome.WorldChunkManagerHell;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -14,42 +16,17 @@ public class MBBossWorldProvider extends WorldProvider
 {
 
 	
-	@Override
-	protected void registerWorldChunkManager()
-	{
-		this.worldChunkMgr = new WorldChunkManagerHell(EmptyBiomeRegistry.BossBiome, 0.0f);
-		this.setAllowedSpawnTypes(false, false);
-		this.dimensionId = MBBossDimension.BossDimensionID;
-		this.setDimension(MBBossDimension.BossDimensionID);
-		this.hasNoSky = false;
-	}
-	
-	@Override
-    public WorldChunkManager getWorldChunkManager()
-    {
-        return this.worldChunkMgr; 
-    }
+
 	
     /**
      * Returns a new chunk provider which generates chunks for this world
      */
 	@Override
-    public IChunkProvider createChunkGenerator()
+    public IChunkGenerator createChunkGenerator()
     {
-        return new BossChunkProvider(worldObj, worldObj.getSeed(), true);
+        return new BossChunkProvider(world, world.getSeed(), true);
     }
 	
-	@Override
-	public String getDimensionName()
-	{
-		return "BossDimension";
-	}
-
-	@Override
-	public String getInternalNameSuffix()
-	{
-		return "_BossDimension";
-	}
 	
 	@Override
 	public boolean canRespawnHere()
@@ -64,18 +41,12 @@ public class MBBossWorldProvider extends WorldProvider
 		
 	}
 	
+
+
 	@Override
-	@SideOnly(Side.CLIENT)
-	public String getWelcomeMessage()
-	{
-		return "Leaving your universe";
-	}
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-	public String getDepartMessage()
-	{
-		return "Returning to your universe";
+	public DimensionType getDimensionType() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

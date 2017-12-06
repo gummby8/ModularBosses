@@ -17,9 +17,14 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -48,9 +53,9 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	public static String[] paragonLoot = new String[]{"100|1|mb:itemNote","1|1|mb:itemNote"};
 	/*================== PARAGON CONFIG SETTINGS  =====================*/
 	
-	
-	private static final int DEATH_WATCHER = 16;
-	private static final int ANI_ID_WATCHER = 17;
+	private static final DataParameter<Integer> DEATH_WATCHER = EntityDataManager.<Integer>createKey(EntityParagon.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> ANI_ID_WATCHER = EntityDataManager.<Integer>createKey(EntityParagon.class, DataSerializers.VARINT);
+
 
 
 	private static final int STAND = 0;
@@ -187,8 +192,8 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataWatcher.addObject(DEATH_WATCHER, 0);
-		this.dataWatcher.addObject(ANI_ID_WATCHER, 0);
+		this.dataManager.register(DEATH_WATCHER, 0);
+		this.dataManager.register(ANI_ID_WATCHER, 0);
 	}
 
 	/**
@@ -223,20 +228,13 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	}
 
 	@Override
-	protected String getLivingSound() {
-		return MBSounds.PARAGON_LIVING;
-	}
+    protected SoundEvent getAmbientSound() {
+        return MBSounds.PARAGON_LIVING;
+    }
 
-	/**
-	 * Returns the sound this mob makes when it is hurt.
-	 * 
-	 * @Override protected String getHurtSound() { return Sounds.CHORP_HURT; }
-	 */
-	/**
-	 * Returns the sound this mob makes on death.
-	 */
+
 	@Override
-	protected String getDeathSound() {
+    protected SoundEvent getDeathSound() {
 		return MBSounds.CHORP_DEATH;
 	}
 
@@ -247,7 +245,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 
-		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
+		this.AniID = this.dataManager.get(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID)? 0 : this.AniFrame;
 
 		
@@ -359,7 +357,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 			this.AniID = STAND;
 			pickAttack();
 		} else if (this.AniID == SQUISH && this.AniFrame >= 15 && this.AniFrame <= 20) {
-			this.playSound("mob.ghast.fireball", 1F, 1.0F);
+			this.playSound(SoundEvents.ENTITY_GHAST_SHOOT, 1F, 1.0F);
 			CamShake(this, 10, 40);
 			for (int i = 0; i < 40; ++i) {
 				this.X = ((AniFrame - 14) * Math.cos(Math.toRadians(i * 9))) + this.posX;
@@ -410,7 +408,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 			}
 			this.AniFrame++;
 		} else if (this.AniID == JUMP && this.AniFrame >= 55 && this.AniFrame <= 60) {
-			this.playSound("mob.ghast.fireball", 1F, 1.0F);
+			this.playSound(SoundEvents.ENTITY_GHAST_SHOOT, 1F, 1.0F);
 			CamShake(this, 10, 40);
 			for (int i = 0; i < 40; ++i) {
 				this.X = ((AniFrame - 54) * Math.cos(Math.toRadians(i * 9))) + this.posX;
@@ -431,7 +429,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 			this.AniID = STAND;
 			setLastAttackCounter();
 		} else if (this.AniID == DOUBLEFISTSLAM && this.AniFrame > 14) {
-			this.playSound("mob.ghast.fireball", 1F, 1.0F);
+			this.playSound(SoundEvents.ENTITY_GHAST_SHOOT, 1F, 1.0F);
 			CamShake(this, 10, 40);
 			this.attackCounter = this.AniFrame - 12;
 
@@ -475,7 +473,7 @@ public class EntityParagon extends EntityMob implements IEntityMultiPart, IMob {
 		
 		this.PrevAniID = this.AniID;
 		if (!this.world.isRemote) {
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+			this.dataManager.set(ANI_ID_WATCHER, AniID);
 			//this.dataWatcher.updateObject(ANI_FRAME_WATCHER, AniFrame);
 		}
 	}

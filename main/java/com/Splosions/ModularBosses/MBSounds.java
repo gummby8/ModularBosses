@@ -49,6 +49,14 @@ public class MBSounds {
 	public static final SoundEvent GOLEM_BUILD = createSoundEvent("golem_build");
 	public static final SoundEvent GOLEM_ROLL = createSoundEvent("golem_roll");
 	public static final SoundEvent BOULDER_HIT = createSoundEvent("boulder_hit");
+	
+	public static final SoundEvent SHADEHOWLER_HOWL = createSoundEvent("shadehowler_howl");
+	public static final SoundEvent SHADEHOWLER_LIVE = createSoundEvent("shadehowler_live");
+	
+	public static final SoundEvent SKULL_HIT = createSoundEvent("skull_hit");
+	
+	public static final SoundEvent MOLDORM_HIT = createSoundEvent("moldorm_hit");
+	public static final SoundEvent MOLDORM_DEATH = createSoundEvent("moldorm_death");
 
 	public static void registerSounds(RegistryEvent.Register<SoundEvent> event){
 		IForgeRegistry<SoundEvent> reg = event.getRegistry();

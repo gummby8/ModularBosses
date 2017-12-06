@@ -19,12 +19,17 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -53,7 +58,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	public static final int STOMP = 4;
 	public static final int DIE = 5;
 
-	private static final int ANI_ID_WATCHER = 17;
+	private static final DataParameter<Integer> ANI_ID_WATCHER = EntityDataManager.<Integer>createKey(EntityGolem.class, DataSerializers.VARINT);
 
 	public int AniID = 0;
 	public int PrevAniID = 0;
@@ -107,7 +112,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	}
 	
 	@Override
-	protected String getLivingSound() {
+	protected SoundEvent getAmbientSound() {
 		return MBSounds.GOLEM_LIVING;
 	}
 
@@ -118,20 +123,20 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
 		// Follow Range - default 32.0D - min 0.0D - max 2048.0D
-		this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(20.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(20.0D);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
-		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1.0D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.699D);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.699D);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(2.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2.0D);
 	}
 
 	protected void entityInit() {
 		super.entityInit();
-		this.dataWatcher.addObject(ANI_ID_WATCHER, 0);
+		this.dataManager.register(ANI_ID_WATCHER, 0);
 	}
 
 	public static void postInitConfig(Configuration config) {
@@ -148,11 +153,11 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		TargetUtils.betaMsg(this);
 		getTexture();
 		
-		if (entityToAttack == null && !this.worldObj.isRemote) {
+		if (entityToAttack == null && !this.world.isRemote) {
 			entityToAttack = TargetUtils.findRandomVisablePlayer(this, 20, 4);
 		} 
 		
-		if (this.AniID == STAND && entityToAttack != null && !this.worldObj.isRemote) {
+		if (this.AniID == STAND && entityToAttack != null && !this.world.isRemote) {
 			this.moveHelper.setMoveTo(this.entityToAttack.posX, this.entityToAttack.posY, this.entityToAttack.posZ, 0.35F);
 		} 
 		
@@ -162,13 +167,13 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			this.tasks.removeTask(entityAIWander);
 		}
 		
-		if (!this.worldObj.isRemote && this.AniID == STAND && entityToAttack != null) {
+		if (!this.world.isRemote && this.AniID == STAND && entityToAttack != null) {
 			attackPicker();
 		}
 		
 		
 		
-		this.AniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
+		this.AniID = this.dataManager.get(ANI_ID_WATCHER);
 		this.AniFrame = (this.AniID != this.PrevAniID) ? 0 : this.AniFrame;
 
 
@@ -181,7 +186,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			this.AniFrame = 0;
 			this.AniID = STAND;
 		} else if (this.AniID == THROW && this.AniFrame == 15) {
-			if (!this.worldObj.isRemote){throwRock();}		
+			if (!this.world.isRemote){throwRock();}		
 		} else if (this.AniID == THROW && this.AniFrame > 29) {
 			entityToAttack = null;
 			this.AniFrame = 0;
@@ -194,14 +199,14 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		} else if (this.AniID == ROLL && this.AniFrame == 9) {
 			this.playSound(MBSounds.GOLEM_ROLL, 4F, 1.0F);
 			count = 0;
-			Vec3 look = this.getLookVec();
+			Vec3d look = this.getLookVec();
 			float distance = 20F; //distance in front of entity
-			double dx = this.posX + (look.xCoord * distance);
+			double dx = this.posX + (look.x * distance);
 			double dy = this.posY; 
-			double dz = this.posZ + (look.zCoord * distance);
+			double dz = this.posZ + (look.z * distance);
 			this.targetPos = new BlockPos(dx, dy - 1, dz);
 		} else if (this.AniID == ROLL && this.AniFrame > 9 && this.AniFrame < 20) {
-			List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(1, 0, 1));
+			List list = this.world.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(1, 0, 1));
 			this.kickEntities(list, 3D, 1D, this.hardness * golemDmgMulti);	
 			this.moveHelper.setMoveTo(this.targetPos.getX(), this.posY, this.targetPos.getZ(), 1);				
 		} else if (this.AniID == ROLL && this.AniFrame == 20 && this.count < 2) {
@@ -225,10 +230,10 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		         float f = (this.rand.nextFloat() - 0.5F) * 3;
 		         float f1 = (this.rand.nextFloat() - 0.5F) * 3;
 		         float f2 = (this.rand.nextFloat() - 0.5F) * 3;
-		         this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) f, this.posY + 1 + (double) f1, this.posZ + (double) f2, 0.0D, 0.0D, 0.0D);
+		         this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) f, this.posY + 1 + (double) f1, this.posZ + (double) f2, 0.0D, 0.0D, 0.0D);
 			}
 			
-			if (!this.worldObj.isRemote) {
+			if (!this.world.isRemote) {
 				TargetUtils.dropExp(this, this.golemExpDrop);
 				TargetUtils.dropLoot(this, this.golemLoot);
 			}
@@ -237,8 +242,8 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		}
 		
 		this.PrevAniID = this.AniID;
-		if (!this.worldObj.isRemote) {
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+		if (!this.world.isRemote) {
+			this.dataManager.set(ANI_ID_WATCHER, AniID);
 		}
 	}
 	
@@ -254,7 +259,7 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 				this.AniID = ROLL;
 			}
 			this.attackCounter = attackCooldown;
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+			this.dataManager.set(ANI_ID_WATCHER, AniID);
 		} else {
 			this.attackCounter--;
 		}
@@ -267,8 +272,8 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	 protected void onDeathUpdate() {
 		 this.AniID = DIE;
 		 entityToAttack = null;
-			if (!this.worldObj.isRemote) {
-				this.dataWatcher.updateObject(ANI_ID_WATCHER, AniID);
+			if (!this.world.isRemote) {
+				this.dataManager.set(ANI_ID_WATCHER, AniID);
 			}
 	 }
 	
@@ -301,12 +306,12 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	float CamShakeIntensity;
 
 	public void CamShake(Entity entity, float distance, float Intenstity) {
-		if (this.worldObj.isRemote) {
-			List<EntityPlayer> players = entity.worldObj.getEntitiesWithinAABB(EntityPlayer.class, entity.getEntityBoundingBox().expand(distance, 4, distance));
+		if (this.world.isRemote) {
+			List<EntityPlayer> players = entity.world.getEntitiesWithinAABB(EntityPlayer.class, entity.getEntityBoundingBox().expand(distance, 4, distance));
 			this.CamShake = (this.CamShake == false) ? true : false;
 			this.CamShakeIntensity = (this.CamShake) ? Intenstity : -Intenstity;
 			for (EntityPlayer player : players) {
-				player.setAngles(0, CamShakeIntensity);
+				player.setLocationAndAngles(player.posX, player.posY, player.posZ, 0, CamShakeIntensity);
 			}
 		}
 	}
@@ -317,22 +322,22 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	 * PigZombies).
 	 */
 	protected Entity findPlayerToAttack() {
-		EntityPlayer entityplayer = this.worldObj.getClosestPlayerToEntity(this, 30.0D);
+		EntityPlayer entityplayer = this.world.getClosestPlayerToEntity(this, 30.0D);
 		return entityplayer != null && this.canEntityBeSeen(entityplayer) ? entityplayer : null;
 	}
 	
 	
 	public void stompAttack(){
-		this.playSound("mob.ghast.fireball", 4F, 1.0F);
+		this.playSound(SoundEvents.ENTITY_GHAST_SHOOT, 4F, 1.0F);
 		 CamShake(this, 15, 40);
 		for (float i = 0.5F; i < 3; ++i) {
 			double x = ((AniFrame - 6) * Math.cos(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posX;
 			double z = ((AniFrame - 6) * Math.sin(Math.toRadians((i * 6) + this.rotationYaw + 90))) + this.posZ;
 
 			BlockPos pos = new BlockPos(x, this.posY - 1, z);
-			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * 6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
-			if (!this.worldObj.isRemote) {
-				this.worldObj.spawnEntityInWorld(falling);
+			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.world, this, x, this.posY - 1, z, 0.4F, (i * 6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
+			if (!this.world.isRemote) {
+				this.world.spawnEntity(falling);
 			}
 		}
 		for (float i = 0.5F; i < 3; ++i) {
@@ -340,9 +345,9 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			double z = ((AniFrame - 6) * Math.sin(Math.toRadians((i * -6) + this.rotationYaw + 90))) + this.posZ;
 
 			BlockPos pos = new BlockPos(x, this.posY - 1, z);
-			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.worldObj, this, x, this.posY - 1, z, 0.4F, (i * -6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
-			if (!this.worldObj.isRemote) {
-				this.worldObj.spawnEntityInWorld(falling);
+			EntityCustomFallingBlock falling = new EntityCustomFallingBlock(this.world, this, x, this.posY - 1, z, 0.4F, (i * -6) + this.rotationYaw + 90, pos, (int) (this.hardness * golemDmgMulti));
+			if (!this.world.isRemote) {
+				this.world.spawnEntity(falling);
 			}
 		}
 	}
@@ -357,9 +362,9 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			if (this.AniID == THROW && this.AniFrame == 15) {
 				float dmg = this.hardness * golemDmgMulti;
 				Entity projectile;
-				projectile = new EntityBoulder(worldObj, this, (EntityLivingBase) ent, 1.5F, 0, 2.4F, -1.6F, 0F, 1, 1).setDamage(dmg);
-				if (!this.worldObj.isRemote) {
-					worldObj.spawnEntityInWorld(projectile);
+				projectile = new EntityBoulder(world, this, (EntityLivingBase) ent, 1.5F, 0, 2.4F, -1.6F, 0F, 1, 1).setDamage(dmg);
+				if (!this.world.isRemote) {
+					world.spawnEntity(projectile);
 				}
 			}
 		}
@@ -368,14 +373,15 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 	public void getTexture() {
 			if (textureBlockID == -1) {
 				BlockPos blockPos = new BlockPos(this.posX, this.posY, this.posZ);
-				while (!worldObj.getBlockState(blockPos).getBlock().getMaterial().blocksMovement()) {
+				IBlockState iblockstate = this.world.getBlockState(blockPos);
+				while (!world.getBlockState(blockPos).getBlock().getMaterial(iblockstate).blocksMovement()) {
 					blockPos = blockPos.down();
+					iblockstate = this.world.getBlockState(blockPos);
 				}
-				IBlockState iblockstate = this.worldObj.getBlockState(blockPos);
 				textureBlockID = Block.getStateId(iblockstate);
 				System.out.println("" + textureBlockID);
-				this.hardness = iblockstate.getBlock().getBlockHardness(this.worldObj, blockPos);
-				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.golemMaxHealthMulti * this.hardness);
+				this.hardness = iblockstate.getBlock().getBlockHardness(iblockstate, this.world, blockPos);
+				this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(this.golemMaxHealthMulti * this.hardness);
 				this.heal((float) (this.golemMaxHealthMulti * this.hardness));
 			}
 	}
@@ -385,23 +391,24 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 		super.readFromNBT(compound);
 			this.textureBlockID = compound.getInteger("textureBlockID");
 			this.hardness = compound.getFloat("hardness");
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, STAND);
+			this.dataManager.set(ANI_ID_WATCHER, STAND);
 			
 			IBlockState iblockstate = Block.getStateById(textureBlockID);
 			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-			IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
-			String string = ibakedmodel.getTexture().getIconName() + ".png";
+			IBakedModel ibakedmodel = blockrendererdispatcher.getModelForState(iblockstate);
+			String string = ibakedmodel.getParticleTexture().getIconName() + ".png";
 			System.out.println(string);
 			String[] parts = string.split(":");
 			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);	
 	}
 
 	@Override
-	public void writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		getTexture();
 		compound.setInteger("textureBlockID", textureBlockID);
 		compound.setFloat("hardness", this.hardness);
+		return compound;
 	}
 
 	@Override
@@ -415,8 +422,8 @@ public class EntityGolem extends EntityMob implements IEntityAdditionalSpawnData
 			textureBlockID = ByteBufUtils.readVarInt(additionalData, 4);
 			IBlockState iblockstate = Block.getStateById(textureBlockID);
 			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-			IBakedModel ibakedmodel = blockrendererdispatcher.getModelFromBlockState(iblockstate, this.worldObj, new BlockPos(0,0,0));
-			String string = ibakedmodel.getTexture().getIconName() + ".png";
+			IBakedModel ibakedmodel = blockrendererdispatcher.getModelForState(iblockstate);
+			String string = ibakedmodel.getParticleTexture().getIconName() + ".png";
 			String[] parts = string.split(":");
 			textureLoc = new ResourceLocation(parts[0] + ":textures/" + parts[1]);
 			System.out.println(textureLoc);

@@ -9,26 +9,29 @@ import com.Splosions.ModularBosses.util.TargetUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.Vec3;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
 
 public class EntityShadeHowler extends EntityMob {
 
-	private static final int DEATH_WATCHER = 16;
-	private static final int ANI_ID_WATCHER = 17;
-	private static final int ANI_FRAME_WATCHER = 18;
+	private static final DataParameter<Integer> DEATH_WATCHER = EntityDataManager.<Integer>createKey(EntityShadeHowler.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> ANI_ID_WATCHER = EntityDataManager.<Integer>createKey(EntityShadeHowler.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> ANI_FRAME_WATCHER = EntityDataManager.<Integer>createKey(EntityShadeHowler.class, DataSerializers.VARINT);
 
 	public static final int STAND = 0;
 	public static final int WALK = 1;
@@ -97,8 +100,7 @@ public class EntityShadeHowler extends EntityMob {
 		// this.getNavigator().setBreakDoors(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		// this.tasks.addTask(1, new EntityAIBreakDoor(this));
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.21D, false)); 
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.21D, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		//this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, 0.25D));
 		//this.tasks.addTask(5, new EntityAIMoveThroughVillage(this, 0.25D, false));
 		//this.tasks.addTask(6, new EntityAIWander(this, 0.25D)); // Wander speed
@@ -113,9 +115,9 @@ public class EntityShadeHowler extends EntityMob {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataWatcher.addObject(DEATH_WATCHER, 0);
-		this.dataWatcher.addObject(ANI_ID_WATCHER, 0);
-		this.dataWatcher.addObject(ANI_FRAME_WATCHER, 0);
+		this.dataManager.register(DEATH_WATCHER, 0);
+		this.dataManager.register(ANI_ID_WATCHER, 0);
+		this.dataManager.register(ANI_FRAME_WATCHER, 0);
 
 	}
 
@@ -141,10 +143,10 @@ public class EntityShadeHowler extends EntityMob {
 
 		
 		
-		this.aniID = this.dataWatcher.getWatchableObjectInt(ANI_ID_WATCHER);
+		this.aniID = this.dataManager.get(ANI_ID_WATCHER);
 		this.aniFrame = (this.aniID != this.prevaniID)? 0 : this.aniFrame;
 		
-		if (!this.worldObj.isRemote && this.target == null) {
+		if (!this.world.isRemote && this.target == null) {
 			this.target = TargetUtils.findRandomVisablePlayer(this, 20, 4);
 		}
 		
@@ -193,7 +195,7 @@ public class EntityShadeHowler extends EntityMob {
 						
 			double d0 = this.posX - this.targetX;
 			double d2 = this.posZ - this.targetZ;
-			double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+			double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 			float f = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
 			this.rotationYaw = f + 180;
 			
@@ -218,20 +220,20 @@ public class EntityShadeHowler extends EntityMob {
 						d2 = (this.jumpOff) ? this.posZ - this.Z1 : this.posZ - this.Z2;
 					}
 
-					double d3 = (double) MathHelper.sqrt_double(d0 * d0 + d2 * d2);
+					double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
 					float f = (float) (Math.atan2(d2, d0) * 180.0D / Math.PI) - 90.0F;
 					this.rotationYaw = f + 180;
 					moveForward(0.1F);
 				}
 				
-				List list = this.worldObj.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(2, 2, 2));
+				List list = this.world.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(2, 2, 2));
 
 				if (!list.isEmpty()) {
 					this.bite = true;
 					this.target = (Entity) list.get(0);
 					MBExtendedPlayer.get((EntityPlayer) this.target).knockdownTime = 20;
-					((EntityLivingBase) this.target).addPotionEffect(new PotionEffect(2, 20, 100));
-					if (this.target == Minecraft.getMinecraft().thePlayer) {
+					((EntityLivingBase) this.target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 100));
+					if (this.target == Minecraft.getMinecraft().player) {
 						ModularBosses.INSTANCE.playerTarget = this;
 					}
 				}
@@ -267,12 +269,12 @@ public class EntityShadeHowler extends EntityMob {
 				this.meltPercent += 5;
 				if (this.meltPercent >= 100) {
 					this.aniID = MELT_MOVE;
-					if (!this.worldObj.isRemote) {
+					if (!this.world.isRemote) {
 						if (target != null) {
-							Vec3 vec = target.getLookVec();
-							double dx = target.posX - (vec.xCoord * 2);
+							Vec3d vec = target.getLookVec();
+							double dx = target.posX - (vec.x * 2);
 							double dy = target.posY;
-							double dz = target.posZ - (vec.zCoord * 2);
+							double dz = target.posZ - (vec.z * 2);
 							meltDest = new BlockPos(dx,dy,dz);	
 						} else {
 							meltDest = this.getPosition();
@@ -281,7 +283,7 @@ public class EntityShadeHowler extends EntityMob {
 					
 				}
 			} else if (this.aniID == MELT_MOVE) {
-				if (!this.worldObj.isRemote) {this.moveHelper.setMoveTo(meltDest.getX(), meltDest.getY(), meltDest.getZ(), 1);
+				if (!this.world.isRemote) {this.moveHelper.setMoveTo(meltDest.getX(), meltDest.getY(), meltDest.getZ(), 1);
 				this.aniID = (this.getDistanceSq(meltDest) < 2)? MELT_REFORM : MELT_MOVE;
 				}
 				this.meltPercent = 100;
@@ -306,8 +308,8 @@ public class EntityShadeHowler extends EntityMob {
 		
 			
 		this.prevaniID = this.aniID;
-		if (!this.worldObj.isRemote) {
-			this.dataWatcher.updateObject(ANI_ID_WATCHER, aniID);
+		if (!this.world.isRemote) {
+			this.dataManager.set(ANI_ID_WATCHER, aniID);
 		}
 	}
 	
@@ -360,7 +362,7 @@ public class EntityShadeHowler extends EntityMob {
 	
 
 	public void placeHowl(float length) {
-		if (this.worldObj.isRemote) {
+		if (this.world.isRemote) {
 			float angle = (float) Math.toRadians(this.rotationYaw + 90);
 			double xe = ((length * MathHelper.cos(angle)) + this.posX);
 			double ze = ((length * MathHelper.sin(angle)) + this.posZ);

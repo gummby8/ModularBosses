@@ -5,8 +5,8 @@ import com.Splosions.ModularBosses.entity.projectile.EntityBloodBlob;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,8 +30,7 @@ public class EntityHeart extends EntityMob {
 		super(worldIn);
 		// sets hitbox size
 		this.setSize(3F, 4F);
-		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 0.3D, false));
-		this.tasks.addTask(3, new EntityAIAttackOnCollide(this, EntityVillager.class, 0.3D, true));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
 
 	}
@@ -40,13 +39,13 @@ public class EntityHeart extends EntityMob {
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		// Max Health - default 20.0D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(100);
 		// Knockback Resistance - default 0.0D - min 0.0D - max 1.0D
-		this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).setBaseValue(1D);
+		this.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).setBaseValue(1D);
 		// Movement Speed - default 0.699D - min 0.0D - max Double.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
 		// Attack Damage - default 2.0D - min 0.0D - max Doubt.MAX_VALUE
-		this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1);
+		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1);
 	}
 
 	@Override
@@ -94,12 +93,12 @@ public class EntityHeart extends EntityMob {
 		}
 
 		// spew Blood
-		if (this.ticksExisted % 10 == (10 - 1) && !this.worldObj.isRemote && invulnerable > 0) {
+		if (this.ticksExisted % 10 == (10 - 1) && !this.world.isRemote && invulnerable > 0) {
 			int xOff = TargetUtils.getRanNum(-5, 5);
 			int zOff = TargetUtils.getRanNum(-5, 5);
 			BlockPos pos = new BlockPos(this.posX + xOff, this.posY, this.posZ + zOff);
-			EntityBloodBlob projectile = new EntityBloodBlob(this.worldObj, this, pos, (float) (Math.random() - 0.2F), 0.3F);
-			worldObj.spawnEntityInWorld(projectile);
+			EntityBloodBlob projectile = new EntityBloodBlob(this.world, this, pos, (float) (Math.random() - 0.2F), 0.3F);
+			world.spawnEntity(projectile);
 
 		}
 
@@ -135,10 +134,10 @@ public class EntityHeart extends EntityMob {
 				double d2 = this.rand.nextGaussian() * 0.02D;
 				double d0 = this.rand.nextGaussian() * 0.02D;
 				double d1 = this.rand.nextGaussian() * 0.02D;
-				this.worldObj.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0, d1, new int[0]);
+				this.world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, this.posY + (double) (this.rand.nextFloat() * this.height), this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d2, d0, d1, new int[0]);
 			}
 
-			if (!this.worldObj.isRemote) {
+			if (!this.world.isRemote) {
 				TargetUtils.dropExp(this, this.heartExpDrop);
 				TargetUtils.dropLoot(this, this.heartLoot);
 			}

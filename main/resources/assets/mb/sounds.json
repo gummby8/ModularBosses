@@ -28,5 +28,13 @@
 "golem_living": {"category": "hostile","sounds":["entity/Golem/golem_living_1","entity/Golem/golem_living_2","entity/Golem/golem_living_3"]},
 "golem_build": {"category": "hostile","sounds":["entity/Golem/golem_build"]},
 "golem_roll": {"category": "hostile","sounds":["entity/Golem/golem_roll"]},
-"boulder_hit": {"category": "hostile","sounds":["entity/Golem/boulder_hit"]}
+"boulder_hit": {"category": "hostile","sounds":["entity/Golem/boulder_hit"]},
+
+"shadehowler_live": {"category": "hostile","sounds":["entity/ShadeHowler/live"]},
+"shadehowler_howl": {"category": "hostile","sounds":["entity/ShadeHowler/roar_1","entity/ShadeHowler/roar_2","entity/ShadeHowler/roar_3","entity/ShadeHowler/roar_4"]},
+
+"skull_hit": {"category": "hostile","sounds":["entity/Skull/hit"]},
+
+"moldorm_death": {"category": "hostile","sounds":["entity/Moldorm/death"]},
+"moldorm_hit": {"category": "hostile","sounds":["entity/Moldorm/hit"]}
 }
