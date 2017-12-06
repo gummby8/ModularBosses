@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.Config;
 import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.dimensions.BossDimension.BossTeleporter;
+import com.Splosions.ModularBosses.dimensions.BossTeleporter;
 import com.Splosions.ModularBosses.entity.projectile.EntityBait;
 import com.Splosions.ModularBosses.util.TargetUtils;
 import com.Splosions.ModularBosses.util.schematic.Dungeon;

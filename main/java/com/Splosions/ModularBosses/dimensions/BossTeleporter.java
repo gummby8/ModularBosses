@@ -1,4 +1,4 @@
-package com.Splosions.ModularBosses.dimensions.BossDimension;
+package com.Splosions.ModularBosses.dimensions;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;

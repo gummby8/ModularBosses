@@ -1,7 +1,4 @@
-package com.Splosions.ModularBosses.dimensions.BossDimension;
-
-import com.Splosions.ModularBosses.dimensions.EmptyBiomeRegistry;
-import com.Splosions.ModularBosses.dimensions.BossDimension;
+package com.Splosions.ModularBosses.dimensions;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.WorldProvider;
@@ -13,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
-public class BossWorldProvider extends WorldProvider
+public class MBBossWorldProvider extends WorldProvider
 {
 
 	
@@ -22,15 +19,15 @@ public class BossWorldProvider extends WorldProvider
 	{
 		this.worldChunkMgr = new WorldChunkManagerHell(EmptyBiomeRegistry.BossBiome, 0.0f);
 		this.setAllowedSpawnTypes(false, false);
-		this.dimensionId = BossDimension.BossDimensionID;
-		this.setDimension(BossDimension.BossDimensionID);
+		this.dimensionId = MBBossDimension.BossDimensionID;
+		this.setDimension(MBBossDimension.BossDimensionID);
 		this.hasNoSky = false;
 	}
 	
 	@Override
     public WorldChunkManager getWorldChunkManager()
     {
-        return this.worldChunkMgr;
+        return this.worldChunkMgr; 
     }
 	
     /**
