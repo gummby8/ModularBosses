@@ -5,8 +5,8 @@ import com.Splosions.ModularBosses.entity.CustomEntityList;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityCustomEgg extends EntityMobThrowable
@@ -43,15 +43,15 @@ public class EntityCustomEgg extends EntityMobThrowable
 			entity = CustomEntityList.createEntity(oclass, world);
 			if (entity instanceof EntityLiving) {
 				EntityLiving entityliving = (EntityLiving) entity;
-				entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
+				entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360.0F), 0.0F);
 				entityliving.rotationYawHead = entityliving.rotationYaw;
 				entityliving.renderYawOffset = entityliving.rotationYaw;
-				world.spawnEntityInWorld(entity);
+				world.spawnEntity(entity);
 				entityliving.playLivingSound();
 			} else {
 				//entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(world.rand.nextFloat() * 360.0F), 0.0F);
 				entity.setPosition(x, y, z);
-				world.spawnEntityInWorld(entity);
+				world.spawnEntity(entity);
 			}
 		}
 		return entity;
@@ -60,9 +60,9 @@ public class EntityCustomEgg extends EntityMobThrowable
 	
 
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		if (!this.worldObj.isRemote){
-			spawnCreature(worldObj, dmg, this.posX, this.posY, this.posZ);			
+	protected void onImpact(RayTraceResult result) {
+		if (!this.world.isRemote){
+			spawnCreature(world, dmg, this.posX, this.posY, this.posZ);			
 		}
 		setDead();
 	}

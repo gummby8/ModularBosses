@@ -8,9 +8,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import net.minecraftforge.common.IExtendedEntityProperties;
 
-public class MBExtendedPlayer implements IExtendedEntityProperties {
+
+public class MBExtendedPlayer extends EntityProperties<EntityPlayer> {
 	
 	public final static String EXT_PROP_NAME = "MBExtendedPlayer";
 	

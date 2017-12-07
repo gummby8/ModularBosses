@@ -162,8 +162,7 @@ public class ModularBossesEntities
 		RenderManager manager = Minecraft.getMinecraft().getRenderManager();
 		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 		
-		
-		//mobs
+ 		//mobs
 		RenderingRegistry.registerEntityRenderingHandler(EntitySkull.class, new RenderSkull(manager, new ModelSkull(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBrain.class, new RenderBrain(manager, new ModelBrain(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityHeart.class, new RenderHeart(manager, new ModelHeart(), 1));
@@ -180,7 +179,7 @@ public class ModularBossesEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityTick.class, new RenderTick(manager, new ModelTick(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityShadeHowler.class, new RenderShadeHowler(manager, new ModelShadeHowler(), 1));
 		RenderingRegistry.registerEntityRenderingHandler(EntityTeleportBiped.class, new RenderTeliportBiped(manager));
-		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderKnockedDown(manager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderKnockedDown(manager)); 
 		
 		 
 		//projectiles

@@ -35,6 +35,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
@@ -79,5 +80,12 @@ public class ClientProxy extends CommonProxy{
 		super.preInit();
 
 	}
+	
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
+
+
+    }
 	
 }

@@ -8,10 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.Splosions.ModularBosses.blocks.ModBlocks;
 import com.Splosions.ModularBosses.blocks.ModFluids;
-import com.Splosions.ModularBosses.dimensions.EmptyBiomeRegistry;
 import com.Splosions.ModularBosses.dimensions.MBBossDimension;
 import com.Splosions.ModularBosses.entity.ModularBossesEntities;
-import com.Splosions.ModularBosses.handler.ChunkLoadingHandler;
 import com.Splosions.ModularBosses.handler.GuiHandler;
 import com.Splosions.ModularBosses.handler.MBEventHandler;
 import com.Splosions.ModularBosses.handler.TickHandler;
@@ -63,7 +61,6 @@ public class ModularBosses {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		FMLCommonHandler.instance().bus().register(new TickHandler());
-		EmptyBiomeRegistry.registerBiomes();
 		PacketDispatcher.preInit();
 		Config.preInit(event);
 		proxy.preInit();
@@ -73,7 +70,7 @@ public class ModularBosses {
 	public void Init(FMLInitializationEvent event) {
 		MBBossDimension.init();
 		proxy.registerItemRenderers();
-		proxy.init(event);
+		proxy.init();
 	}
 
 	@EventHandler
