@@ -98,30 +98,7 @@ public class MBEventHandler {
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onBakeModel(ModelBakeEvent event) {
-		for (ModelResourceLocation resource : ClientProxy.smartModels.keySet()) {
-			Object object = event.getModelRegistry().getObject(resource);
-			if (object instanceof IBakedModel) {
-				Class<? extends IBakedModel> clazz = ClientProxy.smartModels.get(resource);
-				try {
-					IBakedModel customRender = clazz.getConstructor(IBakedModel.class)
-							.newInstance((IBakedModel) object);
-					event.getModelRegistry().putObject(resource, customRender);
-					ModularBosses.logger.warn("Registered new renderer for resource " + resource + ": "
-							+ customRender.getClass().getSimpleName());
-				} catch (NoSuchMethodException e) {
-					ModularBosses.logger.warn("Failed to swap model: class " + clazz.getSimpleName()
-							+ " is missing a constructor that takes an IBakedModel");
-				} catch (Exception e) {
-					ModularBosses.logger.warn("Failed to swap model with exception: " + e.getMessage());
-				}
-			} else {
-				ModularBosses.logger.warn("Resource is not a baked model! Failed resource: " + resource.toString());
-			}
-		}
-	}
+
 
 	@SubscribeEvent
 	public void SpawnEvent(EntityJoinWorldEvent event) {
