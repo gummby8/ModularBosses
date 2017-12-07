@@ -4,7 +4,7 @@ import java.util.Random;
 
 import com.Splosions.ModularBosses.ModularBosses;
 import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
-import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.MBExtendedPlayer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

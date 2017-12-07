@@ -10,7 +10,7 @@ import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.client.render.entity.RenderKnockedDown;
 import com.Splosions.ModularBosses.client.render.items.RenderItemNote;
 import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
-import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.MBExtendedPlayer;
 import com.Splosions.ModularBosses.items.ItemNote;
 
 import net.minecraft.block.Block;
@@ -136,7 +136,7 @@ public class MBClientEventHandler {
 
 		if (MBExtendedPlayer.get((EntityPlayer) event.getEntity()).knockdownTime != 0 && !(event.getRenderer() instanceof RenderKnockedDown)) {
 			event.setCanceled(true);
-			knockedDown.doRender(player, event.getX(), event.getY(), event.getZ(), 0.0625F, event.getPartialRenderTick());
+			knockedDown.doRender((AbstractClientPlayer) player, event.getX(), event.getY(), event.getZ(), 0.0625F, event.getPartialRenderTick());
 		}
 
 	}

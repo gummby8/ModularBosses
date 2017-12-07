@@ -7,7 +7,7 @@ import com.Splosions.ModularBosses.blocks.FluidWormBlood;
 import com.Splosions.ModularBosses.blocks.FluidWormSaliva;
 import com.Splosions.ModularBosses.blocks.GasWormGas;
 import com.Splosions.ModularBosses.entity.MBExtendedEntityLivingBase;
-import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.MBExtendedPlayer;
 import com.Splosions.ModularBosses.proxy.ClientProxy;
 
 import net.minecraft.block.Block;

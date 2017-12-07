@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.Splosions.ModularBosses.MBSounds;
 import com.Splosions.ModularBosses.entity.EntityGolem;
-import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
+import com.Splosions.ModularBosses.entity.MBExtendedPlayer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;

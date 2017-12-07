@@ -3,7 +3,6 @@ package com.Splosions.ModularBosses.entity;
 import java.util.List;
 
 import com.Splosions.ModularBosses.ModularBosses;
-import com.Splosions.ModularBosses.entity.player.MBExtendedPlayer;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
 import net.minecraft.client.Minecraft;
