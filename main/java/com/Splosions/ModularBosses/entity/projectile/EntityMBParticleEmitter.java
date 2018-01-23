@@ -1,10 +1,14 @@
 package com.Splosions.ModularBosses.entity.projectile;
 
 import com.Splosions.ModularBosses.MBSounds;
+import com.Splosions.ModularBosses.entity.EntitySandWorm;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -15,8 +19,8 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 	public static final int TATTERS_SMOKE = 1;
 	
 	
-	
-	protected static final int SHOOTER_INDEX = 22;
+	private static final DataParameter<Integer> SHOOTER_INDEX = EntityDataManager.<Integer>createKey(EntitySandWorm.class, DataSerializers.VARINT);
+
 	
 	public Entity Shooter;
 	public int variant;
@@ -29,7 +33,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 
 	
 	public EntityMBParticleEmitter(Entity entity, double posX, double posY, double posZ, int variant, int arg1, int arg2){
-		super(entity.worldObj);
+		super(entity.world);
 		setShooter(entity);
 		this.Shooter = getShooter();
 		this.setPosition(posX, posY, posZ);
@@ -41,7 +45,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 	
 	@Override
 	protected void entityInit() {
-		dataWatcher.addObject(SHOOTER_INDEX, -1);
+		this.dataManager.register(SHOOTER_INDEX, 0);
 		
 	}
 
@@ -60,7 +64,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 				float x = (this.rand.nextFloat() - 0.5F) * 2F;
 				float y = (this.rand.nextFloat() - 0.7F) * 4.5F;
 				float z = (this.rand.nextFloat() - 0.5F) * 2F;
-				this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
+				this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX + (double) x, this.posY + 2.0D + (double) y, this.posZ + (double) z, 0.0D, 0.0D, 0.0D);
 			}
 			this.playSound(MBSounds.TATTERS_TELEPORT, 1F, 1.0F);
 			this.setDead();
@@ -71,12 +75,12 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 	
 	
 	public Entity getShooter() {
-		int id = dataWatcher.getWatchableObjectInt(SHOOTER_INDEX);
-		return (id == -1 ? null : worldObj.getEntityByID(id));
+		int id = this.dataManager.get(SHOOTER_INDEX);
+		return (id == -1 ? null : world.getEntityByID(id));
 	}
 
 	public void setShooter(Entity entity) {
-		dataWatcher.updateObject(SHOOTER_INDEX, entity != null ? entity.getEntityId() : -1);
+		this.dataManager.set(SHOOTER_INDEX, entity != null ? entity.getEntityId() : -1);
 	}
 	
 	
@@ -105,7 +109,7 @@ public class EntityMBParticleEmitter  extends Entity implements IEntityAdditiona
 
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
-		Shooter = worldObj.getEntityByID(ByteBufUtils.readVarInt(additionalData, 4));
+		Shooter = world.getEntityByID(ByteBufUtils.readVarInt(additionalData, 4));
 		variant = ByteBufUtils.readVarInt(additionalData, 2);
 		arg1 = ByteBufUtils.readVarInt(additionalData, 2);
 		arg2 = ByteBufUtils.readVarInt(additionalData, 2);

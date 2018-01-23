@@ -58,16 +58,14 @@ public class EntityBlackBomb extends EntityMobThrowable implements IEntityAdditi
 
 	public EntityBlackBomb(World world, EntityLivingBase shooter, float wobble, float FrontToBack, float YOffset, float SideToSide) {
 		super(world, shooter, wobble, FrontToBack, YOffset, SideToSide);
-		setShooter(shooter);
-		this.Shooter = (EntityLivingBase) getShooter();
+		this.Shooter = (EntityLivingBase) getThrower();
 	}
 
 	
 	public EntityBlackBomb(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale, int dmg, int dur) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
-		setScale(scale);
-		setShooter(shooter);
-		this.Shooter = (EntityLivingBase) getShooter();
+		this.setSize(scale, scale);
+		this.Shooter = (EntityLivingBase) getThrower();
 		this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
 		Dmg = dmg;
 		Dur = dur;
@@ -77,9 +75,6 @@ public class EntityBlackBomb extends EntityMobThrowable implements IEntityAdditi
 	@Override
 	public void entityInit() {
 		super.entityInit();
-		dataWatcher.addObject(SHOOTER_INDEX, -1);
-		dataWatcher.addObject(SCALE, 1);
-
 		setSize(1,1);
 	}
 
@@ -97,7 +92,7 @@ public class EntityBlackBomb extends EntityMobThrowable implements IEntityAdditi
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		this.Shooter =  (EntityLivingBase) getShooter();
+		this.Shooter =  (EntityLivingBase) getThrower();
 		this.Scale++;
 		this.noClip = true;
 
@@ -135,8 +130,8 @@ public class EntityBlackBomb extends EntityMobThrowable implements IEntityAdditi
 				double d4 = d2 * d2 + d3 * d3;
 				entity.addVelocity(d2 / d4 * 1, 1, d3 / d4 * 1);
 				//((EntityPlayer) entity).addPotionEffect(new PotionEffect(15, Dur, 1));
-				((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, Dur, 1));
-                entity.attackEntityFrom(DamageSource.causeMobDamage((EntityLivingBase) this.getShooter()), dmg);
+				((EntityPlayer) entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, Dur, 1));
+                entity.attackEntityFrom(DamageSource.causeMobDamage((EntityLivingBase) this.getThrower()), dmg);
 				
 			} 
 		}
@@ -145,7 +140,7 @@ public class EntityBlackBomb extends EntityMobThrowable implements IEntityAdditi
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if (result.entityHit != this.getShooter()) {
+		if (result.entityHit != this.getThrower()) {
 			hurtEntities(this.world.getEntitiesWithinAABB(EntityPlayer.class, this.getEntityBoundingBox().expand(6, 6, 6)), 10); //set real damage here
 			setDead();			
 		}

@@ -2,9 +2,10 @@ package com.Splosions.ModularBosses.entity.projectile;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityChorpSlimeBlob extends EntityMobThrowable
@@ -32,17 +33,18 @@ public class EntityChorpSlimeBlob extends EntityMobThrowable
 		this.duration = duration;
 	}
 
+
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		if (mop.entityHit != null && mop.entityHit instanceof EntityPlayer) {
-			mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
-			((EntityLivingBase) mop.entityHit).addPotionEffect(new PotionEffect(2, duration, strength));
-			
+	protected void onImpact(RayTraceResult rtr) {
+		if (rtr.entityHit != null && rtr.entityHit instanceof EntityPlayer) {
+			((EntityLivingBase) rtr.entityHit).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, duration, strength));
+			rtr.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, getThrower()), getDamage());
 		}
 
-		if (!worldObj.isRemote) {
+		if (!world.isRemote) {
 			setDead();
 		}
+		
 	}
 
 

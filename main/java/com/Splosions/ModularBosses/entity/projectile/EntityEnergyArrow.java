@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
@@ -16,7 +16,7 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 	
 	protected static final int SHOOTER_INDEX = 22;
 	protected static final int SCALE = 23;
-	public EntityLivingBase Shooter;
+
 
 	private float Dmg;
 
@@ -53,41 +53,10 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 	
 	public EntityEnergyArrow(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
-		setScale(scale);
-		setShooter(shooter);
-		this.Shooter = (EntityLivingBase) getShooter();
-		//this.setRotation(shooter.rotationYaw, shooter.rotationPitch);
 		this.Dmg = 40;
 	}
 
 
-
-	@Override
-	public void entityInit() {
-		super.entityInit();
-		dataWatcher.addObject(SHOOTER_INDEX, -1);
-		dataWatcher.addObject(SCALE, 1);
-		//SET SIZE HERE NEXT TIME
-	}
-
-	public int getScale() {
-		
-		return dataWatcher.getWatchableObjectInt(SCALE);
-	}
-
-	public void setScale(int scale) {
-		dataWatcher.updateObject(SCALE, scale);
-	}
-	
-
-	public Entity getShooter() {
-		int id = dataWatcher.getWatchableObjectInt(SHOOTER_INDEX);
-		return (id == -1 ? null : worldObj.getEntityByID(id));
-	}
-
-	public void setShooter(Entity entity) {
-		dataWatcher.updateObject(SHOOTER_INDEX, entity != null ? entity.getEntityId() : -1);
-	}
 
 
 
@@ -125,11 +94,11 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 		{
 			Entity entity = (Entity)par1List.get(i);
 
-			if (entity instanceof EntityLivingBase && entity != this.Shooter)
+			if (entity instanceof EntityLivingBase && entity != getThrower())
 			{
 
 
-				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
+				entity.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), this.Dmg);
 
 				System.out.println(entity);
 			} 
@@ -148,18 +117,17 @@ public class EntityEnergyArrow extends EntityMobThrowable implements IEntityAddi
 		
 	}
 
+
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-        if (mop != null)
+	protected void onImpact(RayTraceResult rtr) {
+        if (rtr != null)
         {
-            if (mop.entityHit != null)
+            if (rtr.entityHit != null)
             {
-			mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
+			rtr.entityHit.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), this.Dmg);
 		}
         }
 		setDead();
 	}
-
-
-	
+		
 }

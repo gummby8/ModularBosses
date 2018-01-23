@@ -40,4 +40,9 @@ public class CommonProxy {
 		MBSounds.registerSounds(event);
 	}
 
+	public void init(FMLInitializationEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

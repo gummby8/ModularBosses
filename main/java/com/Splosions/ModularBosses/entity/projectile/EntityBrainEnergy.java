@@ -3,9 +3,8 @@ package com.Splosions.ModularBosses.entity.projectile;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityBrainEnergy extends EntityMobThrowable {
@@ -60,17 +59,19 @@ public class EntityBrainEnergy extends EntityMobThrowable {
 	}
 
 
+
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-		if (mop != null) {
-			if (mop.typeOfHit == MovingObjectType.BLOCK) {
+	protected void onImpact(RayTraceResult rtr) {
+		if (rtr != null) {
+			if (rtr.typeOfHit == RayTraceResult.Type.BLOCK) {
 				this.setDead();
 			}
-			if (mop.entityHit instanceof EntityPlayer) {
-				mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);	
+			if (rtr.entityHit instanceof EntityPlayer) {
+				rtr.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);	
 			}
 			
 		}
+		
 	}
 
 }

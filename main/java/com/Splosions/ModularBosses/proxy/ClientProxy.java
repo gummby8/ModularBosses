@@ -13,8 +13,10 @@ import com.Splosions.ModularBosses.blocks.tileentity.TileEntityPortalBlock;
 import com.Splosions.ModularBosses.blocks.tileentity.TileEntityReturnPortalBlock;
 import com.Splosions.ModularBosses.client.ISwapModel;
 import com.Splosions.ModularBosses.client.models.ModModelManager;
+import com.Splosions.ModularBosses.client.render.entity.projectiles.RenderScythe;
 import com.Splosions.ModularBosses.client.render.items.ItemRenderHack;
 import com.Splosions.ModularBosses.client.render.items.RenderItemBait;
+import com.Splosions.ModularBosses.client.render.items.RenderItemScythe;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityControlBlock;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityPortalBlock;
 import com.Splosions.ModularBosses.client.render.tileentity.RenderTileEntityReturnPortalBlock;
@@ -72,6 +74,9 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void registerItemRenderers() {
 		ItemRenderHack.registerItemRenderer(ModularBossesItems.itemBait, new RenderItemBait());
+		ItemRenderHack.registerItemRenderer(ModularBossesItems.itemLegendsBow, new RenderItemBait());
+		ItemRenderHack.registerItemRenderer(ModularBossesItems.itemLegendsSword, new RenderItemBait());
+		ItemRenderHack.registerItemRenderer(ModularBossesItems.itemScythe, new RenderItemScythe());
 	}
 
 	

@@ -6,17 +6,11 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 
-public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAdditionalSpawnData {
-
-	
-	
-	protected static final int SHOOTER_INDEX = 22;
-	protected static final int SCALE = 23;
-	public EntityLivingBase Shooter;
+public class EntityEnergyClaw extends EntityMobThrowable {
 
 	private float Dmg;
 
@@ -53,41 +47,11 @@ public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAddit
 	
 	public EntityEnergyClaw(World world, EntityLivingBase shooter, EntityLivingBase target, float velocity, float wobble, float FrontToBack, float YOffset, float SideToSide,float Size1,float Size2,int scale, int dmg) {
 		super(world, shooter, target, velocity, wobble, FrontToBack, YOffset, SideToSide, Size1, Size2);
-		setScale(scale);
-		setShooter(shooter);
-		this.Shooter = (EntityLivingBase) getShooter();
-		
 		this.Dmg = dmg;
 	}
 
 
 
-	@Override
-	public void entityInit() {
-		super.entityInit();
-		dataWatcher.addObject(SHOOTER_INDEX, -1);
-		dataWatcher.addObject(SCALE, 1);
-		//SET SIZE HERE NEXT TIME
-	}
-
-	public int getScale() {
-		
-		return dataWatcher.getWatchableObjectInt(SCALE);
-	}
-
-	public void setScale(int scale) {
-		dataWatcher.updateObject(SCALE, scale);
-	}
-	
-
-	public Entity getShooter() {
-		int id = dataWatcher.getWatchableObjectInt(SHOOTER_INDEX);
-		return (id == -1 ? null : worldObj.getEntityByID(id));
-	}
-
-	public void setShooter(Entity entity) {
-		dataWatcher.updateObject(SHOOTER_INDEX, entity != null ? entity.getEntityId() : -1);
-	}
 
 
 
@@ -126,35 +90,27 @@ public class EntityEnergyClaw extends EntityMobThrowable implements IEntityAddit
 		{
 			Entity entity = (Entity)par1List.get(i);
 
-			if (entity instanceof EntityLivingBase && entity != this.Shooter)
+			if (entity instanceof EntityLivingBase && entity != getThrower())
 			{
-				entity.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
+				entity.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), this.Dmg);
 			} 
 		}
 	}
 
-	@Override
-	public void writeSpawnData(ByteBuf buffer) {
-		// TODO Auto-generated method stub
-		
-	}
+
+
 
 	@Override
-	public void readSpawnData(ByteBuf additionalData) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	protected void onImpact(MovingObjectPosition mop) {
-        if (mop != null)
+	protected void onImpact(RayTraceResult result) {
+        if (result != null)
         {
-            if (mop.entityHit != null)
+            if (result.entityHit != null)
             {
-			mop.entityHit.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
+			result.entityHit.attackEntityFrom(DamageSource.causeMobDamage(getThrower()), this.Dmg);
 		}
         }
 		setDead();
+		
 	}
 
 

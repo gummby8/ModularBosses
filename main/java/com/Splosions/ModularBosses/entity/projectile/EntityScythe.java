@@ -10,13 +10,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityMultiPart;
-import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
 public class EntityScythe extends EntityMobThrowable {
@@ -313,5 +312,11 @@ public class EntityScythe extends EntityMobThrowable {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		// TODO Auto-generated method stub
+		
 	}
 }
