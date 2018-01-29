@@ -162,7 +162,7 @@ public class ModBlocks
 	  @SideOnly(Side.CLIENT)
 	  @SubscribeEvent
 	  public static void registerModels(ModelRegistryEvent event) {
-	    //ModelLoader.setCustomModelResourceLocation(CONTROL_BLOCK_ITEM, 0, new ModelResourceLocation("mb", "textures/blocks/control_block/blank.png"));
+	    //ModelLoader.setCustomModelResourceLocation(CONTROL_BLOCK_ITEM, 0, new ModelResourceLocation("mb:control_block", "inventory"));
 	  }
 	
 }
