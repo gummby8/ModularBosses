@@ -65,6 +65,19 @@ public class MBEventHandler {
 		}
 	}
 	
+	
+	@SubscribeEvent
+	public void SpawnEvent(EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof EntitySquid) {
+			BlockPos pos = new BlockPos(event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ);
+			Block block = event.getWorld().getBlockState(pos).getBlock();
+			if (block instanceof FluidWormBlood || block instanceof FluidWormSaliva || block instanceof FluidWormAcid || block instanceof GasWormGas) {
+				event.setCanceled(true);
+			}
+		}
+	}
+	
+	/**
 	@SubscribeEvent
 	public void onEntityConstructing(EntityConstructing event) {
 		try {
@@ -100,16 +113,7 @@ public class MBEventHandler {
 
 
 
-	@SubscribeEvent
-	public void SpawnEvent(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntitySquid) {
-			BlockPos pos = new BlockPos(event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ);
-			Block block = event.getWorld().getBlockState(pos).getBlock();
-			if (block instanceof FluidWormBlood || block instanceof FluidWormSaliva || block instanceof FluidWormAcid || block instanceof GasWormGas) {
-				event.setCanceled(true);
-			}
-		}
-	}
+
 
 	
 	@SubscribeEvent
@@ -136,5 +140,8 @@ public class MBEventHandler {
 			}
 		}
 	}
+	
+	
+	*/
 
 }

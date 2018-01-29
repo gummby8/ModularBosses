@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
-public class MBExtendedEntityLivingBase implements IExtendedEntityProperties {
+public class MBExtendedEntityLivingBase {
 	
 	public final static String EXT_PROP_NAME = "MBExtendedEntityLivingBase";
 	
@@ -28,14 +28,7 @@ public class MBExtendedEntityLivingBase implements IExtendedEntityProperties {
 	}
 
 	
-	/**
-	* Used to register these extended properties for the player during EntityConstructing event
-	* This method is for convenience only; it will make your code look nicer
-	*/
-	public static final void register(EntityLivingBase ent)
-	{
-		ent.registerExtendedProperties(MBExtendedEntityLivingBase.EXT_PROP_NAME, new MBExtendedEntityLivingBase(ent));
-	}
+
 	
 
 	/**
@@ -61,21 +54,7 @@ public class MBExtendedEntityLivingBase implements IExtendedEntityProperties {
 	
 
 	
-	@Override
-	public void saveNBTData(NBTTagCompound compound) {
-		
-	}
 
-	@Override
-	public void loadNBTData(NBTTagCompound compound) {
-
-	}
-
-	@Override
-	public void init(Entity entity, World world) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	
 	

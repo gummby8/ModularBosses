@@ -2,17 +2,23 @@ package com.Splosions.ModularBosses.entity.projectile;
 
 import java.util.List;
 
+import com.Splosions.ModularBosses.entity.EntitySandWormTail;
 import com.Splosions.ModularBosses.entity.EntityTatters;
 import com.Splosions.ModularBosses.items.ModularBossesItems;
 import com.Splosions.ModularBosses.util.TargetUtils;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityMultiPart;
+import net.minecraft.entity.MultiPartEntityPart;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -20,10 +26,11 @@ import net.minecraft.world.World;
 
 public class EntityScythe extends EntityMobThrowable {
 
-	protected static final int THROWN = 21;
-	protected static final int SHOOTER_INDEX = 22;
-	protected static final int SCALE = 23;
-	protected static final int SPIN = 24;
+	private static final DataParameter<Integer> THROWN = EntityDataManager.<Integer>createKey(EntityScythe.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SHOOTER_INDEX = EntityDataManager.<Integer>createKey(EntityScythe.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SCALE = EntityDataManager.<Integer>createKey(EntityScythe.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> SPIN = EntityDataManager.<Integer>createKey(EntityScythe.class, DataSerializers.VARINT);
+
 	public int spin = 40;
 	public EntityLivingBase Shooter;
 	public ItemStack item = new ItemStack(ModularBossesItems.itemScythe);
@@ -69,10 +76,11 @@ public class EntityScythe extends EntityMobThrowable {
 	@Override
 	public void entityInit() {
 		super.entityInit();
-		dataWatcher.addObject(THROWN, 1);
-		dataWatcher.addObject(SHOOTER_INDEX, -1);
-		dataWatcher.addObject(SCALE, 1);
-		dataWatcher.addObject(SPIN, 0);
+		
+		this.dataManager.register(THROWN, 1);
+		this.dataManager.register(SHOOTER_INDEX, -1);
+		this.dataManager.register(SCALE, 1);
+		this.dataManager.register(SPIN, 0);
 
 	}
 
@@ -82,36 +90,36 @@ public class EntityScythe extends EntityMobThrowable {
 	}
 
 	public void setThrown(int thrown) {
-		if (!this.worldObj.isRemote) {
-			dataWatcher.updateObject(THROWN, thrown);
+		if (!this.world.isRemote) {
+			this.dataManager.set(THROWN, thrown);
 		}
-		this.thrown = dataWatcher.getWatchableObjectInt(THROWN);
+		this.thrown = this.dataManager.get(THROWN);
 	}
 
 	public int getScale() {
 
-		return dataWatcher.getWatchableObjectInt(SCALE);
+		return this.dataManager.get(SCALE);
 	}
 
 	public void setScale(int scale) {
-		dataWatcher.updateObject(SCALE, scale);
+		this.dataManager.set(SCALE, scale);
 	}
 
 	public int getSpin() {
-		return dataWatcher.getWatchableObjectInt(SPIN);
+		return this.dataManager.get(SPIN);
 	}
 
 	public void setSpin(int spin) {
-		dataWatcher.updateObject(SPIN, spin);
+		this.dataManager.set(SPIN, spin);
 	}
 
 	public Entity getShooter() {
-		int id = dataWatcher.getWatchableObjectInt(SHOOTER_INDEX);
-		return (id == -1 ? null : worldObj.getEntityByID(id));
+		int id = this.dataManager.get(SHOOTER_INDEX);
+		return (id == -1 ? null : world.getEntityByID(id));
 	}
 
 	public void setShooter(Entity entity) {
-		dataWatcher.updateObject(SHOOTER_INDEX, entity != null ? entity.getEntityId() : -1);
+		this.dataManager.set(SHOOTER_INDEX, entity != null ? entity.getEntityId() : -1);
 	}
 
 	// set to 0 do have 0 drop
@@ -124,7 +132,7 @@ public class EntityScythe extends EntityMobThrowable {
 	public void onUpdate() {
 		super.onUpdate();
 
-		this.thrown = dataWatcher.getWatchableObjectInt(THROWN);
+		this.thrown = this.dataManager.get(THROWN);
 		this.spin = getSpin();
 		this.Shooter = (EntityLivingBase) getShooter();
 		this.noClip = true;
@@ -151,16 +159,16 @@ public class EntityScythe extends EntityMobThrowable {
 				this.throwTime = 0;
 			}
 
-			attackEntitiesInList(this.worldObj.getEntitiesWithinAABB(EntityLiving.class, this.getEntityBoundingBox()));
-			catchScythe(this.worldObj.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().expand(1, 1, 1)));
+			attackEntitiesInList(this.world.getEntitiesWithinAABB(EntityLiving.class, this.getEntityBoundingBox()));
+			catchScythe(this.world.getEntitiesWithinAABB(Entity.class, this.getEntityBoundingBox().expand(1, 1, 1)));
 
 		} else {
 			setDead();
 		}
 
 
-		if (this.ticksExisted > 600 && !this.worldObj.isRemote && this.Shooter != null && !(this.Shooter instanceof EntityTatters)) {
-			worldObj.spawnEntityInWorld(new EntityItem(worldObj, posX, posY, posZ, item));
+		if (this.ticksExisted > 600 && !this.world.isRemote && this.Shooter != null && !(this.Shooter instanceof EntityTatters)) {
+			world.spawnEntity(new EntityItem(world, posX, posY, posZ, item));
 			setDead();
 		}
 
@@ -213,7 +221,7 @@ public class EntityScythe extends EntityMobThrowable {
 				if (entity instanceof EntityTatters) {
 					setThrown(0);
 					setSpin(20);
-				} else if (entity instanceof EntityPlayer && !this.worldObj.isRemote) {
+				} else if (entity instanceof EntityPlayer && !this.world.isRemote) {
 					EntityPlayer player = (EntityPlayer) entity;
 					if (player.inventory.getStackInSlot(slot) == null) {
 						player.inventory.setInventorySlotContents(slot, item);
@@ -243,8 +251,8 @@ public class EntityScythe extends EntityMobThrowable {
 				if (entity instanceof IEntityMultiPart) {
 					Entity[] entArray = entity.getParts();
 					for (int k = 0; k < entArray.length; ++k) {
-						EntityDragonPart part = (EntityDragonPart) entArray[k];
-						if (part.getEntityBoundingBox().intersectsWith(this.getEntityBoundingBox())) {
+						MultiPartEntityPart part = (MultiPartEntityPart) entArray[k];
+						if (part.getEntityBoundingBox().intersects(this.getEntityBoundingBox())) {
 							part.attackEntityFrom(DamageSource.causeMobDamage(this.Shooter), this.Dmg);
 						}
 					}
@@ -266,7 +274,7 @@ public class EntityScythe extends EntityMobThrowable {
 	 * direction.
 	 */
 	public void SetThrowableHeading(double par1, double par3, double par5, float par7, float par8) {
-		float f2 = MathHelper.sqrt_double(par1 * par1 + par3 * par3 + par5 * par5);
+		float f2 = MathHelper.sqrt(par1 * par1 + par3 * par3 + par5 * par5);
 		par1 /= (double) f2;
 		par3 /= (double) f2;
 		par5 /= (double) f2;
@@ -299,10 +307,13 @@ public class EntityScythe extends EntityMobThrowable {
 		return this;
 	}
 
+
 	@Override
-	protected void onImpact(MovingObjectPosition mop) {
+	protected void onImpact(RayTraceResult result) {
 		try {
-			if (!(mop.entityHit instanceof Entity) && this.worldObj.getBlockState(mop.getBlockPos()).getBlock().getMaterial().blocksMovement()) {
+			IBlockState iblockstate = this.world.getBlockState(result.getBlockPos());
+			Boolean solid = this.world.getBlockState(result.getBlockPos()).getBlock().getMaterial(iblockstate).blocksMovement();
+			if (!(result.entityHit instanceof Entity) && solid ) {
 				this.motionX = 0;
 				this.motionY = 0;
 				this.motionZ = 0;
@@ -312,11 +323,6 @@ public class EntityScythe extends EntityMobThrowable {
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	protected void onImpact(RayTraceResult result) {
-		// TODO Auto-generated method stub
 		
 	}
 }

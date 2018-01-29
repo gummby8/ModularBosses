@@ -68,7 +68,7 @@ public class ModularBosses {
 
 	@EventHandler
 	public void Init(FMLInitializationEvent event) {
-		MBBossDimension.init();
+		//MBBossDimension.init();
 		proxy.registerItemRenderers();
 		proxy.init();
 	}

@@ -16,23 +16,29 @@ import com.google.common.base.Preconditions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
-//@SuppressWarnings("WeakerAccess")
-@ObjectHolder(Reference.MOD_ID)
+@Mod.EventBusSubscriber
+@GameRegistry.ObjectHolder(Reference.MOD_ID)
 public class ModBlocks
 {
-
+/**
+	
 	public static final BlockInvisible INVISIBLE_BLOCK = new BlockInvisible(Material.BARRIER);
 		
 	public static final BlockControlBlock CONTROL_BLOCK = new BlockControlBlock(Material.BARRIER);
@@ -53,10 +59,7 @@ public class ModBlocks
 	public static class RegistrationHandler {
 		public static final Set<ItemBlock> ITEM_BLOCKS = new HashSet<>();
 		
-		/**
-		 * Register this mod's {@link Block}s.
-		 * @param event The event
-		 */
+
 		@SubscribeEvent
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 			final IForgeRegistry<Block> registry = event.getRegistry();
@@ -78,11 +81,7 @@ public class ModBlocks
 		}
 		
 		
-		/**
-		 * Register this mod's {@link ItemBlock}s.
-		 * @param event The event
-		 */
-		
+
 		@SubscribeEvent
 		public static void registerItemBlocks(final RegistryEvent.Register<Item> event) {
 			final ItemBlock[] items = {
@@ -124,4 +123,46 @@ public class ModBlocks
 	private static void registerTileEntity(final Class<? extends TileEntity> tileEntityClass, final String name) {
 		GameRegistry.registerTileEntity(tileEntityClass, Reference.MOD_ID + ":" + name);
 	}
+	
+	*/
+	@GameRegistry.ObjectHolder("control_block")
+	public static BlockControlBlock CONTROL_BLOCK = null;
+
+	@GameRegistry.ObjectHolder("myblock")
+	public static ItemBlock CONTROL_BLOCK_ITEM = null;
+	
+	  @SubscribeEvent
+	  public static void registerBlocks(RegistryEvent.Register<Block> event) {
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+		  System.out.println("REGESTERING BLOCKS");
+	    event.getRegistry().register(new BlockControlBlock(Material.BARRIER).setRegistryName("control_block"));
+	  }
+	  
+	  @SubscribeEvent
+	  public static void registerBlockItems(RegistryEvent.Register<Item> event) {
+	    // will MY_BLOCK have been injected at this point?
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+		  System.out.println("REGESTERING BLOCK ITEMS");
+	    event.getRegistry().register(new ItemBlock(CONTROL_BLOCK).setRegistryName("control_block"));
+	  }
+	  
+	  @SideOnly(Side.CLIENT)
+	  @SubscribeEvent
+	  public static void registerModels(ModelRegistryEvent event) {
+	    //ModelLoader.setCustomModelResourceLocation(CONTROL_BLOCK_ITEM, 0, new ModelResourceLocation("mb", "textures/blocks/control_block/blank.png"));
+	  }
+	
 }
