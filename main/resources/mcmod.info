@@ -1,14 +1,14 @@
 [
 {
   "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "name": "Modular Bosses Mod",
+  "description": "an insane mod that conists of insance mobs such as a sandworm.",
   "version": "${version}",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://www.curseforge.com/minecraft/mc-mods/modular-bosses",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["SpIosions"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
